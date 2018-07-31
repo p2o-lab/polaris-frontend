@@ -1,0 +1,10 @@
+<h1 class="mat-h1">Settings</h1>
+<form>
+  <mat-form-field>
+    <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
+           placeholder="URL for Backend API">
+  </mat-form-field>
+
+
+  <button mat-raised-button (click)="back()">Save & Back</button>
+</form>

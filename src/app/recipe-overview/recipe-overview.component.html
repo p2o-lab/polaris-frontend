@@ -1,0 +1,75 @@
+<h1 class="mat-h1">Recipe Overview</h1>
+
+<div *ngIf="recipe && status; else noRecipeBlock">
+  <mat-list>
+    <mat-list-item>Name: {{recipe.name}}</mat-list-item>
+
+    <mat-list-item>Version: {{recipe.version}}</mat-list-item>
+
+    <mat-list-item>Status: {{status.recipe_status}}</mat-list-item>
+
+    <mat-divider></mat-divider>
+    <mat-list-item>Current Step: {{status.current_step}}</mat-list-item>
+    <mat-list-item>Current Transitions: {{status.recipe_status}}</mat-list-item>
+  </mat-list>
+
+  <button mat-button>Refresh</button>
+  <button mat-button>Start</button>
+  <button mat-button>Stop</button>
+  <button mat-button>Abort</button>
+
+
+  <h2 class="mat-h2">Modules</h2>
+  <mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let module of status.service_states">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h3 class="mat-h3">{{module.module}}</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <mat-list>
+            <mat-list-item *ngFor="let service of module.services">
+              {{service.service}}: {{service.state}}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+
+  <h2 class="mat-h2">Steps</h2>
+  <mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let step of steps">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h3 class="mat-h3">{{step.name}}</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <h4 class="mat-h4">Operations</h4>
+          <mat-list>
+            <mat-list-item *ngFor="let operation of step.operations">
+              {{operation | json}}
+            </mat-list-item>
+          </mat-list>
+          <h4 class="mat-h4">Transitions</h4>
+          <mat-list>
+            <mat-list-item *ngFor="let transition of step.transitions">
+              {{transition | json}}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<ng-template #noRecipeBlock>
+  No recipe loaded yet
+
+</ng-template>
+
