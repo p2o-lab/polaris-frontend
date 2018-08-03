@@ -1,48 +1,22 @@
 <h1 class="mat-h1">Recipe Overview</h1>
 
-<div *ngIf="recipe && status; else noRecipeBlock">
+<div *ngIf="recipe  && options; else noRecipeBlock">
   <mat-list>
-    <mat-list-item>Name: {{recipe.name}}</mat-list-item>
-
-    <mat-list-item>Version: {{recipe.version}}</mat-list-item>
-
-    <mat-list-item>Status: {{status.recipe_status}}</mat-list-item>
-
+    <mat-list-item>Name: {{options.name}}</mat-list-item>
+    <mat-list-item>Version: {{options.version}}</mat-list-item>
+    <mat-list-item>Status: {{recipe.recipe_status}}</mat-list-item>
     <mat-divider></mat-divider>
-    <mat-list-item>Current Step: {{status.current_step}}</mat-list-item>
-    <mat-list-item>Current Transitions: {{status.recipe_status}}</mat-list-item>
+    <mat-list-item>Current Step: {{recipe.current_step | json}}</mat-list-item>
   </mat-list>
 
-  <button mat-button>Refresh</button>
-  <button mat-button>Start</button>
-  <button mat-button>Stop</button>
-  <button mat-button>Abort</button>
-
-
-  <h2 class="mat-h2">Modules</h2>
-  <mat-grid-list cols="3">
-    <mat-grid-tile *ngFor="let module of status.service_states">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            <h3 class="mat-h3">{{module.module}}</h3>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <mat-list>
-            <mat-list-item *ngFor="let service of module.services">
-              {{service.service}}: {{service.state}}
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-
+  <button mat-raised-button>Refresh</button>
+  <button mat-raised-button>Start</button>
+  <button mat-raised-button>Stop</button>
+  <button mat-raised-button>Abort</button>
 
   <h2 class="mat-h2">Steps</h2>
   <mat-grid-list cols="3">
-    <mat-grid-tile *ngFor="let step of steps">
+    <mat-grid-tile *ngFor="let step of options.steps">
       <mat-card class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
@@ -70,6 +44,12 @@
 
 <ng-template #noRecipeBlock>
   No recipe loaded yet
-
 </ng-template>
 
+<h2 class="mat-h2">Options</h2>
+<div class="example-container">
+  <mat-form-field>
+    <textarea matInput placeholder="Recipe options" cdkAutosizeTextarea>{{options | json}}</textarea>
+  </mat-form-field>
+</div>
+{{options | json}}

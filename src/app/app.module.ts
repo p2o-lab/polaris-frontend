@@ -25,6 +25,7 @@ import {SettingsService} from './_services/settings.service';
 import {WebStorageModule} from 'ngx-store';
 import {SettingsComponent} from './settings/settings.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ModuleViewComponent} from './module-view/module-view.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     NavigationComponent,
     DashboardComponent,
     RecipeOverviewComponent,
-    SettingsComponent
+    SettingsComponent,
+    ModuleViewComponent
   ],
   imports: [
     BrowserModule,

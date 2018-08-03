@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 export class RecipeOverviewComponent implements OnInit {
 
   recipe: any;
-  status: any;
+  options: any;
   private steps: any;
 
   constructor(private http: HttpClient) {
@@ -18,11 +18,10 @@ export class RecipeOverviewComponent implements OnInit {
   ngOnInit() {
     this.http.get('http://localhost:3000/recipe').subscribe((data) => {
       this.recipe = data;
-      this.steps = Object.values(this.recipe.steps);
     });
 
-    this.http.get('http://localhost:3000/status').subscribe((data) => {
-      this.status = data;
+    this.http.get('http://localhost:3000/recipe/options').subscribe((data) => {
+      this.options = data;
     });
   }
 

@@ -1,0 +1,25 @@
+<h1 class="mat-h1">Modules</h1>
+<mat-grid-list cols="3" rowHeight="400px">
+  <mat-grid-tile *ngFor="let module of modules">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h2 class="mat-h2">{{module.id}}</h2>
+        </mat-card-title>
+        <mat-card-subtitle>{{module.endpoint}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="dashboard-card-content">
+        <mat-list>
+          <mat-list-item *ngFor="let service of module.services">
+            {{service.service}}: {{service.state}}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">Connect</button>
+        <button mat-button color="warn">Remove</button>
+      </mat-card-actions>
+      <mat-card-footer>Connected: {{module.connected}}</mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

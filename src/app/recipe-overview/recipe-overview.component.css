@@ -5,3 +5,12 @@
   right: 15px;
   bottom: 15px;
 }
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
