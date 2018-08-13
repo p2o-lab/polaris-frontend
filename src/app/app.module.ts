@@ -8,6 +8,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {
   MatButtonModule,
   MatCardModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -26,6 +27,8 @@ import {WebStorageModule} from 'ngx-store';
 import {SettingsComponent} from './settings/settings.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModuleViewComponent} from './module-view/module-view.component';
+import {BackendService} from './backend.service';
+import {WebsocketService} from './websocket.service';
 
 @NgModule({
   declarations: [
@@ -52,11 +55,12 @@ import {ModuleViewComponent} from './module-view/module-view.component';
     MatCardModule,
     MatMenuModule,
     MatFormFieldModule,
+    MatExpansionModule,
     AppRoutingModule,
     HttpClientModule,
     WebStorageModule
   ],
-  providers: [SettingsService],
+  providers: [SettingsService, BackendService, WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

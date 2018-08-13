@@ -10,7 +10,7 @@ import {SettingsService} from '../_services/settings.service';
 export class SettingsComponent implements OnInit {
 
   constructor(private location: Location,
-              private settings: SettingsService) {
+              public settings: SettingsService) {
   }
 
   ngOnInit() {

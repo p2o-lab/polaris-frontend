@@ -1,8 +1,11 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {async, TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {MatSidenavModule} from '@angular/material';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MatSidenavModule],
       declarations: [
         AppComponent
       ],
@@ -25,3 +28,4 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
   }));
 });
+

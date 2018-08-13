@@ -1,9 +1,5 @@
 .dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  margin-bottom: 1em;
 }
 
 .example-container {
@@ -14,3 +10,14 @@
 .example-container > * {
   width: 100%;
 }
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+

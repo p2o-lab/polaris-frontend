@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {BackendService} from '../backend.service';
 
 @Component({
   selector: 'app-recipe-overview',
@@ -9,25 +9,46 @@ import {HttpClient} from '@angular/common/http';
 export class RecipeOverviewComponent implements OnInit {
 
   recipe: any;
-  options: any;
-  private steps: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private backend: BackendService) {
   }
 
   ngOnInit() {
-    this.http.get('http://localhost:3000/recipe').subscribe((data) => {
-      this.recipe = data;
-    });
+    this.recipe = this.backend.recipe.subscribe(recipe => this.recipe = recipe);
 
-    this.http.get('http://localhost:3000/recipe/options').subscribe((data) => {
-      this.options = data;
-    });
+    this.backend.refreshRecipe();
+  }
+
+  startAllowed() {
+    return this.recipe.recipe_status === 'idle';
+  }
+
+  stopAllowed() {
+    return this.recipe.recipe_status === 'running';
+  }
+
+  resetAllowed() {
+    return (this.recipe.recipe_status === 'stopped' || this.recipe.recipe_status === 'completed');
+  }
+
+  abortAllowed() {
+    return (this.recipe.recipe_status === 'stopped' || this.recipe.recipe_status === 'completed');
   }
 
 
-  getSteps() {
-    if (this.recipe)
-      return Array.from(this.recipe.steps.keys());
+  start() {
+    this.backend.startRecipe().subscribe(data => console.log(data));
+  }
+
+  reset() {
+    this.backend.resetRecipe().subscribe(data => console.log(data));
+  }
+
+  stop() {
+    this.backend.stopRecipe().subscribe(data => console.log(data));
+  }
+
+  abort() {
+    this.backend.abortRecipe().subscribe(data => console.log(data));
   }
 }
