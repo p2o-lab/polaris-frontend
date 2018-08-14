@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './_services/settings.service';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {WebsocketService} from './websocket.service';
 
 @Injectable({
@@ -34,7 +34,7 @@ export class BackendService {
 
   private _recipe: BehaviorSubject<any>;
 
-  get recipe() {
+  get recipe(): Observable<any> {
     return this._recipe.asObservable();
   }
 
@@ -71,7 +71,7 @@ export class BackendService {
     return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
   }
 
-  addModule(moduleOptions: string) {
+  addModule(moduleOptions) {
     return this.http.post(`${this.settings.apiUrl}/module`, moduleOptions);
   }
 
@@ -89,5 +89,9 @@ export class BackendService {
 
   abortRecipe() {
     return this.http.post(`${this.settings.apiUrl}/recipe/abort`, {});
+  }
+
+  editRecipe(recipeOptions) {
+    return this.http.post(`${this.settings.apiUrl}/recipe`, recipeOptions);
   }
 }

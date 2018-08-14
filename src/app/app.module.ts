@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavigationComponent} from './navigation/navigation.component';
 import {LayoutModule} from '@angular/cdk/layout';
 import {
   MatButtonModule,
@@ -29,15 +28,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {BackendService} from './backend.service';
 import {WebsocketService} from './websocket.service';
+import {NewRecipeComponent} from './new-recipe/new-recipe.component';
+import {NewModuleComponent} from './new-module/new-module.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     DashboardComponent,
     RecipeOverviewComponent,
     SettingsComponent,
-    ModuleViewComponent
+    ModuleViewComponent,
+    NewRecipeComponent,
+    NewModuleComponent
   ],
   imports: [
     BrowserModule,

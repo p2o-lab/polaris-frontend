@@ -14,7 +14,9 @@ export class RecipeOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipe = this.backend.recipe.subscribe(recipe => this.recipe = recipe);
+    this.backend.recipe.subscribe(recipe => {
+      this.recipe = recipe;
+    });
 
     this.backend.refreshRecipe();
   }

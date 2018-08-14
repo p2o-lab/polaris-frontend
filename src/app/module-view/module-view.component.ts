@@ -22,7 +22,6 @@ export class ModuleViewComponent implements OnInit {
     this.backend.sendCommand(module, service, command)
       .subscribe(data => {
         this.backend.refreshModules();
-        console.log(data);
       });
   }
 

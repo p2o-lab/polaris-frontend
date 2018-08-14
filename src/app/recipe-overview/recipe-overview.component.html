@@ -1,4 +1,4 @@
-<div *ngIf="recipe && recipe.options; else noRecipeBlock">
+<div *ngIf="recipe; else noRecipeBlock">
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
@@ -10,7 +10,7 @@
     <mat-list-item>Name: {{recipe.options.name}}</mat-list-item>
     <mat-list-item>Version: {{recipe.options.version}}</mat-list-item>
     <mat-list-item>Status: {{recipe.recipe_status}}</mat-list-item>
-    <mat-list-item>Current Step: {{recipe.current_step}}</mat-list-item>
+
   </mat-list>
 
 
@@ -20,34 +20,33 @@
       <button [disabled]="!abortAllowed()" (click)="abort()" mat-raised-button>Abort</button>
     </mat-card-content>
   </mat-card>
-  <!--
-    <h2 class="mat-h2">Steps</h2>
-    <mat-grid-list cols="3">
-      <mat-grid-tile *ngFor="let step of options.steps">
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              <h3 class="mat-h3">{{step.name}}</h3>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <h4 class="mat-h4">Operations</h4>
-            <mat-list>
-              <mat-list-item *ngFor="let operation of step.operations">
-                {{operation | json}}
-              </mat-list-item>
-            </mat-list>
-            <h4 class="mat-h4">Transitions</h4>
-            <mat-list>
-              <mat-list-item *ngFor="let transition of step.transitions">
-                {{transition | json}}
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
-  -->
+
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title>
+        <h1 class="mat-h1">Current Step</h1>
+      </mat-card-title>
+      <mat-card-subtitle>{{recipe.current_step.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 class="mat-h2">Operations</h2>
+      <mat-list>
+        <mat-list-item *ngFor="let operation of recipe.current_step.operations">
+          <p mat-line>Module: {{operation.module}}</p>
+          <p mat-line>Service: {{operation.service}}</p>
+          <p mat-line>Command: {{operation.command}}</p>
+        </mat-list-item>
+      </mat-list>
+      <h2 class="mat-h2">Current Transitions</h2>
+      <mat-list>
+        <mat-list-item *ngFor="let trans of recipe.current_step.transitions">
+          <p mat-line>Next Step: {{trans.next_step}}</p>
+          <p mat-line>Condition: {{trans.condition | json}}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
@@ -55,13 +54,16 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="example-container">
-        <mat-form-field>
-          <textarea disabled matInput placeholder="Recipe options" cdkAutosizeTextarea rows="30"
+      <mat-form-field class="example-container">
+          <textarea matInput
+                    placeholder="Current recipe options"
+                    disabled
+                    matTextareaAutosize
+                    matAutosizeMinRows="5"
+                    matAutosizeMaxRows="20"
                     [value]="recipe.options | json"></textarea>
-        </mat-form-field>
-      </div>
-      <button [disabled]="!startAllowed()" (click)="loadRecipe()" mat-raised-button>Edit</button>
+      </mat-form-field>
+      <button mat-button routerLink="/recipe/new">New/Edit Recipe</button>
     </mat-card-content>
   </mat-card>
 
@@ -71,4 +73,6 @@
 <ng-template #noRecipeBlock>
   No recipe loaded yet
 </ng-template>
+
+
 

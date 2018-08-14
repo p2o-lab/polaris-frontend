@@ -22,21 +22,22 @@
           <mat-expansion-panel *ngFor="let service of module.services">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{service.service}}
+                {{service.name}}
               </mat-panel-title>
               <mat-panel-description>
-                {{service.state}}
+                {{service.status}}
               </mat-panel-description>
             </mat-expansion-panel-header>
 
             <h3 class="mat-h3">Commands</h3>
-            <button mat-button (click)="sendCommand(module.id, service.service,'start')">Start</button>
-            <button mat-button (click)="sendCommand(module.id, service.service,'stop')">Stop</button>
-            <button mat-button (click)="sendCommand(module.id, service.service,'complete')">Complete</button>
-            <button mat-button (click)="sendCommand(module.id, service.service,'reset')">Reset</button>
-            <button mat-button (click)="sendCommand(module.id, service.service,'pause')">Pause</button>
-            <button mat-button (click)="sendCommand(module.id, service.service,'resume')">Resume</button>
-            <button mat-button (click)="sendCommand(module.id, service.service,'unhold')">Unhold</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'start')">Start</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'stop')">Stop</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'complete')">Complete</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'reset')">Reset</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'pause')">Pause</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'resume')">Resume</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'unhold')">Unhold</button>
+            <button mat-button (click)="sendCommand(module.id, service.name,'abort')">Abort</button>
 
             <h3 class="mat-h3">Parameter</h3>
           </mat-expansion-panel>
@@ -48,3 +49,5 @@
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
+
+<button mat-button routerLink="/modules/new">Add Module</button>
