@@ -1,56 +1,89 @@
+<h1 class="mat-h1">Recipe</h1>
 <div *ngIf="recipe; else noRecipeBlock">
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
-        <h1 class="mat-h1">Recipe Overview</h1>
+        <h2 class="mat-h2">Overview</h2>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="dashboard-card-content">
-  <mat-list>
-    <mat-list-item>Name: {{recipe.options.name}}</mat-list-item>
-    <mat-list-item>Version: {{recipe.options.version}}</mat-list-item>
-    <mat-list-item>Status: {{recipe.recipe_status}}</mat-list-item>
-
-  </mat-list>
-
-
+      <mat-list>
+        <mat-list-item>Name: {{recipe.options.name}}</mat-list-item>
+        <mat-list-item>Version: {{recipe.options.version}}</mat-list-item>
+        <mat-list-item>Status: {{recipe.recipe_status}}</mat-list-item>
+        <mat-list-item>Step: {{recipe.current_step.name}}</mat-list-item>
+      </mat-list>
       <button [disabled]="!startAllowed()" (click)="start()" mat-raised-button>Start</button>
       <button [disabled]="!resetAllowed()" (click)="reset()" mat-raised-button>Reset</button>
       <button [disabled]="!stopAllowed()" (click)="stop()" mat-raised-button>Stop</button>
       <button [disabled]="!abortAllowed()" (click)="abort()" mat-raised-button>Abort</button>
     </mat-card-content>
   </mat-card>
-
-  <mat-card class="dashboard-card">
+  <!--
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h1 class="mat-h1">Current Step: {{recipe.current_step.name}}</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="mat-h2">Operations</h2>
+        <mat-list>
+          <mat-list-item *ngFor="let operation of recipe.current_step.operations">
+            <p mat-line>Module: {{operation.module}}</p>
+            <p mat-line>Service: {{operation.service}}</p>
+            <p mat-line>Command: {{operation.command}}</p>
+          </mat-list-item>
+        </mat-list>
+        <h2 class="mat-h2">Current Transitions</h2>
+        <mat-list>
+          <mat-list-item *ngFor="let trans of recipe.current_step.transitions">
+            <p mat-line>Next Step: {{trans.next_step}}</p>
+            <p mat-line>Condition: {{trans.condition | json}}</p>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  -->
+  <mat-card color="warn" class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
-        <h1 class="mat-h1">Current Step</h1>
+        <h2 class="mat-h2">Steps</h2>
       </mat-card-title>
-      <mat-card-subtitle>{{recipe.current_step.name}}</mat-card-subtitle>
+      <mat-card-subtitle>Loaded from recipe</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <h2 class="mat-h2">Operations</h2>
-      <mat-list>
-        <mat-list-item *ngFor="let operation of recipe.current_step.operations">
-          <p mat-line>Module: {{operation.module}}</p>
-          <p mat-line>Service: {{operation.service}}</p>
-          <p mat-line>Command: {{operation.command}}</p>
-        </mat-list-item>
-      </mat-list>
-      <h2 class="mat-h2">Current Transitions</h2>
-      <mat-list>
-        <mat-list-item *ngFor="let trans of recipe.current_step.transitions">
-          <p mat-line>Next Step: {{trans.next_step}}</p>
-          <p mat-line>Condition: {{trans.condition | json}}</p>
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let step of recipe.options.steps">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3 class="mat-h3">{{step.name}}</h3>
+          </mat-panel-title>
+          <mat-panel-description *ngIf="step.name == recipe.current_step.name">
+            active
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4 class="mat-h4">Operations</h4>
+        <mat-list>
+          <mat-list-item *ngFor="let operation of step.operations">
+            {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span> ->
+            {{operation.command}}
+          </mat-list-item>
+        </mat-list>
+        <h4 class="mat-h4">Transitions</h4>
+        <mat-list>
+          <mat-list-item *ngFor="let transition of step.transitions">
+            {{transition.next_step}}: {{transition.condition | json}}
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-card>
 
+
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
-        <h1 class="mat-h1">Recipe Options</h1>
+        <h2 class="mat-h2">Recipe Options</h2>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>

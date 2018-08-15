@@ -18,14 +18,6 @@ export class ModuleViewComponent implements OnInit {
     this.backend.refreshModules();
   }
 
-  sendCommand(module: string, service: string, command: string) {
-    this.backend.sendCommand(module, service, command)
-      .subscribe(data => {
-        this.backend.refreshModules();
-      });
-  }
-
-
   connect(module: string) {
     this.backend.connect(module).subscribe(data => console.log(data));
 
@@ -37,7 +29,6 @@ export class ModuleViewComponent implements OnInit {
 
   remove(module: string) {
     this.backend.removeModule(module).subscribe(data => {
-      console.log('remove finished', data);
       this.backend.refreshModules();
     });
   }

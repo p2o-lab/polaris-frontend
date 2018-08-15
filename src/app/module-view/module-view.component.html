@@ -1,7 +1,5 @@
 <h1 class="mat-h1">Modules</h1>
-<mat-grid-list cols="2" rowHeight="500px">
-  <mat-grid-tile *ngFor="let module of modules | async">
-    <mat-card class="dashboard-card">
+<mat-card class="dashboard-card" *ngFor="let module of modules | async">
       <mat-card-header>
         <mat-card-title>
           <h2 class="mat-h2">{{module.id}}</h2>
@@ -19,35 +17,15 @@
       </mat-card-header>
       <mat-card-content class="dashboard-card-content">
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let service of module.services">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{service.name}}
-              </mat-panel-title>
-              <mat-panel-description>
-                {{service.status}}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+          <app-service-view *ngFor="let service of module.services" [service]="service" [module]="module">
 
-            <h3 class="mat-h3">Commands</h3>
-            <button mat-button (click)="sendCommand(module.id, service.name,'start')">Start</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'stop')">Stop</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'complete')">Complete</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'reset')">Reset</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'pause')">Pause</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'resume')">Resume</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'unhold')">Unhold</button>
-            <button mat-button (click)="sendCommand(module.id, service.name,'abort')">Abort</button>
-
-            <h3 class="mat-h3">Parameter</h3>
-          </mat-expansion-panel>
+          </app-service-view>
         </mat-accordion>
       </mat-card-content>
       <mat-card-actions>
 
       </mat-card-actions>
     </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+
 
 <button mat-button routerLink="/modules/new">Add Module</button>

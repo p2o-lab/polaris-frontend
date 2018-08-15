@@ -14,6 +14,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatSelectModule,
   MatSidenavModule,
   MatToolbarModule
 } from '@angular/material';
@@ -30,6 +31,7 @@ import {BackendService} from './backend.service';
 import {WebsocketService} from './websocket.service';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewModuleComponent} from './new-module/new-module.component';
+import {ServiceViewComponent} from './service-view/service-view.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {NewModuleComponent} from './new-module/new-module.component';
     SettingsComponent,
     ModuleViewComponent,
     NewRecipeComponent,
-    NewModuleComponent
+    NewModuleComponent,
+    ServiceViewComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import {NewModuleComponent} from './new-module/new-module.component';
     MatMenuModule,
     MatFormFieldModule,
     MatExpansionModule,
+    MatSelectModule,
     AppRoutingModule,
     HttpClientModule,
     WebStorageModule

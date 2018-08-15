@@ -38,9 +38,16 @@ export class BackendService {
     return this._recipe.asObservable();
   }
 
-  sendCommand(module: string, service: string, command: string) {
-    return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, {});
+  sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
+    let body = {};
+    if (strategy) {
+      body['strategy'] = strategy;
+    }
+    if (parameters) {
+      body['parameters'] = parameters;
+    }
 
+    return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
   }
 
   refreshModules() {
