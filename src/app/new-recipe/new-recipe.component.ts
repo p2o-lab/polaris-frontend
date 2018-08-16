@@ -16,12 +16,7 @@ export class NewRecipeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.backend.recipe.subscribe((data) => {
-      if (data) {
-        this.recipe = JSON.stringify(data.options);
-      }
-    });
-    this.backend.refreshRecipe();
+    this.recipe = JSON.stringify(this.backend.recipe.options) || undefined;
   }
 
   public previewFile(event) {

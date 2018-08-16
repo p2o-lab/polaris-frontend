@@ -22,7 +22,6 @@ export class ServiceViewComponent implements OnInit {
   }
 
   sendCommand(command: string, parameterForm: NgForm) {
-    console.log(parameterForm);
     const strategy = parameterForm ? parameterForm.value.selectedStrategy.name : undefined;
     const parameters = [];
 

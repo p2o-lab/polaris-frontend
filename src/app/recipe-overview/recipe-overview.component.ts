@@ -8,31 +8,26 @@ import {BackendService} from '../backend.service';
 })
 export class RecipeOverviewComponent implements OnInit {
 
-  recipe: any;
-
-  constructor(private backend: BackendService) {
+  constructor(public backend: BackendService) {
   }
 
   ngOnInit() {
-    this.backend.recipe.subscribe(recipe => {
-      this.recipe = recipe;
-    });
   }
 
   startAllowed() {
-    return this.recipe.recipe_status === 'idle';
+    return this.backend.recipe.recipe_status === 'idle';
   }
 
   stopAllowed() {
-    return this.recipe.recipe_status === 'running';
+    return this.backend.recipe.recipe_status === 'running';
   }
 
   resetAllowed() {
-    return (this.recipe.recipe_status === 'stopped' || this.recipe.recipe_status === 'completed');
+    return (this.backend.recipe.recipe_status === 'stopped' || this.backend.recipe.recipe_status === 'completed');
   }
 
   abortAllowed() {
-    return (this.recipe.recipe_status === 'stopped' || this.recipe.recipe_status === 'completed');
+    return (this.backend.recipe.recipe_status === 'stopped' || this.backend.recipe.recipe_status === 'completed');
   }
 
 

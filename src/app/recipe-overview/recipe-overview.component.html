@@ -1,5 +1,5 @@
 <h1 class="mat-h1">Recipe</h1>
-<div *ngIf="recipe; else noRecipeBlock">
+<div *ngIf="backend.recipe; else noRecipeBlock">
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
@@ -8,10 +8,10 @@
     </mat-card-header>
     <mat-card-content class="dashboard-card-content">
       <mat-list>
-        <mat-list-item>Name: {{recipe.options.name}}</mat-list-item>
-        <mat-list-item>Version: {{recipe.options.version}}</mat-list-item>
-        <mat-list-item>Status: {{recipe.recipe_status}}</mat-list-item>
-        <mat-list-item>Step: {{recipe.current_step.name}}</mat-list-item>
+        <mat-list-item>Name: {{backend.recipe.options.name}}</mat-list-item>
+        <mat-list-item>Version: {{backend.recipe.options.version}}</mat-list-item>
+        <mat-list-item>Status: {{backend.recipe.recipe_status}}</mat-list-item>
+        <mat-list-item>Step: {{backend.recipe.current_step.name}}</mat-list-item>
       </mat-list>
       <button [disabled]="!startAllowed()" (click)="start()" mat-raised-button>Start</button>
       <button [disabled]="!resetAllowed()" (click)="reset()" mat-raised-button>Reset</button>
@@ -53,12 +53,12 @@
       <mat-card-subtitle>Loaded from recipe</mat-card-subtitle>
     </mat-card-header>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let step of recipe.options.steps">
+      <mat-expansion-panel *ngFor="let step of backend.recipe.options.steps">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <h3 class="mat-h3">{{step.name}}</h3>
           </mat-panel-title>
-          <mat-panel-description *ngIf="step.name == recipe.current_step.name">
+          <mat-panel-description *ngIf="step.name == backend.recipe.current_step.name">
             active
           </mat-panel-description>
         </mat-expansion-panel-header>
@@ -87,14 +87,14 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-form-field *ngIf="recipe" class="example-container">
+      <mat-form-field *ngIf="backend.recipe" class="example-container">
           <textarea matInput
                     placeholder="Current recipe options"
                     disabled
                     matTextareaAutosize
                     matAutosizeMinRows="5"
                     matAutosizeMaxRows="20"
-                    [value]="recipe.options | json"></textarea>
+                    [value]="backend.recipe.options | json"></textarea>
       </mat-form-field>
       <button mat-button routerLink="/recipe/new">New/Edit Recipe</button>
     </mat-card-content>

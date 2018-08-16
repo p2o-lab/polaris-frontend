@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './_services/settings.service';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {WebsocketService} from './websocket.service';
 import {MatSnackBar} from '@angular/material';
 
@@ -16,20 +15,24 @@ export class BackendService {
               private snackBar: MatSnackBar) {
 
 
-    this._modules = new BehaviorSubject<any[]>([]);
-    this._recipe = new BehaviorSubject<any>(undefined);
+    this._modules = [];
+    this._recipe = undefined;
 
     this.ws.connect(this.settings.apiUrl.replace('http', 'ws')).subscribe((msg) => {
-      console.log('ws received', msg);
-      if (msg.data === 'refresh') {
-        this.refreshRecipe();
-        this.refreshModules();
-      }
-      if (msg.data === 'recipeCompleted') {
-        this.refreshRecipe();
-        this.snackBar.open('Recipe completed', undefined, {
-          duration: 4000,
-        });
+      const data = JSON.parse(msg.data);
+      console.log('ws received', data);
+      if (data.msg === 'refresh') {
+        if (data.data === 'recipe') {
+          this.refreshRecipe();
+          if (data.action === 'completed') {
+            this.snackBar.open('Recipe completed', undefined, {
+              duration: 4000,
+            });
+          }
+        }
+        if (data.data === 'module') {
+          this.refreshModules();
+        }
       }
     });
 
@@ -37,16 +40,16 @@ export class BackendService {
     this.refreshModules();
   }
 
-  private _modules: BehaviorSubject<any[]>;
+  private _modules: any[];
 
   get modules() {
-    return this._modules.asObservable();
+    return this._modules;
   }
 
-  private _recipe: BehaviorSubject<any>;
+  private _recipe: any;
 
-  get recipe(): Observable<any> {
-    return this._recipe.asObservable();
+  get recipe(): any {
+    return this._recipe;
   }
 
   sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
@@ -63,13 +66,13 @@ export class BackendService {
 
   refreshModules() {
     this.http.get(`${this.settings.apiUrl}/module`).subscribe((data: any[]) => {
-      this._modules.next(data);
+      this._modules = data;
     });
   }
 
   refreshRecipe() {
     this.http.get(`${this.settings.apiUrl}/recipe`).subscribe((data) => {
-      this._recipe.next(data);
+      this._recipe = data;
     });
   }
 

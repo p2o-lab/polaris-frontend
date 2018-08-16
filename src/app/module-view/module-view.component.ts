@@ -9,30 +9,27 @@ import {BackendService} from '../backend.service';
 export class ModuleViewComponent implements OnInit {
   public modules: any;
 
-  constructor(private backend: BackendService) {
+  constructor(public backend: BackendService) {
   }
 
   ngOnInit() {
-    this.modules = this.backend.modules;
   }
 
   connect(module: string) {
-    this.backend.connect(module).subscribe(data => console.log(data));
+    this.backend.connect(module).subscribe(data => console.log('Connect result', data));
 
   }
 
   disconnect(module: string) {
-    this.backend.disconnect(module).subscribe(data => console.log(data));
+    this.backend.disconnect(module).subscribe(data => console.log('Disconnect result', data));
   }
 
   remove(module: string) {
-    this.backend.removeModule(module).subscribe(data => {
-      this.backend.refreshModules();
-    });
+    this.backend.removeModule(module).subscribe(data => console.log('Remove result', data));
   }
 
   add(moduleOptions: string) {
-    this.backend.addModule(moduleOptions).subscribe(data => console.log(data));
+    this.backend.addModule(moduleOptions).subscribe(data => console.log('Add result', data));
   }
 
 
