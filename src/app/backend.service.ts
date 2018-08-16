@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './_services/settings.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {WebsocketService} from './websocket.service';
+import {MatSnackBar} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class BackendService {
 
   constructor(private http: HttpClient,
               private settings: SettingsService,
-              private ws: WebsocketService) {
+              private ws: WebsocketService,
+              private snackBar: MatSnackBar) {
 
 
     this._modules = new BehaviorSubject<any[]>([]);
@@ -23,7 +25,16 @@ export class BackendService {
         this.refreshRecipe();
         this.refreshModules();
       }
+      if (msg.data === 'recipeCompleted') {
+        this.refreshRecipe();
+        this.snackBar.open('Recipe completed', undefined, {
+          duration: 4000,
+        });
+      }
     });
+
+    this.refreshRecipe();
+    this.refreshModules();
   }
 
   private _modules: BehaviorSubject<any[]>;
@@ -39,7 +50,7 @@ export class BackendService {
   }
 
   sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
-    let body = {};
+    const body = {};
     if (strategy) {
       body['strategy'] = strategy;
     }

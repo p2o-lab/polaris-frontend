@@ -79,15 +79,15 @@
     </mat-accordion>
   </mat-card>
 
-
+</div>
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
-        <h2 class="mat-h2">Recipe Options</h2>
+        <h2 class="mat-h2">JSON</h2>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-form-field class="example-container">
+      <mat-form-field *ngIf="recipe" class="example-container">
           <textarea matInput
                     placeholder="Current recipe options"
                     disabled
@@ -99,8 +99,6 @@
       <button mat-button routerLink="/recipe/new">New/Edit Recipe</button>
     </mat-card-content>
   </mat-card>
-
-</div>
 
 
 <ng-template #noRecipeBlock>

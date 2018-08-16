@@ -14,3 +14,7 @@
 .grid-container {
   margin: 20px;
 }
+
+.mat-nav-list a.active {
+  background: #FAFAFA;
+}

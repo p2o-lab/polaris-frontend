@@ -16,6 +16,7 @@ import {
   MatMenuModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -62,6 +63,7 @@ import {ServiceViewComponent} from './service-view/service-view.component';
     MatFormFieldModule,
     MatExpansionModule,
     MatSelectModule,
+    MatSnackBarModule,
     AppRoutingModule,
     HttpClientModule,
     WebStorageModule

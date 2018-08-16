@@ -17,8 +17,6 @@ export class RecipeOverviewComponent implements OnInit {
     this.backend.recipe.subscribe(recipe => {
       this.recipe = recipe;
     });
-
-    this.backend.refreshRecipe();
   }
 
   startAllowed() {
