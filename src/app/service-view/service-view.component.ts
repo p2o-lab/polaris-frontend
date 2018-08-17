@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BackendService} from '../backend.service';
+import {ModuleInterface, ServiceInterface} from 'pfe-interface';
+import {StrategyInterface} from 'pfe-interface/dist/interfaces';
 
 @Component({
   selector: 'app-service-view',
@@ -9,10 +11,10 @@ import {BackendService} from '../backend.service';
 })
 export class ServiceViewComponent implements OnInit {
 
-  @Input() service: any;
-  @Input() module: any;
+  @Input() service: ServiceInterface;
+  @Input() module: ModuleInterface;
 
-  public strategy;
+  public strategy: StrategyInterface;
 
   constructor(private backend: BackendService) {
   }
@@ -22,16 +24,17 @@ export class ServiceViewComponent implements OnInit {
   }
 
   sendCommand(command: string, parameterForm: NgForm) {
-    const strategy = parameterForm ? parameterForm.value.selectedStrategy.name : undefined;
+    const strategy: string = parameterForm ? parameterForm.value.selectedStrategy.name : undefined;
     const parameters = [];
 
     if (parameterForm) {
-      Object.keys(parameterForm.value).forEach((key, value) => {
+      Object.keys(parameterForm.value).forEach((key,) => {
         if (key !== 'selectedStrategy') {
-          parameters.push({name: key, value: value});
+          parameters.push({name: key.replace(this.service.name + '>', ''), value: parameterForm.value[key]});
         }
       });
     }
+    console.log('Parameters', parameterForm.value, parameters);
 
     this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
       .subscribe(data => {

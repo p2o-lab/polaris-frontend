@@ -15,13 +15,15 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-list *ngIf="parameterForm.value.selectedStrategy">
-      <mat-list-item *ngFor="let param of parameterForm.value.selectedStrategy.parameters">
+    <div *ngIf="parameterForm.value.selectedStrategy">
+      <p *ngFor="let param of parameterForm.value.selectedStrategy.parameters">
         <mat-form-field>
-          <input matInput type="number" [name]="param.name" ngModel [placeholder]="param.name" [value]="param.value">
+          <input matInput type="number" [name]="service.name + '>' + param.name" [ngModel]="param.value"
+                 [placeholder]="param.name" [min]="param.min" [max]="param.max">
+          <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
         </mat-form-field>
-      </mat-list-item>
-    </mat-list>
+      </p>
+    </div>
   </form>
   <mat-action-row>
     <button mat-button color="primary" (click)="sendCommand('start', parameterForm)">Start</button>

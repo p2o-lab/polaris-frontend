@@ -27,7 +27,7 @@
     "@angular/router": "^6.0.0",
     "core-js": "^2.5.4",
     "ngx-store": "^2.0.0",
-    "pfe-interface": "^1.0.1",
+    "pfe-interface": "^1.1.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
