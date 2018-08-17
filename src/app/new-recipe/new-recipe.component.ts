@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class NewRecipeComponent implements OnInit {
 
-  recipe: any;
+  recipe: string;
 
   constructor(private backend: BackendService,
               private router: Router) {

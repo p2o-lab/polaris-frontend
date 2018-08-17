@@ -7,7 +7,6 @@ import {BackendService} from '../backend.service';
   styleUrls: ['./module-view.component.css']
 })
 export class ModuleViewComponent implements OnInit {
-  public modules: any;
 
   constructor(public backend: BackendService) {
   }

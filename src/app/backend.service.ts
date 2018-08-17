@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './_services/settings.service';
 import {WebsocketService} from './websocket.service';
 import {MatSnackBar} from '@angular/material';
+import {RecipeManagerInterface, ModuleInterface} from 'pfe-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -40,15 +41,15 @@ export class BackendService {
     this.refreshModules();
   }
 
-  private _modules: any[];
+  private _modules: ModuleInterface[];
 
-  get modules() {
+  get modules(): ModuleInterface[] {
     return this._modules;
   }
 
-  private _recipe: any;
+  private _recipe: RecipeManagerInterface;
 
-  get recipe(): any {
+  get recipe(): RecipeManagerInterface {
     return this._recipe;
   }
 
@@ -71,7 +72,7 @@ export class BackendService {
   }
 
   refreshRecipe() {
-    this.http.get(`${this.settings.apiUrl}/recipe`).subscribe((data) => {
+    this.http.get(`${this.settings.apiUrl}/recipe`).subscribe((data: RecipeManagerInterface) => {
       this._recipe = data;
     });
   }

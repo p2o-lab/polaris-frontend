@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../backend.service';
 
+
 @Component({
   selector: 'app-recipe-overview',
   templateUrl: './recipe-overview.component.html',
@@ -29,6 +30,8 @@ export class RecipeOverviewComponent implements OnInit {
   abortAllowed() {
     return (this.backend.recipe.recipe_status === 'stopped' || this.backend.recipe.recipe_status === 'completed');
   }
+
+
 
 
   start() {
