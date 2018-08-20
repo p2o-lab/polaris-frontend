@@ -12,7 +12,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "publishConfig": {
+    "registry": "http://registry.plt.et.tu-dresden.de:4873"
+  },
   "dependencies": {
     "@angular/animations": "^6.1.0",
     "@angular/cdk": "^6.4.2",
