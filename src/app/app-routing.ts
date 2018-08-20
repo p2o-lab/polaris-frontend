@@ -7,6 +7,7 @@ import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.compone
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
+import {AboutComponent} from './about/about.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/recipe', pathMatch: 'full'},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'modules/new', component: NewModuleComponent},
   {path: 'recipe', component: RecipeOverviewComponent},
   {path: 'recipe/new', component: NewRecipeComponent},
-  {path: 'settings', component: SettingsComponent}
+  {path: 'settings', component: SettingsComponent},
+  {path: 'about', component: AboutComponent}
 ];
 
 @NgModule({

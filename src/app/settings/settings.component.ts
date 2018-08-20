@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {SettingsService} from '../_services/settings.service';
-import {BackendService} from '../backend.service';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
   selector: 'app-settings',

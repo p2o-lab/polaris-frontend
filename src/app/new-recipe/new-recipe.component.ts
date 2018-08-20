@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../backend.service';
+import {BackendService} from '../_services/backend.service';
 import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-new-recipe',
@@ -12,11 +13,16 @@ export class NewRecipeComponent implements OnInit {
   recipe: string;
 
   constructor(private backend: BackendService,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.recipe = JSON.stringify(this.backend.recipe.options) || undefined;
+    try {
+      this.recipe = JSON.stringify(this.backend.recipe.options);
+    } catch {
+      this.recipe = undefined;
+    }
   }
 
   public previewFile(event) {
@@ -29,9 +35,20 @@ export class NewRecipeComponent implements OnInit {
   }
 
   editRecipe() {
-    this.backend.editRecipe(JSON.parse(this.recipe)).subscribe((data) => {
-      this.router.navigate(['/recipe']);
-    });
+    try {
+      const recipe = JSON.parse(this.recipe);
+      this.snackBar.dismiss();
+      this.backend.editRecipe(recipe).subscribe(
+        (data) => {
+          this.router.navigate(['/recipe']);
+        },
+        (error) => {
+          this.snackBar.open(error.error.error, 'Dismiss');
+        }
+      );
+    } catch {
+      this.snackBar.open('Not valid JSON', 'Dismiss');
+    }
   }
 
   cancel() {

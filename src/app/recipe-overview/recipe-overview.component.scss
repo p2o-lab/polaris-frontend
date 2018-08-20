@@ -1,0 +1,25 @@
+// Define a mixin that accepts a theme and outputs the color styles for the component.
+@mixin recipe_overview_theme($theme) {
+
+  // Extract whichever individual palettes you need from the theme.
+  $palette-primary: map-get($theme, primary);
+  $palette-accent: map-get($theme, accent);
+  $palette-warn: map-get($theme, warn);
+
+  $primary: mat-color($palette-primary);
+  $accent: mat-color($palette-accent);
+  $info: mat-color($palette-primary, 'lighter');
+  $warn: mat-color($palette-warn);
+
+  .active {
+    background-color: $info;
+  }
+
+  .recipe-card {
+    margin-bottom: 1em;
+  }
+
+}
+
+
+

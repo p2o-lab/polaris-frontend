@@ -1,65 +1,58 @@
 <h1 class="mat-h1">Recipe</h1>
-<div *ngIf="backend.recipe; else noRecipeBlock">
-  <mat-card class="dashboard-card">
+  <mat-card class="recipe-card">
     <mat-card-header>
       <mat-card-title>
         <h2 class="mat-h2">Overview</h2>
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content class="dashboard-card-content">
+    <mat-card-content class="dashboard-card-content" *ngIf="backend.recipe; else noRecipeBlock">
       <mat-list>
-        <mat-list-item>Name: {{backend.recipe.options.name}}</mat-list-item>
-        <mat-list-item>Version: {{backend.recipe.options.version}}</mat-list-item>
-        <mat-list-item>Status: {{backend.recipe.recipe_status}}</mat-list-item>
-        <mat-list-item>Step: {{backend.recipe.current_step.name}}</mat-list-item>
+        <mat-list-item>
+          <p mat-line>{{backend.recipe.options.name}}</p>
+          <p class="mat-form-field-label" mat-line>Name</p>
+        </mat-list-item>
+        <mat-list-item>
+          <p mat-line>{{backend.recipe.options.version}}</p>
+          <p class="mat-form-field-label" mat-line>Version</p>
+        </mat-list-item>
+        <mat-list-item>
+          <p mat-line><span *ngFor="let module of backend.recipe.service_states; let first=first"><span *ngIf="!first">, </span>{{module.module}}</span></p>
+          <p class="mat-form-field-label" mat-line>Modules</p>
+        </mat-list-item>
+        <mat-list-item>
+          <p mat-line>{{backend.recipe.recipe_status}}</p>
+          <p mat-line class="mat-form-field-label">Status</p>
+        </mat-list-item>
+        <mat-list-item>
+          <p mat-line>{{backend.recipe.current_step.name}}</p>
+          <p mat-line class="mat-form-field-label">Step</p>
+        </mat-list-item>
       </mat-list>
-      <button [disabled]="!startAllowed()" (click)="start()" mat-raised-button>Start</button>
-      <button [disabled]="!resetAllowed()" (click)="reset()" mat-raised-button>Reset</button>
-      <button [disabled]="!stopAllowed()" (click)="stop()" mat-raised-button>Stop</button>
-      <button [disabled]="!abortAllowed()" (click)="abort()" mat-raised-button>Abort</button>
     </mat-card-content>
+    <mat-card-actions *ngIf="backend.recipe">
+      <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button><mat-icon>play_arrow</mat-icon>Start</button>
+      <button [disabled]="!resetAllowed()" (click)="reset()" color="accent" mat-button><mat-icon>replay_arrow</mat-icon>Reset</button>
+      <button [disabled]="!stopAllowed()" (click)="stop()" color="warn" mat-button><mat-icon>stop</mat-icon>Stop</button>
+      <button [disabled]="!abortAllowed()" (click)="abort()" color="warn" mat-button><mat-icon>clear</mat-icon>Abort</button>
+    </mat-card-actions>
   </mat-card>
-  <!--
-    <mat-card class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title>
-          <h1 class="mat-h1">Current Step: {{recipe.current_step.name}}</h1>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <h2 class="mat-h2">Operations</h2>
-        <mat-list>
-          <mat-list-item *ngFor="let operation of recipe.current_step.operations">
-            <p mat-line>Module: {{operation.module}}</p>
-            <p mat-line>Service: {{operation.service}}</p>
-            <p mat-line>Command: {{operation.command}}</p>
-          </mat-list-item>
-        </mat-list>
-        <h2 class="mat-h2">Current Transitions</h2>
-        <mat-list>
-          <mat-list-item *ngFor="let trans of recipe.current_step.transitions">
-            <p mat-line>Next Step: {{trans.next_step}}</p>
-            <p mat-line>Condition: {{trans.condition | json}}</p>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
-  -->
-  <mat-card color="warn" class="dashboard-card">
+
+  <mat-card class="recipe-card">
     <mat-card-header>
       <mat-card-title>
         <h2 class="mat-h2">Steps</h2>
       </mat-card-title>
-      <mat-card-subtitle>Loaded from recipe</mat-card-subtitle>
+      <!--<mat-card-subtitle>Loaded from recipe</mat-card-subtitle>-->
     </mat-card-header>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let step of backend.recipe.options.steps">
+    <mat-card-content>
+    <mat-accordion *ngIf="backend.recipe; else noRecipeBlock">
+      <mat-expansion-panel *ngFor="let step of backend.recipe.options.steps" [class.active]="step.name == backend.recipe.current_step.name">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <h3 class="mat-h3">{{step.name}}</h3>
+            <h3 class="mat-h3">{{step.name}} <span *ngIf="step.name == backend.recipe.options.initial_step"> (inital step)</span></h3>
           </mat-panel-title>
-          <mat-panel-description *ngIf="step.name == backend.recipe.current_step.name">
-            active
+          <mat-panel-description >
+            <span *ngIf="step.name == backend.recipe.current_step.name">active</span>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <h4 class="mat-h4">Operations</h4>
@@ -77,9 +70,13 @@
         </mat-list>
       </mat-expansion-panel>
     </mat-accordion>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button routerLink="/recipe/new">New/Edit Recipe</button>
+    </mat-card-actions>
   </mat-card>
 
-</div>
+<!--
   <mat-card class="dashboard-card">
     <mat-card-header>
       <mat-card-title>
@@ -96,10 +93,10 @@
                     matAutosizeMaxRows="20"
                     [value]="backend.recipe.options | json"></textarea>
       </mat-form-field>
-      <button mat-button routerLink="/recipe/new">New/Edit Recipe</button>
+
     </mat-card-content>
   </mat-card>
-
+-->
 
 <ng-template #noRecipeBlock>
   No recipe loaded yet

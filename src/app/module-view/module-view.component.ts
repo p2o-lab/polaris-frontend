@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../backend.service';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
   selector: 'app-module-view',

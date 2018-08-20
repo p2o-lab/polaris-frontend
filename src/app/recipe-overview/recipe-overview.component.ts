@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../backend.service';
+import {BackendService} from '../_services/backend.service';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
   selector: 'app-recipe-overview',
   templateUrl: './recipe-overview.component.html',
-  styleUrls: ['./recipe-overview.component.css']
+  styleUrls: ['./recipe-overview.component.scss']
 })
 export class RecipeOverviewComponent implements OnInit {
 
-  constructor(public backend: BackendService) {
+  constructor(public backend: BackendService,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -31,11 +33,10 @@ export class RecipeOverviewComponent implements OnInit {
     return (this.backend.recipe.recipe_status === 'stopped' || this.backend.recipe.recipe_status === 'completed');
   }
 
-
-
-
   start() {
-    this.backend.startRecipe().subscribe(data => console.log(data));
+    this.backend.startRecipe().subscribe(
+      data => console.log(data),
+      error => this.snackBar.open('Could not connect to all moduless', 'Dismiss'));
   }
 
   reset() {

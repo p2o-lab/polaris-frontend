@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {BackendService} from '../backend.service';
+import {BackendService} from '../_services/backend.service';
 import {ModuleInterface, ServiceInterface} from 'pfe-interface';
 import {StrategyInterface} from 'pfe-interface/dist/interfaces';
 
@@ -33,8 +33,8 @@ export class ServiceViewComponent implements OnInit {
           parameters.push({name: key.replace(this.service.name + '>', ''), value: parameterForm.value[key]});
         }
       });
+      console.log('Parameters', parameters);
     }
-    console.log('Parameters', parameterForm.value, parameters);
 
     this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
       .subscribe(data => {

@@ -6,12 +6,12 @@
 </p>
 
 <mat-form-field class="example-container">
-          <textarea matInput placeholder="Recipe options" matTextareaAutosize
+  <textarea matInput placeholder="Recipe options" matTextareaAutosize
                     matAutosizeMinRows="5"
                     matAutosizeMaxRows="30"
                     [(ngModel)]="recipe"></textarea>
-</mat-form-field>
 
+</mat-form-field>
 <p>
   <button mat-button (click)="editRecipe()">Apply</button>
   <button mat-button (click)="cancel()">Cancel</button>

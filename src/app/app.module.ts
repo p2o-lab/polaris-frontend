@@ -28,11 +28,12 @@ import {WebStorageModule} from 'ngx-store';
 import {SettingsComponent} from './settings/settings.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModuleViewComponent} from './module-view/module-view.component';
-import {BackendService} from './backend.service';
-import {WebsocketService} from './websocket.service';
+import {BackendService} from './_services/backend.service';
+import {WebsocketService} from './_services/websocket.service';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {ServiceViewComponent} from './service-view/service-view.component';
+import {AboutComponent} from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {ServiceViewComponent} from './service-view/service-view.component';
     ModuleViewComponent,
     NewRecipeComponent,
     NewModuleComponent,
-    ServiceViewComponent
+    ServiceViewComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

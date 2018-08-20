@@ -1,0 +1,38 @@
+// Import material theming functions
+@import '~@angular/material/theming';
+@import 'app/recipe-overview/recipe-overview.component';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define a theme.
+$palette-primary: mat-palette($mat-indigo);
+//$palette-accent:  mat-palette($mat-pink, A200, A100, A400);
+$palette-accent: mat-palette($mat-purple);
+$palette-warn: mat-palette($mat-red);
+$theme: mat-light-theme($palette-primary, $palette-accent, $palette-warn);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
+@include recipe_overview_theme($theme);
+
+/** Custom CSS here **/
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}

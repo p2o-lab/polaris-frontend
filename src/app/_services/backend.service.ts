@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {SettingsService} from './_services/settings.service';
+import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
 import {MatSnackBar} from '@angular/material';
-import {RecipeManagerInterface, ModuleInterface} from 'pfe-interface';
+import {ModuleInterface, RecipeManagerInterface} from 'pfe-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -94,7 +94,7 @@ export class BackendService {
   }
 
   addModule(moduleOptions) {
-    return this.http.post(`${this.settings.apiUrl}/module`, moduleOptions);
+    return this.http.post(`${this.settings.apiUrl}/module/new`, moduleOptions);
   }
 
   startRecipe() {

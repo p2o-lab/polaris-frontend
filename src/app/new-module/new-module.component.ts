@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../backend.service';
+import {BackendService} from '../_services/backend.service';
 import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-new-module',
@@ -10,9 +11,11 @@ import {Router} from '@angular/router';
 export class NewModuleComponent implements OnInit {
 
   module: string;
+  file: File;
 
   constructor(private backend: BackendService,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -24,12 +27,20 @@ export class NewModuleComponent implements OnInit {
       this.module = e.target.result;
     };
     reader.readAsText(event.target.files[0]);
+    this.file = event.target.files[0];
   }
 
   addModule() {
-    this.backend.addModule(JSON.parse(this.module)).subscribe((data) => {
+    const formData: FormData = new FormData();
+
+    formData.append('file', this.file);
+    this.backend.addModule(formData).subscribe(
+      (data) => {
       this.router.navigate(['/modules']);
-    });
+    },
+      (error) => {
+        this.snackBar.open(error.toString(), 'Dismiss');
+      });
   }
 
   cancel() {
