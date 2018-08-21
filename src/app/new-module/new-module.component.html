@@ -15,6 +15,6 @@
 </mat-form-field>
 
 <p>
-  <button mat-button (click)="addModule()">Add</button>
+  <button mat-button [disabled]="module==undefined" (click)="addModule()">Add</button>
   <button mat-button (click)="cancel()">Cancel</button>
 </p>

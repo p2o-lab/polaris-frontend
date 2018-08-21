@@ -1,10 +1,38 @@
-# PfeViz
+# pfe-ree-viz
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+## Dependencies
+All dependencies are installed via NPM
+```
+npm install
+```
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` or `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+
+## Publish
+*pfe-ree-node* is provided via our private NPM registry (https://registry.plt.et.tu-dresden.de:4873)
+```
+npm publish
+``` 
+
+## Docker
+```angular2html
+docker run -d -p 8080:80 pfe-ree-viz
+```
+
+Build it and deploy it
+```
+npm run build
+docker build -t pfe-ree-viz .
+docker tag pfe-ree-node registry.plt.et.tu-dresden.de:443/pfe-ree-viz
+docker push registry.plt.et.tu-dresden.de:443/pfe-ree-viz 
+```
+
+
+
+
 
 ## Code scaffolding
 

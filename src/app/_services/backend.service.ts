@@ -3,21 +3,19 @@ import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
 import {MatSnackBar} from '@angular/material';
-import {ModuleInterface, RecipeManagerInterface} from 'pfe-interface';
+import {ModuleInterface, RecipeInterface} from 'pfe-ree-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
+  private _modules: ModuleInterface[];
+
   constructor(private http: HttpClient,
               private settings: SettingsService,
               private ws: WebsocketService,
               private snackBar: MatSnackBar) {
-
-
-    this._modules = [];
-    this._recipe = undefined;
 
     this.ws.connect(this.settings.apiUrl.replace('http', 'ws')).subscribe((msg) => {
       const data = JSON.parse(msg.data);
@@ -39,18 +37,40 @@ export class BackendService {
 
     this.refreshRecipe();
     this.refreshModules();
+    this.refreshAutoReset();
   }
 
-  private _modules: ModuleInterface[];
+  private _recipe: RecipeInterface;
+
+  get recipe(): RecipeInterface {
+    return this._recipe;
+  }
+
+  private _autoReset: boolean;
+
+  get autoReset(): boolean {
+    return this._autoReset;
+  }
 
   get modules(): ModuleInterface[] {
     return this._modules;
   }
 
-  private _recipe: RecipeManagerInterface;
+  set autoReset(value: boolean) {
+    this.setAutoReset(value);
+  }
 
-  get recipe(): RecipeManagerInterface {
-    return this._recipe;
+  public refreshAutoReset() {
+    this.http.get(`${this.settings.apiUrl}/autoReset`).subscribe((data: any) => {
+      this._autoReset = data.autoReset;
+    });
+  }
+
+  refreshRecipe() {
+    this.http.get(`${this.settings.apiUrl}/recipe`).subscribe(
+      (data: RecipeInterface) => {
+        this._recipe = data;
+      });
   }
 
   sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
@@ -71,14 +91,8 @@ export class BackendService {
     });
   }
 
-  refreshRecipe() {
-    this.http.get(`${this.settings.apiUrl}/recipe`).subscribe((data: RecipeManagerInterface) => {
-      this._recipe = data;
-    });
-  }
-
-  getRecipeOptions() {
-    return this.http.get(`${this.settings.apiUrl}/recipe/options`);
+  addModule(moduleOptions) {
+    return this.http.put(`${this.settings.apiUrl}/module`, moduleOptions);
   }
 
   connect(module: string) {
@@ -93,8 +107,10 @@ export class BackendService {
     return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
   }
 
-  addModule(moduleOptions) {
-    return this.http.post(`${this.settings.apiUrl}/module/new`, moduleOptions);
+  private setAutoReset(value: boolean) {
+    this.http.post(`${this.settings.apiUrl}/autoReset`, {autoReset: value}).subscribe((data: any) => {
+      this._autoReset = data.autoReset;
+    });
   }
 
   startRecipe() {
@@ -103,10 +119,6 @@ export class BackendService {
 
   resetRecipe() {
     return this.http.post(`${this.settings.apiUrl}/recipe/reset`, {});
-  }
-
-  stopRecipe() {
-    return this.http.post(`${this.settings.apiUrl}/recipe/stop`, {});
   }
 
   abortRecipe() {

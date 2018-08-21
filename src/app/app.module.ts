@@ -7,6 +7,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
@@ -66,6 +67,7 @@ import {AboutComponent} from './about/about.component';
     MatExpansionModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatCheckboxModule,
     AppRoutingModule,
     HttpClientModule,
     WebStorageModule

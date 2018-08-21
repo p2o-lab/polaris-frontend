@@ -16,15 +16,16 @@
           <p class="mat-form-field-label" mat-line>Version</p>
         </mat-list-item>
         <mat-list-item>
-          <p mat-line><span *ngFor="let module of backend.recipe.service_states; let first=first"><span *ngIf="!first">, </span>{{module.module}}</span></p>
+          <p mat-line><span *ngFor="let module of backend.recipe.modules; let first=first"><span
+            *ngIf="!first">, </span>{{module.module}}</span></p>
           <p class="mat-form-field-label" mat-line>Modules</p>
         </mat-list-item>
         <mat-list-item>
-          <p mat-line>{{backend.recipe.recipe_status}}</p>
+          <p mat-line>{{backend.recipe.status}}</p>
           <p mat-line class="mat-form-field-label">Status</p>
         </mat-list-item>
         <mat-list-item>
-          <p mat-line>{{backend.recipe.current_step.name}}</p>
+          <p mat-line>{{backend.recipe.currentStep.name}}</p>
           <p mat-line class="mat-form-field-label">Step</p>
         </mat-list-item>
       </mat-list>
@@ -32,8 +33,10 @@
     <mat-card-actions *ngIf="backend.recipe">
       <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button><mat-icon>play_arrow</mat-icon>Start</button>
       <button [disabled]="!resetAllowed()" (click)="reset()" color="accent" mat-button><mat-icon>replay_arrow</mat-icon>Reset</button>
-      <button [disabled]="!stopAllowed()" (click)="stop()" color="warn" mat-button><mat-icon>stop</mat-icon>Stop</button>
-      <button [disabled]="!abortAllowed()" (click)="abort()" color="warn" mat-button><mat-icon>clear</mat-icon>Abort</button>
+      <button [disabled]="!abortAllowed()" (click)="abort()" color="warn" mat-button>
+        <mat-icon>clear</mat-icon>
+        Abort all services
+      </button>
     </mat-card-actions>
   </mat-card>
 
@@ -46,13 +49,14 @@
     </mat-card-header>
     <mat-card-content>
     <mat-accordion *ngIf="backend.recipe; else noRecipeBlock">
-      <mat-expansion-panel *ngFor="let step of backend.recipe.options.steps" [class.active]="step.name == backend.recipe.current_step.name">
+      <mat-expansion-panel *ngFor="let step of backend.recipe.options.steps"
+                           [class.active]="step.name == backend.recipe.currentStep.name">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <h3 class="mat-h3">{{step.name}} <span *ngIf="step.name == backend.recipe.options.initial_step"> (inital step)</span></h3>
           </mat-panel-title>
           <mat-panel-description >
-            <span *ngIf="step.name == backend.recipe.current_step.name">active</span>
+            <span *ngIf="step.name == backend.recipe.currentStep.name">active</span>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <h4 class="mat-h4">Operations</h4>

@@ -18,19 +18,19 @@ export class RecipeOverviewComponent implements OnInit {
   }
 
   startAllowed() {
-    return this.backend.recipe.recipe_status === 'idle';
+    return this.backend.recipe.status === 'idle';
   }
 
   stopAllowed() {
-    return this.backend.recipe.recipe_status === 'running';
+    return this.backend.recipe.status === 'running';
   }
 
   resetAllowed() {
-    return (this.backend.recipe.recipe_status === 'stopped' || this.backend.recipe.recipe_status === 'completed');
+    return (this.backend.recipe.status === 'stopped' || this.backend.recipe.status === 'completed');
   }
 
   abortAllowed() {
-    return (this.backend.recipe.recipe_status === 'stopped' || this.backend.recipe.recipe_status === 'completed');
+    return (this.backend.recipe.status === 'stopped' || this.backend.recipe.status === 'completed');
   }
 
   start() {
@@ -43,9 +43,6 @@ export class RecipeOverviewComponent implements OnInit {
     this.backend.resetRecipe().subscribe(data => console.log(data));
   }
 
-  stop() {
-    this.backend.stopRecipe().subscribe(data => console.log(data));
-  }
 
   abort() {
     this.backend.abortRecipe().subscribe(data => console.log(data));

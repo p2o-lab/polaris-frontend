@@ -1,9 +1,14 @@
 <h1 class="mat-h1">Settings</h1>
 
 <mat-form-field class="example-container">
-    <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
-           placeholder="URL for Backend API">
-  </mat-form-field>
+  <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
+         placeholder="URL for Backend API">
+</mat-form-field>
 
+<p>
+  <mat-checkbox [(ngModel)]="backend.autoReset">AutoReset</mat-checkbox>
+</p>
 
+<p>
   <button mat-button color="primary" (click)="back()">Save & Back</button>
+</p>

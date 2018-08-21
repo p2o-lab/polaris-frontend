@@ -36,10 +36,11 @@ export class NewModuleComponent implements OnInit {
     formData.append('file', this.file);
     this.backend.addModule(formData).subscribe(
       (data) => {
-      this.router.navigate(['/modules']);
+        this.backend.refreshModules();
+        this.router.navigate(['/modules']);
     },
       (error) => {
-        this.snackBar.open(error.toString(), 'Dismiss');
+        this.snackBar.open(error.error.error, 'Dismiss');
       });
   }
 

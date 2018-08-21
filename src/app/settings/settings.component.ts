@@ -12,13 +12,14 @@ export class SettingsComponent implements OnInit {
 
   constructor(private location: Location,
               public settings: SettingsService,
-              private backend: BackendService) {
+              public backend: BackendService) {
   }
 
   ngOnInit() {
   }
 
   back() {
+    this.backend.refreshAutoReset();
     this.backend.refreshModules();
     this.backend.refreshRecipe();
     this.location.back();

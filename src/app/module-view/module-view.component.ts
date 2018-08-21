@@ -27,9 +27,4 @@ export class ModuleViewComponent implements OnInit {
     this.backend.removeModule(module).subscribe(data => console.log('Remove result', data));
   }
 
-  add(moduleOptions: string) {
-    this.backend.addModule(moduleOptions).subscribe(data => console.log('Add result', data));
-  }
-
-
 }

@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BackendService} from '../_services/backend.service';
-import {ModuleInterface, ServiceInterface} from 'pfe-interface';
-import {StrategyInterface} from 'pfe-interface/dist/interfaces';
+import {ModuleInterface, ServiceInterface, StrategyInterface} from 'pfe-ree-interface';
 
 @Component({
   selector: 'app-service-view',

@@ -13,7 +13,7 @@
     "e2e": "ng e2e"
   },
   "publishConfig": {
-    "registry": "http://registry.plt.et.tu-dresden.de:4873"
+    "registry": "https://registry.plt.et.tu-dresden.de:4873"
   },
   "dependencies": {
     "@angular/animations": "^6.1.0",
@@ -29,7 +29,7 @@
     "@angular/router": "^6.0.0",
     "core-js": "^2.5.4",
     "ngx-store": "^2.0.0",
-    "pfe-interface": "^1.1.0",
+    "pfe-ree-interface": "^1.2.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
