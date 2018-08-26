@@ -12,6 +12,7 @@ export class ModuleViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.backend.refreshModules();
   }
 
   connect(module: string) {

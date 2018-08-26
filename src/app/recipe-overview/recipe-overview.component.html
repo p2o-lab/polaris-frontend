@@ -1,4 +1,8 @@
 <h1 class="mat-h1">Recipe</h1>
+<button mat-button routerLink="/recipe/new">
+  <mat-icon>library_add</mat-icon>
+  Add Recipe
+</button>
   <mat-card class="recipe-card">
     <mat-card-header>
       <mat-card-title>
@@ -16,8 +20,11 @@
           <p class="mat-form-field-label" mat-line>Version</p>
         </mat-list-item>
         <mat-list-item>
-          <p mat-line><span *ngFor="let module of backend.recipe.modules; let first=first"><span
-            *ngIf="!first">, </span>{{module.module}}</span></p>
+          <p mat-line>
+            <button *ngFor="let module of backend.recipe.modules" mat-stroked-button routerLink="/modules">
+              {{module.module}}
+            </button>
+          </p>
           <p class="mat-form-field-label" mat-line>Modules</p>
         </mat-list-item>
         <mat-list-item>
@@ -75,9 +82,6 @@
       </mat-expansion-panel>
     </mat-accordion>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button routerLink="/recipe/new">New/Edit Recipe</button>
-    </mat-card-actions>
   </mat-card>
 
 <!--

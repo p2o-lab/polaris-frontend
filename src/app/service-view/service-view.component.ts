@@ -19,7 +19,9 @@ export class ServiceViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.strategy = this.service.strategies.find(strategy => strategy.default);
+    if (this.strategy) {
+      this.strategy = this.service.strategies.find(strategy => strategy.default);
+    }
   }
 
   sendCommand(command: string, parameterForm: NgForm) {

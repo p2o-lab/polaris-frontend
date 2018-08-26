@@ -15,6 +15,7 @@ export class RecipeOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.backend.refreshRecipe();
   }
 
   startAllowed() {

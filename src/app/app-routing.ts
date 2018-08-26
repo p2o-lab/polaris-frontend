@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'modules', component: ModuleViewComponent},
   {path: 'modules/new', component: NewModuleComponent},
+  {path: 'queue', component: RecipeOverviewComponent},
   {path: 'recipe', component: RecipeOverviewComponent},
   {path: 'recipe/new', component: NewRecipeComponent},
   {path: 'settings', component: SettingsComponent},

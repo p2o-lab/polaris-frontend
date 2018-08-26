@@ -9,8 +9,13 @@
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
       <!--<a mat-list-item routerLink="/dashboard" routerLinkActive="active">Dashboard</a>-->
+      <a mat-list-item routerLink="/queue" routerLinkActive="active">
+        <mat-icon mat-list-icon>list</mat-icon>
+        Queue</a>
       <a mat-list-item routerLink="/recipe" routerLinkActive="active"><mat-icon mat-list-icon>receipt</mat-icon>Recipe</a>
-      <a mat-list-item routerLink="/modules" routerLinkActive="active"><mat-icon mat-list-icon>view_module</mat-icon>Modules</a>
+      <a mat-list-item routerLink="/modules" routerLinkActive="active">
+        <mat-icon mat-list-icon>view_module</mat-icon>
+        <span matBadgeOverlap="false" [matBadge]="backend.modules? backend.modules.length: ''">Modules</span></a>
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/settings" routerLinkActive="active"><mat-icon mat-list-icon>settings</mat-icon>Settings</a>
       <a mat-list-item routerLink="/about" routerLinkActive="active"><mat-icon mat-list-icon>help</mat-icon>About</a>

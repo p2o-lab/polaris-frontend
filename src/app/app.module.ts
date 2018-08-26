@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from '@angular/cdk/layout';
 import {
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
@@ -67,6 +68,7 @@ import {AboutComponent} from './about/about.component';
     MatExpansionModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatBadgeModule,
     MatCheckboxModule,
     AppRoutingModule,
     HttpClientModule,

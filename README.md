@@ -18,7 +18,7 @@ npm publish
 ``` 
 
 ## Docker
-```angular2html
+```
 docker run -d -p 8080:80 pfe-ree-viz
 ```
 

@@ -15,11 +15,12 @@
         <mat-card-subtitle>{{module.endpoint}} - <span *ngIf="!module.connected">not </span>connected
         </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content class="dashboard-card-content">
+  <mat-card-content class="dashboard-card-content" *ngIf="module.services">
         <mat-accordion>
-          <app-service-view *ngFor="let service of module.services" [service]="service" [module]="module">
-
+          <div *ngFor="let service of module.services">
+            <app-service-view [service]="service" [module]="module" *ngIf="service">
           </app-service-view>
+          </div>
         </mat-accordion>
       </mat-card-content>
       <mat-card-actions>
