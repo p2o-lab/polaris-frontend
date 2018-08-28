@@ -1,0 +1,88 @@
+<h1 class="mat-h1">Recipe Player</h1>
+
+<mat-card class="recipe-card">
+  <mat-card-header>
+    <mat-card-title>
+      <h2 class="mat-h2">Player</h2>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-actions *ngIf="activeRecipe">
+      <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button>
+        <mat-icon>play_arrow</mat-icon>
+        Start
+      </button>
+      <button [disabled]="!resetAllowed()" (click)="reset()" color="accent" mat-button>
+        <mat-icon>replay_arrow</mat-icon>
+        Reset
+      </button>
+      <button (click)="abort()" color="warn" mat-button>
+        <mat-icon>clear</mat-icon>
+        Abort all services
+      </button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="recipe-card" *ngIf="activeRecipe as recipe">
+  <mat-card-header>
+    <mat-card-title>
+      <h2 class="mat-h2">{{recipe.options.name}}</h2>
+    </mat-card-title>
+    <mat-card-subtitle>Active Recipe</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="dashboard-card-content">
+    <mat-list>
+      <mat-list-item>
+        <p mat-line>{{recipe.status}}</p>
+        <p mat-line class="mat-form-field-label">Status</p>
+      </mat-list-item>
+      <mat-list-item>
+        <p mat-line>{{recipe.currentStep.name}}</p>
+        <p mat-line class="mat-form-field-label">Step</p>
+      </mat-list-item>
+    </mat-list>
+    <h3 class="mat-h3">Steps</h3>
+    <mat-accordion *ngIf="recipe">
+      <mat-expansion-panel *ngFor="let step of recipe.options.steps"
+                           [class.active]="step.name == recipe.currentStep.name">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3 class="mat-h3">{{step.name}} <span
+              *ngIf="step.name == recipe.options.initial_step"> (inital step)</span></h3>
+          </mat-panel-title>
+          <mat-panel-description>
+            <span *ngIf="step.name == recipe.currentStep.name">active</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4 class="mat-h4">Operations</h4>
+        <mat-list>
+          <mat-list-item *ngFor="let operation of step.operations">
+            {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
+            ->
+            {{operation.command}}
+          </mat-list-item>
+        </mat-list>
+        <h4 class="mat-h4">Transitions</h4>
+        <mat-list>
+          <mat-list-item *ngFor="let transition of step.transitions">
+            {{transition.next_step}}: {{transition.condition | json}}
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Playlist</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngIf="activeRecipe">
+        {{activeRecipe.options.name}}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

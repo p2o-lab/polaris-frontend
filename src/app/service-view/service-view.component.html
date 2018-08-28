@@ -8,6 +8,13 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <form #parameterForm="ngForm">
+    <p *ngFor="let param of service.parameters">
+      <mat-form-field>
+        <input matInput type="number" [name]="service.name + '>' + param.name" [ngModel]="param.value"
+               [placeholder]="param.name" [min]="param.min" [max]="param.max">
+        <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
+      </mat-form-field>
+    </p>
     <mat-form-field>
       <mat-select name="selectedStrategy" [ngModel]="strategy" placeholder="Strategy">
         <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">

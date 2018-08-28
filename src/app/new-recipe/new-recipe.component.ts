@@ -18,11 +18,6 @@ export class NewRecipeComponent implements OnInit {
   }
 
   ngOnInit() {
-    try {
-      this.recipe = JSON.stringify(this.backend.recipe.options);
-    } catch {
-      this.recipe = undefined;
-    }
   }
 
   public previewFile(event) {

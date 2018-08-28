@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../_services/backend.service';
+import {ModuleInterface} from 'pfe-ree-interface';
 
 @Component({
   selector: 'app-module-view',
@@ -8,11 +9,31 @@ import {BackendService} from '../_services/backend.service';
 })
 export class ModuleViewComponent implements OnInit {
 
+  public modules: ModuleInterface[] = [];
+
   constructor(public backend: BackendService) {
   }
 
   ngOnInit() {
     this.backend.refreshModules();
+    this.backend.modules.subscribe((modules: ModuleInterface[]) => {
+      this.modules = modules;
+      /*if (this.modules) {
+        modules.forEach((module) => {
+          let m = this.modules.find(m => m.id === module.id);
+          if (m) {
+            module.services.forEach(service => {
+              let s1 = m.services.find(s => s.name === service.name);
+              s1.strategies = service.strategies;
+            });
+
+          }
+          else {
+            this.modules.push(module);
+          }
+        });
+      }*/
+    });
   }
 
   connect(module: string) {

@@ -8,15 +8,20 @@ import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {AboutComponent} from './about/about.component';
+import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
+import {PlayerComponent} from './player/player.component';
+import {LogComponent} from './log/log.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/recipe', pathMatch: 'full'},
+  {path: '', redirectTo: '/activeRecipe', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'modules', component: ModuleViewComponent},
   {path: 'modules/new', component: NewModuleComponent},
-  {path: 'queue', component: RecipeOverviewComponent},
+  {path: 'logs', component: LogComponent},
+  {path: 'queue', component: PlayerComponent},
   {path: 'recipe', component: RecipeOverviewComponent},
   {path: 'recipe/new', component: NewRecipeComponent},
+  {path: 'recipe/:id', component: RecipeDetailComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'about', component: AboutComponent}
 ];

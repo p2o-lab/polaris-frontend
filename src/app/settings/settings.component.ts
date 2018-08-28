@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
   back() {
     this.backend.refreshAutoReset();
     this.backend.refreshModules();
-    this.backend.refreshRecipe();
+    this.backend.refreshRecipes();
     this.location.back();
   }
 

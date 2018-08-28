@@ -16,9 +16,12 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatPaginatorModule,
   MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
+  MatSortModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -36,6 +39,9 @@ import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {AboutComponent} from './about/about.component';
+import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
+import {PlayerComponent} from './player/player.component';
+import {LogComponent} from './log/log.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +53,10 @@ import {AboutComponent} from './about/about.component';
     NewRecipeComponent,
     NewModuleComponent,
     ServiceViewComponent,
-    AboutComponent
+    AboutComponent,
+    RecipeDetailComponent,
+    PlayerComponent,
+    LogComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +81,10 @@ import {AboutComponent} from './about/about.component';
     MatCheckboxModule,
     AppRoutingModule,
     HttpClientModule,
-    WebStorageModule
+    WebStorageModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [SettingsService, BackendService, WebsocketService],
   bootstrap: [AppComponent]

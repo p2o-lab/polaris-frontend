@@ -1,0 +1,5 @@
+<h1 class="mat-h1">Logs</h1>
+
+<mat-list *ngIf="logs$ | async as logs">
+  <mat-list-item *ngFor="let item of logs">{{item}}</mat-list-item>
+</mat-list>

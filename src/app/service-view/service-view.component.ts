@@ -19,7 +19,7 @@ export class ServiceViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.strategy) {
+    if (this.service) {
       this.strategy = this.service.strategies.find(strategy => strategy.default);
     }
   }

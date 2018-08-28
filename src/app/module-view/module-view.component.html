@@ -1,20 +1,23 @@
 <h1 class="mat-h1">Modules</h1>
-<mat-card class="dashboard-card" *ngFor="let module of backend.modules">
-      <mat-card-header>
-        <mat-card-title>
-          <h2 class="mat-h2">{{module.id}}</h2>
-          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu" xPosition="before">
-            <button *ngIf="module.connected" mat-menu-item (click)="disconnect(module.id)">Disonnect</button>
-            <button *ngIf="!module.connected" mat-menu-item (click)="connect(module.id)">Connect</button>
-            <button mat-menu-item (click)="remove(module.id)">Remove</button>
-          </mat-menu>
-        </mat-card-title>
-        <mat-card-subtitle>{{module.endpoint}} - <span *ngIf="!module.connected">not </span>connected
-        </mat-card-subtitle>
-      </mat-card-header>
+
+<button mat-button routerLink="/modules/new">Add Module</button>
+
+<mat-card class="dashboard-card" *ngFor="let module of modules">
+  <mat-card-header>
+    <mat-card-title>
+      <h2 class="mat-h2">{{module.id}}</h2>
+      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button *ngIf="module.connected" mat-menu-item (click)="disconnect(module.id)">Disonnect</button>
+        <button *ngIf="!module.connected" mat-menu-item (click)="connect(module.id)">Connect</button>
+        <button mat-menu-item (click)="remove(module.id)">Remove</button>
+      </mat-menu>
+    </mat-card-title>
+    <mat-card-subtitle>{{module.endpoint}} - <span *ngIf="!module.connected">not </span>connected
+    </mat-card-subtitle>
+  </mat-card-header>
   <mat-card-content class="dashboard-card-content" *ngIf="module.services">
         <mat-accordion>
           <div *ngFor="let service of module.services">
@@ -27,6 +30,3 @@
 
       </mat-card-actions>
     </mat-card>
-
-
-<button mat-button routerLink="/modules/new">Add Module</button>

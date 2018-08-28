@@ -1,0 +1,6 @@
+# Docker Parent Image with nginx
+FROM  arm32v7/nginx
+
+COPY ./qemu-arm-static /usr/bin/qemu-arm-static
+
+COPY dist /usr/share/nginx/html
