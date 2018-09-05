@@ -15,30 +15,36 @@
         <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
       </mat-form-field>
     </p>
-    <mat-form-field>
+    <mat-form-field ngHide="service.strategies.length > 1">
       <mat-select name="selectedStrategy" [ngModel]="strategy" placeholder="Strategy">
         <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">
           {{strategy.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div *ngIf="parameterForm.value.selectedStrategy">
-      <p *ngFor="let param of parameterForm.value.selectedStrategy.parameters">
+    <div *ngIf="strategy">
+      <p *ngFor="let param of strategy.parameters">
         <mat-form-field>
           <input matInput type="number" [name]="service.name + '>' + param.name" [ngModel]="param.value"
                  [placeholder]="param.name" [min]="param.min" [max]="param.max">
+          <span matSuffix>{{param.unit}}</span>
           <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
         </mat-form-field>
       </p>
     </div>
   </form>
   <mat-action-row>
-    <button mat-button color="primary" (click)="sendCommand('start', parameterForm)">Start</button>
-    <button mat-button color="primary" (click)="sendCommand('complete')">Complete</button>
-    <button mat-button color="primary" (click)="sendCommand('reset')">Reset</button>
-    <button mat-button (click)="sendCommand('pause')">Pause</button>
-    <button mat-button (click)="sendCommand('resume')">Resume</button>
-    <button mat-button (click)="sendCommand('unhold')">Unhold</button>
+    <button mat-button [disabled]="!commandEnabled('start')" color="primary"
+            (click)="sendCommand('start', parameterForm)">Start
+    </button>
+    <button mat-button [disabled]="!commandEnabled('complete')" color="primary" (click)="sendCommand('complete')">
+      Complete
+    </button>
+    <button mat-button [disabled]="!commandEnabled('reset')" color="primary" (click)="sendCommand('reset')">Reset
+    </button>
+    <button mat-button [disabled]="!commandEnabled('pause')" (click)="sendCommand('pause')">Pause</button>
+    <button mat-button [disabled]="!commandEnabled('resume')" (click)="sendCommand('resume')">Resume</button>
+    <button mat-button [disabled]="!commandEnabled('unhold')" (click)="sendCommand('unhold')">Unhold</button>
     <button mat-button color="warn" (click)="sendCommand('stop')">Stop</button>
     <button mat-button color="warn" (click)="sendCommand('abort')">Abort</button>
   </mat-action-row>

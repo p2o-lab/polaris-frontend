@@ -19,7 +19,7 @@ export class ServiceViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.service) {
+    if (this.service.strategies) {
       this.strategy = this.service.strategies.find(strategy => strategy.default);
     }
   }
@@ -41,6 +41,15 @@ export class ServiceViewComponent implements OnInit {
       .subscribe(data => {
         this.backend.refreshModules();
       });
+  }
+
+  commandEnabled(command): boolean {
+    return (command === 'start' && this.service.status === 'IDLE') ||
+      (command === 'complete' && this.service.status === 'RUNNING') ||
+      (command === 'reset' && this.service.status === 'COMPLETED') ||
+      (command === 'pause' && this.service.status === 'RUNNING') ||
+      (command === 'unhold' && this.service.status === 'HOLD') ||
+      (command === 'resume' && this.service.status === 'PAUSED');
   }
 
 

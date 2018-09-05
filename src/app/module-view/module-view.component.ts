@@ -11,28 +11,26 @@ export class ModuleViewComponent implements OnInit {
 
   public modules: ModuleInterface[] = [];
 
-  constructor(public backend: BackendService) {
+  constructor(private backend: BackendService) {
   }
 
   ngOnInit() {
     this.backend.refreshModules();
-    this.backend.modules.subscribe((modules: ModuleInterface[]) => {
-      this.modules = modules;
-      /*if (this.modules) {
-        modules.forEach((module) => {
-          let m = this.modules.find(m => m.id === module.id);
-          if (m) {
-            module.services.forEach(service => {
-              let s1 = m.services.find(s => s.name === service.name);
-              s1.strategies = service.strategies;
-            });
 
-          }
-          else {
-            this.modules.push(module);
-          }
-        });
-      }*/
+    // update modules without replacing the whole object since this would close the accordion
+    this.backend.modules.subscribe((modulesUpdates: ModuleInterface[]) => {
+      // this.modules = modules;
+      modulesUpdates.forEach((moduleUpdated) => {
+        const module = this.modules.find(moduleFind => moduleFind.id === moduleUpdated.id);
+        if (module) {
+          moduleUpdated.services.forEach(serviceUpdated => {
+            const service = module.services.find(serviceFind => serviceFind.name === serviceUpdated.name);
+            service.status = serviceUpdated.status;
+          });
+        } else {
+          this.modules.push(moduleUpdated);
+        }
+      });
     });
   }
 

@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
 import {MatSnackBar} from '@angular/material';
-import {ModuleInterface, RecipeInterface} from 'pfe-ree-interface';
+import {ModuleInterface, PlayerInterface, RecipeInterface} from 'pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
@@ -18,13 +18,13 @@ export class BackendService {
 
     this.ws.connect(this.settings.apiUrl.replace('http', 'ws')).subscribe((msg) => {
       const data = JSON.parse(msg.data);
-      // console.log('ws received', data);
+      console.log('ws received', data);
       if (data.msg === 'refresh') {
         if (data.data === 'recipes') {
           this.refreshRecipes();
         }
         if (data.data === 'recipe') {
-          this.refreshActiveRecipe();
+          this.refreshPlayer();
           if (data.action === 'completed') {
             this.snackBar.open('Recipe completed', undefined, {
               duration: 4000,
@@ -54,16 +54,12 @@ export class BackendService {
     return this._recipes.asObservable();
   }
 
-  private _activeRecipe: BehaviorSubject<RecipeInterface> = new BehaviorSubject<RecipeInterface>(undefined);
+  private _player: BehaviorSubject<PlayerInterface> = new BehaviorSubject<PlayerInterface>(undefined);
 
   private _autoReset: boolean;
 
   get autoReset(): boolean {
     return this._autoReset;
-  }
-
-  get activeRecipe(): Observable<RecipeInterface> {
-    return this._activeRecipe.asObservable();
   }
 
   set autoReset(value: boolean) {
@@ -131,34 +127,58 @@ export class BackendService {
     return this.http.get(`${this.settings.apiUrl}/logs`);
   }
 
-  refreshActiveRecipe() {
-    this.http.get(`${this.settings.apiUrl}/activeRecipe`).subscribe((data: RecipeInterface) => {
-        this._activeRecipe.next(data);
+
+  get player(): Observable<PlayerInterface> {
+    return this._player.asObservable();
+  }
+
+  refreshPlayer() {
+    this.http.get(`${this.settings.apiUrl}/player`).subscribe((data: any) => {
+      this._player.next(data);
       }
     );
   }
 
-  activateRecipe(id: string) {
-    return this.http.post(`${this.settings.apiUrl}/recipe/${id}/active`, {});
+  startPlayer() {
+    return this.http.post(`${this.settings.apiUrl}/player/start`, {});
   }
 
-  startRecipe() {
-    return this.http.post(`${this.settings.apiUrl}/recipe/start`, {});
+  resetPlayer() {
+    return this.http.post(`${this.settings.apiUrl}/player/reset`, {});
   }
 
-  resetRecipe() {
-    return this.http.post(`${this.settings.apiUrl}/recipe/reset`, {});
+  pausePlayer() {
+    return this.http.post(`${this.settings.apiUrl}/player/pause`, {});
   }
 
-  abortRecipe() {
-    return this.http.post(`${this.settings.apiUrl}/recipe/abort`, {});
+  resumePlayer() {
+    return this.http.post(`${this.settings.apiUrl}/player/resume`, {});
   }
 
-  editRecipe(recipeOptions) {
+  stopPlayer() {
+    return this.http.post(`${this.settings.apiUrl}/player/stop`, {});
+  }
+
+  enqueueRecipe(id: string) {
+    return this.http.post(`${this.settings.apiUrl}/player/enqueue`, {recipeId: id});
+  }
+
+  removeRecipeFromPlaylist(index: number) {
+    return this.http.post(`${this.settings.apiUrl}/player/remove`, {index: index});
+  }
+
+
+  abortAllServices() {
+    return this.http.post(`${this.settings.apiUrl}/abort`, {});
+  }
+
+  submitNewRecipe(recipeOptions) {
     return this.http.put(`${this.settings.apiUrl}/recipe`, recipeOptions);
   }
 
   removeRecipe(id: string) {
     return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
   }
+
+
 }

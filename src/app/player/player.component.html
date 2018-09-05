@@ -1,16 +1,47 @@
 <h1 class="mat-h1">Recipe Player</h1>
 
-<mat-card class="recipe-card">
+<mat-card class="recipe-card" *ngIf="player">
   <mat-card-header>
     <mat-card-title>
       <h2 class="mat-h2">Player</h2>
     </mat-card-title>
+    <mat-card-subtitle>
+      {{player.status}} <span
+      *ngIf="player.status==='running'">({{player.currentItem+1}}/{{player.playlist.length}})</span>
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <mat-card-actions *ngIf="activeRecipe">
+    <p>Current Recipe: <span class="mat-body-strong">{{currentRecipe?.options.name}}</span></p>
+    <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep.name}}</span></p>
+    <p>Operations:
+      <mat-list>
+        <mat-list-item *ngFor="let operation of currentRecipe?.currentStep.operations">
+          {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
+          ->
+          {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
+        </mat-list-item>
+      </mat-list>
+    </p>
+    <p>Transitions:
+      <mat-list>
+        <mat-list-item *ngFor="let transition of currentRecipe?.currentStep.transitions">
+          {{transition.next_step}}: {{transition.condition | json}}
+        </mat-list-item>
+      </mat-list>
+    </p>
+
+    <mat-card-actions *ngIf="player">
       <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button>
         <mat-icon>play_arrow</mat-icon>
         Start
+      </button>
+      <button (click)="pause()" mat-button>
+        <mat-icon>pause_arrow</mat-icon>
+        Pause
+      </button>
+      <button (click)="stop()" mat-button>
+        <mat-icon>stop_arrow</mat-icon>
+        Stop
       </button>
       <button [disabled]="!resetAllowed()" (click)="reset()" color="accent" mat-button>
         <mat-icon>replay_arrow</mat-icon>
@@ -24,7 +55,8 @@
   </mat-card-content>
 </mat-card>
 
-<mat-card class="recipe-card" *ngIf="activeRecipe as recipe">
+<!--
+<mat-card class="recipe-card" *ngIf="currentRecipe as recipe">
   <mat-card-header>
     <mat-card-title>
       <h2 class="mat-h2">{{recipe.options.name}}</h2>
@@ -73,15 +105,21 @@
     </mat-accordion>
   </mat-card-content>
 </mat-card>
+-->
 
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Playlist</mat-card-title>
+    <mat-card-title>
+      <h2 class="mat-h2">Playlist</h2>
+    </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-list>
-      <mat-list-item *ngIf="activeRecipe">
-        {{activeRecipe.options.name}}
+    <mat-list *ngIf="player && player.playlist">
+      <mat-list-item *ngFor="let item of player.playlist; let i = index"
+                     [class.active]="i == player.currentItem && player.status==='running'">
+        {{i+1}}. {{item.options.name}}
+        <small>({{item.options.steps.length}} steps)</small>
+        <button mat-button (click)="remove(i)">Remove</button>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

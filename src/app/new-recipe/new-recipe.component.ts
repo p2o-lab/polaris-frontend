@@ -33,7 +33,7 @@ export class NewRecipeComponent implements OnInit {
     try {
       const recipe = JSON.parse(this.recipe);
       this.snackBar.dismiss();
-      this.backend.editRecipe(recipe).subscribe(
+      this.backend.submitNewRecipe(recipe).subscribe(
         (data) => {
           this.router.navigate(['/recipe']);
         },

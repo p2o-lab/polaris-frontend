@@ -8,9 +8,10 @@
     [opened]="!(isHandset$ | async)">
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/queue" routerLinkActive="active">
+      <a mat-list-item routerLink="/player" routerLinkActive="active">
         <mat-icon mat-list-icon>playlist_play</mat-icon>
-        Playlist</a>
+        <span matBadgeOverlap="false" [matBadge]="(backend.player | async)?.playlist.length">Playlist</span>
+      </a>
       <a mat-list-item routerLink="/logs" routerLinkActive="active">
         <mat-icon mat-list-icon>history</mat-icon>
         Logs</a>

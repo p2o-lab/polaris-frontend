@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../_services/backend.service';
 import {MatSnackBar} from '@angular/material';
-import {RecipeInterface} from 'pfe-ree-interface';
+import {PlayerInterface, RecipeInterface} from 'pfe-ree-interface';
 
 @Component({
   selector: 'app-player',
@@ -9,43 +9,69 @@ import {RecipeInterface} from 'pfe-ree-interface';
   styleUrls: ['./player.component.css']
 })
 export class PlayerComponent implements OnInit {
-  public activeRecipe: RecipeInterface;
+  public player: PlayerInterface;
+  public currentRecipe: RecipeInterface = undefined;
 
   constructor(private backend: BackendService,
               private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.backend.refreshActiveRecipe();
-    this.backend.activeRecipe.subscribe(recipe => this.activeRecipe = recipe);
+    this.backend.refreshPlayer();
+    this.backend.player.subscribe((player) => {
+      this.player = player;
+      if (player) {
+        this.currentRecipe = player.playlist[player.currentItem];
+      }
+    });
   }
 
 
   startAllowed() {
-    return this.activeRecipe.status === 'idle';
+    return (this.player.status === 'idle' || this.player.status === 'stopped' || this.player.status === 'paused');
   }
 
   stopAllowed() {
-    return this.activeRecipe.status === 'running';
+    return this.player.status === 'running';
   }
 
   resetAllowed() {
-    return (this.activeRecipe.status === 'stopped' || this.activeRecipe.status === 'completed');
+    return (this.player.status === 'stopped' || this.player.status === 'completed');
   }
 
   start() {
-    this.backend.startRecipe().subscribe(
+    this.backend.startPlayer().subscribe(
       data => console.log(data),
       error => this.snackBar.open('Could not connect to all modules', 'Dismiss'));
   }
 
   reset() {
-    this.backend.resetRecipe().subscribe(data => console.log(data));
+    this.backend.resetPlayer().subscribe(data => this.backend.refreshPlayer());
+  }
+
+  pause() {
+    this.backend.pausePlayer().subscribe(data => console.log(data));
+  }
+
+  resume() {
+    this.backend.resumePlayer().subscribe(data => console.log(data));
+  }
+
+  stop() {
+    this.backend.stopPlayer().subscribe(data => console.log(data));
   }
 
 
   abort() {
-    this.backend.abortRecipe().subscribe(data => console.log(data));
+    this.backend.abortAllServices().subscribe(data => console.log(data));
+  }
+
+  remove(id: number) {
+    this.backend.removeRecipeFromPlaylist(id).subscribe((data) => {
+        console.log(data);
+        this.backend.refreshPlayer();
+      }
+    );
   }
 
 
