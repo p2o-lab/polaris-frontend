@@ -10,6 +10,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu" xPosition="before">
+        <button *ngIf="module.connected" mat-menu-item (click)="configure(module)">Configure Parameters</button>
         <button *ngIf="module.connected" mat-menu-item (click)="disconnect(module.id)">Disonnect</button>
         <button *ngIf="!module.connected" mat-menu-item (click)="connect(module.id)">Connect</button>
         <button mat-menu-item (click)="remove(module.id)">Remove</button>
@@ -19,14 +20,14 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content" *ngIf="module.services">
-        <mat-accordion>
-          <div *ngFor="let service of module.services">
-            <app-service-view [service]="service" [module]="module" *ngIf="service">
-          </app-service-view>
-          </div>
-        </mat-accordion>
-      </mat-card-content>
-      <mat-card-actions>
+    <mat-accordion>
+      <div *ngFor="let service of module.services">
+        <app-service-view [service]="service" [module]="module" *ngIf="service">
+        </app-service-view>
+      </div>
+    </mat-accordion>
+  </mat-card-content>
+  <mat-card-actions>
 
-      </mat-card-actions>
-    </mat-card>
+  </mat-card-actions>
+</mat-card>

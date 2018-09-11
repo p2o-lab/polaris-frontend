@@ -40,6 +40,7 @@ export class BackendService {
     this.refreshRecipes();
     this.refreshModules();
     this.refreshAutoReset();
+    this.refreshPlayer();
   }
 
   private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject<ModuleInterface[]>([]);
@@ -133,7 +134,7 @@ export class BackendService {
   }
 
   refreshPlayer() {
-    this.http.get(`${this.settings.apiUrl}/player`).subscribe((data: any) => {
+    this.http.get(`${this.settings.apiUrl}/player`).subscribe((data: PlayerInterface) => {
       this._player.next(data);
       }
     );
@@ -179,6 +180,4 @@ export class BackendService {
   removeRecipe(id: string) {
     return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
   }
-
-
 }

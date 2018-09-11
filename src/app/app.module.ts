@@ -9,6 +9,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
+  MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
@@ -42,6 +43,7 @@ import {AboutComponent} from './about/about.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {PlayerComponent} from './player/player.component';
 import {LogComponent} from './log/log.component';
+import {ServiceParameterDialogComponent} from './service-parameter-dialog/service-parameter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import {LogComponent} from './log/log.component';
     AboutComponent,
     RecipeDetailComponent,
     PlayerComponent,
-    LogComponent
+    LogComponent,
+    ServiceParameterDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -79,12 +82,16 @@ import {LogComponent} from './log/log.component';
     MatSnackBarModule,
     MatBadgeModule,
     MatCheckboxModule,
+    MatDialogModule,
     AppRoutingModule,
     HttpClientModule,
     WebStorageModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule
+  ],
+  entryComponents: [
+    ServiceParameterDialogComponent
   ],
   providers: [SettingsService, BackendService, WebsocketService],
   bootstrap: [AppComponent]

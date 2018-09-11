@@ -12,9 +12,6 @@
         <mat-icon mat-list-icon>playlist_play</mat-icon>
         <span matBadgeOverlap="false" [matBadge]="(backend.player | async)?.playlist.length">Playlist</span>
       </a>
-      <a mat-list-item routerLink="/logs" routerLinkActive="active">
-        <mat-icon mat-list-icon>history</mat-icon>
-        Logs</a>
       <a mat-list-item routerLink="/recipe" routerLinkActive="active">
         <mat-icon mat-list-icon>receipt</mat-icon>
         <span matBadgeOverlap="false" [matBadge]="(backend.recipes | async).length">Recipes</span>
@@ -23,9 +20,18 @@
         <mat-icon mat-list-icon>view_module</mat-icon>
         <span matBadgeOverlap="false" [matBadge]="(backend.modules | async).length">Modules</span>
       </a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/settings" routerLinkActive="active"><mat-icon mat-list-icon>settings</mat-icon>Settings</a>
-      <a mat-list-item routerLink="/about" routerLinkActive="active"><mat-icon mat-list-icon>help</mat-icon>About</a>
+      <a mat-list-item routerLink="/logs" routerLinkActive="active">
+        <mat-icon mat-list-icon>history</mat-icon>
+        Logs
+      </a>
+      <a mat-list-item routerLink="/settings" routerLinkActive="active">
+        <mat-icon mat-list-icon>settings</mat-icon>
+        Settings
+      </a>
+      <a mat-list-item routerLink="/about" routerLinkActive="active">
+        <mat-icon mat-list-icon>help</mat-icon>
+        About
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

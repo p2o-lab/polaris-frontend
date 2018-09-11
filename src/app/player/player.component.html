@@ -12,22 +12,22 @@
   </mat-card-header>
   <mat-card-content>
     <p>Current Recipe: <span class="mat-body-strong">{{currentRecipe?.options.name}}</span></p>
-    <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep.name}}</span></p>
+    <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep?.name}}</span></p>
     <p>Operations:
-      <mat-list>
-        <mat-list-item *ngFor="let operation of currentRecipe?.currentStep.operations">
+      <span class="mat-body-strong">
+    <p *ngFor="let operation of currentRecipe?.currentStep?.operations">
           {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
           ->
-          {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
-        </mat-list-item>
-      </mat-list>
+      {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
+    </p>
+    </span>
     </p>
     <p>Transitions:
-      <mat-list>
-        <mat-list-item *ngFor="let transition of currentRecipe?.currentStep.transitions">
+      <span class="mat-body-strong">
+    <p *ngFor="let transition of currentRecipe?.currentStep?.transitions">
           {{transition.next_step}}: {{transition.condition | json}}
-        </mat-list-item>
-      </mat-list>
+    </p>
+    </span>
     </p>
 
     <mat-card-actions *ngIf="player">
@@ -35,11 +35,11 @@
         <mat-icon>play_arrow</mat-icon>
         Start
       </button>
-      <button (click)="pause()" mat-button>
+      <button [disabled]="!pauseAllowed()" (click)="pause()" mat-button>
         <mat-icon>pause_arrow</mat-icon>
         Pause
       </button>
-      <button (click)="stop()" mat-button>
+      <button [disabled]="!stopAllowed()" (click)="stop()" mat-button>
         <mat-icon>stop_arrow</mat-icon>
         Stop
       </button>
@@ -118,8 +118,10 @@
       <mat-list-item *ngFor="let item of player.playlist; let i = index"
                      [class.active]="i == player.currentItem && player.status==='running'">
         {{i+1}}. {{item.options.name}}
+        <span class="right">
         <small>({{item.options.steps.length}} steps)</small>
-        <button mat-button (click)="remove(i)">Remove</button>
+        <button mat-button (click)="remove(i)"><mat-icon mat-list-icon>remove_circle</mat-icon></button>
+          </span>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

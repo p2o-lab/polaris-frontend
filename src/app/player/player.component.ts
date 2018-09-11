@@ -35,9 +35,14 @@ export class PlayerComponent implements OnInit {
     return this.player.status === 'running';
   }
 
+  pauseAllowed() {
+    return this.player.status === 'running';
+  }
+
   resetAllowed() {
     return (this.player.status === 'stopped' || this.player.status === 'completed');
   }
+
 
   start() {
     this.backend.startPlayer().subscribe(
