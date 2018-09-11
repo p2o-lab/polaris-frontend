@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
 import {MatSnackBar} from '@angular/material';
-import {ModuleInterface, PlayerInterface, RecipeInterface} from 'pfe-ree-interface';
+import {ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, ServiceInterface} from 'pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
@@ -179,5 +179,9 @@ export class BackendService {
 
   removeRecipe(id: string) {
     return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
+  }
+
+  configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
+    return this.http.put(`${this.settings.apiUrl}/${module.id}/service/${service.name}/configure`, parameterOptions);
   }
 }

@@ -7,9 +7,15 @@
         <h2 class="mat-h2">{{recipe.options.name}}</h2>
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content class="dashboard-card-content" *ngIf="recipe">
+    <mat-card-content *ngIf="recipe">
       <h3 class="mat-h3" mat-line>Version</h3>
       <p>{{recipe.options.version}}</p>
+
+      <h3 class="mat-h3" mat-line>Author</h3>
+      <p>{{recipe.options.author}}</p>
+
+      <h3 class="mat-h3" mat-line>Description</h3>
+      <p>{{recipe.options.description}}</p>
 
       <h3 class="mat-h3" mat-line>Modules</h3>
       <p>
