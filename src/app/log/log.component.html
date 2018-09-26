@@ -1,4 +1,7 @@
 <h1 class="mat-h1">Logs</h1>
+<a mat-button [href]="logUrl">
+    <span class="with-icon"><mat-icon>cloud_download</mat-icon>&nbsp;Download</span>
+</a>
 
 <mat-list *ngIf="logs$ | async as logs">
   <mat-list-item *ngFor="let item of logs">{{item}}</mat-list-item>

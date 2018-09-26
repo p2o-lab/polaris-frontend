@@ -88,6 +88,7 @@ export class BackendService {
     if (parameters) {
       body['parameters'] = parameters;
     }
+      console.log('Body', body);
 
     return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
   }
@@ -182,6 +183,7 @@ export class BackendService {
   }
 
   configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
-    return this.http.put(`${this.settings.apiUrl}/${module.id}/service/${service.name}/configure`, parameterOptions);
+      return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/configure`,
+          {parameters: parameterOptions});
   }
 }

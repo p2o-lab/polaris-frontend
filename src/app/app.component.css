@@ -18,3 +18,7 @@
 .mat-nav-list a.active {
   background: #FAFAFA;
 }
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}

@@ -1,25 +1,38 @@
 <h1 class="mat-h1">About</h1>
 
-<p>This is a HTML visualization for the <i>Prozessführungsebene</i> (PFE) tool proudly presented by <a
-        href="https://tu-dresden.de/ing/elektrotechnik/ifa/plt">PLT/SVT @ TU Dresden</a>.
+<p>This is a HTML visualization for the <i>Prozessführungsebene</i> (PFE) tool proudly presented by the <a
+        href="https://tu-dresden.de/ing/elektrotechnik/ifa/plt">P2O-Lab</a> from TU Dresden. It helps you to control the
+    modules connected to the PFE and perform service orchestration with them. Thus, you can
+    integrate modules by loading its interface descriptions stored in a JSON file. This JSON file can automatically be
+    generated from a MTP of this module.
+</p>
+<p>
+    <mat-grid-list cols="2" rowHeight="70px">
+        <mat-grid-tile>
+            <img height="100%" src="assets/TU_Logo_HKS41.png">
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <img height="100%" src="assets/P2O-RGB.png">
+        </mat-grid-tile>
+    </mat-grid-list>
 </p>
 
-<p>It helps you to control the modules connected to the PFE and run recipes on them.</p>
-
-
 <h2 class="mat-h2">Modules</h2>
-<p class="mat-body">Modules are loaded via JSON</p>
+<p>The PFE can control multiple modules. Modules are loaded via JSON files which describe the necessary communication
+    variables to interact with. </p>
 
 
-<h3 class="mat-h3">Service State Machine</h3>
-
+<h2 class="mat-h2">Service</h2>
 <img width="60%" src="assets/service_state_machine.png">
-<p class="mat-body">Each service consists of a finite state machine which is used to control the service. For that,
+<p>Each service consists of a finite state machine which is used to control the service. For that,
   commands are used to trigger state transitions.</p>
 
 
 <h2 class="mat-h2">Recipes</h2>
-<p class="mat-body">Recipes are loaded via JSON</p>
+<p>Recipes are also loaded via JSON. They describe in a declarative way which steps should be executed one after another
+    and which actions should be taken in each step (e.g. starting or stopping a service). Furthermore, each step defines
+    a set of transitions which lead under a defined condition to a next step.</p>
 
-<h2 class="mat-h2">Queue/PLayer</h2>
-<p class="mat-body">You can dynamically enqueue recipes.</p>
+<h2 class="mat-h2">Playlist</h2>
+<p>You can dynamically enqueue recipes in a playlist which then can started. This allows to define a set of recipes
+    which will be executed one after another.</p>

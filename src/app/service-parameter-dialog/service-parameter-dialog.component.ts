@@ -21,7 +21,7 @@ export class ServiceParameterDialogComponent implements OnInit {
 
   save(parameterForm: NgForm) {
     const parameters = [];
-
+      console.log('set configuation parameters', parameterForm);
     if (parameterForm) {
       Object.keys(parameterForm.value).forEach((key) => {
         let service, param;
@@ -30,14 +30,20 @@ export class ServiceParameterDialogComponent implements OnInit {
       });
       console.log('Collected Parameters', parameters);
 
-      this.module.services.forEach((service: ServiceInterface) => {
-        const parameterOptions: ParameterOptions[] = parameters
-          .filter(item => service.name === item.name)
-          .map((item) => ({name: item.parameter, value: item.value}));
-        console.log('Parameters', service.name, parameterOptions);
-        this.backend.configureServiceParameters(this.module, service, parameterOptions)
-          .subscribe(data => console.log(data));
-      });
+        if (this.module.services) {
+            this.module.services.forEach((service: ServiceInterface) => {
+                const parameterOptions: ParameterOptions[] = parameters
+                    .filter(item => service.name === item.service)
+                    .map((item) => ({name: item.parameter, value: item.value}));
+                console.log('Parameters', service.name, parameterOptions);
+                this.backend.configureServiceParameters(this.module, service, parameterOptions)
+                    .subscribe((data) => {
+                        console.log('Configuration parameters updated', data);
+                        this.backend.refreshModules();
+                    });
+            });
+        }
     }
+      this.dialogRef.close();
   }
 }

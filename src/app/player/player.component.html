@@ -12,10 +12,10 @@
   </mat-card-header>
   <mat-card-content>
     <p>Current Recipe: <span class="mat-body-strong">{{currentRecipe?.options.name}}</span></p>
-    <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep?.name}}</span></p>
+      <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep}}</span></p>
     <p>Operations:
       <span class="mat-body-strong">
-    <p *ngFor="let operation of currentRecipe?.currentStep?.operations">
+      <p *ngFor="let operation of currentStep?.operations">
           {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
           ->
       {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
@@ -24,7 +24,7 @@
     </p>
     <p>Transitions:
       <span class="mat-body-strong">
-    <p *ngFor="let transition of currentRecipe?.currentStep?.transitions">
+      <p *ngFor="let transition of currentStep?.transitions">
           {{transition.next_step}}: {{transition.condition | json}}
     </p>
     </span>

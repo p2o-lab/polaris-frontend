@@ -26,10 +26,12 @@ export class ModuleViewComponent implements OnInit {
       modulesUpdates.forEach((moduleUpdated) => {
         const module = this.modules.find(moduleFind => moduleFind.id === moduleUpdated.id);
         if (module) {
-          moduleUpdated.services.forEach(serviceUpdated => {
-            const service = module.services.find(serviceFind => serviceFind.name === serviceUpdated.name);
-            service.status = serviceUpdated.status;
-          });
+            if (moduleUpdated.services && module.services) {
+                moduleUpdated.services.forEach(serviceUpdated => {
+                    const service = module.services.find(serviceFind => serviceFind.name === serviceUpdated.name);
+                    service.status = serviceUpdated.status;
+                });
+            }
         } else {
           this.modules.push(moduleUpdated);
         }
@@ -38,12 +40,22 @@ export class ModuleViewComponent implements OnInit {
   }
 
   connect(module: string) {
-    this.backend.connect(module).subscribe(data => console.log('Connect result', data));
+      this.backend.connect(module).subscribe(data => {
+          console.log('Connect result', data);
+          const index = this.modules.findIndex(mod => module === mod.id);
+          this.modules.splice(index, 1);
+          this.backend.refreshModules();
+      });
 
   }
 
   disconnect(module: string) {
-    this.backend.disconnect(module).subscribe(data => console.log('Disconnect result', data));
+      this.backend.disconnect(module).subscribe((data) => {
+          const index = this.modules.findIndex(mod => module === mod.id);
+          this.modules.splice(index, 1);
+          this.backend.refreshModules();
+          console.log('Disconnect result', data);
+      });
   }
 
   remove(module: string) {

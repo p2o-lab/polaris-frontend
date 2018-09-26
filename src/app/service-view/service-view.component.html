@@ -15,10 +15,11 @@
         <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
       </mat-form-field>
     </p>
-    <mat-form-field ngHide="service.strategies.length > 1">
-      <mat-select name="selectedStrategy" [ngModel]="strategy" placeholder="Strategy">
-        <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">
-          {{strategy.name}}
+      <mat-form-field>
+          <mat-select name="selectedStrategy" [(ngModel)]="strategy" placeholder="Strategy"
+                      [disabled]="service.strategies.length <= 1">
+              <mat-option *ngFor="let strat of service.strategies" [value]="strat">
+                  {{strat.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -37,6 +38,9 @@
     <button mat-button [disabled]="!commandEnabled('start')" color="primary"
             (click)="sendCommand('start', parameterForm)">Start
     </button>
+      <button mat-button [disabled]="!commandEnabled('restart')" color="primary"
+              (click)="sendCommand('restart', parameterForm)">Restart
+      </button>
     <button mat-button [disabled]="!commandEnabled('complete')" color="primary" (click)="sendCommand('complete')">
       Complete
     </button>

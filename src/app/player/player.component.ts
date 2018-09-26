@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../_services/backend.service';
 import {MatSnackBar} from '@angular/material';
-import {PlayerInterface, RecipeInterface} from 'pfe-ree-interface';
+import {PlayerInterface, RecipeInterface, StepOptions} from 'pfe-ree-interface';
 
 @Component({
   selector: 'app-player',
@@ -11,6 +11,7 @@ import {PlayerInterface, RecipeInterface} from 'pfe-ree-interface';
 export class PlayerComponent implements OnInit {
   public player: PlayerInterface;
   public currentRecipe: RecipeInterface = undefined;
+    public currentStep: StepOptions | undefined;
 
   constructor(private backend: BackendService,
               private snackBar: MatSnackBar) {
@@ -23,6 +24,9 @@ export class PlayerComponent implements OnInit {
       if (player) {
         this.currentRecipe = player.playlist[player.currentItem];
       }
+        if (this.currentRecipe) {
+            this.currentStep = this.currentRecipe.options.steps.find(step => step.name === this.currentRecipe.currentStep);
+        }
     });
   }
 

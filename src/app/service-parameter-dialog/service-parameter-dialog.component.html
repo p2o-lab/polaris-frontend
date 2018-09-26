@@ -1,7 +1,8 @@
 <h2 mat-dialog-title>Configure Service Parameters of Module {{module.id}} </h2>
-<mat-dialog-content>
-  <form #parameterForm="ngForm">
-    <div *ngFor="let service of module.services">
+<form #parameterForm="ngForm">
+    <mat-dialog-content>
+
+        <div *ngFor="let service of module.services">
       <h3 class="mat-h3">{{service.name}}</h3>
       <div *ngIf="service.parameters.length>0; else noParameters">
         <mat-form-field *ngFor="let param of service.parameters">
@@ -11,14 +12,14 @@
         </mat-form-field>
       </div>
     </div>
-  </form>
+
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="save(parameterForm)">Abort & Close</button>
+    <button mat-button class="mat-warn" mat-dialog-close>Abort & Close</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button [mat-dialog-close]="true">Save & Close</button>
+    <button mat-button (click)="save(parameterForm)">Save & Close</button>
 </mat-dialog-actions>
-
+</form>
 
 <ng-template #noParameters>
   No parameters for this service

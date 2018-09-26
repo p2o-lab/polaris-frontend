@@ -1,5 +1,4 @@
 <h1 class="mat-h1">Recipe Detail</h1>
-
 <div *ngIf="(recipe$ | async) as recipe; else loading">
   <mat-card class="recipe-card">
     <mat-card-header>
@@ -20,22 +19,18 @@
       <h3 class="mat-h3" mat-line>Modules</h3>
       <p>
         <button *ngFor="let module of recipe.modules" mat-stroked-button routerLink="/modules">
-          {{module.module}}
+            {{module.id}}
         </button>
       </p>
 
       <h3 class="mat-h3">Steps</h3>
       <mat-accordion *ngIf="recipe">
-        <mat-expansion-panel *ngFor="let step of recipe.options.steps"
-                             [class.active]="step.name == recipe.currentStep.name">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel *ngFor="let step of recipe.options.steps">
+              <mat-expansion-panel-header>
             <mat-panel-title>
               <h3 class="mat-h3">{{step.name}} <span
-                *ngIf="step.name == recipe.options.initial_step"> (inital step)</span></h3>
+                      *ngIf="step && step.name == recipe.options.initial_step"> (inital step)</span></h3>
             </mat-panel-title>
-            <mat-panel-description>
-              <span *ngIf="step.name == recipe.currentStep.name">active</span>
-            </mat-panel-description>
           </mat-expansion-panel-header>
           <h4 class="mat-h4">Operations</h4>
           <mat-list>

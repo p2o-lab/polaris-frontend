@@ -24,18 +24,18 @@ export class ServiceViewComponent implements OnInit {
     }
   }
 
-  sendCommand(command: string, parameterForm: NgForm) {
-    const strategy: string = parameterForm ? parameterForm.value.selectedStrategy.name : undefined;
+    sendCommand(command: string, parameterForm?: NgForm) {
+      const strategy: string = this.strategy ? this.strategy.name : undefined;
     const parameters = [];
 
     if (parameterForm) {
-      Object.keys(parameterForm.value).forEach((key,) => {
+        Object.keys(parameterForm.value).forEach((key) => {
         if (key !== 'selectedStrategy') {
           parameters.push({name: key.replace(this.service.name + '>', ''), value: parameterForm.value[key]});
         }
       });
-      console.log('Parameters', parameters);
     }
+      console.log('Strategy', strategy, 'Parameters', parameters);
 
     this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
       .subscribe(data => {
@@ -45,10 +45,12 @@ export class ServiceViewComponent implements OnInit {
 
   commandEnabled(command): boolean {
     return (command === 'start' && this.service.status === 'IDLE') ||
+        (command === 'restart' && this.service.status === 'RUNNING') ||
       (command === 'complete' && this.service.status === 'RUNNING') ||
-      (command === 'reset' && this.service.status === 'COMPLETED') ||
+        (command === 'reset' &&
+            (this.service.status === 'COMPLETED' || this.service.status === 'STOPPED' || this.service.status === 'ABORTED')) ||
       (command === 'pause' && this.service.status === 'RUNNING') ||
-      (command === 'unhold' && this.service.status === 'HOLD') ||
+        (command === 'unhold' && this.service.status === 'HELD') ||
       (command === 'resume' && this.service.status === 'PAUSED');
   }
 

@@ -24,7 +24,7 @@ docker run -d -p 8080:80 pfe-ree-viz
 
 Build it and deploy it
 ```
-npm run build
+ng build --prod
 docker build -t pfe-ree-viz .
 docker tag pfe-ree-node registry.plt.et.tu-dresden.de:443/pfe-ree-viz
 docker push registry.plt.et.tu-dresden.de:443/pfe-ree-viz 
