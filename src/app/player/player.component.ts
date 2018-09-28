@@ -32,7 +32,7 @@ export class PlayerComponent implements OnInit {
 
 
   startAllowed() {
-    return (this.player.status === 'idle' || this.player.status === 'stopped' || this.player.status === 'paused');
+      return (this.player.status === 'idle' || this.player.status === 'paused');
   }
 
   stopAllowed() {
@@ -59,20 +59,20 @@ export class PlayerComponent implements OnInit {
   }
 
   pause() {
-    this.backend.pausePlayer().subscribe(data => console.log(data));
+      this.backend.pausePlayer().subscribe(data => this.backend.refreshPlayer());
   }
 
   resume() {
-    this.backend.resumePlayer().subscribe(data => console.log(data));
+      this.backend.resumePlayer().subscribe(data => this.backend.refreshPlayer());
   }
 
   stop() {
-    this.backend.stopPlayer().subscribe(data => console.log(data));
+      this.backend.stopPlayer().subscribe(data => this.backend.refreshPlayer());
   }
 
 
   abort() {
-    this.backend.abortAllServices().subscribe(data => console.log(data));
+      this.backend.abortAllServices().subscribe(data => this.backend.refreshPlayer());
   }
 
   remove(id: number) {

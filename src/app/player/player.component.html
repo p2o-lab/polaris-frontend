@@ -7,28 +7,30 @@
     </mat-card-title>
     <mat-card-subtitle>
       {{player.status}} <span
-      *ngIf="player.status==='running'">({{player.currentItem+1}}/{{player.playlist.length}})</span>
+            *ngIf="player.status==='running'">({{player.currentItem+1}}/{{player.playlist.length}})</span>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>Current Recipe: <span class="mat-body-strong">{{currentRecipe?.options.name}}</span></p>
+      <div *ngIf="currentRecipe">
+          <p>Current Recipe: <span class="mat-body-strong">{{currentRecipe?.options.name}}</span></p>
       <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep}}</span></p>
-    <p>Operations:
-      <span class="mat-body-strong">
-      <p *ngFor="let operation of currentStep?.operations">
+          <p>Operations:
+              <span class="mat-body-strong">
+          <p *ngFor="let operation of currentStep?.operations">
           {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
           ->
-      {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
-    </p>
-    </span>
-    </p>
-    <p>Transitions:
-      <span class="mat-body-strong">
-      <p *ngFor="let transition of currentStep?.transitions">
-          {{transition.next_step}}: {{transition.condition | json}}
-    </p>
-    </span>
-    </p>
+              {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
+          </p>
+          </span>
+          </p>
+          <p>Transitions:
+              <span class="mat-body-strong">
+          <p *ngFor="let transition of currentStep?.transitions">
+              {{transition.next_step}}: {{transition.condition | json}}
+          </p>
+          </span>
+          </p>
+      </div>
 
     <mat-card-actions *ngIf="player">
       <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button>

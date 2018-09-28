@@ -27,7 +27,11 @@ export class RecipeOverviewComponent implements OnInit {
   addToPlayList(id: string) {
     console.log('Add to Playlist', id);
     this.backend.enqueueRecipe(id).subscribe(
-      () => this.router.navigate(['/player']),
+        () => {
+            // this.router.navigate(['/player']);
+            this.backend.refreshPlayer();
+            console.log('Recipe added to playlist', id);
+        },
       (err) => console.log(err)
     );
   }

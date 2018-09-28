@@ -19,15 +19,15 @@ npm publish
 
 ## Docker
 ```
-docker run -d -p 8080:80 pfe-ree-viz
+docker run --name pfe-ree-viz -d -p 8080:80 pfe-ree-viz
 ```
 
 Build it and deploy it
 ```
 ng build --prod
 docker build -t pfe-ree-viz .
-docker tag pfe-ree-node registry.plt.et.tu-dresden.de:443/pfe-ree-viz
-docker push registry.plt.et.tu-dresden.de:443/pfe-ree-viz 
+docker tag pfe-ree-viz registry.plt.et.tu-dresden.de/pfe-ree-viz
+docker push registry.plt.et.tu-dresden.de/pfe-ree-viz 
 ```
 
 

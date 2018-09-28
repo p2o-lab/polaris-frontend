@@ -26,8 +26,8 @@ export class BackendService {
         if (data.data === 'recipe') {
           this.refreshPlayer();
           if (data.action === 'completed') {
-            this.snackBar.open('Recipe completed', undefined, {
-              duration: 4000,
+              this.snackBar.open('Recipe completed', 'Dismiss', {
+                  duration: 3500,
             });
           }
         }
