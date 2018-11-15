@@ -22,7 +22,7 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content" *ngIf="module.services">
-    <mat-accordion>
+    <mat-accordion multi="true">
         <app-service-view *ngFor="let service of module.services" [service]="service" [module]="module">
         </app-service-view>
     </mat-accordion>

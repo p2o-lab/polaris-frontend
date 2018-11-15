@@ -4,9 +4,14 @@
       {{service.name}}
     </mat-panel-title>
     <mat-panel-description>
-      {{service.status}}
+      <span [class.error]="service.error">{{service.status}}</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
+  <p *ngIf="service.error">
+  <mat-error>
+    Error: {{service.error}}
+  </mat-error>
+  </p>
   <form #parameterForm="ngForm">
     <p *ngFor="let param of service.parameters">
       <mat-form-field>
