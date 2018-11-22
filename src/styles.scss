@@ -18,6 +18,13 @@ $theme: mat-light-theme($palette-primary, $palette-accent, $palette-warn);
 @include angular-material-theme($theme);
 @include recipe_overview_theme($theme);
 
+// Define a custom typography config
+$custom-typography: mat-typography-config(
+        $font-family: 'Open Sans'
+);
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($custom-typography);
+
 /** Custom CSS here **/
 html, body {
   height: 100%;
@@ -25,14 +32,5 @@ html, body {
 
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
 }
 
-html, body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-}
