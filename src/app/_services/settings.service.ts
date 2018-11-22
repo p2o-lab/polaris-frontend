@@ -8,7 +8,7 @@ export class SettingsService {
   @LocalStorage() public apiUrl: string;
 
   constructor() {
-    this.apiUrl = this.apiUrl || 'http://localhost:3000';
+    this.apiUrl = this.apiUrl || window.location + 'api';
   }
 
 
