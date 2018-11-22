@@ -14,6 +14,13 @@ docker run -d --name pfe-ree -p 3000:3000 registry.plt.et.tu-dresden.de/pfe-ree-
 ```
 
 
+## Settings
+
+The settings view allows you to adapt settings of the PFE. The settings are persisted in the browser.
+
+As first option, you can change the URI of the PFE backend (if you want to host the frontend somewhere else than the backend). The default value of the *URI* refers to the same server as the frontend.
+
+Furthermore, you can enable *AutoReset*. If this feature is enabled, the PFE will automatically reset a service (thus, bring it to IDLE) if the service has COMPLETED. This reduces additional service calls from the user or the recipe engine. The default option of *AutoReset* is on.    
 
 ## Usage
 
@@ -36,5 +43,5 @@ __add screenshot__
 
 ### Recipe JSON
 
-
+string
 ### Examples
