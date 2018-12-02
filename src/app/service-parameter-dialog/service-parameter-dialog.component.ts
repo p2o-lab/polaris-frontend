@@ -34,7 +34,7 @@ export class ServiceParameterDialogComponent implements OnInit {
             this.module.services.forEach((service: ServiceInterface) => {
                 const parameterOptions: ParameterOptions[] = parameters
                     .filter(item => service.name === item.service)
-                    .map((item) => ({name: item.parameter, value: item.value}));
+                    .map((item) => ({name: item.parameter, value: item.value, continuous: false}));
                 console.log('Parameters', service.name, parameterOptions);
                 this.backend.configureServiceParameters(this.module, service, parameterOptions)
                     .subscribe((data) => {
