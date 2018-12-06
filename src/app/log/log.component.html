@@ -1,6 +1,12 @@
 <h1 class="mat-h1">Logs</h1>
 <a mat-button [href]="logUrl">
-    <span class="with-icon"><mat-icon>cloud_download</mat-icon>&nbsp;Download</span>
+    <span class="with-icon"><mat-icon>cloud_download</mat-icon>&nbsp;Download Log</span>
+</a>
+<a mat-button [href]="logServiceUrl">
+    <span class="with-icon"><mat-icon>cloud_download</mat-icon>&nbsp;Download Service Log</span>
+</a>
+<a mat-button [href]="logVariableUrl">
+    <span class="with-icon"><mat-icon>cloud_download</mat-icon>&nbsp;Download Variable Log</span>
 </a>
 
 <mat-list *ngIf="logs$ | async as logs">
