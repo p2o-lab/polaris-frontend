@@ -20,7 +20,7 @@
         <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
       </mat-form-field>
     </p>
-      <mat-form-field>
+      <mat-form-field *ngIf="service.strategies.length>1">
           <mat-select name="selectedStrategy" [(ngModel)]="strategy" placeholder="Strategy"
                       [disabled]="service.strategies.length <= 1">
               <mat-option *ngFor="let strat of service.strategies" [value]="strat">
