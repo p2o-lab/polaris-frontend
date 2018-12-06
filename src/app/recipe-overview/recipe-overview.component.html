@@ -13,7 +13,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu" xPosition="before">
-        <button mat-menu-item (click)="remove(recipe.id)">Remove</button>
+        <button mat-menu-item [disabled]="recipe.protected" (click)="remove(recipe.id)">Remove</button>
       </mat-menu>
     </mat-card-title>
       <mat-card-subtitle class="with-icon">

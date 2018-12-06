@@ -13,7 +13,7 @@
         <button *ngIf="module.connected" mat-menu-item (click)="configure(module)">Configure Parameters</button>
           <button *ngIf="module.connected" mat-menu-item (click)="disconnect(module.id)">Disconnect</button>
         <button *ngIf="!module.connected" mat-menu-item (click)="connect(module.id)">Connect</button>
-        <button *ngIf="!module.protected" mat-menu-item (click)="remove(module.id)">Remove</button>
+        <button [disabled]="module.protected" mat-menu-item (click)="remove(module.id)">Remove</button>
       </mat-menu>
     </mat-card-title>
       <mat-card-subtitle class="with-icon">
