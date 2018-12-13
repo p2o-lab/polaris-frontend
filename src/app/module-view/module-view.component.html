@@ -18,7 +18,7 @@
     </mat-card-title>
       <mat-card-subtitle class="with-icon">
           <mat-icon>{{ module.connected ? 'link' : 'clear'}}</mat-icon> &nbsp;
-          {{module.endpoint}}
+        {{module.endpoint}} <span *ngIf="module.hmiUrl">- <a [href]="module.hmiUrl">{{module.hmiUrl}}</a></span>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content" *ngIf="module.services">
