@@ -13,7 +13,7 @@ import {PlayerComponent} from './player/player.component';
 import {LogComponent} from './log/log.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/recipe', pathMatch: 'full'},
+  {path: '', redirectTo: '/modules', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'modules', component: ModuleViewComponent},
   {path: 'modules/new', component: NewModuleComponent},
