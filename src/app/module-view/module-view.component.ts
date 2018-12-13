@@ -32,6 +32,7 @@ export class ModuleViewComponent implements OnInit {
                     const service: ServiceInterface = module.services.find(serviceFind => serviceFind.name === serviceUpdated.name);
                     service.status = serviceUpdated.status;
                     service.error = serviceUpdated.error;
+                    service.lastChange = serviceUpdated.lastChange;
                 });
             }
         } else {

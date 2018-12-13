@@ -2,3 +2,8 @@
 .mat-expansion-panel-header-description {
     flex-basis: 0;
 }
+
+.serviceState {
+    display: inline-block;
+    width: 8em;
+}

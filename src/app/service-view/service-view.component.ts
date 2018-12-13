@@ -1,58 +1,74 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BackendService} from '../_services/backend.service';
 import {ModuleInterface, ServiceInterface, StrategyInterface} from 'pfe-ree-interface';
+import * as moment from 'moment';
+import {Subscription, timer} from 'rxjs';
 
 @Component({
-  selector: 'app-service-view',
-  templateUrl: './service-view.component.html',
-  styleUrls: ['./service-view.component.css']
+    selector: 'app-service-view',
+    templateUrl: './service-view.component.html',
+    styleUrls: ['./service-view.component.css']
 })
-export class ServiceViewComponent implements OnInit {
+export class ServiceViewComponent implements OnInit, OnDestroy {
 
-  @Input() service: ServiceInterface;
-  @Input() module: ModuleInterface;
+    @Input() service: ServiceInterface;
+    @Input() module: ModuleInterface;
 
-  public strategy: StrategyInterface;
+    public strategy: StrategyInterface;
 
-  constructor(private backend: BackendService) {
-  }
+    public changeDuration: string;
+    private timer: Subscription;
 
-  ngOnInit() {
-    if (this.service.strategies) {
-      this.strategy = this.service.strategies.find(strategy => strategy.default);
+    constructor(private backend: BackendService) {
     }
-  }
+
+    ngOnInit() {
+        if (this.service.strategies) {
+            this.strategy = this.service.strategies.find(strategy => strategy.default);
+        }
+        this.timer = timer(0, 1000)
+            .subscribe(() => this.updateDuration());
+    }
+
+    ngOnDestroy() {
+        this.timer.unsubscribe();
+    }
+
+    private updateDuration() {
+        console.log(moment.relativeTimeThreshold('ss'), moment.relativeTimeThreshold('s'));
+        this.changeDuration = moment(new Date).to(this.service.lastChange);
+    }
 
     sendCommand(command: string, parameterForm?: NgForm) {
-      const strategy: string = this.strategy ? this.strategy.name : undefined;
-    const parameters = [];
+        const strategy: string = this.strategy ? this.strategy.name : undefined;
+        const parameters = [];
 
-    if (parameterForm) {
-        Object.keys(parameterForm.value).forEach((key) => {
-        if (key !== 'selectedStrategy') {
-          parameters.push({name: key.replace(this.service.name + '>', ''), value: parameterForm.value[key]});
+        if (parameterForm) {
+            Object.keys(parameterForm.value).forEach((key) => {
+                if (key !== 'selectedStrategy') {
+                    parameters.push({name: key.replace(this.service.name + '>', ''), value: parameterForm.value[key]});
+                }
+            });
         }
-      });
+        console.log('Strategy', strategy, 'Parameters', parameters);
+
+        this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
+            .subscribe(data => {
+                this.backend.refreshModules();
+            });
     }
-      console.log('Strategy', strategy, 'Parameters', parameters);
 
-    this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
-      .subscribe(data => {
-        this.backend.refreshModules();
-      });
-  }
-
-  commandEnabled(command): boolean {
-    return (command === 'start' && this.service.status === 'IDLE') ||
-        (command === 'restart' && this.service.status === 'RUNNING') ||
-      (command === 'complete' && this.service.status === 'RUNNING') ||
-        (command === 'reset' &&
-            (this.service.status === 'COMPLETED' || this.service.status === 'STOPPED' || this.service.status === 'ABORTED')) ||
-      (command === 'pause' && this.service.status === 'RUNNING') ||
-        (command === 'unhold' && this.service.status === 'HELD') ||
-      (command === 'resume' && this.service.status === 'PAUSED');
-  }
+    commandEnabled(command): boolean {
+        return (command === 'start' && this.service.status === 'IDLE') ||
+            (command === 'restart' && this.service.status === 'RUNNING') ||
+            (command === 'complete' && this.service.status === 'RUNNING') ||
+            (command === 'reset' &&
+                (this.service.status === 'COMPLETED' || this.service.status === 'STOPPED' || this.service.status === 'ABORTED')) ||
+            (command === 'pause' && this.service.status === 'RUNNING') ||
+            (command === 'unhold' && this.service.status === 'HELD') ||
+            (command === 'resume' && this.service.status === 'PAUSED');
+    }
 
 
 }

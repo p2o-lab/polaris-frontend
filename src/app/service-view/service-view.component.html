@@ -4,7 +4,7 @@
       {{service.name}}
     </mat-panel-title>
     <mat-panel-description>
-      <span [class.error]="service.error">{{service.status}}</span>
+      <span [class.error]="service.error"><span class="serviceState">{{service.status}}</span> <small>({{changeDuration}})</small></span>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <p *ngIf="service.error">
