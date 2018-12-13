@@ -19,7 +19,7 @@
       <h3 class="mat-h3" mat-line>Modules</h3>
       <p>
         <button *ngFor="let module of recipe.modules" mat-stroked-button routerLink="/modules">
-            {{module.id}}
+            {{module}}
         </button>
       </p>
 
@@ -35,9 +35,9 @@
           <h4 class="mat-h4">Operations</h4>
           <mat-list>
             <mat-list-item *ngFor="let operation of step.operations">
-              {{operation.module}}.{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
+                <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
               ->
-              {{operation.command}}
+              {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
             </mat-list-item>
           </mat-list>
           <h4 class="mat-h4">Transitions</h4>
