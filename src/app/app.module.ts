@@ -44,6 +44,28 @@ import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {PlayerComponent} from './player/player.component';
 import {LogComponent} from './log/log.component';
 import {ServiceParameterDialogComponent} from './service-parameter-dialog/service-parameter-dialog.component';
+import * as moment from 'moment';
+
+
+moment.updateLocale('en', {
+    relativeTime : {
+        future: 'in %s',
+        past:   '%s ago',
+        s  : 'a few seconds',
+        ss : '%d seconds',
+        m:  'a minute',
+        mm: '%d minutes',
+        h:  'an hour',
+        hh: '%d hours',
+        d:  'a day',
+        dd: '%d days',
+        M:  'a month',
+        MM: '%d months',
+        y:  'a year',
+        yy: '%d years'
+    }
+});
+moment.relativeTimeThreshold('ss', 5);
 
 @NgModule({
   declarations: [
