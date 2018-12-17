@@ -186,4 +186,9 @@ export class BackendService {
       return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/configure`,
           {parameters: parameterOptions});
   }
+
+  playerForceTransition(currentStep: string, nextStep: string) {
+      return this.http.post(`${this.settings.apiUrl}/player/forceTransition`,
+          {currentStep, nextStep});
+  }
 }
