@@ -1,11 +1,11 @@
+import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {switchMap} from 'rxjs/internal/operators';
-import {BackendService} from '../_services/backend.service';
 import {RecipeInterface} from 'pfe-ree-interface';
 import {Observable} from 'rxjs';
-import {Location} from '@angular/common';
-import {MatSnackBar} from '@angular/material';
+import {switchMap} from 'rxjs/internal/operators';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -27,7 +27,6 @@ export class RecipeDetailComponent implements OnInit {
         this.backend.getRecipe(params.get('id')))
     );
   }
-
 
   back() {
     this.location.back();

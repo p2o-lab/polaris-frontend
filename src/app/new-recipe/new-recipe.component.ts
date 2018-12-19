@@ -1,23 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../_services/backend.service';
-import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
   selector: 'app-new-recipe',
   templateUrl: './new-recipe.component.html',
   styleUrls: ['./new-recipe.component.css']
 })
-export class NewRecipeComponent implements OnInit {
+export class NewRecipeComponent {
 
-  recipe: string;
+  public recipe: string;
 
   constructor(private backend: BackendService,
               private router: Router,
               private snackBar: MatSnackBar) {
-  }
-
-  ngOnInit() {
   }
 
   public previewFile(event) {
@@ -29,7 +26,7 @@ export class NewRecipeComponent implements OnInit {
     reader.readAsText(event.target.files[0]);
   }
 
-  editRecipe() {
+  public editRecipe() {
     try {
       const recipe = JSON.parse(this.recipe);
       this.snackBar.dismiss();
@@ -46,7 +43,7 @@ export class NewRecipeComponent implements OnInit {
     }
   }
 
-  cancel() {
+  public cancel() {
     this.router.navigate(['/recipe']);
   }
 }

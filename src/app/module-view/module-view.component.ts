@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../_services/backend.service';
-import {ModuleInterface} from 'pfe-ree-interface';
 import {MatDialog} from '@angular/material';
-import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
+import {ModuleInterface} from 'pfe-ree-interface';
 import {ServiceInterface} from 'pfe-ree-interface/dist/interfaces';
+import {BackendService} from '../_services/backend.service';
+import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
   selector: 'app-module-view',
@@ -25,11 +25,12 @@ export class ModuleViewComponent implements OnInit {
     this.backend.modules.subscribe((modulesUpdates: ModuleInterface[]) => {
       // this.modules = modules;
       modulesUpdates.forEach((moduleUpdated: ModuleInterface) => {
-        const module = this.modules.find(moduleFind => moduleFind.id === moduleUpdated.id);
+        const module = this.modules.find((moduleFind) => moduleFind.id === moduleUpdated.id);
         if (module) {
             if (moduleUpdated.services && module.services) {
                 moduleUpdated.services.forEach((serviceUpdated: ServiceInterface) => {
-                    const service: ServiceInterface = module.services.find(serviceFind => serviceFind.name === serviceUpdated.name);
+                    const service: ServiceInterface = module.services
+                        .find((serviceFind) => serviceFind.name === serviceUpdated.name);
                     service.status = serviceUpdated.status;
                     service.error = serviceUpdated.error;
                     service.lastChange = serviceUpdated.lastChange;
@@ -43,9 +44,9 @@ export class ModuleViewComponent implements OnInit {
   }
 
   connect(module: string) {
-      this.backend.connect(module).subscribe(data => {
+      this.backend.connect(module).subscribe((data) => {
           console.log('Connect result', data);
-          const index = this.modules.findIndex(mod => module === mod.id);
+          const index = this.modules.findIndex((mod) => module === mod.id);
           this.modules.splice(index, 1);
           this.backend.refreshModules();
       });
@@ -54,7 +55,7 @@ export class ModuleViewComponent implements OnInit {
 
   disconnect(module: string) {
       this.backend.disconnect(module).subscribe((data) => {
-          const index = this.modules.findIndex(mod => module === mod.id);
+          const index = this.modules.findIndex((mod) => module === mod.id);
           this.modules.splice(index, 1);
           this.backend.refreshModules();
           console.log('Disconnect result', data);
@@ -62,7 +63,7 @@ export class ModuleViewComponent implements OnInit {
   }
 
   remove(module: string) {
-    this.backend.removeModule(module).subscribe(data => console.log('Remove result', data));
+    this.backend.removeModule(module).subscribe((data) => console.log('Remove result', data));
   }
 
   configure(module: ModuleInterface) {

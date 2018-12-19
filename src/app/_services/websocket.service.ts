@@ -5,9 +5,6 @@ import {Observable, Observer, Subject} from 'rxjs';
 export class WebsocketService {
   private subject: Subject<MessageEvent>;
 
-  constructor() {
-  }
-
   public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
@@ -27,7 +24,7 @@ export class WebsocketService {
         return ws.close.bind(ws);
       });
     const observer = {
-      next: (data: Object) => {
+      next: (data: any) => {
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(JSON.stringify(data));
         }

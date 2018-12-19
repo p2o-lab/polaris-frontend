@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {SettingsService} from './settings.service';
-import {WebsocketService} from './websocket.service';
+import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, ServiceInterface} from 'pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {SettingsService} from './settings.service';
+import {WebsocketService} from './websocket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -81,14 +81,14 @@ export class BackendService {
   }
 
   sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
-    const body = {};
+    const body: any =  {};
     if (strategy) {
-      body['strategy'] = strategy;
+      body.strategy = strategy;
     }
     if (parameters) {
-      body['parameters'] = parameters;
+      body.parameters = parameters;
     }
-      console.log('Body', body);
+    console.log('Body', body);
 
     return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
   }
@@ -125,10 +125,9 @@ export class BackendService {
     return this.http.get<RecipeInterface>(`${this.settings.apiUrl}/recipe/${id}`);
   }
 
-  getLogs() {
+  public getLogs() {
     return this.http.get(`${this.settings.apiUrl}/logs`);
   }
-
 
   get player(): Observable<PlayerInterface> {
     return this._player.asObservable();
@@ -166,9 +165,8 @@ export class BackendService {
   }
 
   removeRecipeFromPlaylist(index: number) {
-    return this.http.post(`${this.settings.apiUrl}/player/remove`, {index: index});
+    return this.http.post(`${this.settings.apiUrl}/player/remove`, {index});
   }
-
 
   abortAllServices() {
     return this.http.post(`${this.settings.apiUrl}/abort`, {});

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../_services/backend.service';
 import {Observable} from 'rxjs';
+import {BackendService} from '../_services/backend.service';
 import {SettingsService} from '../_services/settings.service';
 
 @Component({
@@ -9,7 +9,7 @@ import {SettingsService} from '../_services/settings.service';
   styleUrls: ['./log.component.css']
 })
 export class LogComponent implements OnInit {
-  public logs$: Observable<Object>;
+  public logs$: Observable<any>;
     public readonly logUrl: string;
     public readonly logVariableUrl: string;
     public readonly logServiceUrl: string;
@@ -21,7 +21,7 @@ export class LogComponent implements OnInit {
         this.logVariableUrl = this.settings.apiUrl + '/logs/variables.json';
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.logs$ = this.backend.getLogs();
   }
 

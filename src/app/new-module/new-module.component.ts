@@ -1,36 +1,33 @@
-import {Component, OnInit} from '@angular/core';
-import {BackendService} from '../_services/backend.service';
-import {Router} from '@angular/router';
+import {Component} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
   selector: 'app-new-module',
   templateUrl: './new-module.component.html',
   styleUrls: ['./new-module.component.css']
 })
-export class NewModuleComponent implements OnInit {
+export class NewModuleComponent {
 
-  module: string;
-  file: File;
+  public module: string;
+  public file: File;
 
   constructor(private backend: BackendService,
               private router: Router,
               private snackBar: MatSnackBar) {
   }
 
-  ngOnInit() {
-  }
-
   public previewFile(event) {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.module = e.target.result;
-    };
-    reader.readAsText(event.target.files[0]);
-    this.file = event.target.files[0];
+      this.file = event.target.files[0];
+      const reader: FileReader = new FileReader();
+      reader.onload = (e: Event) => {
+        this.module = reader.result;
+      };
+      reader.readAsText(this.file);
   }
 
-  addModule() {
+  public addModule() {
     const formData: FormData = new FormData();
 
     formData.append('file', this.file);
@@ -44,7 +41,7 @@ export class NewModuleComponent implements OnInit {
       });
   }
 
-  cancel() {
+  public cancel() {
     this.router.navigate(['/modules']);
   }
 }

@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BackendService} from '../_services/backend.service';
 import {MatSnackBar} from '@angular/material';
 import {PlayerInterface, RecipeInterface, StepOptions} from 'pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
     selector: 'app-player',
@@ -14,7 +14,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     public currentRecipe: RecipeInterface = undefined;
     public currentStep: StepOptions | undefined;
     public currentStepDuration: number;
-    private interval;
+    private interval: number;
     private timer: Subscription;
 
     constructor(private backend: BackendService,
@@ -31,7 +31,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
                 this.currentRecipe = player.playlist[player.currentItem];
             }
             if (this.currentRecipe) {
-                const newStep = this.currentRecipe.options.steps.find(step => step.name === this.currentRecipe.currentStep);
+                const newStep = this.currentRecipe.options.steps
+                    .find((step) => step.name === this.currentRecipe.currentStep);
                 if (newStep !== this.currentStep) {
                     this.currentStepDuration = 0;
                 }
@@ -46,7 +47,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.timer.unsubscribe();
     }
-
 
     startAllowed() {
         return (this.player.status === 'idle' || this.player.status === 'paused');
@@ -64,36 +64,34 @@ export class PlayerComponent implements OnInit, OnDestroy {
         return (this.player.status === 'stopped' || this.player.status === 'completed');
     }
 
-
     start() {
         this.backend.startPlayer().subscribe(
-            data => console.log(data),
-            error => this.snackBar.open('Could not connect to all modules', 'Dismiss'));
+            (data) => console.log(data),
+            (error) => this.snackBar.open('Could not connect to all modules', 'Dismiss'));
     }
 
     reset() {
-        this.backend.resetPlayer().subscribe(data => this.backend.refreshPlayer());
+        this.backend.resetPlayer().subscribe((data) => this.backend.refreshPlayer());
     }
 
     pause() {
-        this.backend.pausePlayer().subscribe(data => this.backend.refreshPlayer());
+        this.backend.pausePlayer().subscribe((data) => this.backend.refreshPlayer());
     }
 
     resume() {
-        this.backend.resumePlayer().subscribe(data => this.backend.refreshPlayer());
+        this.backend.resumePlayer().subscribe((data) => this.backend.refreshPlayer());
     }
 
     stop() {
-        this.backend.stopPlayer().subscribe(data => this.backend.refreshPlayer());
+        this.backend.stopPlayer().subscribe((data) => this.backend.refreshPlayer());
     }
 
-
     abort() {
-        this.backend.abortAllServices().subscribe(data => this.backend.refreshPlayer());
+        this.backend.abortAllServices().subscribe((data) => this.backend.refreshPlayer());
     }
 
     forceTransition(currentStep, nextStep) {
-        this.backend.playerForceTransition(currentStep, nextStep).subscribe(data => console.log(data));
+        this.backend.playerForceTransition(currentStep, nextStep).subscribe((data) => console.log(data));
     }
 
     remove(id: number) {

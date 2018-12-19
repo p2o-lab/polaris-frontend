@@ -1,9 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {BackendService} from '../_services/backend.service';
-import {ModuleInterface, ServiceInterface, StrategyInterface} from 'pfe-ree-interface';
 import * as moment from 'moment';
+import {ModuleInterface, ServiceInterface, StrategyInterface} from 'pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
     selector: 'app-service-view',
@@ -25,7 +25,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.service.strategies) {
-            this.strategy = this.service.strategies.find(strategy => strategy.default);
+            this.strategy = this.service.strategies.find((strategy) => strategy.default);
         }
         this.timer = timer(0, 1000)
             .subscribe(() => this.updateDuration());
@@ -33,11 +33,6 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.timer.unsubscribe();
-    }
-
-    private updateDuration() {
-        console.log(moment.relativeTimeThreshold('ss'), moment.relativeTimeThreshold('s'));
-        this.changeDuration = moment(new Date).to(this.service.lastChange);
     }
 
     sendCommand(command: string, parameterForm?: NgForm) {
@@ -54,7 +49,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         console.log('Strategy', strategy, 'Parameters', parameters);
 
         this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
-            .subscribe(data => {
+            .subscribe((data) => {
                 this.backend.refreshModules();
             });
     }
@@ -64,11 +59,17 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
             (command === 'restart' && this.service.status === 'RUNNING') ||
             (command === 'complete' && this.service.status === 'RUNNING') ||
             (command === 'reset' &&
-                (this.service.status === 'COMPLETED' || this.service.status === 'STOPPED' || this.service.status === 'ABORTED')) ||
+                (this.service.status === 'COMPLETED' ||
+                    this.service.status === 'STOPPED' ||
+                    this.service.status === 'ABORTED')) ||
             (command === 'pause' && this.service.status === 'RUNNING') ||
             (command === 'unhold' && this.service.status === 'HELD') ||
             (command === 'resume' && this.service.status === 'PAUSED');
     }
 
+    private updateDuration() {
+        console.log(moment.relativeTimeThreshold('ss'), moment.relativeTimeThreshold('s'));
+        this.changeDuration = moment(new Date()).to(this.service.lastChange);
+    }
 
 }
