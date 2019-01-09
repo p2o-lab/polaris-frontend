@@ -18,7 +18,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     public strategy: StrategyInterface;
 
     public changeDuration: string;
-    private timer: Subscription;
+    private timer: Subscription;//                this.backend.refreshModules();
 
     constructor(private backend: BackendService) {
     }
@@ -50,7 +50,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
 
         this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
             .subscribe((data) => {
-                this.backend.refreshModules();
+                console.log('command sent', data);
             });
     }
 
@@ -68,7 +68,6 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     private updateDuration() {
-        console.log(moment.relativeTimeThreshold('ss'), moment.relativeTimeThreshold('s'));
         this.changeDuration = moment(new Date()).to(this.service.lastChange);
     }
 

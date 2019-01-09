@@ -33,7 +33,6 @@ export class NewModuleComponent {
     formData.append('file', this.file);
     this.backend.addModule(formData).subscribe(
       (data) => {
-        this.backend.refreshModules();
         this.router.navigate(['/modules']);
     },
       (error) => {

@@ -14,7 +14,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     public currentRecipe: RecipeInterface = undefined;
     public currentStep: StepOptions | undefined;
     public currentStepDuration: number;
-    private interval: number;
     private timer: Subscription;
 
     constructor(private backend: BackendService,
@@ -24,7 +23,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.currentStepDuration = 0;
         this.backend.refreshPlayer();
-        /* Continously update data from backend service */
+        /* Continuously update data from backend service */
         this.backend.player.subscribe((player) => {
             this.player = player;
             if (player) {
@@ -41,7 +40,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         });
 
         this.timer = timer(1000, 1000)
-            .subscribe(() => console.log('still alive'));
+            .subscribe(() => {this.currentStepDuration = this.currentStepDuration + 1; });
     }
 
     ngOnDestroy() {
@@ -66,7 +65,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     start() {
         this.backend.startPlayer().subscribe(
-            (data) => console.log(data),
+            (data) => console.log('start player', data),
             (error) => this.snackBar.open('Could not connect to all modules', 'Dismiss'));
     }
 
@@ -96,7 +95,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     remove(id: number) {
         this.backend.removeRecipeFromPlaylist(id).subscribe((data) => {
-                console.log(data);
                 this.backend.refreshPlayer();
             }
         );

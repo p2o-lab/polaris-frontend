@@ -1,5 +1,5 @@
 import {Location} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../_services/backend.service';
 import {SettingsService} from '../_services/settings.service';
 
@@ -8,17 +8,18 @@ import {SettingsService} from '../_services/settings.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
 
   constructor(private location: Location,
               public settings: SettingsService,
               public backend: BackendService) {
   }
 
-  back() {
+  ngOnInit() {
     this.backend.refreshAutoReset();
-    this.backend.refreshModules();
-    this.backend.refreshRecipes();
+  }
+
+  back() {
     this.location.back();
   }
 

@@ -5,188 +5,212 @@ import {ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, Ser
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
+import {RecipeState, Repeat} from 'pfe-ree-interface/dist/enum';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BackendService {
 
-  constructor(private http: HttpClient,
-              private settings: SettingsService,
-              private ws: WebsocketService,
-              private snackBar: MatSnackBar) {
+    constructor(private http: HttpClient,
+                private settings: SettingsService,
+                private ws: WebsocketService,
+                private snackBar: MatSnackBar) {
 
-    this.ws.connect(this.settings.apiUrl.replace('http', 'ws')).subscribe((msg) => {
-      const data = JSON.parse(msg.data);
-      console.log('ws received', data);
-      if (data.msg === 'refresh') {
-        if (data.data === 'recipes') {
-          this.refreshRecipes();
-        }
-        if (data.data === 'recipe') {
-          this.refreshPlayer();
-          if (data.action === 'completed') {
-              this.snackBar.open('Recipe completed', 'Dismiss', {
-                  duration: 3500,
+        this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
+            .subscribe((msg) => {
+                const data: { message: string, data: any } = JSON.parse(msg.data);
+                console.log('ws received', data);
+                if (data.message === 'recipes') {
+                    this.refreshRecipes();
+                }
+                if (data.message === 'module') {
+                    if (data.data) {
+                        if (data.data.module) {
+                            const newModules = this._modules.getValue();
+                            const newService = newModules.find((module) => module.id === data.data.module)
+                                .services.find((service) => service.name === data.data.service);
+                            if (data.data.state) {
+                                newService.status = data.data.state;
+                            }
+                            if (data.data.errorMessage) {
+                                newService.error = data.data.errorMessage;
+                            }
+                            this._modules.next(newModules);
+                        }
+                    } else {
+                        this.refreshModules();
+                    }
+                }
+                if (data.message === 'player') {
+                  const player: PlayerInterface = data.data;
+                  this._player.next(player);
+                }
+                if (data.message === 'action'){
+                    if (data.data === 'recipeCompleted') {
+                        this.snackBar.open('Recipe completed', 'Dismiss', {
+                            duration: 3500,
+                        });
+                    }
+                }
             });
-          }
-        }
-        if (data.data === 'module') {
-          this.refreshModules();
-        }
-      }
-    });
 
-    this.refreshRecipes();
-    this.refreshModules();
-    this.refreshAutoReset();
-    this.refreshPlayer();
-  }
-
-  private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject<ModuleInterface[]>([]);
-
-  get modules(): Observable<ModuleInterface[]> {
-    return this._modules.asObservable();
-  }
-
-  private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
-
-  get recipes(): Observable<RecipeInterface[]> {
-    return this._recipes.asObservable();
-  }
-
-  private _player: BehaviorSubject<PlayerInterface> = new BehaviorSubject<PlayerInterface>(undefined);
-
-  private _autoReset: boolean;
-
-  get autoReset(): boolean {
-    return this._autoReset;
-  }
-
-  set autoReset(value: boolean) {
-    this.setAutoReset(value);
-  }
-
-  public refreshAutoReset() {
-    this.http.get(`${this.settings.apiUrl}/autoReset`).subscribe((data: any) => {
-      this._autoReset = data.autoReset;
-    });
-  }
-
-  refreshRecipes() {
-    this.http.get(`${this.settings.apiUrl}/recipe`).subscribe(
-      (data: RecipeInterface[]) => {
-        this._recipes.next(data);
-      });
-  }
-
-  sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
-    const body: any =  {};
-    if (strategy) {
-      body.strategy = strategy;
+        this.refreshRecipes();
+        this.refreshModules();
+        this.refreshAutoReset();
+        this.refreshPlayer();
     }
-    if (parameters) {
-      body.parameters = parameters;
+
+    private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject<ModuleInterface[]>([]);
+
+    get modules(): Observable<ModuleInterface[]> {
+        return this._modules.asObservable();
     }
-    console.log('Body', body);
 
-    return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
-  }
+    private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
-  refreshModules() {
-    this.http.get(`${this.settings.apiUrl}/module`).subscribe((data: any[]) => {
-      this._modules.next(data);
-    });
-  }
+    get recipes(): Observable<RecipeInterface[]> {
+        return this._recipes.asObservable();
+    }
 
-  addModule(moduleOptions) {
-    return this.http.put(`${this.settings.apiUrl}/module`, moduleOptions);
-  }
+    private _player: BehaviorSubject<PlayerInterface> = new BehaviorSubject<PlayerInterface>(
+        {    playlist: [],
+    currentItem: undefined,
+    repeat: Repeat.none,
+    status: RecipeState.idle});
 
-  connect(module: string) {
-    return this.http.post(`${this.settings.apiUrl}/module/${module}/connect`, {});
-  }
+    private _autoReset: boolean;
 
-  disconnect(module: string) {
-    return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
-  }
+    get autoReset(): boolean {
+        return this._autoReset;
+    }
 
-  removeModule(module: string) {
-    return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
-  }
+    set autoReset(value: boolean) {
+        this.setAutoReset(value);
+    }
 
-  private setAutoReset(value: boolean) {
-    this.http.post(`${this.settings.apiUrl}/autoReset`, {autoReset: value}).subscribe((data: any) => {
-      this._autoReset = data.autoReset;
-    });
-  }
+    public refreshAutoReset() {
+        this.http.get(`${this.settings.apiUrl}/autoReset`).subscribe((data: any) => {
+            this._autoReset = data.autoReset;
+        });
+    }
 
-  getRecipe(id: string): Observable<RecipeInterface> {
-    return this.http.get<RecipeInterface>(`${this.settings.apiUrl}/recipe/${id}`);
-  }
+    refreshRecipes() {
+        this.http.get(`${this.settings.apiUrl}/recipe`).subscribe(
+            (data: RecipeInterface[]) => {
+                this._recipes.next(data);
+            });
+    }
 
-  public getLogs() {
-    return this.http.get(`${this.settings.apiUrl}/logs`);
-  }
+    sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
+        const body: any = {};
+        if (strategy) {
+            body.strategy = strategy;
+        }
+        if (parameters) {
+            body.parameters = parameters;
+        }
 
-  get player(): Observable<PlayerInterface> {
-    return this._player.asObservable();
-  }
+        return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
+    }
 
-  refreshPlayer() {
-    this.http.get(`${this.settings.apiUrl}/player`).subscribe((data: PlayerInterface) => {
-      this._player.next(data);
-      }
-    );
-  }
+    refreshModules() {
+        this.http.get(`${this.settings.apiUrl}/module`).subscribe((data: ModuleInterface[]) => {
+            console.log('modules refreshed via HTTP GET', data);
+            this._modules.next(data);
+        });
+    }
 
-  startPlayer() {
-    return this.http.post(`${this.settings.apiUrl}/player/start`, {});
-  }
+    addModule(moduleOptions) {
+        return this.http.put(`${this.settings.apiUrl}/module`, moduleOptions);
+    }
 
-  resetPlayer() {
-    return this.http.post(`${this.settings.apiUrl}/player/reset`, {});
-  }
+    connect(module: string) {
+        return this.http.post(`${this.settings.apiUrl}/module/${module}/connect`, {});
+    }
 
-  pausePlayer() {
-    return this.http.post(`${this.settings.apiUrl}/player/pause`, {});
-  }
+    disconnect(module: string) {
+        return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
+    }
 
-  resumePlayer() {
-    return this.http.post(`${this.settings.apiUrl}/player/resume`, {});
-  }
+    removeModule(module: string) {
+        return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
+    }
 
-  stopPlayer() {
-    return this.http.post(`${this.settings.apiUrl}/player/stop`, {});
-  }
+    private setAutoReset(value: boolean) {
+        this.http.post(`${this.settings.apiUrl}/autoReset`, {autoReset: value}).subscribe((data: any) => {
+            this._autoReset = data.autoReset;
+        });
+    }
 
-  enqueueRecipe(id: string) {
-    return this.http.post(`${this.settings.apiUrl}/player/enqueue`, {recipeId: id});
-  }
+    getRecipe(id: string): Observable<RecipeInterface> {
+        return this.http.get<RecipeInterface>(`${this.settings.apiUrl}/recipe/${id}`);
+    }
 
-  removeRecipeFromPlaylist(index: number) {
-    return this.http.post(`${this.settings.apiUrl}/player/remove`, {index});
-  }
+    public getLogs() {
+        return this.http.get(`${this.settings.apiUrl}/logs`);
+    }
 
-  abortAllServices() {
-    return this.http.post(`${this.settings.apiUrl}/abort`, {});
-  }
+    get player(): Observable<PlayerInterface> {
+        return this._player.asObservable();
+    }
 
-  submitNewRecipe(recipeOptions) {
-    return this.http.put(`${this.settings.apiUrl}/recipe`, recipeOptions);
-  }
+    refreshPlayer() {
+        this.http.get(`${this.settings.apiUrl}/player`)
+            .subscribe((data: PlayerInterface) => {
+                console.log('player update via http get', data);
+                this._player.next(data);
+            }
+        );
+    }
 
-  removeRecipe(id: string) {
-    return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
-  }
+    startPlayer() {
+        return this.http.post(`${this.settings.apiUrl}/player/start`, {});
+    }
 
-  configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
-      return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/configure`,
-          {parameters: parameterOptions});
-  }
+    resetPlayer() {
+        return this.http.post(`${this.settings.apiUrl}/player/reset`, {});
+    }
 
-  playerForceTransition(currentStep: string, nextStep: string) {
-      return this.http.post(`${this.settings.apiUrl}/player/forceTransition`,
-          {currentStep, nextStep});
-  }
+    pausePlayer() {
+        return this.http.post(`${this.settings.apiUrl}/player/pause`, {});
+    }
+
+    resumePlayer() {
+        return this.http.post(`${this.settings.apiUrl}/player/resume`, {});
+    }
+
+    stopPlayer() {
+        return this.http.post(`${this.settings.apiUrl}/player/stop`, {});
+    }
+
+    enqueueRecipe(id: string) {
+        return this.http.post(`${this.settings.apiUrl}/player/enqueue`, {recipeId: id});
+    }
+
+    removeRecipeFromPlaylist(index: number) {
+        return this.http.post(`${this.settings.apiUrl}/player/remove`, {index});
+    }
+
+    abortAllServices() {
+        return this.http.post(`${this.settings.apiUrl}/abort`, {});
+    }
+
+    submitNewRecipe(recipeOptions) {
+        return this.http.put(`${this.settings.apiUrl}/recipe`, recipeOptions);
+    }
+
+    removeRecipe(id: string) {
+        return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
+    }
+
+    configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
+        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/configure`,
+            {parameters: parameterOptions});
+    }
+
+    playerForceTransition(currentStep: string, nextStep: string) {
+        return this.http.post(`${this.settings.apiUrl}/player/forceTransition`,
+            {currentStep, nextStep});
+    }
 }

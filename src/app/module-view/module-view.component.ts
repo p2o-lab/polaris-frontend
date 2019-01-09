@@ -48,7 +48,6 @@ export class ModuleViewComponent implements OnInit {
           console.log('Connect result', data);
           const index = this.modules.findIndex((mod) => module === mod.id);
           this.modules.splice(index, 1);
-          this.backend.refreshModules();
       });
 
   }
@@ -57,7 +56,6 @@ export class ModuleViewComponent implements OnInit {
       this.backend.disconnect(module).subscribe((data) => {
           const index = this.modules.findIndex((mod) => module === mod.id);
           this.modules.splice(index, 1);
-          this.backend.refreshModules();
           console.log('Disconnect result', data);
       });
   }
