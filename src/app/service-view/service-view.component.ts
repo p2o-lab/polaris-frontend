@@ -18,7 +18,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     public strategy: StrategyInterface;
 
     public changeDuration: string;
-    private timer: Subscription;//                this.backend.refreshModules();
+    private timer: Subscription;
 
     constructor(private backend: BackendService) {
     }

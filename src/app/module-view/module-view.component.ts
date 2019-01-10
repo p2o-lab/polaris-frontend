@@ -27,14 +27,19 @@ export class ModuleViewComponent implements OnInit {
       modulesUpdates.forEach((moduleUpdated: ModuleInterface) => {
         const module = this.modules.find((moduleFind) => moduleFind.id === moduleUpdated.id);
         if (module) {
-            if (moduleUpdated.services && module.services) {
-                moduleUpdated.services.forEach((serviceUpdated: ServiceInterface) => {
-                    const service: ServiceInterface = module.services
-                        .find((serviceFind) => serviceFind.name === serviceUpdated.name);
-                    service.status = serviceUpdated.status;
-                    service.error = serviceUpdated.error;
-                    service.lastChange = serviceUpdated.lastChange;
-                });
+            module.connected = moduleUpdated.connected;
+            if (module.services) {
+                if (moduleUpdated.services) {
+                    moduleUpdated.services.forEach((serviceUpdated: ServiceInterface) => {
+                        const service: ServiceInterface = module.services
+                            .find((serviceFind) => serviceFind.name === serviceUpdated.name);
+                        service.status = serviceUpdated.status;
+                        service.error = serviceUpdated.error;
+                        service.lastChange = serviceUpdated.lastChange;
+                    });
+                } else {
+                    module.services = moduleUpdated.services;
+                }
             }
         } else {
           this.modules.push(moduleUpdated);

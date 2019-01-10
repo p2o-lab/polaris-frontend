@@ -3,6 +3,7 @@ import {MatSnackBar} from '@angular/material';
 import {PlayerInterface, RecipeInterface, StepOptions} from 'pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-player',
@@ -13,15 +14,14 @@ export class PlayerComponent implements OnInit, OnDestroy {
     public player: PlayerInterface;
     public currentRecipe: RecipeInterface = undefined;
     public currentStep: StepOptions | undefined;
-    public currentStepDuration: number;
     private timer: Subscription;
+    private changeDuration: string;
 
     constructor(private backend: BackendService,
                 private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
-        this.currentStepDuration = 0;
         this.backend.refreshPlayer();
         /* Continuously update data from backend service */
         this.backend.player.subscribe((player) => {
@@ -32,15 +32,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
             if (this.currentRecipe) {
                 const newStep = this.currentRecipe.options.steps
                     .find((step) => step.name === this.currentRecipe.currentStep);
-                if (newStep !== this.currentStep) {
-                    this.currentStepDuration = 0;
-                }
                 this.currentStep = newStep;
             }
         });
 
-        this.timer = timer(1000, 1000)
-            .subscribe(() => {this.currentStepDuration = this.currentStepDuration + 1; });
+        this.timer = timer(0, 1000)
+            .subscribe(() => this.updateDuration());
     }
 
     ngOnDestroy() {
@@ -98,5 +95,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
                 this.backend.refreshPlayer();
             }
         );
+    }
+
+    private updateDuration() {
+        if (this.currentRecipe) {
+            this.changeDuration = moment(new Date()).to(this.currentRecipe.lastChange);
+        }
     }
 }

@@ -28,15 +28,20 @@ export class BackendService {
                     if (data.data) {
                         if (data.data.module) {
                             const newModules = this._modules.getValue();
-                            const newService = newModules.find((module) => module.id === data.data.module)
-                                .services.find((service) => service.name === data.data.service);
-                            if (data.data.state) {
-                                newService.status = data.data.state;
+                            const newModule = newModules.find((module) => module.id === data.data.module);
+                            if (newModule) {
+                                const newService = newModule.services.find((service) => service.name === data.data.service);
+                                if (data.data.lastChange) {
+                                    newService.lastChange = data.data.lastChange;
+                                }
+                                if (data.data.state) {
+                                    newService.status = data.data.state;
+                                }
+                                if (data.data.errorMessage) {
+                                    newService.error = data.data.errorMessage;
+                                }
+                                this._modules.next(newModules);
                             }
-                            if (data.data.errorMessage) {
-                                newService.error = data.data.errorMessage;
-                            }
-                            this._modules.next(newModules);
                         }
                     } else {
                         this.refreshModules();
@@ -77,7 +82,8 @@ export class BackendService {
         {    playlist: [],
     currentItem: undefined,
     repeat: Repeat.none,
-    status: RecipeState.idle});
+    status: RecipeState.idle,
+        currentRecipeRun: undefined});
 
     private _autoReset: boolean;
 

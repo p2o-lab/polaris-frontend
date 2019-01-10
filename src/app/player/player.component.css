@@ -2,3 +2,8 @@
   position: absolute;
   right: 0px;
 }
+
+.with-icon {
+  display: flex;
+  align-items: center;
+}
