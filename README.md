@@ -12,21 +12,20 @@ Run `npm start` or `ng serve` for a dev server. Navigate to `http://localhost:42
 
 
 ## Publish
-*pfe-ree-node* is provided via our private NPM registry (https://registry.plt.et.tu-dresden.de:4873)
+*pfe-ree-viz* is provided via our private NPM registry (https://registry.plt.et.tu-dresden.de:4873)
 ```
 npm publish
 ``` 
 
 ## Docker
 ```
-docker run --name pfe-ree-viz -d -p 8080:80 pfe-ree-viz
+docker run --name registry.plt.et.tu-dresden.de/pfe-ree-viz -d -p 8080:80 pfe-ree-viz
 ```
 
 Build it and deploy it
 ```
 ng build --prod
-docker build -t pfe-ree-viz .
-docker tag pfe-ree-viz registry.plt.et.tu-dresden.de/pfe-ree-viz
+docker build registry.plt.et.tu-dresden.de/pfe-ree-viz .
 docker push registry.plt.et.tu-dresden.de/pfe-ree-viz 
 ```
 
