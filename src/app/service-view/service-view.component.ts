@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import * as moment from 'moment';
-import {ModuleInterface, ServiceInterface, StrategyInterface} from 'pfe-ree-interface';
+import {ModuleInterface, ServiceInterface, StrategyInterface} from '@plt/pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 
@@ -11,7 +11,6 @@ import {BackendService} from '../_services/backend.service';
     styleUrls: ['./service-view.component.css']
 })
 export class ServiceViewComponent implements OnInit, OnDestroy {
-
     @Input() service: ServiceInterface;
     @Input() module: ModuleInterface;
 
@@ -52,19 +51,6 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
             .subscribe((data) => {
                 console.log('command sent', data);
             });
-    }
-
-    commandEnabled(command): boolean {
-        return (command === 'start' && this.service.status === 'IDLE') ||
-            (command === 'restart' && this.service.status === 'RUNNING') ||
-            (command === 'complete' && this.service.status === 'RUNNING') ||
-            (command === 'reset' &&
-                (this.service.status === 'COMPLETED' ||
-                    this.service.status === 'STOPPED' ||
-                    this.service.status === 'ABORTED')) ||
-            (command === 'pause' && this.service.status === 'RUNNING') ||
-            (command === 'unhold' && this.service.status === 'HELD') ||
-            (command === 'resume' && this.service.status === 'PAUSED');
     }
 
     private updateDuration() {

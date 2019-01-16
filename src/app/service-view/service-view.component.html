@@ -40,21 +40,21 @@
     </div>
   </form>
   <mat-action-row>
-    <button mat-button [disabled]="!commandEnabled('start')" color="primary"
-            (click)="sendCommand('start', parameterForm)">Start
+    <button mat-button [disabled]="!service.controlEnable.start" color="primary"
+            (click)="sendCommand('start', parameterForm)"><mat-icon>play_arrow</mat-icon>Start
     </button>
-      <button mat-button [disabled]="!commandEnabled('restart')" color="primary"
-              (click)="sendCommand('restart', parameterForm)">Restart
+      <button mat-button [disabled]="!service.controlEnable.restart" color="primary"
+              (click)="sendCommand('restart', parameterForm)"><mat-icon>play_circle_outline</mat-icon>Restart
       </button>
-    <button mat-button [disabled]="!commandEnabled('complete')" color="primary" (click)="sendCommand('complete')">
+    <button mat-button [disabled]="!service.controlEnable.complete" color="primary" (click)="sendCommand('complete')"><mat-icon>skip_next</mat-icon>
       Complete
     </button>
-    <button mat-button [disabled]="!commandEnabled('reset')" color="primary" (click)="sendCommand('reset')">Reset
+    <button mat-button [disabled]="!service.controlEnable.reset" color="primary" (click)="sendCommand('reset')"><mat-icon>replay</mat-icon>Reset
     </button>
-    <button mat-button [disabled]="!commandEnabled('pause')" (click)="sendCommand('pause')">Pause</button>
-    <button mat-button [disabled]="!commandEnabled('resume')" (click)="sendCommand('resume')">Resume</button>
-    <button mat-button [disabled]="!commandEnabled('unhold')" (click)="sendCommand('unhold')">Unhold</button>
-    <button mat-button color="warn" (click)="sendCommand('stop')">Stop</button>
-    <button mat-button color="warn" (click)="sendCommand('abort')">Abort</button>
+    <button mat-button [disabled]="!service.controlEnable.pause" (click)="sendCommand('pause')"><mat-icon>pause_circle_filled</mat-icon>Pause</button>
+    <button mat-button [disabled]="!service.controlEnable.resume" (click)="sendCommand('resume')"><mat-icon>play_circle_filled</mat-icon>Resume</button>
+    <button mat-button [disabled]="!service.controlEnable.unhold" (click)="sendCommand('unhold')"><mat-icon>sync</mat-icon>Unhold</button>
+    <button mat-button [disabled]="!service.controlEnable.stop" color="warn" (click)="sendCommand('stop')"><mat-icon>stop</mat-icon>Stop</button>
+    <button mat-button [disabled]="!service.controlEnable.abort" color="warn" (click)="sendCommand('abort')"><mat-icon>error</mat-icon>Abort</button>
   </mat-action-row>
 </mat-expansion-panel>

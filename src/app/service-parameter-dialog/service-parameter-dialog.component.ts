@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {ModuleInterface, ParameterOptions, ServiceInterface} from 'pfe-ree-interface';
+import {ModuleInterface, ParameterOptions, ServiceInterface} from '@plt/pfe-ree-interface';
 import {BackendService} from '../_services/backend.service';
 
 @Component({

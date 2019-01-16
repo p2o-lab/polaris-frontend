@@ -1,11 +1,13 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, ServiceInterface} from 'pfe-ree-interface';
+import {
+    ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, RecipeState, Repeat,
+    ServiceInterface
+} from '@plt/pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
-import {RecipeState, Repeat} from 'pfe-ree-interface/dist/enum';
 
 @Injectable({
     providedIn: 'root'
@@ -20,16 +22,15 @@ export class BackendService {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
                 const data: { message: string, data: any } = JSON.parse(msg.data);
-                console.log('ws received', data);
+                console.log('ws received', data.message, data.data);
                 if (data.message === 'recipes') {
                     this.refreshRecipes();
                 }
                 if (data.message === 'module') {
                     if (data.data) {
                         if (data.data.module) {
-                            const newModules = this._modules.getValue();
-                            const newModule = newModules.find((module) => module.id === data.data.module);
-                            if (newModule) {
+                            const newModule = this.modules.find((module) => module.id === data.data.module);
+                            if (newModule && newModule.services) {
                                 const newService = newModule.services.find((service) => service.name === data.data.service);
                                 if (data.data.lastChange) {
                                     newService.lastChange = data.data.lastChange;
@@ -40,7 +41,9 @@ export class BackendService {
                                 if (data.data.errorMessage) {
                                     newService.error = data.data.errorMessage;
                                 }
-                                this._modules.next(newModules);
+                                if (data.data.controlEnable) {
+                                    newService.controlEnable = data.data.controlEnable;
+                                }
                             }
                         }
                     } else {
@@ -66,11 +69,8 @@ export class BackendService {
         this.refreshPlayer();
     }
 
-    private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject<ModuleInterface[]>([]);
+    public modules: ModuleInterface[] = [];
 
-    get modules(): Observable<ModuleInterface[]> {
-        return this._modules.asObservable();
-    }
 
     private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
@@ -83,7 +83,7 @@ export class BackendService {
     currentItem: undefined,
     repeat: Repeat.none,
     status: RecipeState.idle,
-        currentRecipeRun: undefined});
+        recipeRuns: []});
 
     private _autoReset: boolean;
 
@@ -123,7 +123,7 @@ export class BackendService {
     refreshModules() {
         this.http.get(`${this.settings.apiUrl}/module`).subscribe((data: ModuleInterface[]) => {
             console.log('modules refreshed via HTTP GET', data);
-            this._modules.next(data);
+            this.modules = data;
         });
     }
 

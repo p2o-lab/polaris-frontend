@@ -18,7 +18,7 @@
       </a>
       <a mat-list-item routerLink="/modules" routerLinkActive="active">
         <mat-icon mat-list-icon>view_module</mat-icon>
-        <span matBadgeOverlap="false" [matBadge]="(backend.modules | async).length">Modules</span>
+        <span matBadgeOverlap="false" [matBadge]="backend.modules.length">Modules</span>
       </a>
       <a mat-list-item routerLink="/logs" routerLinkActive="active">
         <mat-icon mat-list-icon>history</mat-icon>
@@ -44,8 +44,11 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-        <span class="fill-remaining-space">PFE Visualization by P2O-Lab</span>
-        <!--<button mat-button class="mat-warn">ABORT ALL services</button>-->
+        <span class="fill-remaining-space">PFE Recipe Engine by P2O-Lab</span>
+        <!--
+          <button mat-button>STOP ALL services</button>
+          <button mat-button>ABORT ALL services</button>
+        -->
         <img height="48px" src="assets/P2O-RGB.png">
     </mat-toolbar>
     <!-- Add Content Here -->

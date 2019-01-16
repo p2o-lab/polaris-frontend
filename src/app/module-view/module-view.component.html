@@ -2,7 +2,7 @@
 
 <button mat-button routerLink="/modules/new">Add Module</button>
 
-<mat-card class="dashboard-card" *ngFor="let module of modules">
+<mat-card class="dashboard-card" *ngFor="let module of backend.modules">
   <mat-card-header>
     <mat-card-title>
       <h2 class="mat-h2">{{module.id}}</h2>

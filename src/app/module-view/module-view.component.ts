@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {ModuleInterface} from 'pfe-ree-interface';
-import {ServiceInterface} from 'pfe-ree-interface/dist/interfaces';
+import {ModuleInterface, ServiceInterface} from '@plt/pfe-ree-interface';
 import {BackendService} from '../_services/backend.service';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
@@ -12,55 +11,25 @@ import {ServiceParameterDialogComponent} from '../service-parameter-dialog/servi
 })
 export class ModuleViewComponent implements OnInit {
 
-  public modules: ModuleInterface[] = [];
-
-  constructor(private backend: BackendService,
+  constructor(public backend: BackendService,
               public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.backend.refreshModules();
-
-    // update modules without replacing the whole object since this would close the accordion
-    this.backend.modules.subscribe((modulesUpdates: ModuleInterface[]) => {
-      // this.modules = modules;
-      modulesUpdates.forEach((moduleUpdated: ModuleInterface) => {
-        const module = this.modules.find((moduleFind) => moduleFind.id === moduleUpdated.id);
-        if (module) {
-            module.connected = moduleUpdated.connected;
-            if (module.services) {
-                if (moduleUpdated.services) {
-                    moduleUpdated.services.forEach((serviceUpdated: ServiceInterface) => {
-                        const service: ServiceInterface = module.services
-                            .find((serviceFind) => serviceFind.name === serviceUpdated.name);
-                        service.status = serviceUpdated.status;
-                        service.error = serviceUpdated.error;
-                        service.lastChange = serviceUpdated.lastChange;
-                    });
-                } else {
-                    module.services = moduleUpdated.services;
-                }
-            }
-        } else {
-          this.modules.push(moduleUpdated);
-        }
-      });
-    });
   }
 
   connect(module: string) {
       this.backend.connect(module).subscribe((data) => {
           console.log('Connect result', data);
-          const index = this.modules.findIndex((mod) => module === mod.id);
-          this.modules.splice(index, 1);
       });
 
   }
 
   disconnect(module: string) {
       this.backend.disconnect(module).subscribe((data) => {
-          const index = this.modules.findIndex((mod) => module === mod.id);
-          this.modules.splice(index, 1);
+          const index = this.backend.modules.findIndex((mod) => module === mod.id);
+          this.backend.modules.splice(index, 1);
           console.log('Disconnect result', data);
       });
   }
