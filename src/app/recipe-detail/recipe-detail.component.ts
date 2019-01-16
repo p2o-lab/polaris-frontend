@@ -2,7 +2,7 @@ import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {RecipeInterface} from 'pfe-ree-interface';
+import {RecipeInterface} from '@plt/pfe-ree-interface';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/internal/operators';
 import {BackendService} from '../_services/backend.service';
