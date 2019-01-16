@@ -13,10 +13,16 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "docker": "npm run build && docker build -t registry.plt.et.tu-dresden.de/pfe-ree-viz .",
-    "docker-pi": "npm run build && docker build -t registry.plt.et.tu-dresden.de/pfe-ree-viz/arm ."
+    "docker-pi": "npm run build && docker build -t registry.plt.et.tu-dresden.de/pfe-ree-viz/arm .",
+    "deploy": "docker-deploy"
   },
   "publishConfig": {
     "registry": "https://registry.plt.et.tu-dresden.de:4873"
+  },
+  "config": {
+    "docker": {
+      "imageName": "registry.plt.et.tu-dresden.de/pfe-ree-viz"
+    }
   },
   "dependencies": {
     "@angular/animations": "^6.1.0",
@@ -49,6 +55,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
+    "docker-deploy": "0.0.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
