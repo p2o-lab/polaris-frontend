@@ -7,7 +7,7 @@ export class SettingsService {
   @LocalStorage() public apiUrl: string;
 
   constructor() {
-    this.apiUrl = this.apiUrl || window.location + 'api';
+    this.apiUrl = this.apiUrl || window.location.protocol + '//' + window.location.hostname + ':3000/api';
   }
 
 }

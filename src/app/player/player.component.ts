@@ -1,6 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {PlayerInterface, RecipeInterface, StepOptions} from '@plt/pfe-ree-interface';
+import {
+    ConditionOptions, ConditionType, PlayerInterface, RecipeInterface, StepOptions,
+    TransitionOptions
+} from '@plt/pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import * as moment from 'moment';
@@ -65,7 +68,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     start() {
         this.backend.startPlayer().subscribe(
             (data) => console.log('start player', data),
-            (error) => this.snackBar.open('Could not connect to all modules', 'Dismiss'));
+            (error) => this.snackBar.open(error, 'Dismiss'));
     }
 
     reset() {
@@ -88,8 +91,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.backend.abortAllServices().subscribe((data) => this.backend.refreshPlayer());
     }
 
-    forceTransition(currentStep, nextStep) {
-        this.backend.playerForceTransition(currentStep, nextStep).subscribe((data) => console.log(data));
+    forceTransition(nextStep) {
+        this.backend.playerForceTransition(this.currentStep.name, nextStep).subscribe((data) => console.log(data));
     }
 
     remove(id: number) {
@@ -97,6 +100,32 @@ export class PlayerComponent implements OnInit, OnDestroy {
                 this.backend.refreshPlayer();
             }
         );
+    }
+
+    /**
+     * formats transition options
+     * @param {ConditionOptions} condition
+     * @returns {string}
+     */
+    conditionToString(condition: ConditionOptions) {
+        if (condition.type === ConditionType.time) {
+            return `duration == ${condition.duration}`;
+        }
+        if (condition.type === ConditionType.state) {
+            return `${condition.module}.${condition.service} == ${condition.state}`;
+        }
+        if (condition.type === ConditionType.variable) {
+            return `${condition.module}.${condition.variable} ${condition.operator} ${condition.value}`;
+        }
+        if (condition.type === ConditionType.not) {
+            return `!(${this.conditionToString(condition.condition)})`;
+        }
+        if (condition.type === ConditionType.and) {
+            return condition.conditions.map((c) => `(${this.conditionToString(c)})`).join(' && ');
+        }
+        if (condition.type === ConditionType.or) {
+            return condition.conditions.map((c) => `(${this.conditionToString(c)})`).join(' || ');
+        }
     }
 
     private updateDuration() {

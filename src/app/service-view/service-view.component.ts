@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
-import {ModuleInterface, ServiceInterface, StrategyInterface} from '@plt/pfe-ree-interface';
+import {ModuleInterface, ParameterOptions, ServiceInterface} from '@plt/pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 
@@ -14,7 +14,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     @Input() service: ServiceInterface;
     @Input() module: ModuleInterface;
 
-    public strategy: StrategyInterface;
+    strategyFormControl: FormControl = new FormControl('', new FormControl());
+    strategyParameterFormGroup: FormGroup = new FormGroup({}, {updateOn: 'blur'});
 
     public changeDuration: string;
     private timer: Subscription;
@@ -23,9 +24,29 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (this.service.strategies) {
-            this.strategy = this.service.strategies.find((strategy) => strategy.default);
+        let newStrategy = this.service.strategies.find((strategy) => strategy.id === this.service.currentStrategy);
+        if (!newStrategy && this.service.strategies) {
+            newStrategy = this.service.strategies.find((strategy) => strategy.default);
         }
+        this.strategyFormControl.valueChanges.subscribe((strategy) => {
+            this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
+            strategy.parameters.forEach((param) => {
+                this.strategyParameterFormGroup.registerControl(param.name, new FormControl()).setValue(param.value);
+            });
+            this.strategyParameterFormGroup.valueChanges
+                .subscribe((data) => {
+                    console.log('Strategy parameter changed', this.module.id, this.service.name, data);
+                    this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value, this.getParameter())
+                        .subscribe((data) => {
+                            console.log('parameter sent', data);
+                        });
+                });
+        });
+        this.strategyFormControl.setValue(newStrategy);
+        if (this.service.strategies.length === 1) {
+            this.strategyFormControl.disable();
+        }
+
         this.timer = timer(0, 1000)
             .subscribe(() => this.updateDuration());
     }
@@ -34,18 +55,19 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         this.timer.unsubscribe();
     }
 
-    sendCommand(command: string, parameterForm?: NgForm) {
-        const strategy: string = this.strategy ? this.strategy.name : undefined;
-        const parameters = [];
-
-        if (parameterForm) {
-            Object.keys(parameterForm.value).forEach((key) => {
-                if (key !== 'selectedStrategy') {
-                    parameters.push({name: key.replace(this.service.name + '>', ''), value: parameterForm.value[key]});
-                }
+    private getParameter(): ParameterOptions[] {
+        return Object.keys(this.strategyParameterFormGroup.value)
+            .map((key) => {
+                return {
+                    name: key,
+                    value: this.strategyParameterFormGroup.value[key]
+                };
             });
-        }
-        console.log('Strategy', strategy, 'Parameters', parameters);
+    }
+
+    sendCommand(command: string) {
+        const strategy: string = this.strategyFormControl.value.name;
+        const parameters: any[] = this.getParameter();
 
         this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
             .subscribe((data) => {
