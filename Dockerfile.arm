@@ -2,7 +2,6 @@
 FROM catchdigital/node-sass as build
 WORKDIR /app
 COPY . .
-RUN npm config set @plt:registry https://registry.plt.et.tu-dresden.de:4873
 RUN npm install
 RUN npm run build
 
