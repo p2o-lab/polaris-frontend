@@ -1,0 +1,70 @@
+clone:
+  git:
+    image: plugins/git
+    skip_verify: true
+
+
+pipeline:
+
+  build:
+    image: node:8-jessie
+    commands:
+      - npm config set @plt:registry https://registry.plt.et.tu-dresden.de:4873 
+      - npm install
+      - npm run-script build
+
+  docker-develop:
+    image: docker
+    privileged: true
+    commands:
+      - docker build -t registry.plt.et.tu-dresden.de/pfe-ree-viz:develop .
+      - docker build -f Dockerfile.arm -t registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm .
+      - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:develop
+      - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm
+      - docker rm registry.plt.et.tu-dresden.de/pfe-ree-viz:develop registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+      branch:
+        - develop
+
+  docker-stable:
+    image: docker
+    privileged: true
+    commands:
+      - docker build -t registry.plt.et.tu-dresden.de/pfe-ree-viz:stable .
+      - docker build -f Dockerfile.arm -t registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm .
+      - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:stable
+      - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm
+      - docker rm registry.plt.et.tu-dresden.de/pfe-ree-viz:stable registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+      branch:
+        - stable
+
+  docker-tag:
+    image: docker
+    privileged: true
+    commands:
+      - docker build -t "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}" .
+      - docker build -f Dockerfile.arm -t "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm" .
+      - docker push "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}"
+      - docker push "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm"
+      - docker rmi "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}" "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+       event:
+       - tag
+
+  notify:
+    image: drillster/drone-email
+    host: mail.zih.tu-dresden.de
+    username: plt
+    password: $EMAIL_PASSWORD
+    secrets: [ email_password ]
+    from: plt@mailbox.tu-dresden.de
+    recipients: [ markus.graube@tu-dresden.de ]
+    when:
+      status: [ changed, failure ]
