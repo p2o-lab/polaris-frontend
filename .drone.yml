@@ -6,13 +6,6 @@ clone:
 
 pipeline:
 
-  build:
-    image: node:8-jessie
-    commands:
-      - npm config set @plt:registry https://registry.plt.et.tu-dresden.de:4873 
-      - npm install
-      - npm run-script build
-
   docker-develop:
     image: docker
     privileged: true
@@ -61,10 +54,10 @@ pipeline:
   notify:
     image: drillster/drone-email
     host: mail.zih.tu-dresden.de
-    username: plt
+    username: mgraube
     password: $EMAIL_PASSWORD
     secrets: [ email_password ]
-    from: plt@mailbox.tu-dresden.de
+    from: markus.graube@tu-dresden.de
     recipients: [ markus.graube@tu-dresden.de ]
     when:
       status: [ changed, failure ]
