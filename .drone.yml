@@ -14,7 +14,7 @@ pipeline:
       - docker build -f Dockerfile.arm -t registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm .
       - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:develop
       - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm
-      - docker rm registry.plt.et.tu-dresden.de/pfe-ree-viz:develop registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm
+      - docker rm image registry.plt.et.tu-dresden.de/pfe-ree-viz:develop registry.plt.et.tu-dresden.de/pfe-ree-viz:develop-arm
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
@@ -29,7 +29,7 @@ pipeline:
       - docker build -f Dockerfile.arm -t registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm .
       - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:stable
       - docker push registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm
-      - docker rm registry.plt.et.tu-dresden.de/pfe-ree-viz:stable registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm
+      - docker rm image registry.plt.et.tu-dresden.de/pfe-ree-viz:stable registry.plt.et.tu-dresden.de/pfe-ree-viz:stable-arm
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
@@ -44,7 +44,7 @@ pipeline:
       - docker build -f Dockerfile.arm -t "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm" .
       - docker push "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}"
       - docker push "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm"
-      - docker rmi "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}" "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm"
+      - docker rm image "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}" "registry.plt.et.tu-dresden.de/pfe-ree-viz:${DRONE_TAG##v}-arm"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
