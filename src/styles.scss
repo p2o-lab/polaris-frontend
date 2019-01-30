@@ -9,7 +9,6 @@
 
 // Define a theme.
 $palette-primary: mat-palette($mat-indigo);
-//$palette-accent:  mat-palette($mat-pink, A200, A100, A400);
 $palette-accent: mat-palette($mat-purple);
 $palette-warn: mat-palette($mat-red);
 $theme: mat-light-theme($palette-primary, $palette-accent, $palette-warn);
@@ -33,4 +32,3 @@ html, body {
 body {
   margin: 0;
 }
-

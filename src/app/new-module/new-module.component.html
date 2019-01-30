@@ -5,7 +5,6 @@
   <button type="button" mat-button (click)="imgFileInput.click()">Load from file</button>
   <input hidden type="file" #imgFileInput (change)="previewFile($event)"/>
 </p>
-
 <mat-form-field class="example-container">
           <textarea matInput placeholder="Module options" matTextareaAutosize
                     matAutosizeMinRows="5"
@@ -15,6 +14,6 @@
 </mat-form-field>
 
 <p>
-  <button mat-button [disabled]="module==undefined" (click)="addModule()">Add</button>
-  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" [disabled]="module==undefined" (click)="addModule()">Add</button>
+  <button mat-button color="warn" (click)="cancel()">Cancel</button>
 </p>

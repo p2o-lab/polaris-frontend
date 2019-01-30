@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {
     ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, RecipeState, Repeat,
-    ServiceInterface
+    ServiceInterface, StrategyInterface
 } from '@plt/pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
@@ -31,7 +31,8 @@ export class BackendService {
                         if (data.data.module) {
                             const newModule = this.modules.find((module) => module.id === data.data.module);
                             if (newModule && newModule.services) {
-                                const newService = newModule.services.find((service) => service.name === data.data.service);
+                                const newService = newModule.services
+                                    .find((service) => service.name === data.data.service);
                                 if (data.data.lastChange) {
                                     newService.lastChange = data.data.lastChange;
                                 }
@@ -116,8 +117,17 @@ export class BackendService {
         if (parameters) {
             body.parameters = parameters;
         }
-
         return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
+    }
+
+    configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
+        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/parameter`,
+            {parameters: parameterOptions});
+    }
+
+    configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters: ParameterOptions[]) {
+        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
+            {strategy: strategy.name, parameters});
     }
 
     refreshModules() {
@@ -210,13 +220,11 @@ export class BackendService {
         return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
     }
 
-    configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/configure`,
-            {parameters: parameterOptions});
+    playerForceTransition(currentStep: string, nextStep: string) {
+        const body = {stepName: currentStep, nextStepName: nextStep};
+        console.log("body", body);
+        return this.http.post(`${this.settings.apiUrl}/player/forceTransition`, body);
     }
 
-    playerForceTransition(currentStep: string, nextStep: string) {
-        return this.http.post(`${this.settings.apiUrl}/player/forceTransition`,
-            {currentStep, nextStep});
-    }
+
 }

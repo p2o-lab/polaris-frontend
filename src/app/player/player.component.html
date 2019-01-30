@@ -1,69 +1,74 @@
 <h1 class="mat-h1">Recipe Player</h1>
 
 <mat-card class="recipe-card" *ngIf="player">
-  <mat-card-header>
-    <mat-card-title>
-      <h2 class="mat-h2"><span *ngIf="currentRecipe">{{currentRecipe?.options.name}}</span><span *ngIf="!currentRecipe">No recipe active</span></h2>
-    </mat-card-title>
-      <mat-card-subtitle>
-          Current Recipe
-      </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-      <div *ngIf="currentRecipe">
-          <p>Current Step: <span class="mat-body-strong">{{currentRecipe?.currentStep}}</span></p>
-          <p class="with-icon"><mat-icon>timelapse</mat-icon>{{changeDuration}}</p>
-          <p>Operations:
-              <span class="mat-body-strong">
-          <p *ngFor="let operation of currentStep?.operations">
-          <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
-          ->
-              {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
-          </p>
-          </span>
-          </p>
-          <p>Transitions:
-              <span class="mat-body-strong">
-          <p *ngFor="let transition of currentStep?.transitions">
-              {{transition.next_step}}: {{transition.condition | json}}
-          </p>
-          </span>
-          </p>
-      </div>
-
-    <mat-card-actions *ngIf="currentRecipe">
-        <button mat-button [routerLink]="['recipe', currentRecipe.id]">Details</button>
-        <button (click)="forceTransition()" color="warn" mat-button>
-            <mat-icon>skip_next</mat-icon>
-            Force Transition
-        </button>
-    </mat-card-actions>
-  </mat-card-content>
+    <mat-card-header>
+        <mat-card-title>
+            <h2 class="mat-h2"><span *ngIf="currentRecipe">{{currentRecipe?.options.name}}</span><span
+                    *ngIf="!currentRecipe">No recipe active</span></h2>
+        </mat-card-title>
+        <mat-card-subtitle>
+            Current Recipe
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content *ngIf="currentRecipe">
+        <mat-list>
+            <mat-list-item>
+                <p matLine><strong>{{currentRecipe?.currentStep}}</strong></p>
+                <p matLine><span class="with-icon"><mat-icon>timer</mat-icon>&nbsp;{{changeDuration}}</span></p>
+            </mat-list-item>
+            <mat-list-item>
+                <p matLine>Operations</p>
+                <p matLine *ngIf="currentStep?.operations.length==0"><span class="with-icon"><mat-icon>chevron_right</mat-icon>&nbsp;No operation</span></p>
+                <p matLine *ngFor="let operation of currentStep?.operations">
+                    <span class="with-icon">
+                    <mat-icon>chevron_right</mat-icon>&nbsp;
+                    <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
+                        *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small *ngIf="operation.parameter">{{parameterToString(operation.parameter)}}</small>)
+                        </span>
+                </p>
+            </mat-list-item>
+            <mat-list-item>
+                <p matLine>Transitions</p>
+                <p matLine *ngFor="let transition of currentStep?.transitions">
+                    <span class="with-icon">
+                    {{conditionToString(transition.condition)}}
+                    &nbsp;<mat-icon>arrow_right_alt</mat-icon>&nbsp;
+                    {{transition.next_step}}
+                &nbsp;<button (click)="forceTransition(transition.next_step)" color="warn" mat-button>
+                    <mat-icon>skip_next</mat-icon>
+                    Force Transition
+                </button>
+                        </span>
+                </p>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
 </mat-card>
 
 <mat-card class="recipe-card">
-  <mat-card-header>
-    <mat-card-title>
-      <h2 class="mat-h2">Playlist</h2>
-    </mat-card-title>
-      <mat-card-subtitle>
-          {{player.status}} <span
-              *ngIf="player.status==='running'">({{player.currentItem+1}}/{{player.playlist.length}})</span>
-      </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-list *ngIf="player && player.playlist">
-      <mat-list-item *ngFor="let item of player.playlist; let i = index"
-                     [class.active]="i == player.currentItem && player.status==='running'">
-        {{i+1}}. {{item.options.name}}
-        <span class="right">
-        <small>({{item.options.steps.length}} steps)</small>
-        <button mat-button (click)="remove(i)"><mat-icon mat-list-icon>remove_circle</mat-icon></button>
-          </span>
-      </mat-list-item>
-    </mat-list>
-    <span *ngIf="player.playlist.length==0">No recipes added to playlist. Go to recipes to <a routerLink="/recipe">recipes</a> add them.</span>
-  </mat-card-content>
+    <mat-card-header>
+        <mat-card-title>
+            <h2 class="mat-h2">Playlist</h2>
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{player.status}} <span
+                *ngIf="player.status==='running'">({{player.currentItem+1}}/{{player.playlist.length}})</span>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list *ngIf="player && player.playlist">
+            <mat-list-item *ngFor="let item of player.playlist; let i = index"
+                           [class.active]="i == player.currentItem && player.status==='running'">
+                {{i+1}}. {{item.options.name}}
+                <span class="right">
+                    <button mat-button [routerLink]="['/recipe', item.id]"><mat-icon
+                            mat-list-icon>linear_scale</mat-icon>{{item.options.steps.length}} steps</button>
+                    <button mat-button (click)="remove(i)"><mat-icon mat-list-icon>delete</mat-icon>remove recipe</button>
+                </span>
+            </mat-list-item>
+        </mat-list>
+        <span *ngIf="player.playlist.length==0">No recipes added to playlist. Go to recipes to <a routerLink="/recipe">recipes</a> add them.</span>
+    </mat-card-content>
     <mat-card-actions *ngIf="player">
         <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button>
             <mat-icon>play_arrow</mat-icon>
@@ -93,9 +98,10 @@
     <mat-card-content>
         <mat-list *ngIf="player.recipeRuns">
             <mat-list-item *ngFor="let run of player.recipeRuns">
-                {{run.startTime}} &nbsp; {{run.name}} &nbsp; <small>{{run.endTime}}</small>
+                {{run.startTime}} &nbsp; {{run.name}} &nbsp;
+                <small>{{run.endTime}}</small>
                 <span class="right">
-        <a mat-button [href]="settings.apiUrl+'/recipeRun/'+run.id"><mat-icon>cloud_download</mat-icon> Download Log</a>
+        <a mat-button [href]="settings.apiUrl+'/recipeRun/'+run.id"><mat-icon>get_app</mat-icon> Download Log</a>
           </span>
             </mat-list-item>
         </mat-list>

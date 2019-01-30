@@ -12,34 +12,25 @@
     Error: {{service.error}}
   </mat-error>
   </p>
-  <form #parameterForm="ngForm">
-    <p *ngFor="let param of service.parameters">
+  <mat-form-field>
+    <mat-select [formControl]="strategyFormControl" placeholder="Strategy">
+      <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">
+        {{strategy.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <form [formGroup]="strategyParameterFormGroup">
+    <p *ngFor="let param of strategyFormControl.value.parameters">
       <mat-form-field>
-        <input matInput type="number" [name]="service.name + '>' + param.name" [ngModel]="param.value"
+        <input matInput [type]="param.readonly?'text':'number'" [formControlName]="param.name"
                [placeholder]="param.name" [min]="param.min" [max]="param.max">
+        {{param.json}}
+        <span matSuffix>{{param.unit}}</span>
         <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
       </mat-form-field>
     </p>
-      <mat-form-field *ngIf="service.strategies.length>1">
-          <mat-select name="selectedStrategy" [(ngModel)]="strategy" placeholder="Strategy"
-                      [disabled]="service.strategies.length <= 1">
-              <mat-option *ngFor="let strat of service.strategies" [value]="strat">
-                  {{strat.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div *ngIf="strategy">
-      <p *ngFor="let param of strategy.parameters">
-        <mat-form-field>
-          <input matInput type="number" [name]="service.name + '>' + param.name" [ngModel]="param.value"
-                 [placeholder]="param.name" [min]="param.min" [max]="param.max">
-          <span matSuffix>{{param.unit}}</span>
-          <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
-        </mat-form-field>
-      </p>
-    </div>
   </form>
-  <mat-action-row>
+  <mat-action-row *ngIf="service.controlEnable">
     <button mat-button [disabled]="!service.controlEnable.start" color="primary"
             (click)="sendCommand('start', parameterForm)"><mat-icon>play_arrow</mat-icon>Start
     </button>
