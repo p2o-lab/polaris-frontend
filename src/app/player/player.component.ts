@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {
-    ConditionOptions, ConditionType, PlayerInterface, RecipeInterface, StepOptions,
+    ConditionOptions, ConditionType, ParameterInterface, PlayerInterface, RecipeInterface, StepOptions,
     TransitionOptions
 } from '@plt/pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
@@ -112,10 +112,18 @@ export class PlayerComponent implements OnInit, OnDestroy {
             return `duration == ${condition.duration}`;
         }
         if (condition.type === ConditionType.state) {
-            return `${condition.module}.${condition.service} == ${condition.state}`;
+            if (condition.module) {
+                return `${condition.module}.${condition.service} == ${condition.state}`;
+            } else {
+                return `${condition.service} == ${condition.state}`;
+            }
         }
         if (condition.type === ConditionType.variable) {
-            return `${condition.module}.${condition.variable} ${condition.operator} ${condition.value}`;
+            if (condition.module) {
+                return `${condition.module}.${condition.variable} ${condition.operator} ${condition.value}`;
+            } else {
+                return `${condition.variable} ${condition.operator} ${condition.value}`;
+            }
         }
         if (condition.type === ConditionType.not) {
             return `!(${this.conditionToString(condition.condition)})`;
@@ -126,6 +134,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
         if (condition.type === ConditionType.or) {
             return condition.conditions.map((c) => `(${this.conditionToString(c)})`).join(' || ');
         }
+    }
+
+    parameterToString(parameter: ParameterInterface[]) {
+        return parameter.map((param) => `${param.name}=${param.value}`).join(', ');
     }
 
     private updateDuration() {

@@ -22,7 +22,7 @@
   <form [formGroup]="strategyParameterFormGroup">
     <p *ngFor="let param of strategyFormControl.value.parameters">
       <mat-form-field>
-        <input matInput type="number" [formControlName]="param.name"
+        <input matInput [type]="param.readonly?'text':'number'" [formControlName]="param.name"
                [placeholder]="param.name" [min]="param.min" [max]="param.max">
         {{param.json}}
         <span matSuffix>{{param.unit}}</span>

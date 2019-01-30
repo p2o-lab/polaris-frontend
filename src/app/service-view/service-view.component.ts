@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
-import {ModuleInterface, ParameterOptions, ServiceInterface} from '@plt/pfe-ree-interface';
+import {ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface} from '@plt/pfe-ree-interface';
 import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 
@@ -30,8 +30,9 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         }
         this.strategyFormControl.valueChanges.subscribe((strategy) => {
             this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
-            strategy.parameters.forEach((param) => {
-                this.strategyParameterFormGroup.registerControl(param.name, new FormControl()).setValue(param.value);
+            strategy.parameters.forEach((param: ParameterInterface) => {
+                this.strategyParameterFormGroup
+                    .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
             });
             this.strategyParameterFormGroup.valueChanges
                 .subscribe((data) => {
