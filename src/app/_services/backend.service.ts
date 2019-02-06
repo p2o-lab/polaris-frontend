@@ -14,6 +14,17 @@ import {WebsocketService} from './websocket.service';
 })
 export class BackendService {
 
+    public modules: ModuleInterface[] = [];
+    private _player: BehaviorSubject<PlayerInterface> = new BehaviorSubject<PlayerInterface>(
+        {    playlist: [],
+            currentItem: undefined,
+            repeat: Repeat.none,
+            status: RecipeState.idle,
+            recipeRuns: []});
+
+    private _autoReset: boolean;
+
+
     constructor(private http: HttpClient,
                 private settings: SettingsService,
                 private ws: WebsocketService,
@@ -39,9 +50,6 @@ export class BackendService {
                                 if (data.data.state) {
                                     newService.status = data.data.state;
                                 }
-                                if (data.data.errorMessage) {
-                                    newService.error = data.data.errorMessage;
-                                }
                                 if (data.data.controlEnable) {
                                     newService.controlEnable = data.data.controlEnable;
                                 }
@@ -55,7 +63,7 @@ export class BackendService {
                   const player: PlayerInterface = data.data;
                   this._player.next(player);
                 }
-                if (data.message === 'action'){
+                if (data.message === 'action') {
                     if (data.data === 'recipeCompleted') {
                         this.snackBar.open('Recipe completed', 'Dismiss', {
                             duration: 3500,
@@ -70,23 +78,12 @@ export class BackendService {
         this.refreshPlayer();
     }
 
-    public modules: ModuleInterface[] = [];
-
 
     private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
     get recipes(): Observable<RecipeInterface[]> {
         return this._recipes.asObservable();
     }
-
-    private _player: BehaviorSubject<PlayerInterface> = new BehaviorSubject<PlayerInterface>(
-        {    playlist: [],
-    currentItem: undefined,
-    repeat: Repeat.none,
-    status: RecipeState.idle,
-        recipeRuns: []});
-
-    private _autoReset: boolean;
 
     get autoReset(): boolean {
         return this._autoReset;
@@ -225,6 +222,5 @@ export class BackendService {
         console.log("body", body);
         return this.http.post(`${this.settings.apiUrl}/player/forceTransition`, body);
     }
-
 
 }

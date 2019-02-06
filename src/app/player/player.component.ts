@@ -68,7 +68,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     start() {
         this.backend.startPlayer().subscribe(
             (data) => console.log('start player', data),
-            (error) => this.snackBar.open(error, 'Dismiss'));
+            (error) => this.snackBar.open(error.error.error, 'Dismiss'));
     }
 
     reset() {
@@ -142,7 +142,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     private updateDuration() {
         if (this.currentRecipe) {
-            this.changeDuration = moment(new Date()).to(this.currentRecipe.lastChange);
+            this.currentRecipe.lastChange = this.currentRecipe.lastChange + 1;
+            this.changeDuration = moment.duration(-this.currentRecipe.lastChange, 'seconds').humanize();
         }
     }
 }

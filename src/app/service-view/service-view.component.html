@@ -4,14 +4,9 @@
       {{service.name}}
     </mat-panel-title>
     <mat-panel-description>
-      <span [class.error]="service.error"><span class="serviceState">{{service.status}}</span> <small>({{changeDuration}})</small></span>
+      <span class="serviceState">{{service.status}}</span> <small>({{changeDuration}})</small>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <p *ngIf="service.error">
-  <mat-error>
-    Error: {{service.error}}
-  </mat-error>
-  </p>
   <mat-form-field>
     <mat-select [formControl]="strategyFormControl" placeholder="Strategy">
       <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">
@@ -22,7 +17,7 @@
   <form [formGroup]="strategyParameterFormGroup">
     <p *ngFor="let param of strategyFormControl.value.parameters">
       <mat-form-field>
-        <input matInput [type]="param.readonly?'text':'number'" [formControlName]="param.name"
+        <input matInput [type]="param.type" [formControlName]="param.name"
                [placeholder]="param.name" [min]="param.min" [max]="param.max">
         {{param.json}}
         <span matSuffix>{{param.unit}}</span>
