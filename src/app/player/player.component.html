@@ -23,7 +23,7 @@
                     <span class="with-icon">
                     <mat-icon>chevron_right</mat-icon>&nbsp;
                     <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
-                        *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small *ngIf="operation.parameter">{{parameterToString(operation.parameter)}}</small>)
+                        *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small *ngIf="operation.parameter">{{formatter.parameterToString(operation.parameter)}}</small>)
                         </span>
                 </p>
             </mat-list-item>
@@ -31,7 +31,7 @@
                 <p matLine>Transitions</p>
                 <p matLine *ngFor="let transition of currentStep?.transitions">
                     <span class="with-icon">
-                    {{conditionToString(transition.condition)}}
+                    {{formatter.conditionToString(transition.condition)}}
                     &nbsp;<mat-icon>arrow_right_alt</mat-icon>&nbsp;
                     {{transition.next_step}}
                 &nbsp;<button (click)="forceTransition(transition.next_step)" color="warn" mat-button>

@@ -8,6 +8,7 @@ import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import * as moment from 'moment';
 import {SettingsService} from '../_services/settings.service';
+import {StepFormatterService} from '../step-formatter.service';
 
 @Component({
     selector: 'app-player',
@@ -23,7 +24,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     constructor(private backend: BackendService,
                 public settings: SettingsService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private formatter: StepFormatterService) {
     }
 
     ngOnInit() {
@@ -100,44 +102,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
                 this.backend.refreshPlayer();
             }
         );
-    }
-
-    /**
-     * formats transition options
-     * @param {ConditionOptions} condition
-     * @returns {string}
-     */
-    conditionToString(condition: ConditionOptions) {
-        if (condition.type === ConditionType.time) {
-            return `duration == ${condition.duration}`;
-        }
-        if (condition.type === ConditionType.state) {
-            if (condition.module) {
-                return `${condition.module}.${condition.service} == ${condition.state}`;
-            } else {
-                return `${condition.service} == ${condition.state}`;
-            }
-        }
-        if (condition.type === ConditionType.variable) {
-            if (condition.module) {
-                return `${condition.module}.${condition.variable} ${condition.operator} ${condition.value}`;
-            } else {
-                return `${condition.variable} ${condition.operator} ${condition.value}`;
-            }
-        }
-        if (condition.type === ConditionType.not) {
-            return `!(${this.conditionToString(condition.condition)})`;
-        }
-        if (condition.type === ConditionType.and) {
-            return condition.conditions.map((c) => `(${this.conditionToString(c)})`).join(' && ');
-        }
-        if (condition.type === ConditionType.or) {
-            return condition.conditions.map((c) => `(${this.conditionToString(c)})`).join(' || ');
-        }
-    }
-
-    parameterToString(parameter: ParameterInterface[]) {
-        return parameter.map((param) => `${param.name}=${param.value}`).join(', ');
     }
 
     private updateDuration() {

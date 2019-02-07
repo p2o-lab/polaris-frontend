@@ -44,15 +44,7 @@ export class BackendService {
                             if (newModule && newModule.services) {
                                 const newService = newModule.services
                                     .find((service) => service.name === data.data.service);
-                                if (data.data.lastChange) {
-                                    newService.lastChange = data.data.lastChange;
-                                }
-                                if (data.data.state) {
-                                    newService.status = data.data.state;
-                                }
-                                if (data.data.controlEnable) {
-                                    newService.controlEnable = data.data.controlEnable;
-                                }
+                                Object.assign(newService, data.data);
                             }
                         }
                     } else {

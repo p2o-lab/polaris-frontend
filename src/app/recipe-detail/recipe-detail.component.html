@@ -32,19 +32,28 @@
                       *ngIf="step && step.name == recipe.options.initial_step"> (inital step)</span></h3>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <h4 class="mat-h4">Operations</h4>
           <mat-list>
-            <mat-list-item *ngFor="let operation of step.operations">
-                <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span *ngIf="operation.strategy">.{{operation.strategy}}</span>
-              ->
-              {{operation.command}} <span *ngIf="operation.parameter">{{operation.parameter | json}}</span>
-            </mat-list-item>
-          </mat-list>
-          <h4 class="mat-h4">Transitions</h4>
-          <mat-list>
-            <mat-list-item *ngFor="let transition of step.transitions">
-              {{transition.next_step}}: {{transition.condition | json}}
-            </mat-list-item>
+              <mat-list-item>
+                  <p matLine>Operations</p>
+                  <p matLine *ngIf="step.operations.length==0"><span class="with-icon"><mat-icon>chevron_right</mat-icon>&nbsp;No operation</span></p>
+                  <p matLine *ngFor="let operation of step.operations">
+                    <span class="with-icon">
+                    <mat-icon>chevron_right</mat-icon>&nbsp;
+                    <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
+                            *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small *ngIf="operation.parameter">{{formatter.parameterToString(operation.parameter)}}</small>)
+                        </span>
+                  </p>
+              </mat-list-item>
+              <mat-list-item>
+                  <p matLine>Transitions</p>
+                  <p matLine *ngFor="let transition of step.transitions">
+                    <span class="with-icon">
+                    {{formatter.conditionToString(transition.condition)}}
+                    &nbsp;<mat-icon>arrow_right_alt</mat-icon>&nbsp;
+                    {{transition.next_step}}
+                        </span>
+                  </p>
+              </mat-list-item>
           </mat-list>
         </mat-expansion-panel>
       </mat-accordion>

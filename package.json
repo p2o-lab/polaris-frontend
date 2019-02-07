@@ -25,7 +25,7 @@
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
-    "@plt/pfe-ree-interface": "^1.20.0",
+    "@plt/pfe-ree-interface": "^1.21.1",
     "core-js": "^2.5.4",
     "moment": "^2.22.2",
     "ngx-store": "^2.0.0",
