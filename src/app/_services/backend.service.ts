@@ -64,12 +64,16 @@ export class BackendService {
                 if (data.message === 'variable') {
                     const name = data.data.variable;
                     const value  = data.data.value;
-                    const timestamp = data.data.timestampModule;
+                    const timestamp = data.data.timestampPfe;
                     const variables = this._variables.getValue();
                     if (!variables.find(v => v.name === name)) {
                         variables.push({name: name, series:[]});
                     }
-                    variables.find(v => v.name === name).series.push({name: new Date(timestamp), value: value});
+                    const series: any[] = variables.find(v => v.name === name).series;
+                    series.push({name: new Date(timestamp), value: value});
+                    if (series.length>1000) {
+                        series.shift();
+                    }
                     this._variables.next(variables);
              }
             });

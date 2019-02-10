@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: 'recipe/new', component: NewRecipeComponent},
   {path: 'recipe/:id', component: RecipeDetailComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'timeseries', component: TimeSeriesViewComponent},
+  {path: 'trendview', component: TimeSeriesViewComponent},
   {path: 'about', component: AboutComponent}
 ];
 

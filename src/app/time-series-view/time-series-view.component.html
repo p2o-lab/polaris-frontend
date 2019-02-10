@@ -1,17 +1,28 @@
-
 <mat-card style="height: 100%">
 <mat-card-header>
-  <mat-card-title> <h2 class="mat-h2">TimeSeries</h2></mat-card-title>
+  <mat-card-title> <h2 class="mat-h2">TrendView</h2></mat-card-title>
 </mat-card-header>
   <mat-card-content style="height: 500px">
-<ngx-charts-line-chart
-        autoscale="true"
-        roundDomains="true"
-        [results]="data"
-        xAxis="true" yAxis="true"
-        timeline="true"
-        legend="true">
-
-</ngx-charts-line-chart>
+    <ngx-charts-line-chart
+            autoscale="true"
+            [results]="data"
+            xAxis="true" yAxis="true"
+            legend="true"
+            animation="false"
+    >
+    </ngx-charts-line-chart>
   </mat-card-content>
 </mat-card>
+
+<mat-grid-list cols="4">
+  <mat-grid-tile *ngFor="let variable of data">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h2 class="mat-h2">{{variable.name}}</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{variable.series[variable.series.length-1].value}}
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
