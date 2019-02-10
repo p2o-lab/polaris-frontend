@@ -20,6 +20,7 @@ export class BackendService {
 
     private _autoReset: boolean;
 
+    private _variables: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]) ;
 
     constructor(private http: HttpClient,
                 private settings: SettingsService,
@@ -59,9 +60,31 @@ export class BackendService {
                         });
                     }
                 }
+                if (data.message === 'variable') {
+                    const name = data.data.variable;
+                    const value  = data.data.value;
+                    const timestamp = data.data.timestampModule;
+                    const variables = this._variables.getValue();
+                    if (!variables.find(v => v.name === name)) {
+                        variables.push({name: name, series:[]});
+                    }
+                    variables.find(v => v.name === name).series.push({name: new Date(timestamp), value: value});
+                    this._variables.next(variables);
+             }
             });
         this.refreshModules();
         this.refreshAutoReset();
+    }
+
+
+    private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
+
+    get variables(): Observable<any[]> {
+        return this._variables.asObservable();
+    }
+
+    get recipes(): Observable<RecipeInterface[]> {
+        return this._recipes.asObservable();
     }
 
     get autoReset(): boolean {

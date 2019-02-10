@@ -1,0 +1,17 @@
+
+<mat-card style="height: 100%">
+<mat-card-header>
+  <mat-card-title> <h2 class="mat-h2">TimeSeries</h2></mat-card-title>
+</mat-card-header>
+  <mat-card-content style="height: 500px">
+<ngx-charts-line-chart
+        autoscale="true"
+        roundDomains="true"
+        [results]="data"
+        xAxis="true" yAxis="true"
+        timeline="true"
+        legend="true">
+
+</ngx-charts-line-chart>
+  </mat-card-content>
+</mat-card>

@@ -45,6 +45,8 @@ import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.compone
 import {ServiceParameterDialogComponent} from './service-parameter-dialog/service-parameter-dialog.component';
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
+import { TimeSeriesViewComponent } from './time-series-view/time-series-view.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 moment.updateLocale('en', {
     relativeTime : {
@@ -80,7 +82,8 @@ moment.relativeTimeThreshold('ss', 5);
     RecipeDetailComponent,
     PlayerComponent,
     LogComponent,
-    ServiceParameterDialogComponent
+    ServiceParameterDialogComponent,
+    TimeSeriesViewComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +112,8 @@ moment.relativeTimeThreshold('ss', 5);
     WebStorageModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+      NgxChartsModule
   ],
   entryComponents: [
     ServiceParameterDialogComponent
