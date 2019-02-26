@@ -25,7 +25,7 @@
 <h2 class="mat-h2">Service</h2>
 <img width="60%" src="assets/service_state_machine.png">
 <p>Each service consists of a finite state machine which is used to control the service. For that,
-  commands are used to trigger state transitions.</p>
+    commands on the <a routerLink="/modules">modules view</a> are used to trigger state transitions.</p>
 
 
 <h2 class="mat-h2">Recipes</h2>
@@ -35,7 +35,8 @@
 
 <h2 class="mat-h2">Playlist</h2>
 <p>You can dynamically enqueue recipes in a playlist which then can started. This allows to define a set of recipes
-    which will be executed one after another.</p>
+    which will be executed one after another. The external trigger can also be used to start the playlist.
+    If external trigger is true and the playlist is currently not running, the playlist will be started.</p>
 
 <h2 class="mat-h2">API</h2>
 <a [href]="apiDocUrl">Here</a> is a documentation about the API of REE.

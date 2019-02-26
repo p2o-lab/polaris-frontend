@@ -12,4 +12,6 @@ Module: *10.187.181.219*
 Recipe Engine (Raspberry Pi): *10.187.181.220*
 
 The Recipe Engine  is available under the IP address 10.6.51.43.
-Just open http://10.6.51.43:3000 in your browser and follow the general instruction manual.
+
+
+Just open http://10.6.51.43:3000 in your browser and follow the general instruction manual. The necessary module and the necessary recipes are already loaded at startup.
