@@ -9,6 +9,7 @@ import {BackendService} from '../_services/backend.service';
 import * as moment from 'moment';
 import {SettingsService} from '../_services/settings.service';
 import {StepFormatterService} from '../step-formatter.service';
+import {PlayerService} from '../_services/player.service';
 
 @Component({
     selector: 'app-player',
@@ -22,10 +23,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private timer: Subscription;
     private changeDuration: string;
 
-    constructor(private backend: BackendService,
+    constructor(private backend: PlayerService,
                 public settings: SettingsService,
-                private snackBar: MatSnackBar,
-                private formatter: StepFormatterService) {
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -87,10 +87,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     stop() {
         this.backend.stopPlayer().subscribe((data) => this.backend.refreshPlayer());
-    }
-
-    abort() {
-        this.backend.abortAllServices().subscribe((data) => this.backend.refreshPlayer());
     }
 
     forceTransition(nextStep) {

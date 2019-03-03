@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
-import {BackendService} from '../_services/backend.service';
+import {RecipeService} from '../_services/recipe.service';
 
 @Component({
   selector: 'app-new-recipe',
@@ -12,7 +12,7 @@ export class NewRecipeComponent {
 
   public recipe: string;
 
-  constructor(private backend: BackendService,
+  constructor(private backend: RecipeService,
               private router: Router,
               private snackBar: MatSnackBar) {
   }

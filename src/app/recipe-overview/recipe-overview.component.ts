@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {Router} from '@angular/router';
 import {RecipeInterface} from '@plt/pfe-ree-interface';
-import {BackendService} from '../_services/backend.service';
+import {RecipeService} from '../_services/recipe.service';
+import {PlayerService} from '../_services/player.service';
 
 @Component({
   selector: 'app-recipe-overview',
@@ -13,22 +13,22 @@ export class RecipeOverviewComponent implements OnInit {
 
   recipes: RecipeInterface[] = [];
 
-  constructor(private backend: BackendService,
-              private snackBar: MatSnackBar,
-              private router: Router) {
+  constructor(private recipeService: RecipeService,
+              private playerService: PlayerService,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.backend.refreshRecipes();
-    this.backend.recipes.subscribe((recipes) => this.recipes = recipes);
+    this.recipeService.refreshRecipes();
+    this.recipeService.recipes.subscribe((recipes) => this.recipes = recipes);
   }
 
   addToPlayList(id: string) {
     console.log('Add to Playlist', id);
-    this.backend.enqueueRecipe(id).subscribe(
+    this.playerService.enqueueRecipe(id).subscribe(
         () => {
             // this.router.navigate(['/player']);
-            this.backend.refreshPlayer();
+            this.playerService.refreshPlayer();
             console.log('Recipe added to playlist', id);
         },
       (err) => console.log(err)
@@ -36,7 +36,7 @@ export class RecipeOverviewComponent implements OnInit {
   }
 
   remove(id: string) {
-    this.backend.removeRecipe(id).subscribe((data) => {
+    this.recipeService.removeRecipe(id).subscribe((data) => {
         this.snackBar.open(`Recipe removed`, 'Dismiss');
       },
       (err) => {
