@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {
-    ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, RecipeState, Repeat,
+    ModuleInterface, ParameterOptions, RecipeInterface,
     ServiceInterface, StrategyInterface
 } from '@plt/pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -26,8 +26,9 @@ export class BackendService {
                 private settings: SettingsService,
                 private ws: WebsocketService,
                 private snackBar: MatSnackBar,
-                public recipeService: RecipeService,
-                public playerService: PlayerService) {
+
+                private recipeService: RecipeService,
+                private playerService: PlayerService) {
 
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
