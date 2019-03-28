@@ -26,21 +26,32 @@
     </p>
   </form>
   <mat-action-row *ngIf="service.controlEnable">
-    <button mat-button [disabled]="!service.controlEnable.start" color="primary"
-            (click)="sendCommand('start', parameterForm)"><mat-icon>play_arrow</mat-icon>Start
+    <button mat-button [disabled]="!service.controlEnable.start" color="primary" (click)="sendCommand('start', parameterForm)">
+      <mat-icon>play_arrow</mat-icon> Start
     </button>
-      <button mat-button [disabled]="!service.controlEnable.restart" color="primary"
-              (click)="sendCommand('restart', parameterForm)"><mat-icon>play_circle_outline</mat-icon>Restart
-      </button>
-    <button mat-button [disabled]="!service.controlEnable.complete" color="primary" (click)="sendCommand('complete')"><mat-icon>skip_next</mat-icon>
-      Complete
+    <button mat-button [disabled]="!service.controlEnable.restart" color="primary" (click)="sendCommand('restart', parameterForm)">
+      <mat-icon>play_circle_outline</mat-icon> Restart
     </button>
-    <button mat-button [disabled]="!service.controlEnable.reset" color="primary" (click)="sendCommand('reset')"><mat-icon>replay</mat-icon>Reset
+    <button mat-button [disabled]="!service.controlEnable.complete" color="primary" (click)="sendCommand('complete')">
+      <mat-icon>skip_next</mat-icon> Complete
     </button>
-    <button mat-button [disabled]="!service.controlEnable.pause" (click)="sendCommand('pause')"><mat-icon>pause_circle_filled</mat-icon>Pause</button>
-    <button mat-button [disabled]="!service.controlEnable.resume" (click)="sendCommand('resume')"><mat-icon>play_circle_filled</mat-icon>Resume</button>
-    <button mat-button [disabled]="!service.controlEnable.unhold" (click)="sendCommand('unhold')"><mat-icon>sync</mat-icon>Unhold</button>
-    <button mat-button [disabled]="!service.controlEnable.stop" color="warn" (click)="sendCommand('stop')"><mat-icon>stop</mat-icon>Stop</button>
-    <button mat-button [disabled]="!service.controlEnable.abort" color="warn" (click)="sendCommand('abort')"><mat-icon>error</mat-icon>Abort</button>
+    <button mat-button [disabled]="!service.controlEnable.reset" color="primary" (click)="sendCommand('reset')">
+      <mat-icon>replay</mat-icon>Reset
+    </button>
+    <button mat-button [disabled]="!service.controlEnable.pause" (click)="sendCommand('pause')">
+      <mat-icon>pause_circle_filled</mat-icon>Pause
+    </button>
+    <button mat-button [disabled]="!service.controlEnable.resume" (click)="sendCommand('resume')">
+      <mat-icon>play_circle_filled</mat-icon>Resume
+    </button>
+    <button mat-button [disabled]="!service.controlEnable.unhold" (click)="sendCommand('unhold')">
+      <mat-icon>sync</mat-icon>Unhold
+    </button>
+    <button mat-button [disabled]="!service.controlEnable.stop" color="warn" (click)="sendCommand('stop')">
+      <mat-icon>stop</mat-icon>Stop
+    </button>
+    <button mat-button [disabled]="!service.controlEnable.abort" color="warn" (click)="sendCommand('abort')">
+      <mat-icon>error</mat-icon>Abort
+    </button>
   </mat-action-row>
 </mat-expansion-panel>
