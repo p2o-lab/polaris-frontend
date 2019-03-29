@@ -25,7 +25,8 @@ Furthermore, you can enable *AutoReset*. If this feature is enabled, the PFE wil
 
 ## Usage
 
-1. Open `http://localhost:3000` in a browser. The dashboard of the PFE is shown.
+1. Open `http://localhost` in a browser. The dashboard of the PFE is shown.
+[Dashboard](./screenshots/modules_empty.png)
 __add screenshot__
 
 2. Load Modules into the REE. Use the prepared JSON file which has been generated from an MTP file
@@ -50,7 +51,6 @@ The Module JSON contains all information necessary to interact with the module. 
 
 ### Recipe JSON
 
-string
 
 
 ### Examples
