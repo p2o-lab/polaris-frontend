@@ -24,28 +24,30 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let newStrategy = this.service.strategies.find((strategy) => strategy.id === this.service.currentStrategy);
-        if (!newStrategy && this.service.strategies) {
-            newStrategy = this.service.strategies.find((strategy) => strategy.default);
-        }
-        this.strategyFormControl.valueChanges.subscribe((strategy) => {
-            this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
-            strategy.parameters.forEach((param: ParameterInterface) => {
-                this.strategyParameterFormGroup
-                    .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
-            });
-            this.strategyParameterFormGroup.valueChanges
-                .subscribe((data) => {
-                    console.log('Strategy parameter changed', this.module.id, this.service.name, data);
-                    this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value, this.getParameter())
-                        .subscribe((strategyReturn) => {
-                            console.log('parameter sent', strategyReturn);
-                        });
+        if (this.service) {
+            let newStrategy = this.service.strategies.find((strategy) => strategy.id === this.service.currentStrategy);
+            if (!newStrategy && this.service.strategies) {
+                newStrategy = this.service.strategies.find((strategy) => strategy.default);
+            }
+            this.strategyFormControl.valueChanges.subscribe((strategy) => {
+                this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
+                strategy.parameters.forEach((param: ParameterInterface) => {
+                    this.strategyParameterFormGroup
+                        .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
                 });
-        });
-        this.strategyFormControl.setValue(newStrategy);
-        if (this.service.strategies.length === 1) {
-            this.strategyFormControl.disable();
+                this.strategyParameterFormGroup.valueChanges
+                    .subscribe((data) => {
+                        console.log('Strategy parameter changed', this.module.id, this.service.name, data);
+                        this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value, this.getParameter())
+                            .subscribe((strategyReturn) => {
+                                console.log('parameter sent', strategyReturn);
+                            });
+                    });
+            });
+            this.strategyFormControl.setValue(newStrategy);
+            if (this.service.strategies.length === 1) {
+                this.strategyFormControl.disable();
+            }
         }
 
         this.timer = timer(0, 1000)

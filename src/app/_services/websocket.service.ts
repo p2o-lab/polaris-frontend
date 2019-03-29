@@ -14,23 +14,29 @@ export class WebsocketService {
   }
 
   private create(url): Subject<MessageEvent> {
-    const ws = new WebSocket(url);
+    try {
+        const ws = new WebSocket(url);
 
-    const observable = Observable.create(
-      (obs: Observer<MessageEvent>) => {
-        ws.onmessage = obs.next.bind(obs);
-        ws.onerror = obs.error.bind(obs);
-        ws.onclose = obs.complete.bind(obs);
-        return ws.close.bind(ws);
-      });
-    const observer = {
-      next: (data: any) => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify(data));
-        }
-      }
-    };
-    return Subject.create(observer, observable);
+        const observable = Observable.create(
+            (obs: Observer<MessageEvent>) => {
+                ws.onmessage = obs.next.bind(obs);
+                ws.onerror = obs.error.bind(obs);
+                ws.onclose = obs.complete.bind(obs);
+                return ws.close.bind(ws);
+            });
+        const observer = {
+            next: (data: any) => {
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify(data));
+                }
+            }
+        };
+        return Subject.create(observer, observable);
+    }
+    catch (e) {
+      console.log('Could not connect to websocket of server', e);
+      return Subject.create(undefined, undefined);
+    }
   }
 
 }

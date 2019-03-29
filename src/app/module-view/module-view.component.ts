@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {ModuleInterface, ServiceInterface} from '@plt/pfe-ree-interface';
+import {ModuleInterface} from '@plt/pfe-ree-interface';
 import {BackendService} from '../_services/backend.service';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 

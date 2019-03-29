@@ -25,8 +25,8 @@ export class BackendService {
                 private settings: SettingsService,
                 private ws: WebsocketService,
                 private snackBar: MatSnackBar,
-                private recipeService: RecipeService,
-                private playerService: PlayerService) {
+                public recipeService: RecipeService,
+                public playerService: PlayerService) {
 
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {

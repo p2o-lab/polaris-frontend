@@ -1,6 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AboutComponent} from './about.component';
+import {MatGridList, MatGridTile} from '@angular/material';
+import {SettingsService} from '../_services/settings.service';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -8,7 +10,8 @@ describe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AboutComponent]
+      declarations: [AboutComponent, MatGridList, MatGridTile],
+        providers: [SettingsService]
     })
       .compileComponents();
   }));

@@ -45,7 +45,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="recipe-card">
+<mat-card class="recipe-card" *ngIf="player">
     <mat-card-header>
         <mat-card-title>
             <h2 class="mat-h2">Playlist</h2>
@@ -89,7 +89,7 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card class="recipe-card">
+<mat-card class="recipe-card" *ngIf="player">
     <mat-card-header>
         <mat-card-title>
             <h2 class="mat-h2">Recent Recipe Runs</h2>
