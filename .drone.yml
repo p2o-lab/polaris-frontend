@@ -6,6 +6,12 @@ clone:
 
 pipeline:
 
+  test:
+    image: trion/ng-cli-karma
+    commands:
+      - npm install
+      - ng test --watch=false --progress false
+
   docker:
     image: docker
     privileged: true
