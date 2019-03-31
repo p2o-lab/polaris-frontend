@@ -10,7 +10,7 @@ pipeline:
     image: trion/ng-cli-karma:6.1.5
     commands:
       - npm install
-      - ng test --watch=false --progress false
+      - ng test --watch=false --progress=false
 
   docker:
     image: docker

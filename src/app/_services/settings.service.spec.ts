@@ -13,3 +13,8 @@ describe('SettingsService', () => {
     expect(service).toBeTruthy();
   }));
 });
+
+
+export const
+    settingsServiceStub = {apiUrl: 'http://test.com'};
+
