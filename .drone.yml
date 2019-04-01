@@ -11,6 +11,7 @@ pipeline:
     commands:
       - npm install
       - ng test --watch=false --progress=false
+      - ng e2e
 
   docker:
     image: docker
