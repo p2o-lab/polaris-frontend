@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService} from '../_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {Overlay} from '@angular/cdk/overlay';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 
@@ -18,7 +18,10 @@ describe('LogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LogComponent],
-        providers: [{provide: SettingsService, useValue: settingsServiceStub}, WebsocketService],
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+        ],
         imports: [HttpClientTestingModule, MatIconModule, MatListModule, MatSnackBarModule]
     })
       .compileComponents();

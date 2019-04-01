@@ -12,7 +12,9 @@ describe('AboutComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AboutComponent, MatGridList, MatGridTile],
-        providers: [{provide: SettingsService, useValue: settingsServiceStub}]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub}
+        ]
     })
       .compileComponents();
   }));
@@ -26,4 +28,8 @@ describe('AboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have correct API URL', () => {
+    expect(component.apiDocUrl).toEqual('http://test.com/api/../doc');
+  })
 });

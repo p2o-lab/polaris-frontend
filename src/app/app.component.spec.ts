@@ -2,12 +2,11 @@ import {async, TestBed} from '@angular/core/testing';
 import {MatBadge, MatIcon, MatNavList, MatSidenavModule, MatSnackBarModule, MatToolbar} from '@angular/material';
 import {AppComponent} from './app.component';
 import {SettingsService} from './_services/settings.service';
-import {ChildrenOutletContexts, RouterOutlet} from '@angular/router';
-import {HttpClient, HttpHandler} from '@angular/common/http';
-import {WebsocketService} from './_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from './_services/websocket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {settingsServiceStub} from './_services/settings.service.spec';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,7 +15,10 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent, MatToolbar, MatIcon, MatBadge, MatNavList
       ],
-        providers: [SettingsService,WebsocketService]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+            ]
     }).compileComponents();
   }));
   it('should create the app', async(() => {

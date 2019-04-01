@@ -9,8 +9,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SettingsService} from '../_services/settings.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {WebsocketService} from '../_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {settingsServiceStub} from '../_services/settings.service.spec';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -21,7 +22,10 @@ describe('SettingsComponent', () => {
       declarations: [SettingsComponent],
         imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule,
             MatCheckboxModule, MatFormFieldModule, MatSnackBarModule, MatInputModule],
-        providers: [SettingsService, WebsocketService]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+        ]
     })
       .compileComponents();
   }));

@@ -5,7 +5,8 @@ import {MatCardModule, MatExpansionModule, MatIconModule, MatListModule} from '@
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService} from '../_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {settingsServiceStub} from '../_services/settings.service.spec';
 
 describe('RecipeDetailComponent', () => {
   let component: RecipeDetailComponent;
@@ -15,7 +16,10 @@ describe('RecipeDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RecipeDetailComponent],
         imports: [MatCardModule, MatExpansionModule, MatListModule, MatIconModule, RouterTestingModule, HttpClientTestingModule],
-        providers: [SettingsService, WebsocketService]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+        ]
     })
       .compileComponents();
   }));

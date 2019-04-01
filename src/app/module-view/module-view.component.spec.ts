@@ -21,7 +21,8 @@ import {CommonModule} from '@angular/common';
 import {Template} from '@angular/compiler/src/render3/r3_ast';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService} from '../_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {settingsServiceStub} from '../_services/settings.service.spec';
 
 describe('ModuleViewComponent', () => {
   let component: ModuleViewComponent;
@@ -36,7 +37,10 @@ describe('ModuleViewComponent', () => {
         imports: [CommonModule, ReactiveFormsModule, HttpClientTestingModule,
             MatExpansionModule, MatPseudoCheckboxModule, MatCardModule, MatIconModule,
             MatInputModule, MatSelectModule, MatMenuModule, MatSnackBarModule, MatDialogModule],
-        providers: [SettingsService, WebsocketService]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+        ]
     })
       .compileComponents();
   }));

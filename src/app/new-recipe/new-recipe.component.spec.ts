@@ -6,7 +6,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatInputModule, MatSnackBarModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService} from '../_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 
@@ -18,7 +18,10 @@ describe('NewRecipeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [NewRecipeComponent],
         imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule, MatInputModule, BrowserAnimationsModule, RouterTestingModule, MatSnackBarModule],
-        providers: [{provide: SettingsService, useValue: settingsServiceStub}, WebsocketService]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+            ]
     })
       .compileComponents();
   }));

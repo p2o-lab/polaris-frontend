@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Observer, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Observer, Subject} from 'rxjs';
 
 @Injectable()
 export class WebsocketService {
@@ -40,3 +40,6 @@ export class WebsocketService {
   }
 
 }
+
+export const
+    websocketServiceStub = { connect: (url) => { return Subject.create(undefined, undefined)}};

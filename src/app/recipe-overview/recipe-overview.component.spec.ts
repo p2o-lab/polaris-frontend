@@ -7,7 +7,8 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RecipeService} from '../_services/recipe.service';
 import {PlayerService} from '../_services/player.service';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService} from '../_services/websocket.service';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {settingsServiceStub} from '../_services/settings.service.spec';
 
 describe('RecipeOverviewComponent', () => {
   let component: RecipeOverviewComponent;
@@ -17,7 +18,10 @@ describe('RecipeOverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RecipeOverviewComponent],
         imports: [MatIconModule, MatMenuModule, MatCardModule, RouterTestingModule, HttpClientTestingModule, MatSnackBarModule],
-        providers: [SettingsService, WebsocketService]
+        providers: [
+            {provide: SettingsService, useValue: settingsServiceStub},
+            {provide: WebsocketService, useValue: websocketServiceStub}
+        ]
     })
       .compileComponents();
   }));
