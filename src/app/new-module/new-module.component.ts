@@ -22,7 +22,7 @@ export class NewModuleComponent {
       this.file = event.target.files[0];
       const reader: FileReader = new FileReader();
       reader.onload = (e: Event) => {
-        this.module = <string> reader.result;
+        this.module = reader.result.toString();
       };
       reader.readAsText(this.file);
   }

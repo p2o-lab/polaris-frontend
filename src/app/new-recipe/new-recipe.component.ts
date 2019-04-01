@@ -20,7 +20,7 @@ export class NewRecipeComponent {
   public previewFile(event) {
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.recipe = e.target.result;
+      this.recipe = e.target.result.toString();
 
     };
     reader.readAsText(event.target.files[0]);
