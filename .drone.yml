@@ -7,7 +7,7 @@ clone:
 pipeline:
 
   test:
-    image: trion/ng-cli-karma:6.1.5
+    image: trion/ng-cli-karma:7.3.7
     commands:
       - npm install
       - ng test --watch=false --progress=false
