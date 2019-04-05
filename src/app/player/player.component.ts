@@ -32,6 +32,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.backend.refreshPlayer();
         /* Continuously update data from backend service */
         this.backend.player.subscribe((player) => {
+            console.log('Got new info for player', player);
             this.player = player;
             if (player) {
                 this.currentRecipe = player.playlist[player.currentItem];
