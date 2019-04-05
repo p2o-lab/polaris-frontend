@@ -25,7 +25,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     constructor(private backend: PlayerService,
                 public settings: SettingsService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private formatter: StepFormatterService) {
     }
 
     ngOnInit() {
