@@ -107,7 +107,7 @@ export class BackendService {
     }
 
     addModule(moduleOptions) {
-        return this.http.put(`${this.settings.apiUrl}/module`, moduleOptions);
+        return this.http.put(`${this.settings.apiUrl}/module`, {modules: moduleOptions});
     }
 
     connect(module: string) {
@@ -134,5 +134,11 @@ export class BackendService {
 
     abortAllServices() {
         return this.http.post(`${this.settings.apiUrl}/abort`, {});
+    }
+
+    public convertMtp(file) {
+        const formData: FormData = new FormData();
+        formData.append('upload', file);
+        return this.http.post(`${this.settings.mtpConverterUrl}/json`, formData);
     }
 }

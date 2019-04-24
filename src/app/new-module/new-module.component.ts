@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import {Component, ViewChild} from '@angular/core';
+import {MatSnackBar, MatStepper} from '@angular/material';
 import {Router} from '@angular/router';
 import {BackendService} from '../_services/backend.service';
 
@@ -10,8 +10,10 @@ import {BackendService} from '../_services/backend.service';
 })
 export class NewModuleComponent {
 
-  public module: string;
-  public file: File;
+  public modules: ModuleOptions;
+
+
+  @ViewChild('stepper') private myStepper: MatStepper;
 
   constructor(private backend: BackendService,
               private router: Router,
@@ -19,19 +21,24 @@ export class NewModuleComponent {
   }
 
   public previewFile(event) {
-      this.file = event.target.files[0];
-      const reader: FileReader = new FileReader();
-      reader.onload = (e: Event) => {
-        this.module = reader.result.toString();
-      };
-      reader.readAsText(this.file);
+      const file: File = event.target.files[0];
+      if (file.name.endsWith('.mtp') || file.name.endsWith('.zip')){
+        this.backend.convertMtp(file).subscribe((data) => {
+            this.modules = <ModuleOptions> data['modules'];
+            this.myStepper.next();
+        })
+      } else {
+          const reader: FileReader = new FileReader();
+          reader.onload = (e: Event) => {
+              this.modules = <ModuleOptions> JSON.parse(reader.result.toString()).modules;
+              this.myStepper.next();
+          };
+          reader.readAsText(file);
+      }
   }
 
   public addModule() {
-    const formData: FormData = new FormData();
-
-    formData.append('file', this.file);
-    this.backend.addModule(formData).subscribe(
+    this.backend.addModule(this.modules).subscribe(
       (data) => {
         this.router.navigate(['/modules']);
     },
@@ -43,4 +50,12 @@ export class NewModuleComponent {
   public cancel() {
     this.router.navigate(['/modules']);
   }
+}
+
+export interface ModuleOptions {
+    id: string;
+    opcua_server_url: string;
+    hmi_url?: string;
+    services: any[];
+    process_values: any[];
 }
