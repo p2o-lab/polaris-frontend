@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NewModuleComponent} from './new-module.component';
-import {MatFormField, MatInputModule, MatSnackBarModule} from '@angular/material';
+import {MatChipsModule, MatFormField, MatInputModule, MatSnackBarModule, MatStepperModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SettingsService} from '../_services/settings.service';
@@ -17,7 +17,9 @@ describe('NewModuleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NewModuleComponent],
-        imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule, MatSnackBarModule, RouterTestingModule, MatInputModule, BrowserAnimationsModule],
+        imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule,
+            MatSnackBarModule, MatStepperModule, MatChipsModule, MatInputModule,
+            BrowserAnimationsModule, RouterTestingModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}
