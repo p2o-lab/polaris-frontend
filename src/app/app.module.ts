@@ -50,6 +50,8 @@ import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import { TimeSeriesViewComponent } from './time-series-view/time-series-view.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 moment.updateLocale('en', {
     relativeTime : {
@@ -119,7 +121,8 @@ moment.relativeTimeThreshold('ss', 5);
     MatChipsModule,
     MatStepperModule,
     NgxChartsModule,
-      ChartModule
+      ChartModule,
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
     ServiceParameterDialogComponent
