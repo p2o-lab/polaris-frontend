@@ -25,7 +25,7 @@ export class PlayerService {
     }
 
     refreshPlayer(player: PlayerInterface = undefined) {
-        if (player) {
+        if (!player) {
             this.http.get(`${this.settings.apiUrl}/player`)
                 .subscribe((data: PlayerInterface) => {
                         console.log('player update via http get', data);

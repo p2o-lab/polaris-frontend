@@ -4,6 +4,10 @@
   <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
          placeholder="URL for Backend API">
 </mat-form-field>
+<mat-form-field class="example-container">
+  <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text" [(ngModel)]="settings.mtpConverterUrl"
+           placeholder="URL for MTP Converter API">
+</mat-form-field>
 
 <p>
     <mat-checkbox [(ngModel)]="backend.autoReset">AutoReset (PFE automatically resets a service when it goes to

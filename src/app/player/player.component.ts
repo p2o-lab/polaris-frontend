@@ -25,13 +25,15 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     constructor(private backend: PlayerService,
                 public settings: SettingsService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private formatter: StepFormatterService) {
     }
 
     ngOnInit() {
         this.backend.refreshPlayer();
         /* Continuously update data from backend service */
         this.backend.player.subscribe((player) => {
+            console.log('Got new info for player', player);
             this.player = player;
             if (player) {
                 this.currentRecipe = player.playlist[player.currentItem];
