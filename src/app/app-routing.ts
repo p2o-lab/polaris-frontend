@@ -11,6 +11,7 @@ import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
 import {SettingsComponent} from './settings/settings.component';
+import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/modules', pathMatch: 'full'},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'recipe/new', component: NewRecipeComponent},
   {path: 'recipe/:id', component: RecipeDetailComponent},
   {path: 'settings', component: SettingsComponent},
+  {path: 'trendview', component: TimeSeriesViewComponent},
   {path: 'about', component: AboutComponent}
 ];
 

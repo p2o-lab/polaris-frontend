@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {
-    ModuleInterface, ParameterOptions, PlayerInterface, RecipeInterface, RecipeState, Repeat,
+    ModuleInterface, ParameterOptions, RecipeInterface,
     ServiceInterface, StrategyInterface
 } from '@plt/pfe-ree-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -20,13 +20,15 @@ export class BackendService {
 
     private _autoReset: boolean;
 
+    private _variables: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]) ;
 
     constructor(private http: HttpClient,
                 private settings: SettingsService,
                 private ws: WebsocketService,
                 private snackBar: MatSnackBar,
-                public recipeService: RecipeService,
-                public playerService: PlayerService) {
+
+                private recipeService: RecipeService,
+                private playerService: PlayerService) {
 
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
@@ -59,9 +61,35 @@ export class BackendService {
                         });
                     }
                 }
+                if (data.message === 'variable') {
+                    const name = data.data.variable;
+                    const value  = data.data.value;
+                    const timestamp = data.data.timestampPfe;
+                    const variables = this._variables.getValue();
+                    if (!variables.find(v => v.name === name)) {
+                        variables.push({name: name, series:[]});
+                    }
+                    const series: any[] = variables.find(v => v.name === name).series;
+                    series.push({name: new Date(timestamp), value: value});
+                    if (series.length>1000) {
+                        series.shift();
+                    }
+                    this._variables.next(variables);
+             }
             });
         this.refreshModules();
         this.refreshAutoReset();
+    }
+
+
+    private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
+
+    get variables(): Observable<any[]> {
+        return this._variables.asObservable();
+    }
+
+    get recipes(): Observable<RecipeInterface[]> {
+        return this._recipes.asObservable();
     }
 
     get autoReset(): boolean {
