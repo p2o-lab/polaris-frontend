@@ -8,6 +8,7 @@ import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('TimeSeriesViewComponent', () => {
   let component: TimeSeriesViewComponent;
@@ -22,7 +23,8 @@ describe('TimeSeriesViewComponent', () => {
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}
-        ]
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
