@@ -11,6 +11,25 @@ import {WebsocketService} from './websocket.service';
 import {RecipeService} from './recipe.service';
 import {PlayerService} from './player.service';
 
+export interface VariableInterface {
+    variableName: string;
+    recentValue: number;
+    timestamp: Date;
+}
+
+export interface ModuleVariableInterface {
+    moduleName: string;
+    variables: VariableInterface[];
+}
+
+export interface UpdatedVariableInterface {
+    module: string, variable: string; value: number, timestamp: Date
+}
+
+export interface SeriesInterface {
+    name: string, data: number[][]
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -21,6 +40,11 @@ export class BackendService {
     private _autoReset: boolean;
 
     private _variables: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]) ;
+    private _var: ModuleVariableInterface[] = [];
+
+    private _updatedVariable: BehaviorSubject<UpdatedVariableInterface> = new BehaviorSubject<UpdatedVariableInterface>(undefined);
+    public series: SeriesInterface[] = [];
+
 
     constructor(private http: HttpClient,
                 private settings: SettingsService,
@@ -33,7 +57,7 @@ export class BackendService {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
                 const data: { message: string, data: any } = JSON.parse(msg.data);
-                console.log('ws received', data.message, data.data);
+                // console.log('ws received', data.message, data.data);
                 if (data.message === 'recipes') {
                     this.recipeService.refreshRecipes();
                 }
@@ -62,25 +86,49 @@ export class BackendService {
                     }
                 }
                 if (data.message === 'variable') {
-                    const name = data.data.variable;
-                    const value  = data.data.value;
-                    const timestamp = data.data.timestampPfe;
-                    const variables = this._variables.getValue();
-                    if (!variables.find(v => v.name === name)) {
-                        variables.push({name: name, series:[]});
+                    const name = <string> data.data.variable;
+                    const module = <string> data.data.module;
+                    const value  = <number> data.data.value;
+                    const timestamp = new Date(data.data.timestampPfe);
+
+                    let m: ModuleVariableInterface = this._var
+                        .find((m: ModuleVariableInterface) => {return (m.moduleName == module)});
+                    if (!m) {
+                        m = {moduleName: module, variables: []};
+                        this._var.push(m);
                     }
-                    const series: any[] = variables.find(v => v.name === name).series;
-                    series.push({name: new Date(timestamp), value: value});
-                    if (series.length>1000) {
-                        series.shift();
+                    let v = m.variables.find(v => v.variableName == name);
+                    if (!v) {
+                        v = {variableName: name, recentValue: value, timestamp: timestamp};
+                        m.variables.push(v);
+                    } else {
+                        v.recentValue = value;
+                        v.timestamp = timestamp;
                     }
-                    this._variables.next(variables);
+                    this._variables.next(this._var);
+                    this._updatedVariable.next({module: module, variable: name, value: value, timestamp: timestamp});
+
+                    const seriesName = `${module}.${name}`;
+                    let serie = this.series.find(s=> s.name === seriesName);
+
+                    if (serie) {
+                        serie.data.push([timestamp.getTime(), value]);
+                        const firstTimestamp = serie.data[0][0];
+                        if (new Date().getTime() - firstTimestamp > 1000*60*5) {
+                            serie.data.shift();
+                        }
+                    } else {
+                        this.series.push({name: seriesName, data: [[timestamp.getTime(), value]]});
+                    }
              }
             });
         this.refreshModules();
         this.refreshAutoReset();
     }
 
+    get updatedVariable(): Observable<UpdatedVariableInterface> {
+        return this._updatedVariable.asObservable();
+    }
 
     private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
