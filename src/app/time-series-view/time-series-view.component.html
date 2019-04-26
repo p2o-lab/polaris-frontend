@@ -1,28 +1,23 @@
-<mat-card style="height: 100%">
+<mat-card>
 <mat-card-header>
   <mat-card-title> <h2 class="mat-h2">TrendView</h2></mat-card-title>
 </mat-card-header>
-  <mat-card-content style="height: 500px">
-    <ngx-charts-line-chart
-            autoscale="true"
-            [results]="data"
-            xAxis="true" yAxis="true"
-            legend="true"
-            animation="false"
-    >
-    </ngx-charts-line-chart>
+  <mat-card-content>
+    <div [chart]="chart"></div>
   </mat-card-content>
 </mat-card>
 
-<mat-grid-list cols="4">
-  <mat-grid-tile *ngFor="let variable of data">
-    <mat-card>
+
+    <mat-card *ngFor="let module of data" style="margin-top: 10px">
       <mat-card-header>
-        <mat-card-title><h2 class="mat-h2">{{variable.name}}</h2></mat-card-title>
+        <mat-card-title><h2 class="mat-h2">{{module.moduleName}}</h2></mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        {{variable.series[variable.series.length-1].value}}
+        <ul>
+          <li *ngFor="let variable of module.variables">
+            {{variable.variableName}} = {{variable.recentValue | number}}
+          </li>
+        </ul>
+
       </mat-card-content>
     </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>

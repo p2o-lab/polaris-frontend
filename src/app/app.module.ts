@@ -4,6 +4,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {LayoutModule} from '@angular/cdk/layout';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
+import { ChartModule } from 'angular-highcharts';
+
 import {
     MatBadgeModule,
     MatButtonModule,
@@ -115,7 +118,8 @@ moment.relativeTimeThreshold('ss', 5);
     MatSortModule,
     MatChipsModule,
     MatStepperModule,
-      NgxChartsModule
+    NgxChartsModule,
+      ChartModule
   ],
   entryComponents: [
     ServiceParameterDialogComponent

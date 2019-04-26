@@ -27,6 +27,8 @@
     "@angular/router": "^7.2.11",
     "@plt/pfe-ree-interface": "^1.21.1",
     "@swimlane/ngx-charts": "^10.0.0",
+    "angular-highcharts": "^7.2.0",
+    "highcharts": "^7.1.1",
     "moment": "^2.24.0",
     "ngx-store": "^2.1.0",
     "roboto-fontface": "^0.10.0",
