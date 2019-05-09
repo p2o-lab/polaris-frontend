@@ -10,7 +10,7 @@ import {BackendService} from '../_services/backend.service';
 })
 export class NewModuleComponent {
 
-  public modules: ModuleOptions;
+  public modules: ModuleOptions[];
 
 
   @ViewChild('stepper') private myStepper: MatStepper;
@@ -24,13 +24,13 @@ export class NewModuleComponent {
       const file: File = event.target.files[0];
       if (file.name.endsWith('.mtp') || file.name.endsWith('.zip')){
         this.backend.convertMtp(file).subscribe((data) => {
-            this.modules = <ModuleOptions> data['modules'];
+            this.modules = <ModuleOptions[]> data['modules'];
             this.myStepper.next();
         })
       } else {
           const reader: FileReader = new FileReader();
           reader.onload = (e: Event) => {
-              this.modules = <ModuleOptions> JSON.parse(reader.result.toString()).modules;
+              this.modules = <ModuleOptions[]> JSON.parse(reader.result.toString()).modules;
               this.myStepper.next();
           };
           reader.readAsText(file);
@@ -38,13 +38,17 @@ export class NewModuleComponent {
   }
 
   public addModule() {
-    this.backend.addModule(this.modules).subscribe(
-      (data) => {
-        this.router.navigate(['/modules']);
-    },
-      (error) => {
-        this.snackBar.open(error.error.error, 'Dismiss');
+      this.modules.forEach((module) => {
+          this.backend.addModule(module).subscribe(
+              (data) => {
+                  this.snackBar.open(`Module ${module.id} succesfully added`, 'Dismiss');
+              },
+              (error) => {
+                  this.snackBar.open(error.error, 'Dismiss');
+              });
       });
+      this.router.navigate(['/modules']);
+
   }
 
   public cancel() {
