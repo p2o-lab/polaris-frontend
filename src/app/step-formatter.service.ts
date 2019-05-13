@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ConditionType} from '@plt/pfe-ree-interface/dist/enum';
-import {ConditionOptions} from '@plt/pfe-ree-interface/dist/options';
-import {ParameterInterface} from '@plt/pfe-ree-interface/dist/interfaces';
+import {ConditionOptions, ConditionType, ParameterInterface} from '@p2olab/polaris-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +8,11 @@ export class StepFormatterService {
 
   constructor() { }
 
-
+    /**
+     * format parameters
+     * @param {ParameterInterface[]} parameter
+     * @returns {string}
+     */
     parameterToString(parameter: ParameterInterface[]) {
         return parameter.map((param) => `${param.name}=${param.value}`).join(', ');
     }

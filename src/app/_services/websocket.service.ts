@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, Observer, Subject} from 'rxjs';
+import {Observable, Observer, Subject} from 'rxjs';
 
 @Injectable()
 export class WebsocketService {
@@ -19,6 +19,7 @@ export class WebsocketService {
         ws.onopen = () => {
             console.log('WebSocket open');
         };
+
         const observable = Observable.create(
             (obs: Observer<MessageEvent>) => {
                 ws.onmessage = obs.next.bind(obs);

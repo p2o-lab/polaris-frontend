@@ -1,7 +1,7 @@
 import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {RecipeInterface} from '@plt/pfe-ree-interface';
+import {RecipeInterface} from '@p2olab/polaris-interface';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/internal/operators';
 import {StepFormatterService} from '../step-formatter.service';
