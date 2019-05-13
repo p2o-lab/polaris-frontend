@@ -16,7 +16,9 @@ export class WebsocketService {
   private create(url): Subject<MessageEvent> {
     try {
         const ws = new WebSocket(url);
-
+        ws.onopen = () => {
+            console.log('WebSocket open');
+        };
         const observable = Observable.create(
             (obs: Observer<MessageEvent>) => {
                 ws.onmessage = obs.next.bind(obs);
