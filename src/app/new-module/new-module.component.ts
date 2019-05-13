@@ -44,7 +44,7 @@ export class NewModuleComponent {
                   this.snackBar.open(`Module ${module.id} succesfully added`, 'Dismiss');
               },
               (error) => {
-                  this.snackBar.open(error.error, 'Dismiss');
+                  this.snackBar.open(JSON.stringify(error.error), 'Dismiss');
               });
       });
       this.router.navigate(['/modules']);
