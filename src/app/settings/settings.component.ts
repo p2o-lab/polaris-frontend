@@ -23,4 +23,8 @@ export class SettingsComponent implements OnInit {
     this.location.back();
   }
 
+  shutdown() {
+    this.backend.shutdown().subscribe(() => console.log('shutdown sent'));
+  }
+
 }
