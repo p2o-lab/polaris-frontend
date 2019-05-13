@@ -27,7 +27,7 @@
     "@angular/pwa": "^0.12.4",
     "@angular/router": "^7.2.11",
     "@angular/service-worker": "^7.2.11",
-    "@plt/pfe-ree-interface": "^1.21.1",
+    "@p2olab/polaris-interface": "^1.22.0",
     "@swimlane/ngx-charts": "^10.0.0",
     "angular-highcharts": "^7.2.0",
     "highcharts": "^7.1.1",

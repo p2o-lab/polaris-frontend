@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {PlayerInterface, RecipeState, Repeat} from '@plt/pfe-ree-interface';
+import {PlayerInterface, RecipeState, Repeat} from '@p2olab/polaris-interface';
 import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './settings.service';
 

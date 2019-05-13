@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {WebsocketService} from './websocket.service';
 import {HttpClient} from '@angular/common/http';
 import {SettingsService} from './settings.service';
-import {MatSnackBar} from '@angular/material';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {RecipeInterface} from '@plt/pfe-ree-interface';
+import {RecipeInterface} from '@p2olab/polaris-interface';
 
 @Injectable({
     providedIn: 'root'

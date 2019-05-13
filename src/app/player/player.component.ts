@@ -3,7 +3,7 @@ import {MatSnackBar} from '@angular/material';
 import {
     ConditionOptions, ConditionType, ParameterInterface, PlayerInterface, RecipeInterface, StepOptions,
     TransitionOptions
-} from '@plt/pfe-ree-interface';
+} from '@p2olab/polaris-interface';
 import {Subscription, timer} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import * as moment from 'moment';

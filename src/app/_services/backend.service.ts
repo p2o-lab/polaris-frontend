@@ -4,7 +4,7 @@ import {MatSnackBar} from '@angular/material';
 import {
     ModuleInterface, ParameterOptions, RecipeInterface,
     ServiceInterface, StrategyInterface
-} from '@plt/pfe-ree-interface';
+} from '@p2olab/polaris-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
