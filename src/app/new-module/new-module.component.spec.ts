@@ -38,4 +38,30 @@ describe('NewModuleComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('add port works', () => {
+
+    const testCases= [
+        {input: "opc.tcp://192.168.31.23:4840", expected: "opc.tcp://192.168.31.23:4840"},
+        {input: "opc.tcp://192.168.31.23:1660", expected: "opc.tcp://192.168.31.23:1660"},
+        {input: "opc.tcp://192.168.31.23:4840/test/de", expected: "opc.tcp://192.168.31.23:4840/test/de"},
+        {input: "opc.tcp://192.168.31.23", expected: "opc.tcp://192.168.31.23:4840"},
+        {input: "opc.tcp://192.168.31.23/test/de", expected: "opc.tcp://192.168.31.23:4840/test/de"},
+        {input: 'opc.tcp://pol.test.com:4840', expected: "opc.tcp://pol.test.com:4840"},
+        {input: 'opc.tcp://pol.tu-dresden.de:4840', expected: "opc.tcp://pol.tu-dresden.de:4840"},
+        {input: "opc.tcp://pol.tu-dresden.de:1660", expected: "opc.tcp://pol.tu-dresden.de:1660"},
+        {input: 'opc.tcp://pol.tu-dresden.de:4840/test/de', expected: "opc.tcp://pol.tu-dresden.de:4840/test/de"},
+        {input: "opc.tcp://pol.tu-dresden.de", expected: "opc.tcp://pol.tu-dresden.de:4840"},
+        {input: "opc.tcp://pol.tu-dresden.de/test/de", expected: "opc.tcp://pol.tu-dresden.de:4840/test/de"},
+        {input: "test", expected: "test"}
+    ];
+    testCases.forEach((tc) => {
+        console.log(tc.input, tc.expected, component.addDefaultPort(tc.input))
+        expect(component.addDefaultPort(tc.input)).toEqual(tc.expected);
+    });
+
+
+  });
+
+
+
 });
