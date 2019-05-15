@@ -7,16 +7,18 @@
       <span class="serviceState">{{service.status}}</span> <small>(since {{changeDuration}})</small>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <mat-form-field>
-    <mat-select [formControl]="strategyFormControl" placeholder="Strategy">
-      <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">
-        {{strategy.name}} <span *ngIf="strategy.sc">(self-completing)</span>
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <form [formGroup]="strategyParameterFormGroup">
+  <div class="form">
+    <mat-form-field class="field">
+      <mat-select [formControl]="strategyFormControl" placeholder="Strategy">
+        <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">
+          {{strategy.name}} <span *ngIf="strategy.sc">(self-completing)</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <form class="form" [formGroup]="strategyParameterFormGroup">
     <p *ngFor="let param of strategyFormControl.value.parameters">
-      <mat-form-field>
+      <mat-form-field class="field">
         <input matInput [type]="param.type" [formControlName]="param.name"
                [placeholder]="param.name" [min]="param.min" [max]="param.max">
         {{param.json}}
