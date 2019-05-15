@@ -9,6 +9,6 @@
     <span class="with-icon"><mat-icon>cloud_download</mat-icon>&nbsp;Download Variable Log</span>
 </a>
 
-<mat-list *ngIf="logs$ | async as logs">
+<mat-list dense *ngIf="logs$ | async as logs">
   <mat-list-item *ngFor="let item of logs">{{item}}</mat-list-item>
 </mat-list>
