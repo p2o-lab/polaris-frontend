@@ -1,20 +1,19 @@
 <h1 class="mat-h1">Settings</h1>
 
+<form>
 <mat-form-field class="example-container">
   <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
-         placeholder="URL for Backend API">
+         placeholder="URL for Backend API" name="apiUrl">
 </mat-form-field>
 <mat-form-field class="example-container">
   <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text" [(ngModel)]="settings.mtpConverterUrl"
-           placeholder="URL for MTP Converter API">
+           placeholder="URL for MTP Converter API" name="mtpConverterUrl">
 </mat-form-field>
 
-<p>
-    <mat-checkbox [(ngModel)]="backend.autoReset">AutoReset (PFE automatically resets a service when it goes to
-    COMPLETED)
-  </mat-checkbox>
-</p>
+<mat-checkbox [(ngModel)]="backend.autoReset" name="autoReset">AutoReset (PFE automatically resets a service when it goes to COMPLETED)
+</mat-checkbox>
 
+</form>
 <p>
   <button mat-button color="primary" (click)="back()">Save & Back</button>
 </p>
