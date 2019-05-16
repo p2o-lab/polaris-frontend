@@ -23,7 +23,7 @@ export interface ModuleVariableInterface {
 }
 
 export interface UpdatedVariableInterface {
-    module: string, variable: string; value: number, timestamp: Date
+    module: string, variable: string; value: any, timestamp: Date
 }
 
 export interface SeriesInterface {
@@ -98,7 +98,7 @@ export class BackendService {
                 if (data.message === 'variable') {
                     const name = <string> data.data.variable;
                     const module = <string> data.data.module;
-                    const value = <number> data.data.value;
+                    const value = data.data.value;
                     const timestamp = new Date(data.data.timestampPfe);
 
                     let m: ModuleVariableInterface = this._var
@@ -126,7 +126,7 @@ export class BackendService {
                     if (serie) {
                         serie.data.push([timestamp.getTime(), value]);
                         const firstTimestamp = serie.data[0][0];
-                        if (new Date().getTime() - firstTimestamp > 1000 * 60 * 5) {
+                        if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
                             serie.data.shift();
                         }
                     } else {
