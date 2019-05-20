@@ -109,7 +109,6 @@ export class BackendService {
     }
 
     private addData(data) {
-        console.log(data)
         const name = <string> data.variable;
         const module = <string> data.module;
         const value = data.value;
@@ -144,13 +143,23 @@ export class BackendService {
         const seriesName = `${module}.${name}`;
         let serie = series.find(s => s.name === seriesName);
         if (serie) {
-            serie.data.push([timestamp.getTime(), value]);
-            const firstTimestamp = serie.data[0][0];
-            if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
-                serie.data.shift();
+            if (timestamp.getTime() > serie.data[serie.data.length-1][0]) {
+                serie.data.push([timestamp.getTime(), value]);
+                const firstTimestamp = serie.data[0][0];
+                if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
+                    serie.data.shift();
+                }
             }
         } else {
-            series.push({name: seriesName, data: [[timestamp.getTime(), value]]});
+            series.push(<any>{
+                name: seriesName,
+                type: 'line',
+                tooltip: {
+                    valueDecimals: 3,
+                    valueSuffix: ` ${data.unit}`
+                },
+                data: [[timestamp.getTime(), value]]
+            });
         }
         this._series.next(series);
     }
