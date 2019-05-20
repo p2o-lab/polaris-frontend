@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
-import {BackendService} from '../_services/backend.service';
+import {ModuleService} from '../_services/module.service';
 
 @Component({
   selector: 'app-service-parameter-dialog',
@@ -13,7 +13,7 @@ export class ServiceParameterDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public module: ModuleInterface,
-              private backend: BackendService) {
+              private backend: ModuleService) {
   }
 
   save(parameterForm: NgForm) {

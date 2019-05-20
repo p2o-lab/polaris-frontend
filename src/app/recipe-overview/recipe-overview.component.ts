@@ -24,12 +24,11 @@ export class RecipeOverviewComponent implements OnInit {
   }
 
   addToPlayList(id: string) {
-    console.log('Add to Playlist', id);
     this.playerService.enqueueRecipe(id).subscribe(
         () => {
             // this.router.navigate(['/player']);
             this.playerService.refreshPlayer();
-            console.log('Recipe added to playlist', id);
+            this.snackBar.open(`Recipe has been added to playlist`, 'Ok');
         },
       (err) => console.log(err)
     );
@@ -37,10 +36,10 @@ export class RecipeOverviewComponent implements OnInit {
 
   remove(id: string) {
     this.recipeService.removeRecipe(id).subscribe((data) => {
-        this.snackBar.open(`Recipe removed`, 'Dismiss');
+        this.snackBar.open(`Recipe removed`, 'Ok');
       },
       (err) => {
-        this.snackBar.open(`Error: ${JSON.stringify(err)}`, 'Dismiss');
+        this.snackBar.open(`Error while removing recipe: ${JSON.stringify(err)}`, 'Dismiss');
       });
   }
 }

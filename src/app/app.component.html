@@ -18,7 +18,7 @@
       </a>
       <a mat-list-item routerLink="/modules" routerLinkActive="active">
         <mat-icon mat-list-icon>view_module</mat-icon>
-        <span matBadgeOverlap="false" [matBadge]="backend.modules.length">Modules</span>
+        <span matBadgeOverlap="false" [matBadge]="(backend.moduleService.modules | async)?.length">Modules</span>
       </a>
       <a mat-list-item routerLink="/trendview" routerLinkActive="active">
         <mat-icon mat-list-icon>timeline</mat-icon>

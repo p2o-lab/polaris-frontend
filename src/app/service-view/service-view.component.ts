@@ -3,7 +3,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
 import {ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
 import {Subscription, timer} from 'rxjs';
-import {BackendService} from '../_services/backend.service';
+import {ModuleService} from '../_services/module.service';
 
 @Component({
     selector: 'app-service-view',
@@ -20,7 +20,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     public changeDuration: string;
     private timer: Subscription;
 
-    constructor(private backend: BackendService) {
+    constructor(private backend: ModuleService) {
     }
 
     ngOnInit() {
@@ -56,6 +56,10 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.timer.unsubscribe();
+    }
+
+    disabled() {
+        return this.service.opMode.source=='internal'
     }
 
     sendCommand(command: string) {

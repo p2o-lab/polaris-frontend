@@ -1,33 +1,41 @@
 <h1 class="mat-h1">Modules</h1>
 
-<button mat-button routerLink="/modules/new"><mat-icon>add</mat-icon>Add Module</button>
+<button mat-button routerLink="/modules/new">
+    <mat-icon>add</mat-icon>
+    Add Module
+</button>
+<div *ngIf="modules$ | async as modulesObject; else loading">
+    <mat-card class="dashboard-card" *ngFor="let module of modulesObject">
+        <mat-card-header>
+            <mat-card-title>
+                <h2 class="mat-h2">{{module.id}}</h2>
+                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button *ngIf="module.connected" mat-menu-item (click)="configure(module)">Configure Parameters
+                    </button>
+                    <button *ngIf="module.connected" mat-menu-item (click)="disconnect(module.id)">Disconnect</button>
+                    <button *ngIf="!module.connected" mat-menu-item (click)="connect(module.id)">Connect</button>
+                    <button [disabled]="module.protected" mat-menu-item (click)="remove(module.id)">Remove</button>
+                </mat-menu>
+            </mat-card-title>
+            <mat-card-subtitle class="with-icon">
+                <mat-icon>{{ module.connected ? 'link' : 'clear'}}</mat-icon> &nbsp;
+                {{module.endpoint}} <span *ngIf="module.hmiUrl">- <a [href]="module.hmiUrl">{{module.hmiUrl}}</a></span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content" *ngIf="module.services">
+            <mat-accordion multi="true">
+                <app-service-view *ngFor="let service of module.services" [service]="service" [module]="module">
+                </app-service-view>
+            </mat-accordion>
+        </mat-card-content>
+        <mat-card-actions>
 
-<mat-card class="dashboard-card" *ngFor="let module of backend.modules">
-  <mat-card-header>
-    <mat-card-title>
-      <h2 class="mat-h2">{{module.id}}</h2>
-      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu" xPosition="before">
-        <button *ngIf="module.connected" mat-menu-item (click)="configure(module)">Configure Parameters</button>
-          <button *ngIf="module.connected" mat-menu-item (click)="disconnect(module.id)">Disconnect</button>
-        <button *ngIf="!module.connected" mat-menu-item (click)="connect(module.id)">Connect</button>
-        <button [disabled]="module.protected" mat-menu-item (click)="remove(module.id)">Remove</button>
-      </mat-menu>
-    </mat-card-title>
-      <mat-card-subtitle class="with-icon">
-          <mat-icon>{{ module.connected ? 'link' : 'clear'}}</mat-icon> &nbsp;
-        {{module.endpoint}} <span *ngIf="module.hmiUrl">- <a [href]="module.hmiUrl">{{module.hmiUrl}}</a></span>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content class="dashboard-card-content" *ngIf="module.services">
-    <mat-accordion multi="true">
-        <app-service-view *ngFor="let service of module.services" [service]="service" [module]="module">
-        </app-service-view>
-    </mat-accordion>
-  </mat-card-content>
-  <mat-card-actions>
+        </mat-card-actions>
+    </mat-card>
+</div>
 
-  </mat-card-actions>
-</mat-card>
+
+<ng-template #loading>still loading modules from backend...</ng-template>
