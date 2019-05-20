@@ -1,19 +1,17 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {
-    ModuleInterface, ParameterOptions, RecipeInterface,
-    ServiceInterface, StrategyInterface
-} from '@p2olab/polaris-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
 import {RecipeService} from './recipe.service';
 import {PlayerService} from './player.service';
+import {ModuleService} from './module.service';
 
 export interface VariableInterface {
     variableName: string;
     recentValue: number;
+    unit: string;
     timestamp: Date;
 }
 
@@ -23,11 +21,16 @@ export interface ModuleVariableInterface {
 }
 
 export interface UpdatedVariableInterface {
-    module: string, variable: string; value: any, timestamp: Date
+    module: string,
+    variable: string;
+    value: any,
+    unit: string,
+    timestamp: Date
 }
 
 export interface SeriesInterface {
-    name: string, data: number[][]
+    name: string,
+    data: number[][]
 }
 
 @Injectable({
@@ -35,28 +38,39 @@ export interface SeriesInterface {
 })
 export class BackendService {
 
-    public modules: ModuleInterface[] = [];
+    // holds last single update of variable
+    get updatedVariable(): Observable<UpdatedVariableInterface> {
+        return this._updatedVariable.asObservable();
+    }
+    private _updatedVariable: BehaviorSubject<UpdatedVariableInterface> = new BehaviorSubject(undefined);
 
-    private _autoReset: boolean;
 
-    private _variables: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]) ;
-    private _var: ModuleVariableInterface[] = [];
+    // current value of all variables from all modules
+    get variables(): Observable<ModuleVariableInterface[]> {
+        return this._variables.asObservable();
+    }
+    private _variables: BehaviorSubject<ModuleVariableInterface[]> = new BehaviorSubject([]);
 
-    private _updatedVariable: BehaviorSubject<UpdatedVariableInterface> = new BehaviorSubject<UpdatedVariableInterface>(undefined);
-    public series: SeriesInterface[] = [];
+
+    // timeseries of all variables for last 5 min
+    get series(): Observable<SeriesInterface[]> {
+        return this._series.asObservable();
+    }
+    public _series: BehaviorSubject<SeriesInterface[]> = new BehaviorSubject([]);
+
+
     private pingTimeout: any;
-
+    private _autoReset: boolean;
 
     constructor(private http: HttpClient,
                 private settings: SettingsService,
                 private ws: WebsocketService,
                 private snackBar: MatSnackBar,
-
                 public recipeService: RecipeService,
-                public playerService: PlayerService) {
+                public playerService: PlayerService,
+                public moduleService: ModuleService) {
 
         this.connectToWebsocket();
-        this.refreshModules();
         this.refreshAutoReset();
     }
 
@@ -72,68 +86,73 @@ export class BackendService {
                     this.recipeService.refreshRecipes();
                 }
                 if (data.message === 'module') {
-                    if (data.data) {
-                        if (data.data.module) {
-                            const newModule = this.modules.find((module) => module.id === data.data.module);
-                            if (newModule && newModule.services) {
-                                const newService = newModule.services
-                                    .find((service) => service.name === data.data.service);
-                                Object.assign(newService, data.data);
-                            }
-                        }
-                    } else {
-                        this.refreshModules();
-                    }
+                   this.moduleService.updateModuleState(data.data);
                 }
                 if (data.message === 'player') {
                     this.playerService.refreshPlayer(data.data);
                 }
                 if (data.message === 'action') {
-                    if (data.data === 'recipeCompleted') {
-                        this.snackBar.open('Recipe completed', 'Dismiss', {
-                            duration: 3500,
-                        });
-                    }
+                    this.handleAction(data.data);
                 }
                 if (data.message === 'variable') {
-                    const name = <string> data.data.variable;
-                    const module = <string> data.data.module;
-                    const value = data.data.value;
-                    const timestamp = new Date(data.data.timestampPfe);
-
-                    let m: ModuleVariableInterface = this._var
-                        .find((m: ModuleVariableInterface) => {
-                            return (m.moduleName == module)
-                        });
-                    if (!m) {
-                        m = {moduleName: module, variables: []};
-                        this._var.push(m);
-                    }
-                    let v = m.variables.find(v => v.variableName == name);
-                    if (!v) {
-                        v = {variableName: name, recentValue: value, timestamp: timestamp};
-                        m.variables.push(v);
-                    } else {
-                        v.recentValue = value;
-                        v.timestamp = timestamp;
-                    }
-                    this._variables.next(this._var);
-                    this._updatedVariable.next({module: module, variable: name, value: value, timestamp: timestamp});
-
-                    const seriesName = `${module}.${name}`;
-                    let serie = this.series.find(s => s.name === seriesName);
-
-                    if (serie) {
-                        serie.data.push([timestamp.getTime(), value]);
-                        const firstTimestamp = serie.data[0][0];
-                        if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
-                            serie.data.shift();
-                        }
-                    } else {
-                        this.series.push({name: seriesName, data: [[timestamp.getTime(), value]]});
-                    }
+                    this.addData(data.data);
                 }
             });
+    }
+
+    private handleAction(data: string) {
+        if (data === 'recipeCompleted') {
+            this.snackBar.open('Recipe completed', 'Dismiss', {
+                duration: 3500,
+            });
+        }
+    }
+
+    private addData(data) {
+        console.log(data)
+        const name = <string> data.variable;
+        const module = <string> data.module;
+        const value = data.value;
+        const unit = data.unit;
+        const timestamp = new Date(data.timestampPfe);
+
+        let variables: ModuleVariableInterface[] = this._variables.value;
+        let m: ModuleVariableInterface = variables
+            .find((m: ModuleVariableInterface) => {
+                return (m.moduleName == module);
+            });
+        if (!m) {
+            m = {moduleName: module, variables: []};
+            variables.push(m);
+        }
+        let v = m.variables.find(v => v.variableName == name);
+        if (!v) {
+            v = {variableName: name, recentValue: value, timestamp: timestamp, unit: unit};
+            m.variables.push(v);
+        } else {
+            v.recentValue = value;
+            v.unit = unit;
+            v.timestamp = timestamp;
+        }
+        this._variables.next(variables);
+
+
+        this._updatedVariable.next({module: module, variable: name, value: value, timestamp: timestamp, unit: unit});
+
+
+        let series: SeriesInterface[] = this._series.value;
+        const seriesName = `${module}.${name}`;
+        let serie = series.find(s => s.name === seriesName);
+        if (serie) {
+            serie.data.push([timestamp.getTime(), value]);
+            const firstTimestamp = serie.data[0][0];
+            if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
+                serie.data.shift();
+            }
+        } else {
+            series.push({name: seriesName, data: [[timestamp.getTime(), value]]});
+        }
+        this._series.next(series);
     }
 
     heartbeat() {
@@ -143,23 +162,9 @@ export class BackendService {
         // equal to the interval at which your server sends out pings plus a
         // conservative assumption of the latency.
         this.pingTimeout = setTimeout(() => {
-            console.log("Connection to backend lost");
-            this.snackBar.open("Connection to backend lost");
+            console.log('Connection to backend lost');
+            this.snackBar.open('Connection to backend lost');
         }, 3000 + 1000);
-    }
-
-    get updatedVariable(): Observable<UpdatedVariableInterface> {
-        return this._updatedVariable.asObservable();
-    }
-
-    private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
-
-    get variables(): Observable<any[]> {
-        return this._variables.asObservable();
-    }
-
-    get recipes(): Observable<RecipeInterface[]> {
-        return this._recipes.asObservable();
     }
 
     get autoReset(): boolean {
@@ -174,50 +179,6 @@ export class BackendService {
         this.http.get(`${this.settings.apiUrl}/autoReset`).subscribe((data: any) => {
             this._autoReset = data.autoReset;
         });
-    }
-
-    sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
-        const body: any = {};
-        if (strategy) {
-            body.strategy = strategy;
-        }
-        if (parameters) {
-            body.parameters = parameters;
-        }
-        return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
-    }
-
-    configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/parameter`,
-            {parameters: parameterOptions});
-    }
-
-    configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters: ParameterOptions[]) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
-            {strategy: strategy.name, parameters});
-    }
-
-    refreshModules() {
-        this.http.get(`${this.settings.apiUrl}/module`).subscribe((data: ModuleInterface[]) => {
-            console.log('modules refreshed via HTTP GET', data);
-            this.modules = data;
-        });
-    }
-
-    addModule(moduleOptions) {
-        return this.http.put(`${this.settings.apiUrl}/module`, {module: moduleOptions});
-    }
-
-    connect(module: string) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module}/connect`, {});
-    }
-
-    disconnect(module: string) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
-    }
-
-    removeModule(module: string) {
-        return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
     }
 
     private setAutoReset(value: boolean) {

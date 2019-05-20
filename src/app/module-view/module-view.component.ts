@@ -1,47 +1,45 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {ModuleInterface} from '@p2olab/polaris-interface';
-import {BackendService} from '../_services/backend.service';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
+import {ModuleService} from '../_services/module.service';
 
 @Component({
-  selector: 'app-module-view',
-  templateUrl: './module-view.component.html',
-  styleUrls: ['./module-view.component.css']
+    selector: 'app-module-view',
+    templateUrl: './module-view.component.html',
+    styleUrls: ['./module-view.component.css']
 })
 export class ModuleViewComponent implements OnInit {
 
-  constructor(public backend: BackendService,
-              public dialog: MatDialog) {
-  }
+    modules$ = this.backend.modules;
 
-  ngOnInit() {
-    this.backend.refreshModules();
-  }
+    constructor(public backend: ModuleService,
+                public dialog: MatDialog) {
+    }
 
-  connect(module: string) {
-      this.backend.connect(module).subscribe((data) => {
-          console.log('Connect result', data);
-      });
+    ngOnInit() {
+    }
 
-  }
+    connect(module: string) {
+        this.backend.connect(module).subscribe((data) => {
+            console.log('Connect result', data);
+        });
+    }
 
-  disconnect(module: string) {
-      this.backend.disconnect(module).subscribe((data) => {
-          const index = this.backend.modules.findIndex((mod) => module === mod.id);
-          this.backend.modules.splice(index, 1);
-          console.log('Disconnect result', data);
-      });
-  }
+    disconnect(module: string) {
+        this.backend.disconnect(module).subscribe((data) => {
+            console.log('Disconnect result', data);
+        });
+    }
 
-  remove(module: string) {
-    this.backend.removeModule(module).subscribe((data) => console.log('Remove result', data));
-  }
+    remove(module: string) {
+        this.backend.removeModule(module).subscribe((data) => console.log('Remove result', data));
+    }
 
-  configure(module: ModuleInterface) {
-    const dialogRef = this.dialog.open(ServiceParameterDialogComponent, {
-      data: module
-    });
-  }
+    configure(module: ModuleInterface) {
+        const dialogRef = this.dialog.open(ServiceParameterDialogComponent, {
+            data: module
+        });
+    }
 
 }

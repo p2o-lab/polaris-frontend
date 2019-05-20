@@ -8,14 +8,14 @@
 </mat-card>
 
 
-    <mat-card *ngFor="let module of data" style="margin-top: 10px">
+    <mat-card *ngFor="let module of backend.variables |async" style="margin-top: 10px">
       <mat-card-header>
         <mat-card-title><h2 class="mat-h2">{{module.moduleName}}</h2></mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <ul>
           <li *ngFor="let variable of module.variables">
-            {{variable.variableName}} = {{variable.recentValue | number}}
+            {{variable.variableName}} = {{variable.recentValue | number}} {{variable.unit}}
           </li>
         </ul>
 

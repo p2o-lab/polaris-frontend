@@ -30,7 +30,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.backend.refreshPlayer();
         /* Continuously update data from backend service */
         this.backend.player.subscribe((player) => {
             console.log('Got new info for player', player);
@@ -46,7 +45,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
         });
 
         this.timer = timer(0, 1000)
-            .subscribe(() => this.updateDuration());
+            .subscribe(() => {
+                this.updateDuration();
+            });
     }
 
     ngOnDestroy() {

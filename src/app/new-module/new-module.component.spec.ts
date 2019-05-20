@@ -38,7 +38,7 @@ describe('NewModuleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('add port works', () => {
+  it('add port if not existing', () => {
 
     const testCases= [
         {input: "opc.tcp://192.168.31.23:4840", expected: "opc.tcp://192.168.31.23:4840"},
@@ -54,11 +54,10 @@ describe('NewModuleComponent', () => {
         {input: "opc.tcp://pol.tu-dresden.de/test/de", expected: "opc.tcp://pol.tu-dresden.de:4840/test/de"},
         {input: "test", expected: "test"}
     ];
+
     testCases.forEach((tc) => {
-        console.log(tc.input, tc.expected, component.addDefaultPort(tc.input))
         expect(component.addDefaultPort(tc.input)).toEqual(tc.expected);
     });
-
 
   });
 
