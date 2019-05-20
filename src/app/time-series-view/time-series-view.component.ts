@@ -43,26 +43,24 @@ export class TimeSeriesViewComponent implements OnInit {
         this.chart.ref$.subscribe((chart) => this.highChart = chart);
 
         this.backend.updatedVariable.subscribe((data) => {
-            if (data) {
-                const seriesName = `${data.module}.${data.variable}`;
-                if (this.highChart && this.highChart.series) {
-                    let index = this.highChart.series.findIndex(s => s.name === seriesName);
+            if (data  && this.highChart && this.highChart.series) {
+            const seriesName = `${data.module}.${data.variable}`;
+                let index = this.highChart.series.findIndex(s => s.name === seriesName);
 
-                    if (index != -1) {
-                        const firstTimestamp = this.highChart.series[index].data[0].x;
-                        this.chart.addPoint([data.timestamp.getTime(), data.value], index,
-                            true, data.timestamp.getTime() - firstTimestamp > 1000 * 60 * 5);
-                    } else {
-                        this.chart.addSeries({
-                            name: seriesName,
-                            type: 'line',
-                            tooltip: {
-                                valueDecimals: 3,
-                                valueSuffix: ` ${data.unit}`
-                            },
-                            data: [[data.timestamp.getTime(), data.value]]
-                        }, true, true);
-                    }
+                if (index != -1) {
+                    const firstTimestamp = this.highChart.series[index].data[0].x;
+                    this.chart.addPoint([data.timestamp.getTime(), data.value], index,
+                        true, data.timestamp.getTime() - firstTimestamp > 1000 * 60 * 5);
+                } else {
+                    this.chart.addSeries({
+                        name: seriesName,
+                        type: 'line',
+                        tooltip: {
+                            valueDecimals: 3,
+                            valueSuffix: ` ${data.unit}`
+                        },
+                        data: [[data.timestamp.getTime(), data.value]]
+                    }, true, true);
                 }
             }
         });
