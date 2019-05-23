@@ -35,6 +35,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                     this.strategyParameterFormGroup
                         .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
                 });
+                this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
+                    .subscribe((data) => console.log('strategy changed', strategy, data));
                 this.strategyParameterFormGroup.valueChanges
                     .subscribe((data) => {
                         console.log('Strategy parameter changed', this.module.id, this.service.name, data);
