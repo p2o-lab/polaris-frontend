@@ -81,9 +81,9 @@ export class ModuleService {
             {parameters: parameterOptions});
     }
 
-    configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters: ParameterOptions[]) {
+    configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters?: ParameterOptions[]) {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
-            {strategy: strategy.name, parameters});
+            {strategy: strategy.name, parameters: parameters});
     }
 
 }
