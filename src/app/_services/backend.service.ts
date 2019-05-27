@@ -144,7 +144,7 @@ export class BackendService {
         let serie = series.find(s => s.name === seriesName);
         if (serie) {
             if (timestamp.getTime() > serie.data[serie.data.length-1][0]) {
-                serie.data.push([timestamp.getTime(), value]);
+                serie.data.push([timestamp.getTime(), value*1]);
                 const firstTimestamp = serie.data[0][0];
                 if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
                     serie.data.shift();
