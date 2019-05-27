@@ -49,7 +49,7 @@ export class TimeSeriesViewComponent implements OnInit {
 
                 if (index != -1) {
                     const firstTimestamp = this.highChart.series[index].data[0].x;
-                    this.chart.addPoint([data.timestamp.getTime(), data.value], index,
+                    this.chart.addPoint([data.timestamp.getTime(), data.value*1], index,
                         true, data.timestamp.getTime() - firstTimestamp > 1000 * 60 * 5);
                 } else {
                     this.chart.addSeries({
@@ -57,7 +57,7 @@ export class TimeSeriesViewComponent implements OnInit {
                         type: 'line',
                         tooltip: {
                             valueDecimals: 3,
-                            valueSuffix: ` ${data.unit}`
+                            valueSuffix: ` ${data.unit? data.unit : ''}`
                         },
                         data: [[data.timestamp.getTime(), data.value]]
                     }, true, true);

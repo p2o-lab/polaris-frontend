@@ -15,9 +15,8 @@
       <mat-card-content>
         <ul>
           <li *ngFor="let variable of module.variables">
-            {{variable.variableName}} = {{variable.recentValue | number}} {{variable.unit}}
+            {{variable.variableName}} = {{variable.recentValue * 1 | number}} {{variable.unit}}
           </li>
         </ul>
-
       </mat-card-content>
     </mat-card>
