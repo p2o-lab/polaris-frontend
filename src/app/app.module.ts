@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ChartModule } from 'angular-highcharts';
 
 import {
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
     MatBadgeModule,
     MatButtonModule,
     MatCardModule,
@@ -127,7 +128,10 @@ moment.relativeTimeThreshold('ss', 5);
   entryComponents: [
     ServiceParameterDialogComponent
   ],
-  providers: [SettingsService, BackendService, WebsocketService],
+  providers: [
+      SettingsService, BackendService, WebsocketService,
+      {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
