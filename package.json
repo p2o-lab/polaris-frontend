@@ -2,8 +2,8 @@
   "name": "@p2olab/polaris-frontend",
   "version": "1.8.1",
   "author": "Markus Graube <markus.graube@tu-dresden.de>",
-  "repository": "svn@dev.plt.et.tu-dresden.de:modulare-automation/pfe-ree-viz.git",
-  "homepage": "https://dev.plt.et.tu-dresden.de/modulare-automation/pfe-ree-viz",
+  "repository": "https://github.com/p2o-lab/polaris-interface.git",
+  "homepage": "https://github.com/p2o-lab/polaris-interface",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

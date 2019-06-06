@@ -10,8 +10,8 @@ import {version} from '../../../package.json';
     styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-    private backendVersion: Object;
-    private frontendVersion;
+    public backendVersion: Object;
+    public frontendVersion;
 
     constructor(private location: Location,
                 public settings: SettingsService,
