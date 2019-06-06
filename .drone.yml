@@ -29,9 +29,6 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
-      branch:
-        - develop
-        - master
       event:
         - tag
         - push
