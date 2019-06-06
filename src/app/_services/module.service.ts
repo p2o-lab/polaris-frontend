@@ -22,15 +22,32 @@ export class ModuleService {
         this.refreshModules();
     }
 
+    /** update internal variables of module (service states, controlEnable of services, strategy parameters)
+     * by searching according to the name of module, service, strategy and parameter provided in data
+     * @param data
+     */
     public updateModuleState(data) {
         if (data) {
             if (data.module) {
                 let modules = this._modules.value;
                 const newModule = modules.find((module) => module.id === data.module);
-                if (newModule && newModule.services) {
-                    const newService = newModule.services
-                        .find((service) => service.name === data.service);
-                    Object.assign(newService, data);
+                if (newModule && newModule.services && data.service) {
+                    const newService = newModule.services.find((service) => service.name === data.service);
+                    if (newService && newService.strategies) {
+                        if (data.strategy) {
+                            const newStrategy = newService.strategies.find((strategy) => strategy.id === data.strategy);
+                            if (newStrategy && newStrategy.parameters && data.parameter ) {
+                                const newParameter = newStrategy.parameters
+                                    .find((parameter) => parameter.name === data.parameter);
+                                if (newParameter) {
+                                    Object.assign(newParameter, data);
+                                }
+                            }
+                        } else {
+                            Object.assign(newService, data);
+                        }
+                    }
+
                 }
                 this._modules.next(modules)
             }

@@ -1,10 +1,11 @@
-<h1 class="mat-h1">Modules</h1>
+<h1 class="mat-h1">Modules <small>(PEAs)</small></h1>
 
 <button mat-button routerLink="/modules/new">
     <mat-icon>add</mat-icon>
     Add Module
 </button>
-<div *ngIf="modules$ | async as modulesObject; else loading">
+<p *ngIf="(modules$ | async).length==0">No modules loaded yet</p>
+<div *ngIf="modules$ | async as modulesObject">
     <mat-card class="dashboard-card" *ngFor="let module of modulesObject">
         <mat-card-header>
             <mat-card-title>
@@ -36,6 +37,3 @@
         </mat-card-actions>
     </mat-card>
 </div>
-
-
-<ng-template #loading>still loading modules from backend...</ng-template>

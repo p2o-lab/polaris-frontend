@@ -18,12 +18,14 @@
             </mat-list-item>
             <mat-list-item>
                 <p matLine>Operations</p>
-                <p matLine *ngIf="currentStep?.operations.length==0"><span class="with-icon"><mat-icon>chevron_right</mat-icon>&nbsp;No operation</span></p>
+                <p matLine *ngIf="currentStep?.operations.length==0"><span class="with-icon"><mat-icon>chevron_right</mat-icon>&nbsp;No operation</span>
+                </p>
                 <p matLine *ngFor="let operation of currentStep?.operations">
                     <span class="with-icon">
                     <mat-icon>chevron_right</mat-icon>&nbsp;
                     <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
-                        *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small *ngIf="operation.parameter">{{formatter.parameterToString(operation.parameter)}}</small>)
+                            *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small
+                            *ngIf="operation.parameter">{{formatter.parameterToString(operation.parameter)}}</small>)
                         </span>
                 </p>
             </mat-list-item>
@@ -63,26 +65,30 @@
                 <span class="right">
                     <button mat-button [routerLink]="['/recipe', item.id]"><mat-icon
                             mat-list-icon>linear_scale</mat-icon>{{item.options.steps.length}} steps</button>
-                    <button mat-button (click)="remove(i)"><mat-icon mat-list-icon>delete</mat-icon>remove recipe</button>
+                    <button mat-button (click)="remove(i)"><mat-icon
+                            mat-list-icon>delete</mat-icon>remove recipe</button>
                 </span>
             </mat-list-item>
         </mat-list>
         <span *ngIf="player.playlist.length==0">No recipes added to playlist. Go to recipes to <a routerLink="/recipe">recipes</a> add them.</span>
     </mat-card-content>
     <mat-card-actions *ngIf="player">
-        <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button>
+        <button [disabled]="!startAllowed()" (click)="start()" color="primary" mat-button
+                matTooltip="Start recipe (or resume recipe)">
             <mat-icon>play_arrow</mat-icon>
             Start
         </button>
-        <button [disabled]="!pauseAllowed()" (click)="pause()" mat-button>
+        <button [disabled]="!pauseAllowed()" (click)="pause()" mat-button
+                matTooltip="Pause all running services and stop waiting for a recipe transition">
             <mat-icon>pause_arrow</mat-icon>
             Pause
         </button>
-        <button [disabled]="!stopAllowed()" (click)="stop()" mat-button>
+        <button [disabled]="!stopAllowed()" (click)="stop()" mat-button
+                matTooltip="Stop recipes and all non-idle services">
             <mat-icon>stop_arrow</mat-icon>
             Stop
         </button>
-        <button [disabled]="!resetAllowed()" (click)="reset()" color="accent" mat-button>
+        <button [disabled]="!resetAllowed()" (click)="reset()" color="accent" mat-button matTooltip="Reset recipe">
             <mat-icon>replay_arrow</mat-icon>
             Reset
         </button>

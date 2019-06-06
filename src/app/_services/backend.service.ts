@@ -7,6 +7,7 @@ import {WebsocketService} from './websocket.service';
 import {RecipeService} from './recipe.service';
 import {PlayerService} from './player.service';
 import {ModuleService} from './module.service';
+import {timeout} from 'rxjs/internal/operators';
 
 export interface VariableInterface {
     variableName: string;
@@ -78,7 +79,7 @@ export class BackendService {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
                 const data: { message: string, data: any } = JSON.parse(msg.data);
-                // console.log('ws received', data.message, data.data);
+                //console.log('ws received', data.message, data.data);
                 if (data.message === 'ping') {
                     this.heartbeat();
                 }
@@ -141,7 +142,7 @@ export class BackendService {
 
         let series: SeriesInterface[] = this._series.value;
         const seriesName = `${module}.${name}`;
-        let serie = series.find(s => s.name === seriesName);
+        const serie = series.find(s => s.name === seriesName);
         if (serie) {
             if (timestamp.getTime() > serie.data[serie.data.length-1][0]) {
                 serie.data.push([timestamp.getTime(), value*1]);
@@ -185,9 +186,16 @@ export class BackendService {
     }
 
     public refreshAutoReset() {
-        this.http.get(`${this.settings.apiUrl}/autoReset`).subscribe((data: any) => {
-            this._autoReset = data.autoReset;
-        });
+        this.http.get(`${this.settings.apiUrl}/autoReset`)
+            .pipe(timeout(2000))
+            .subscribe(
+            (data: any) => {
+                this._autoReset = data.autoReset;
+            },
+            (error) => {
+  //              this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
+            }
+        );
     }
 
     private setAutoReset(value: boolean) {
@@ -212,5 +220,9 @@ export class BackendService {
 
     public shutdown() {
         return this.http.post(`${this.settings.apiUrl}/shutdown`, null);
+    }
+
+    public getVersion() {
+        return this.http.get(`${this.settings.apiUrl}/version`);
     }
 }

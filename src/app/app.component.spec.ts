@@ -7,13 +7,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {settingsServiceStub} from './_services/settings.service.spec';
+import {LoadingBarComponent} from '@ngx-loading-bar/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatSidenavModule, MatSnackBarModule, BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule],
+      imports: [MatSidenavModule, MatSnackBarModule,
+          BrowserAnimationsModule, RouterTestingModule,
+          HttpClientTestingModule],
       declarations: [
-        AppComponent, MatToolbar, MatIcon, MatBadge, MatNavList
+        AppComponent, MatToolbar, MatIcon, MatBadge, MatNavList, LoadingBarComponent
       ],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},

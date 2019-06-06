@@ -15,10 +15,12 @@
 
 </form>
 <p>
-  <button mat-button color="primary" (click)="back()">Save & Back</button>
+  <button mat-flat-button color="primary" (click)="back()">Save & Back</button>
 </p>
 
 <h2 class="mat-h2">Maintenance</h2>
+<p>Version Backend: {{backendVersion }}</p>
+<p>Version Frontend: {{frontendVersion}}</p>
 <p>
-    <button mat-button color="warn" (click)="shutdown()">Shutdown</button>
+    <button mat-stroked-button color="warn" (click)="shutdown()" matTooltip="Shutdown backend. It should automatically restart. Thus, reload this page after a few seconds.">Shutdown</button>
 </p>

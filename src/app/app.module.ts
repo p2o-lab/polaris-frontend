@@ -4,8 +4,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {LayoutModule} from '@angular/cdk/layout';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 import { ChartModule } from 'angular-highcharts';
+
+import 'hammerjs';
 
 import {
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
@@ -21,13 +24,13 @@ import {
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatPaginatorModule,
+    MatPaginatorModule, MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
     MatSnackBarModule,
     MatSortModule, MatStepperModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import * as moment from 'moment';
@@ -121,8 +124,11 @@ moment.relativeTimeThreshold('ss', 5);
     MatSortModule,
     MatChipsModule,
     MatStepperModule,
+      MatTooltipModule,
+      MatProgressSpinnerModule,
     NgxChartsModule,
       ChartModule,
+      LoadingBarHttpClientModule,
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [

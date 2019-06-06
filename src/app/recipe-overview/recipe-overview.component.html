@@ -5,6 +5,8 @@
   Add Recipe
 </button>
 
+<p *ngIf="recipes.length==0">No recipes loaded yet</p>
+
 <mat-card class="recipe-card" *ngFor="let recipe of recipes">
   <mat-card-header>
     <mat-card-title>

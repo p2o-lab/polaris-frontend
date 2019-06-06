@@ -1,9 +1,9 @@
 # polaris-frontend
-Visualisation for POL recipe engine *polaris-backend*
+Visualisation for Polaris recipe engine [polaris-backend](https://github.com/p2o-lab/polaris-backend)
 
-[![Build status](http://cif.plt.et.tu-dresden.de/api/badges/modulare-automation/pfe-ree-viz/status.svg)](http://cif.plt.et.tu-dresden.de/modulare-automation/pfe-ree-viz)
-[![Docker image](https://img.shields.io/badge/docker%20image-available-brightgreen.svg)](http://registry.plt.et.tu-dresden.de/#!taglist/pfe-ree-viz)
-[![NPM package](https://img.shields.io/badge/npm%20package-available-brightgreen.svg)](https://registry.plt.et.tu-dresden.de:4873/#/detail/@plt/pfe-ree-viz)
+Master: [![Build Status](https://cloud.drone.io/api/badges/p2o-lab/polaris-frontend/status.svg)](https://cloud.drone.io/p2o-lab/polaris-frontend)
+Develop: [![Build Status](https://cloud.drone.io/api/badges/p2o-lab/polaris-frontend/status.svg?ref=/refs/heads/develop)](https://cloud.drone.io/p2o-lab/polaris-frontend)
+Docker: [![](https://images.microbadger.com/badges/version/p2olab/polaris-frontend.svg)](https://microbadger.com/images/p2olab/polaris-frontend)
 
 ## Dependencies
 All dependencies are installed via NPM
@@ -18,7 +18,7 @@ Run `npm start` or `ng serve` for a dev server. Navigate to `http://localhost:42
 
 ## Docker
 ```
-docker run --name registry.plt.et.tu-dresden.de/pfe-ree-viz -d -p 8080:80 pfe-ree-viz
+docker run -d -p 8080:80 p2olab/polaris-frontend
 ```
 
 Build it and deploy it
