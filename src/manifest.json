@@ -1,6 +1,6 @@
 {
-  "name": "pfe-viz",
-  "short_name": "pfe-viz",
+  "name": "Polaris Frontend",
+  "short_name": "polaris",
   "theme_color": "#3d5afe",
   "background_color": "#fafafa",
   "display": "standalone",

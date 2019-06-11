@@ -33,6 +33,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-toolbar>span').textContent).toContain('PFE Recipe Engine');
+    expect(compiled.querySelector('mat-toolbar>span').textContent).toContain('Polaris Recipe Engine');
   }));
 });
