@@ -34,7 +34,7 @@ steps:
       from_secret: docker_password
     repo: p2olab/polaris-backend
     auto_tag: true
-    auto_tag_suffix: -arm
+    auto_tag_suffix: arm
 
 ---
 kind: signature
