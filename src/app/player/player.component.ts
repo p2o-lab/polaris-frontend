@@ -72,8 +72,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     start() {
         this.backend.startPlayer().subscribe(
-            (data) => console.log('start player', data),
-            (error) => this.snackBar.open(error.error.error, 'Dismiss'));
+            (data) => {
+                    console.log('start player', data);
+                    this.backend.refreshPlayer();
+                },
+            (error) => this.snackBar.open(error.error.error, 'Dismiss')
+            );
     }
 
     reset() {
