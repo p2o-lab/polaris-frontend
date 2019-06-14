@@ -9,7 +9,7 @@ platform:
 steps:
 
 - name: test
-  image: trion/ng-cli-karma:7.3.7
+  image: trion/ng-cli-karma:8.0.2
   commands:
   - npm install
   - ng test --watch=false --progress=false

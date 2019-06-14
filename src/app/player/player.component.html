@@ -2,28 +2,29 @@
 
 <mat-card class="recipe-card" *ngIf="player">
     <mat-card-header>
-        <mat-card-title>
-            <h2 class="mat-h2"><span *ngIf="currentRecipe">{{currentRecipe?.options.name}}</span><span
-                    *ngIf="!currentRecipe">No recipe active</span></h2>
+        <mat-card-title matTooltip="Active recipe">
+            <h2 class="mat-h2"><span *ngIf="player.currentRecipe">{{player.currentRecipe.options.name}}</span><span
+                    *ngIf="!player.currentRecipe">No active recipe</span></h2>
         </mat-card-title>
-        <mat-card-subtitle>
-            Current Recipe
+        <mat-card-subtitle *ngIf="player.currentRecipe as currentRecipe" matTooltip="Current step in recipe">
+            <span class="with-icon"> {{currentRecipe.currentStep?.name}} &nbsp;
+            (<mat-icon>timer</mat-icon>&nbsp;{{changeDuration}})</span>
         </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content *ngIf="currentRecipe">
+    <mat-card-content *ngIf="player.currentRecipe as currentRecipe">
         <mat-list>
             <mat-list-item>
-                <p matLine><strong>{{currentRecipe?.currentStep}}</strong></p>
-                <p matLine><span class="with-icon"><mat-icon>timer</mat-icon>&nbsp;{{changeDuration}}</span></p>
-            </mat-list-item>
-            <mat-list-item>
                 <p matLine>Operations</p>
-                <p matLine *ngIf="currentStep?.operations.length==0"><span class="with-icon"><mat-icon>chevron_right</mat-icon>&nbsp;No operation</span>
+                <p matLine *ngIf="currentRecipe.currentStep?.operations.length==0"><span class="with-icon"><mat-icon>done</mat-icon>&nbsp;No operation</span>
                 </p>
-                <p matLine *ngFor="let operation of currentStep?.operations">
+                <p matLine *ngFor="let operation of currentRecipe.currentStep?.operations">
                     <span class="with-icon">
-                    <mat-icon>chevron_right</mat-icon>&nbsp;
-                    <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
+                        <mat-icon *ngIf="operation.state=='executing'" matTooltip="Executing operation in progress">chevron_right</mat-icon>
+                        <mat-icon *ngIf="operation.state=='completed'"
+                                  matTooltip="Operation successfully executed">done</mat-icon>
+                        <mat-icon *ngIf="operation.state=='aborted'"
+                                  matTooltip="Operation aborted">highlight_off</mat-icon> &nbsp;
+                        <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
                             *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small
                             *ngIf="operation.parameter">{{formatter.parameterToString(operation.parameter)}}</small>)
                         </span>
@@ -31,16 +32,14 @@
             </mat-list-item>
             <mat-list-item>
                 <p matLine>Transitions</p>
-                <p matLine *ngFor="let transition of currentStep?.transitions">
+                <p matLine *ngFor="let transition of currentRecipe.currentStep?.transitions">
                     <span class="with-icon">
-                    {{formatter.conditionToString(transition.condition)}}
-                    &nbsp;<mat-icon>arrow_right_alt</mat-icon>&nbsp;
-                    {{transition.next_step}}
-                &nbsp;<button (click)="forceTransition(transition.next_step)" color="warn" mat-button>
-                    <mat-icon>skip_next</mat-icon>
-                    Force Transition
-                </button>
-                        </span>
+                        {{formatter.conditionToString(transition.condition)}}
+                        <button (click)="forceTransition(transition.next_step)" mat-button matTooltip="Force Transition">
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                        {{transition.next_step}}
+                    </span>
                 </p>
             </mat-list-item>
         </mat-list>
@@ -63,10 +62,10 @@
                            [class.active]="i == player.currentItem && player.status==='running'">
                 {{i+1}}. {{item.options.name}}
                 <span class="right">
-                    <button mat-button [routerLink]="['/recipe', item.id]"><mat-icon
+                    <button mat-button [routerLink]="['/recipe', item.id]" matTooltip="Show details of recipe"><mat-icon
                             mat-list-icon>linear_scale</mat-icon>{{item.options.steps.length}} steps</button>
-                    <button mat-button (click)="remove(i)"><mat-icon
-                            mat-list-icon>delete</mat-icon>remove recipe</button>
+                    <button mat-button aria-label="Remove Recipe from playlist" matTooltip="Remove recipe from playlist" (click)="remove(i)"><mat-icon
+                            mat-list-icon>delete</mat-icon></button>
                 </span>
             </mat-list-item>
         </mat-list>
@@ -100,15 +99,24 @@
         <mat-card-title>
             <h2 class="mat-h2">Recent Recipe Runs</h2>
         </mat-card-title>
+        <mat-card-subtitle>
+            Archive
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-list *ngIf="player.recipeRuns">
-            <mat-list-item *ngFor="let run of player.recipeRuns">
-                {{run.startTime}} &nbsp; {{run.name}} &nbsp;
-                <small>{{run.endTime}}</small>
+            <mat-list-item *ngFor="let run of player.recipeRuns; let i = index">
+                {{i+1}}. {{run.name}} &nbsp;
+                <mat-icon *ngIf="run.status=='running'" matTooltip="Recipe is currently running">chevron_right</mat-icon>
+                <mat-icon *ngIf="run.status=='completed'" matTooltip="Recipe successfully completed">done</mat-icon>
+                <mat-icon *ngIf="run.status=='stopped'" matTooltip="Recipe has been stopped">highlight_off</mat-icon> &nbsp;
+                <small>
+                    <span [matTooltip]="run.startTime">Start: {{getTime(run.startTime)}}</span> &nbsp; - &nbsp;
+                    <span [matTooltip]="run.endTime">Duration: {{ getDuration(run.startTime, run.endTime) }}</span>
+                </small>
                 <span class="right">
-        <a mat-button [href]="settings.apiUrl+'/recipeRun/'+run.id"><mat-icon>get_app</mat-icon> Download Log</a>
-          </span>
+                    <a mat-button matTooltip="Download log of recipe run" [href]="settings.apiUrl+'/recipeRun/'+run.id"><mat-icon>get_app</mat-icon></a>
+                </span>
             </mat-list-item>
         </mat-list>
         <span *ngIf="player.recipeRuns.length==0">No recipes runs yet.</span>

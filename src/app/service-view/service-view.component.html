@@ -22,7 +22,7 @@
         <input matInput [type]="param.type" [formControlName]="param.name" [value]="param.value"
                [placeholder]="param.name" [min]="param.min" [max]="param.max">
         <span matSuffix>{{param.unit}}</span>
-        <mat-hint *ngIf="param.min || param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
+        <mat-hint *ngIf="param.min && param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
       </mat-form-field>
     </p>
   </form>

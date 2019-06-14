@@ -4,8 +4,8 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 import {RecipeInterface} from '@p2olab/polaris-interface';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/internal/operators';
-import {StepFormatterService} from '../step-formatter.service';
 import {RecipeService} from '../_services/recipe.service';
+import {StepFormatterService} from '../step-formatter.service';
 
 @Component({
   selector: 'app-recipe-detail',
