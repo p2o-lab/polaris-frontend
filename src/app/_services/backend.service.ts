@@ -88,7 +88,7 @@ export class BackendService {
                 this._autoReset = data.autoReset;
             },
             (error) => {
-  //              this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
+                this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
             }
         );
     }
@@ -170,14 +170,14 @@ export class BackendService {
 
         const variables: ModuleVariableInterface[] = this._variables.value;
         let m: ModuleVariableInterface = variables
-            .find((m: ModuleVariableInterface) => {
-                return (m.moduleName === module);
+            .find((mod: ModuleVariableInterface) => {
+                return (mod.moduleName === module);
             });
         if (!m) {
             m = {moduleName: module, variables: []};
             variables.push(m);
         }
-        let v = m.variables.find((v) => v.variableName === name);
+        let v = m.variables.find((moduleVariable) => moduleVariable.variableName === name);
         if (!v) {
             v = {variableName: name, recentValue: value, timestamp, unit};
             m.variables.push(v);
