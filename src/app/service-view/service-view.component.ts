@@ -40,7 +40,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                 this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
                     .subscribe(
                         (data) => {
-                            console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}`);
+                            console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}: ` +
+                                `${JSON.stringify(data)}`);
                         },
                         (err) => {
                             console.log(`Error while changing Service ${this.service.name} to strategy ${strategy}: ` +
@@ -92,7 +93,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
      * @returns {ParameterOptions[]}
      */
     private getParameter(): ParameterOptions[] {
-        const parameters = this.strategyFormControl.value.parameters
+        return this.strategyFormControl.value.parameters
             .filter((param) => !param.readonly)
             .map((param) => {
                 return {
@@ -100,12 +101,13 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                     value: this.strategyParameterFormGroup.value[param.name]
                 };
             });
-        return parameters;
     }
 
     private updateDuration() {
-        this.service.lastChange = this.service.lastChange + 1;
-        this.changeDuration = moment.duration(-this.service.lastChange, 'seconds').humanize();
+        if (this.service && this.service.lastChange) {
+            this.service.lastChange = this.service.lastChange + 1;
+            this.changeDuration = moment.duration(-this.service.lastChange, 'seconds').humanize();
+        }
     }
 
 }

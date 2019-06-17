@@ -1,9 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {
-    ConditionOptions, ConditionType, ParameterInterface, PlayerInterface, RecipeInterface, StepOptions,
-    TransitionOptions
-} from '@p2olab/polaris-interface';
+import {PlayerInterface, RecipeInterface, StepOptions} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {Subscription, timer} from 'rxjs';
 import {PlayerService} from '../_services/player.service';
@@ -64,11 +61,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
     start() {
         this.backend.startPlayer().subscribe(
             (data) => {
-                    console.log('start player', data);
-                    this.backend.refreshPlayer();
-                },
+                console.log('start player', data);
+                this.backend.refreshPlayer();
+            },
             (error) => this.snackBar.open(error.error.error, 'Dismiss')
-            );
+        );
     }
 
     reset() {
@@ -89,7 +86,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     forceTransition(nextStep) {
         this.backend.playerForceTransition(this.player.currentRecipe.currentStep.name, nextStep)
-            .subscribe((data) => console.log("transitions forced", data));
+            .subscribe((data) => console.log('transitions forced', data));
     }
 
     remove(id: number) {
@@ -108,7 +105,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
 
     private updateDuration() {
-        if (this.player && this.player.currentRecipe) {
+        if (this.player && this.player.currentRecipe && this.player.currentRecipe.lastChange) {
             this.player.currentRecipe.lastChange = this.player.currentRecipe.lastChange + 1;
             this.changeDuration = moment.duration(-this.player.currentRecipe.lastChange, 'seconds').humanize();
         }
