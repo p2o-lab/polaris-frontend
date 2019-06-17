@@ -72,7 +72,7 @@ export class ModuleService {
     }
 
     disconnect(module: string) {
-        let modules = this._modules.value;
+        const modules = this._modules.value;
         const index = modules.findIndex((mod) => module === mod.id);
         modules.splice(index, 1);
         return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
@@ -100,7 +100,7 @@ export class ModuleService {
 
     configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters?: ParameterOptions[]) {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
-            {strategy: strategy.name, parameters: parameters});
+            {strategy: strategy.name, parameters});
     }
 
 }
