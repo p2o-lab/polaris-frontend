@@ -1,20 +1,20 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {SettingsService} from './settings.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {RecipeInterface} from '@p2olab/polaris-interface';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {SettingsService} from './settings.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RecipeService {
 
+    private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
+
     constructor(private http: HttpClient,
                 private settings: SettingsService) {
         this.refreshRecipes();
     }
-
-    private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
     get recipes(): Observable<RecipeInterface[]> {
         return this._recipes.asObservable();
@@ -39,4 +39,7 @@ export class RecipeService {
         return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
     }
 
+    instantiateVirtualService(virtualService: any) {
+        return this.http.put(`${this.settings.apiUrl}/virtualService`, virtualService);
+    }
 }

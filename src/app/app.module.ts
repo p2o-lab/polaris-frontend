@@ -56,6 +56,7 @@ import { TimeSeriesViewComponent } from './time-series-view/time-series-view.com
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NewVirtualServiceComponent } from './new-virtual-service/new-virtual-service.component';
 
 moment.updateLocale('en', {
     relativeTime : {
@@ -92,7 +93,8 @@ moment.relativeTimeThreshold('ss', 5);
     PlayerComponent,
     LogComponent,
     ServiceParameterDialogComponent,
-    TimeSeriesViewComponent
+    TimeSeriesViewComponent,
+    NewVirtualServiceComponent
   ],
   imports: [
     BrowserModule,
@@ -132,7 +134,10 @@ moment.relativeTimeThreshold('ss', 5);
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
-    ServiceParameterDialogComponent
+    ServiceParameterDialogComponent,
+      NewVirtualServiceComponent,
+      NewRecipeComponent,
+      NewModuleComponent
   ],
   providers: [
       SettingsService, BackendService, WebsocketService,

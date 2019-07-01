@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Instantiate New VirtualService</h1>
+<mat-dialog-content>
+    <mat-form-field class="example-container">
+        <textarea matInput placeholder="VirtualService options"
+            matTextareaAutosize
+            matAutosizeMinRows="10"
+            [(ngModel)]="virtualService"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="instantiate()">Instantiate</button>
+    <button type="button" mat-button (click)="imgFileInput.click()">Load from file</button>
+    <input hidden type="file" #imgFileInput (change)="previewFile($event)"/>
+    <button mat-button color="warn" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

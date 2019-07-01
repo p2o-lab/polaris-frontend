@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import {MatDialogRef, MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 import {RecipeService} from '../_services/recipe.service';
+import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
   selector: 'app-new-recipe',
@@ -12,8 +13,8 @@ export class NewRecipeComponent {
 
   public recipe: string;
 
-  constructor(private backend: RecipeService,
-              private router: Router,
+  constructor(private dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
+              private backend: RecipeService,
               private snackBar: MatSnackBar) {
   }
 
@@ -26,24 +27,20 @@ export class NewRecipeComponent {
     reader.readAsText(event.target.files[0]);
   }
 
-  public editRecipe() {
+  public submitRecipe() {
     try {
       const recipe = JSON.parse(this.recipe);
       this.snackBar.dismiss();
       this.backend.submitNewRecipe(recipe).subscribe(
         (data) => {
-          this.router.navigate(['/recipe']);
+          this.dialogRef.close();
         },
         (error) => {
-          this.snackBar.open(error.error.error, 'Dismiss');
+          this.snackBar.open(JSON.stringify(error.error), 'Dismiss');
         }
       );
     } catch {
       this.snackBar.open('Not valid JSON', 'Dismiss');
     }
-  }
-
-  public cancel() {
-    this.router.navigate(['/recipe']);
   }
 }

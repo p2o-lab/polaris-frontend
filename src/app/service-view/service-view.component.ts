@@ -1,7 +1,10 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
-import {ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
+import {
+    ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface,
+    StrategyInterface
+} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {Subscription, timer} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
@@ -14,6 +17,7 @@ import {ModuleService} from '../_services/module.service';
 export class ServiceViewComponent implements OnInit, OnDestroy {
     @Input() service: ServiceInterface;
     @Input() module: ModuleInterface;
+    @Input() virtualService: boolean = false;
 
     strategyFormControl: FormControl = new FormControl('', new FormControl());
     strategyParameterFormGroup: FormGroup = new FormGroup({}, {updateOn: 'blur'});
@@ -27,29 +31,38 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.service) {
-            let newStrategy = this.service.strategies.find((strategy) => strategy.id === this.service.currentStrategy);
+
+            let newStrategy;
+            if (this.service.strategies) {
+                newStrategy = this.service.strategies.find((strategy) => strategy.id === this.service.currentStrategy);
+            }
             if (!newStrategy && this.service.strategies) {
                 newStrategy = this.service.strategies.find((strategy) => strategy.default);
             }
-            this.strategyFormControl.valueChanges.subscribe((strategy) => {
+            if (!newStrategy) {
+                newStrategy = {parameters: this.service.parameters, name: 'default', default: true, id: "1", sc: true};
+            }
+            this.strategyFormControl.valueChanges.subscribe((strategy: StrategyInterface) => {
                 this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
                 strategy.parameters.forEach((param: ParameterInterface) => {
                     this.strategyParameterFormGroup
                         .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
                 });
-                this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
-                    .subscribe(
-                        (data) => {
-                            console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}: ` +
-                                `${JSON.stringify(data)}`);
-                        },
-                        (err) => {
-                            console.log(`Error while changing Service ${this.service.name} to strategy ${strategy}: ` +
-                                `${JSON.stringify(err)}`);
-                            this.snackBar.open(`Error while changing Service ${this.service.name} ` +
-                                `to strategy ${strategy}`, 'Ok');
-                        }
-                    );
+                if (this.module) {
+                    this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
+                        .subscribe(
+                            (data) => {
+                                console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}: ` +
+                                    `${JSON.stringify(data)}`);
+                            },
+                            (err) => {
+                                console.log(`Error while changing Service ${this.service.name} ` +
+                                    `to strategy ${strategy.name}: ${JSON.stringify(err)}`);
+                                this.snackBar.open(`Error while changing Service ${this.service.name} ` +
+                                    `to strategy ${strategy.name}`, 'Ok');
+                            }
+                        );
+                }
                 this.strategyParameterFormGroup.valueChanges
                     .subscribe((data) => {
                         console.log('Strategy parameter changed', this.module.id, this.service.name, data);
@@ -61,7 +74,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                     });
             });
             this.strategyFormControl.setValue(newStrategy);
-            if (this.service.strategies.length === 1) {
+            console.log('new strat', newStrategy)
+            if (!this.service.strategies || this.service.strategies.length === 1) {
                 this.strategyFormControl.disable();
             }
         }
@@ -75,17 +89,25 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     disabled() {
-        return this.service.opMode.source === 'internal';
+        return !(this.service.opMode === undefined || this.service.opMode.source === 'external');
     }
 
     sendCommand(command: string) {
         const strategy: string = this.strategyFormControl.value.name;
         const parameters: any[] = this.getParameter();
 
-        this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
-            .subscribe((data) => {
-                console.log('command sent', data);
-            });
+        if (!this.virtualService) {
+            this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
+                .subscribe((data) => {
+                    console.log('command sent', data);
+                });
+        } else {
+            console.log('command sent virtual service');
+            this.backend.sendVirtualServiceCommand(this.service.name, command, parameters)
+                .subscribe((data) => {
+                    console.log('command sent virtual service', data);
+                });
+        }
     }
 
     /**
@@ -93,7 +115,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
      * @returns {ParameterOptions[]}
      */
     private getParameter(): ParameterOptions[] {
-        return this.strategyFormControl.value.parameters
+        const parameters = this.strategyFormControl.value.parameters;
+        return parameters
             .filter((param) => !param.readonly)
             .map((param) => {
                 return {

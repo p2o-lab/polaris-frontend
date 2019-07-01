@@ -29,7 +29,7 @@
     "@angular/service-worker": "^7.2.11",
     "@ngx-loading-bar/core": "^4.2.0",
     "@ngx-loading-bar/http-client": "^4.2.0",
-    "@p2olab/polaris-interface": "^1.24.0",
+    "@p2olab/polaris-interface": "^1.25.0",
     "@swimlane/ngx-charts": "^10.0.0",
     "angular-highcharts": "^7.2.0",
     "hammerjs": "^2.0.8",

@@ -1,23 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {ModuleInterface} from '@p2olab/polaris-interface';
-import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 import {ModuleService} from '../_services/module.service';
+import {NewModuleComponent} from '../new-module/new-module.component';
+import {NewVirtualServiceComponent} from '../new-virtual-service/new-virtual-service.component';
+import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
     selector: 'app-module-view',
     templateUrl: './module-view.component.html',
     styleUrls: ['./module-view.component.css']
 })
-export class ModuleViewComponent implements OnInit {
+export class ModuleViewComponent {
 
     modules$ = this.backend.modules;
 
-    constructor(public backend: ModuleService,
-                public dialog: MatDialog) {
-    }
+    virtualServices$ = this.backend.virtualServices;
 
-    ngOnInit() {
+    constructor(public backend: ModuleService,
+                private dialog: MatDialog) {
     }
 
     connect(module: string) {
@@ -37,9 +38,19 @@ export class ModuleViewComponent implements OnInit {
     }
 
     configure(module: ModuleInterface) {
-        const dialogRef = this.dialog.open(ServiceParameterDialogComponent, {
+        this.dialog.open(ServiceParameterDialogComponent, {
             data: module
         });
     }
 
+    instantiateVirtualService() {
+        this.dialog.open(NewVirtualServiceComponent, {});
+    }
+
+    newModule() {
+        this.dialog.open(NewModuleComponent, {
+            width: '800px',
+            height: '800px'
+        });
+    }
 }
