@@ -1,10 +1,7 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
-import {Router} from '@angular/router';
+import {Component} from '@angular/core';
+import {MatDialogRef, MatSnackBar} from '@angular/material';
 import {RecipeService} from '../_services/recipe.service';
-import {ModuleService} from '../_services/module.service';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
-import {ModuleInterface} from '@p2olab/polaris-interface';
 
 @Component({
   selector: 'app-new-virtual-service',
@@ -17,7 +14,6 @@ export class NewVirtualServiceComponent {
 
     constructor(private dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
                 private backend: RecipeService,
-                private router: Router,
                 private snackBar: MatSnackBar) {
     }
 
