@@ -33,8 +33,11 @@ import {
     MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 import * as moment from 'moment';
 import {WebStorageModule} from 'ngx-store';
+import { environment } from '../environments/environment';
 import {BackendService} from './_services/backend.service';
 import {SettingsService} from './_services/settings.service';
 import {WebsocketService} from './_services/websocket.service';
@@ -42,6 +45,16 @@ import {AboutComponent} from './about/about.component';
 import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {PFEDashboardComponent} from './pfe-dashboard/pfe-dashboard.component';
+import {ServiceLauncherComponent} from './pfe-dashboard/service-launcher/service-launcher.component';
+import {ServiceSettingsComponent} from './pfe-dashboard/service-launcher/service-settings/service-settings.component';
+import {ServicelauncherButtonComponent} from './pfe-dashboard/service-launcher/servicelauncher-button/servicelauncher-button.component';
+import {NavigationComponent} from './pfe-dashboard/navigation/navigation.component';
+import {KpiComponent} from './pfe-dashboard/kpi/kpi.component';
+import {RecipeComponent} from './pfe-dashboard/recipe-visualisation/recipe.component';
+import {ShopfloorComponent} from './pfe-dashboard/navigation/shopfloor/shopfloor.component';
+import {SubplantComponent} from './pfe-dashboard/navigation/subplant/subplant.component';
+import {ModuleComponent} from './pfe-dashboard/navigation/module/module.component';
 import {LogComponent} from './log/log.component';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
@@ -53,9 +66,6 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import { TimeSeriesViewComponent } from './time-series-view/time-series-view.component';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 moment.updateLocale('en', {
     relativeTime : {
@@ -90,6 +100,12 @@ moment.relativeTimeThreshold('ss', 5);
     AboutComponent,
     RecipeDetailComponent,
     PlayerComponent,
+    PFEDashboardComponent,
+    KpiComponent,
+    NavigationComponent,
+    ServiceLauncherComponent,
+    ServiceSettingsComponent,
+    ServicelauncherButtonComponent,
     LogComponent,
     ServiceParameterDialogComponent,
     TimeSeriesViewComponent

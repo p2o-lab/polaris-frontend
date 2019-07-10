@@ -1,19 +1,19 @@
 import 'zone.js/dist/zone-testing';
 import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
 
-import {DashboardComponent} from './dashboard.component';
+import {PfeDashboardComponent} from './pfe-dashboard.component';
 import {MatCardModule, MatGridListModule, MatIconModule, MatMenuModule} from '@angular/material';
 import {SettingsService} from '../_services/settings.service';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 
 describe('PfeDashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+  let component: PfeDashboardComponent;
+  let fixture: ComponentFixture<PfeDashboardComponent>;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
+      declarations: [PfeDashboardComponent],
         imports: [MatCardModule, MatMenuModule, MatIconModule, MatGridListModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
@@ -22,7 +22,7 @@ describe('PfeDashboardComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(PfeDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

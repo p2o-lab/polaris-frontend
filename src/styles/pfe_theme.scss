@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$pfe-app-primary: mat-palette($md-blue, 500, 300, 900);
+$pfe-app-accent : mat-palette($md-orange, 500, 300, 900);
+$pfe-app-warn : mat-palette($md-red, 500, 300, 900);
+
+$pfe-app-theme: mat-light-theme($pfe-app-primary, $pfe-app-accent, $pfe-app-warn);
+
+@include angular-material-theme($pfe-app-theme);
+
+// Export theme colors
+$primary: mat-color($pfe-app-primary);
+$primary-light: mat-color($pfe-app-primary, 100);
+
+$accent: mat-color($pfe-app-accent);
+$warn: mat-color($pfe-app-warn);
+
+// Export typography
+$typo-config: mat-typography-config();

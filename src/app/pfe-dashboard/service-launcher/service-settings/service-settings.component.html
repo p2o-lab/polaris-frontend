@@ -1,0 +1,52 @@
+<!-- todo: fix layout -->
+<div mat-dialog-title>
+    <p>{{currentService.name}}</p>
+</div>
+<div mat-dialog-content="">
+    <mat-tab-group>
+        <mat-tab label="Parameter">
+            <div class="service-parameter">
+                <div  *ngFor="let parameter of serviceParameter; let i = index" class ="margin" >
+                        <mat-label>{{parameter.name}}</mat-label>
+                        <mat-slider min= "parameter.min" max="parameter.max" [(ngModel)]="parameter.value" ></mat-slider>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="parameter.value" >
+                        </mat-form-field>
+                        <mat-label>{{parameter.unit}}</mat-label>     
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Strategy">
+            <div class="strategy-parameter margin">
+                <div class="strategy-parameter-name">
+                    <mat-form-field>
+                        <mat-select placeholder="Strategy" [(value)] = "currentStrategy" (selectionChange)="showStrategyParameter()">
+                          <mat-option *ngFor="let strategy of serviceStrategies" [value]="strategy">
+                            {{strategy.name}}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div  *ngFor="let parameter of strategyParameter; let i = index" class ="margin" >
+                        <mat-label>{{parameter.name}}</mat-label>
+                        <mat-slider min= "parameter.min" max="parameter.max" [(ngModel)]="parameter.value" ></mat-slider>
+                        <mat-form-field>
+                                <input matInput [(ngModel)]="parameter.value" >
+                        </mat-form-field>
+                        <mat-label>{{parameter.unit}}</mat-label>     
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Operation Mode">
+            <p>Tab 3 works!</p>
+            <p>test</p>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button close-button" (click)="close()">Close</button>
+    <div class="space"></div>
+    <button class="mat-raised-button reset-button" (click)="reset()">Reset</button>
+    <button class="mat-raised-button apply-button" (click)="apply()">Apply</button>
+</mat-dialog-actions>

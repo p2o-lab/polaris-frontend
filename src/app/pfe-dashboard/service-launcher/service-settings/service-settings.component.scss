@@ -1,0 +1,27 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/mixins";
+@import '../../../../../node_modules/@angular/material/theming';
+
+.close-button{
+
+}
+.space{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.reset-button{
+    background: $red;
+    color: white;
+}
+
+.apply-button{
+    background: $blue;
+    color: white
+}
+
+.margin{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

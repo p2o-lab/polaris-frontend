@@ -1,0 +1,175 @@
+@import "../service-launcher.component";
+
+
+.service_container{
+    overflow: visible;
+    height: 150px;
+    width: 190px; // todo: change, if flag should not overlap
+    z-index: 2;
+    position: relative;
+    display: flex;
+}
+.svg_container{
+    width: 300px;
+    height: 240px;
+    margin: 20px 8px 8px 16px;
+
+}
+
+// ---------------- Service --------------
+::ng-deep circle.service{
+
+    &.clicked_service{
+        fill: $orange;
+        z-index: 4;
+    }
+    &.unclicked_service{
+        fill: $grey;
+        z-index: 2;
+    }
+    &:hover{
+        fill: $orange;
+    }
+}
+
+::ng-deep text.serviceState{
+    text-anchor: middle;
+    &.unclicked_service{
+        opacity: 0;
+        fill: black;
+        &.hover{
+            opacity: 1;
+        }
+    }
+    &.clicked_service{
+        opacity: 1;
+        fill: white;
+    }
+
+}
+
+::ng-deep text.serviceName{
+    fill: $grey-dark;
+    text-anchor: middle;
+}
+
+::ng-deep .serviceIcon{
+    fill: white;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+
+// ------------ Annotation -----------
+::ng-deep circle.annotation{
+    fill: white;
+    stroke: $grey;
+    stroke-width: 2px;
+}
+
+::ng-deep text.annotationText{
+    text-anchor: middle;
+    dominant-baseline: central;
+    &.upperAnnotation{
+        fill: $grey-dark;
+    }
+    &.lowerAnnotation{
+        fill: $orange;
+    }
+}
+
+// ------------ Action -------------
+::ng-deep circle.action{
+    fill: $orange-light;
+    opacity: 0.8;
+}
+
+::ng-deep .actionIcon{
+    fill: $red;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+::ng-deep text.actionText{
+    text-anchor: middle;
+    fill: white;
+    opacity: 0;
+    &.hover{
+        opacity: 1;
+    }
+}
+
+// ------------ Flag ------------
+::ng-deep rect.flag{
+    fill: #fafafa;
+}
+
+::ng-deep text.flagStrategyText{
+    fill: $grey;
+    font-size: 10px;
+}
+::ng-deep text.flagOperationModeText{
+    fill: $grey;
+    font-size: 10px;
+}
+
+::ng-deep circle.flagWarnCircle{
+    fill: #fff;
+    stroke: $orange-light;
+    stroke-width: 2;
+}
+::ng-deep text.flagWarnText{
+    font-size: 14px;
+    fill: $orange-light;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+::ng-deep circle.flagAlertCircle{
+    fill: #fff;
+    stroke: $red;
+    stroke-width: 2;
+}
+::ng-deep text.flagAlertText{
+    font-size: 14px;
+    fill: $red;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+::ng-deep circle.flagPinCircle{
+    fill: #fff;
+    stroke: $grey;
+    opacity: 0.7;
+    stroke-width: 1;
+    pointer-events: auto;
+    cursor: pointer;
+    &.pinned{
+        opacity: 1;
+        stroke-width: 2;
+    }
+}
+
+::ng-deep .pinIconOn{
+    fill: $grey;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+::ng-deep .pinIconOff{
+    fill: $grey-light;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+::ng-deep circle.settingsButton{
+    fill: white;
+    stroke: $grey;
+    stroke-width: 2;
+    pointer-events: auto;
+    cursor: pointer;
+}
+::ng-deep .settingsIcon{
+    fill: $grey;
+    text-anchor: middle;
+    dominant-baseline: central;
+}

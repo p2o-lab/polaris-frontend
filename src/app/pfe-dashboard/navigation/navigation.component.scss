@@ -1,0 +1,21 @@
+@import "../../../stylesheets/colors";
+@import "../../../stylesheets/mixins";
+
+
+// elements
+$border-width: 3px;
+$border-color: $grey;
+
+$fill-inactive: white;
+$fill-active: $orange;
+$fill-hover: $orange-light;
+
+
+::ng-deep circle, ::ng-deep rect {
+  // transition for hover effect
+  @include transition(fill, 150ms);
+}
+
+// connections
+$connection-width: 5;
+$connection-color: $grey;

@@ -1,0 +1,30 @@
+@import "../navigation.component";
+@import "../../../../stylesheets/colors";
+
+::ng-deep circle.subplant {
+  stroke: $border-color;
+  stroke-width: $border-width;
+
+  &.active_box {
+    fill: $fill-active;
+  }
+
+  &.inactive_box {
+    fill: white;
+  }
+}
+
+::ng-deep g.mod_unavailable line {
+  stroke: $red;
+  stroke-width: 3;
+  stroke-opacity: 0.5;
+}
+
+::ng-deep .subplant:hover circle {
+  fill: $fill-hover;
+}
+
+::ng-deep text.title {
+  alignment-baseline: middle;
+  text-anchor: middle;
+}
