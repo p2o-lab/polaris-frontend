@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewVirtualServiceComponent } from './new-virtual-service.component';
-import {MatDialogModule, MatDialogRef, MatFormFieldModule, MatInputModule, MatSnackBarModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
-import {settingsServiceStub} from '../_services/settings.service.spec';
+import {MatDialogModule, MatDialogRef, MatInputModule, MatSnackBarModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SettingsService} from '../_services/settings.service';
+import {settingsServiceStub} from '../_services/settings.service.spec';
+import { NewVirtualServiceComponent } from './new-virtual-service.component';
 
 describe('NewVirtualServiceComponent', () => {
   let component: NewVirtualServiceComponent;
