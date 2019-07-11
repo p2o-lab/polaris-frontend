@@ -9,7 +9,6 @@ export interface Module {
     rest_api_port: string;
     services: number[];
     com_init: boolean;   // if set to false -> ns has not been replaced -> module has no communication
-    websocket?: SocketIOClient.Socket;
     namespace: object;
     nsIDMap: object;
 }

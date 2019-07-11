@@ -40,6 +40,7 @@
     "open-sans-fontface": "^1.4.0",
     "rxjs": "^6.4.0",
     "snapsvg": "^0.5.1",
+    "snapsvg-cjs": "0.0.6",
     "tslib": "^1.9.0",
     "zone.js": "^0.8.29"
   },

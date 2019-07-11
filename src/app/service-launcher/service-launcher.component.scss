@@ -1,6 +1,6 @@
-@import "../../../stylesheets/colors";
-@import "../../../stylesheets/mixins";
-@import '../../../../node_modules/@angular/material/theming';
+@import "../../styles/colors";
+@import "../../styles/mixins";
+@import '../../../node_modules/@angular/material/theming';
 
 .service-launcher-card-header{
     display: grid;

@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input,
 import * as Snap from 'snapsvg-cjs';
 
 import { MatDialog } from '@angular/material';
-import { Service } from '../../../../models/service.model';
+import { Service } from '../../../models/service.model';
 import { ServiceVisualisation } from './service.draw';
 
 @Component({

@@ -1,12 +1,14 @@
 import * as Snap from 'snapsvg-cjs';
 
-import { Icon } from './icon.draw';
+import {MatDialog} from '@angular/material';
+import {element} from 'protractor';
+import {Service} from '../../../models/service.model';
+import {Action} from './action.draw';
 import {Annotation} from './annotation.draw';
 import {Flag} from './flag.draw';
-import {Action} from './action.draw';
-import {Service} from '../../../models/service.model';
-import {element} from 'protractor';
-import {MatDialog} from '@angular/material';
+import { Icon } from './icon.draw';
+
+declare var mina: any;
 
 export class ServiceVisualisation {
     // Instance in Service
@@ -20,7 +22,7 @@ export class ServiceVisualisation {
     radiusClicked: number;
     xMid: number;
     yMid: number;
-    iconScale = 40;
+    iconScale: number = 40;
     background;
     serviceLauncherDiv;
 
@@ -36,7 +38,7 @@ export class ServiceVisualisation {
     serviceStateText: Snap.Paper; // Shows Service State
     serviceNameText: Snap.Paper; // Shows Name of Service
 
-    constructor (
+    constructor(
         service: Snap.Paper,
         serviceRadius,
         xMid,
@@ -65,7 +67,7 @@ export class ServiceVisualisation {
 
         // get Div of serviceLauncher to; todo
         // document.getElementById('buttonDiv').id = this.serviceName
-        let element = document.getElementById('buttonDiv');
+        const element = document.getElementById('buttonDiv');
         element.id = this.serviceName;
         element.classList.add(this.serviceName);
 
@@ -88,7 +90,6 @@ export class ServiceVisualisation {
         // ToDo: Get Name and State Text dynamic
         // const serviceName = 'Test';
         const serviceState = serviceStateTyp; // todo: capitalize first Letter
-
 
         // Setup Service Circle
         this.serviceCircle = snap.circle(this.xMid, this.yMid, this.radius).attr({
@@ -193,7 +194,7 @@ export class ServiceVisualisation {
 
         // todo: z-Index
         // snap.style.zIndex = 4;
-        let elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
+        const elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.zIndex = '4';
         }
@@ -204,26 +205,26 @@ export class ServiceVisualisation {
        this.resetBackground();
 
       // document.getElementById(this.serviceName).style.zIndex = '1';
-       let elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
+       const elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
 
        for (let i = 0; i < elements.length; i++) {
            elements[i].style.zIndex = '1';
        }
 
-        this.annotation.unclickService();
-        this.action.unclickService();
-        this.flag.unclickService();
+       this.annotation.unclickService();
+       this.action.unclickService();
+       this.flag.unclickService();
 
-        this.serviceCircle.attr({
+       this.serviceCircle.attr({
             class: 'service unclicked_service'
         });
 
         // animate Circle
-        this.serviceCircle.animate({
+       this.serviceCircle.animate({
             r: this.radius
         }, 200, mina.easein(0));
         // animate Icon
-        this.iconSvg.animate({
+       this.iconSvg.animate({
             x: this.xMid - 0.5 * this.iconScale,
             y: this.yMid - 0.5 * this.iconScale,
             height: this.iconScale,
@@ -231,20 +232,19 @@ export class ServiceVisualisation {
         }, 150, mina.easein(0));
 
         // move text
-        this.serviceStateText.animate({
+       this.serviceStateText.animate({
             transform: 'translate(0)'
         }, 30);
-        this.serviceStateText.attr({
+       this.serviceStateText.attr({
             class: 'serviceState unclicked_service'
         });
-        this.serviceNameText.animate({
+       this.serviceNameText.animate({
             transform: 'transform(0)'
         }, 30);
 
         // todo: z-Index
 
-
-        this.clickedService = false;
+       this.clickedService = false;
         // test
     }
 

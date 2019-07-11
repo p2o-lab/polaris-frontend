@@ -13,7 +13,7 @@
         <div class="field sort">
             <mat-form-field>
                 <mat-select (selectionChange)="onSelect()" [(value)] ="sorting">
-                    <mat-option *ngFor="let _sorting of SortingOptions | keys" [value]="_sorting.value" >{{_sorting.value}}</mat-option>
+                    <mat-option *ngFor="let sorting of sortingOptionsArray" [value]="sorting" >{{sorting}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -28,15 +28,15 @@
         </div>
         <mat-divider></mat-divider>
         <div class="section_services" cdkDropList cdkDropListOrientation="horizontal"   (cdkDropListDropped)="dropedInUnpinnedSection($event)"  #unpinnedList="cdkDropList" [cdkDropListConnectedTo]="[pinnedList]">
-            <div class="section_services" *ngIf="sorting === SortingOptions.default || sorting === SortingOptions.alphabetically"  >  
+            <div class="section_services" *ngIf="sorting === sortingOptions.default || sorting === sortingOptions.alphabetically"  >
                 <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
-                        *ngFor="let service of serviceArray |async"
+                        *ngFor="let service of services"
                         [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)"  (setAction)="setAction($event)">
                 </app-servicelauncher-button>
             </div>
-            <div class="section_services" *ngIf="sorting === SortingOptions.module || sorting === SortingOptions.state || sorting === SortingOptions.activity">
-                <div *ngFor ="let item of serviceArray | async | keys">
-                        <h2>{{item.key}}</h2>
+            <div class="section_services" *ngIf="sorting === sortingOptions.module || sorting === sortingOptions.state || sorting === sortingOptions.activity">
+                <div *ngFor ="let item of services">
+                        <h2>{{item.id}}</h2>
                         <div class ="section_services">
                             <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
                                 *ngFor="let service of item.value"

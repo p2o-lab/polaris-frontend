@@ -1,10 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
-import { select, Store } from '@ngrx/store';
-import { OpcuaService } from 'src/app/services/opcua.service';
-import { UnitMappingService } from 'src/app/services/unit-mapping.service';
-import {Service} from '../../../../models/service.model';
-import {Strategy} from '../../../../models/strategy.model';
+import {Service} from '../../../models/service.model';
+import {Strategy} from '../../../models/strategy.model';
 
 @Component({
     selector: 'app-service-settings',
@@ -22,10 +19,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
     strategyParameter = [];
 
     constructor(
-        private dialogRef: MatDialogRef<ServiceSettingsComponent>,
-        private store$: Store<State>,
-        private unitMappingService: UnitMappingService,
-        private opcuaService: OpcuaService
+        private dialogRef: MatDialogRef<ServiceSettingsComponent>
     ) {}
 
     /**
@@ -61,7 +55,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
       * @param id - id of currently selected service
       */
     getService(id) {
-        this.subscriptions.add(this.store$.pipe(select(selectSpecificServices([id]))).subscribe(
+/*        this.subscriptions.add(this.store$.pipe(select(selectSpecificServices([id]))).subscribe(
             (_service) => {
                 this.currentService = _service[0];
             }
@@ -74,19 +68,19 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
                     this.showServiceParameter();
                 }
             ));
-        }
+        }*/
     }
 
     /**
-      * get service parameter
-      */
+     * get service parameter
+     */
     showServiceParameter() {
-        this.subscriptions.add(this.store$.pipe(
+/*        this.subscriptions.add(this.store$.pipe(
           select(selectSpecificNamedNodeCollections(this.currentService.parameters))).subscribe(
             (_params) => {
                 this.serviceParameter = this.createParameter(_params);
             }
-        ));
+        ));*/
     }
 
      /**
@@ -111,7 +105,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
                 unit: null,
             };
             paramNorm.name = param.name;
-            this.subscriptions.add(this.store$.pipe(select(selectNodesFromNamedNodeCollection(param.id))).subscribe(
+            /*this.subscriptions.add(this.store$.pipe(select(selectNodesFromNamedNodeCollection(param.id))).subscribe(
                     (_nodes) => {
                         _nodes.forEach((node) => {
                             switch (node.name) {
@@ -140,7 +134,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
                             }
                         });
                     }
-                ));
+                ));*/
             tmpArray.push(paramNorm);
         });
         return tmpArray;
@@ -150,12 +144,12 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
      * get strategy parameter
      */
     showStrategyParameter() {
-        this.subscriptions.add(this.store$.pipe(
+/*        this.subscriptions.add(this.store$.pipe(
           select(selectSpecificNamedNodeCollections(this.currentStrategy.parameters))).subscribe(
             (_params) => {
                 this.strategyParameter = this.createParameter(_params);
             }
-        ));
+        ));*/
     }
 
     /**
@@ -177,7 +171,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
      * apply all changes from dialog with the help of opcuaService
      */
     apply() {
-        this.subscriptions.add(this.store$.pipe(select(selectModuleOfService(this.currentService.id))).subscribe(
+        /*this.subscriptions.add(this.store$.pipe(select(selectModuleOfService(this.currentService.id))).subscribe(
             (_module) => {
                 this.serviceParameter.forEach(
                     (param) => {
@@ -190,7 +184,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
                     }
                 );
             }
-        ));
+        ));*/
     }
 
     /**
