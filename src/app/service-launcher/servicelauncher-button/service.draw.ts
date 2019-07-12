@@ -1,8 +1,7 @@
+import {ServiceInterface} from '@p2olab/polaris-interface';
 import * as Snap from 'snapsvg-cjs';
 
 import {MatDialog} from '@angular/material';
-import {element} from 'protractor';
-import {Service} from '../../../models/service.model';
 import {Action} from './action.draw';
 import {Annotation} from './annotation.draw';
 import {Flag} from './flag.draw';
@@ -30,6 +29,7 @@ export class ServiceVisualisation {
     serviceName: string;
     serviceState: string;
     serviceDiv;
+    pinned: boolean;
 
     // Variables for reuse in the methodes
     clickedService: boolean; // true, if Service is clicked
@@ -43,14 +43,13 @@ export class ServiceVisualisation {
         serviceRadius,
         xMid,
         yMid,
-        currentService: Service,
+        currentService: ServiceInterface,
         dialog: MatDialog,
         openSettings,
         pinService,
         setAction) {
         // set Constance
-        this.serviceState = 'running'; // todo: dynamic
-        // todo: get Module Name
+        this.serviceState = currentService.status;
         this.serviceName = currentService.name;
 
         this.path = Icon.getIcon(this.serviceState);
@@ -62,21 +61,18 @@ export class ServiceVisualisation {
 
         // set background
         this.background = document.getElementsByClassName('background');
-       // this.resetBackground(); // reset by default
-       // this.background[0].onclick = this.resetBackground(); // todo: do not work
 
-        // get Div of serviceLauncher to; todo
         // document.getElementById('buttonDiv').id = this.serviceName
         const element = document.getElementById('buttonDiv');
         element.id = this.serviceName;
         element.classList.add(this.serviceName);
 
         document.getElementById('buttonDiv');
-         // set individual ID for div; todo: check, if really individual
 
         // add all SVGs
         // generate flag for Service
-        this.flag = new Flag(service, serviceRadius, xMid, yMid, currentService, dialog, openSettings, pinService);
+        this.flag = new Flag(service, serviceRadius, xMid, yMid, currentService,
+          dialog, openSettings, pinService, this.pinned);
         this.setService(service, this.serviceState); // generate Service
         this.annotation = new Annotation(service, serviceRadius, xMid, yMid);
         this.action = new Action(service, serviceRadius, xMid, yMid, this.serviceState, setAction);
@@ -87,9 +83,7 @@ export class ServiceVisualisation {
         const radius = this.radius;
         const clickedServiceRadius = this.radiusClicked;
 
-        // ToDo: Get Name and State Text dynamic
-        // const serviceName = 'Test';
-        const serviceState = serviceStateTyp; // todo: capitalize first Letter
+        const serviceState = serviceStateTyp;
 
         // Setup Service Circle
         this.serviceCircle = snap.circle(this.xMid, this.yMid, this.radius).attr({

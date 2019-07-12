@@ -1,4 +1,14 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {ServiceInterface} from '@p2olab/polaris-interface';
 import * as Snap from 'snapsvg-cjs';
 
 import { MatDialog } from '@angular/material';
@@ -17,7 +27,7 @@ export class ServicelauncherButtonComponent implements OnInit, AfterViewInit {
     xMid: number = 105; // Midpoid x of Service
     yMid: number = 105; // Midpoid y of Service
 
-    @Input() currentService: Service;
+    @Input() currentService: ServiceInterface;
     @Output() openSettings: EventEmitter<any> = new EventEmitter();
     @Output() pinService: EventEmitter<any> = new EventEmitter();
     @Output() setAction: EventEmitter<any> = new EventEmitter();

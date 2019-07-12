@@ -5,7 +5,7 @@ export class Annotation {
     serviceRadius: number; // used for calculation of Annotation Position
     xMid: number; // MidPoint of Service
     yMid: number;
-    radius = 12;
+    radius: number = 12;
 
     // Variables for reuse in the methods
     upperAnnotationCircle;

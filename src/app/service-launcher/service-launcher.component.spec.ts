@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent } from '../ui/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
-import { Store, StoreModule } from '@ngrx/store';
 import { metaReducers, reducers } from '../../reducers';
 import { MaterialModule } from '../../../material/material.module';
 import { ServiceLauncherComponent } from './service-launcher.component';
@@ -14,7 +13,6 @@ import { MatDivider, MatFormField, MatLabel, MatOption, MatSelect, MatSlider, Ma
 describe('ServiceLauncherComponent', () => {
     let component: ServiceLauncherComponent ;
     let fixture: ComponentFixture<ServiceLauncherComponent >;
-    let store;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -22,7 +20,6 @@ describe('ServiceLauncherComponent', () => {
                 KeysPipe, MatFormField, MatSelect, MatOption, MatDivider, MatLabel, MatTabGroup],
             imports: [
                 HttpClientModule,
-                StoreModule.forRoot(reducers, { metaReducers }),
                 DragDropModule,
             ]
         })
@@ -32,7 +29,6 @@ describe('ServiceLauncherComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ServiceLauncherComponent );
         component = fixture.componentInstance;
-        store = store = fixture.debugElement.injector.get(Store);
 
         fixture.detectChanges();
     });
@@ -41,7 +37,4 @@ describe('ServiceLauncherComponent', () => {
     xit('should create', () => {
         expect(component).toBeTruthy();
     });
-    xit('expect store to be defined', async(() => {
-        expect(store).toBeTruthy();
-    }));
 });

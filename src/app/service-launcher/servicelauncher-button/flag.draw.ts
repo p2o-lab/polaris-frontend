@@ -1,27 +1,26 @@
+import {MatDialog} from '@angular/material';
+import {ServiceInterface} from '@p2olab/polaris-interface';
 import * as Snap from 'snapsvg-cjs';
 import {Icon} from './icon.draw';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {ServiceSettingsComponent} from '../service-settings/service-settings.component';
-import {Service} from '../../../models/service.model';
 
 export class Flag {
     // Constance
-    infoLength = 200; // todo: set dynamic
-    infoHeight;
-    infoRadius;
-    serviceRadius;
-    xMid;
-    yMid;
-    infoFlagMovement = 175; // in px
+    infoLength: number = 200; // todo: set dynamic
+    infoHeight: number;
+    infoRadius: number;
+    serviceRadius: number;
+    xMid: number;
+    yMid: number;
+    infoFlagMovement: number = 175; // in px
 
-    strategyName;
-    operationMode;
+    strategyName: string;
+    operationMode: string;
 
     // Variables
     infoMask;
     infoFlag;
     infoGround;
-    pinned;
+    servicePinned;
 
     background;
 
@@ -33,16 +32,17 @@ export class Flag {
         serviceRadius,
         xMid,
         yMid,
-        public currentService: Service,
+        public currentService: ServiceInterface,
         public dialog: MatDialog,
         public openService,
-        public pinServiceEmitter) {
+        public pinServiceEmitter,
+        public pinned) {
 
         this.background = document.getElementsByClassName('background');
 
         // todo: get strategyName and OperationMode dynamic
-        this.strategyName = 'strategy undefined';
-        this.operationMode = 'opmode undefined';
+        this.strategyName = currentService.currentStrategy;
+        this.operationMode = currentService.opMode.source + ' ' + currentService.opMode.state;
 
         this.infoHeight = 2.4 * serviceRadius;
         this.infoRadius = 0.5 * this.infoHeight;
@@ -51,6 +51,7 @@ export class Flag {
         this.yMid = yMid;
 
         this.setFlag(flag);
+        this.servicePinned = pinned;
     }
 
     setFlag(snap: Snap.Paper) {
@@ -60,10 +61,6 @@ export class Flag {
                 //     this.pinned = true;
                 // else
                 //     this.pinned = false;
-
-
-        this.pinned = this.currentService.pinned;
-         // set not pinned by default
 
         // Mask to hide flag when not clicked
         this.infoMask = snap.rect(120, 0, 200, 190).attr({
@@ -89,20 +86,20 @@ export class Flag {
 
         const infoBBox = this.infoGround.getBBox();
 
-        const flagCircleRadius = 12 * 0.8,
-            settingsRadius = this.infoRadius * 0.5,
-            xWarn = infoBBox.x + 0.6 * infoBBox.width, // Position of Warining Circle
-            yWarn = infoBBox.y + 0.27 * infoBBox.height,
-            xAlert = infoBBox.x + 0.45 * infoBBox.width, // Position of Alert Circle
-            yAlert = yWarn,
-            xPin = infoBBox.x + 0.83 * infoBBox.width,
-            yPin = yWarn,
-            xStrategy = xAlert - flagCircleRadius,
-            yStrategy = infoBBox.y + 0.60 * infoBBox.height,
-            xOpMode = xStrategy,
-            yOpMode = infoBBox.y + 0.8 * infoBBox.height,
-            xSettings = infoBBox.x + infoBBox.width + (Math.sqrt(2) / 2 - 1) * this.infoRadius,
-            ySettings = infoBBox.y + infoBBox.height + (Math.sqrt(2) / 2 - 1) * this.infoRadius;
+        const flagCircleRadius = 12 * 0.8;
+        const settingsRadius = this.infoRadius * 0.5;
+        const xWarn = infoBBox.x + 0.6 * infoBBox.width; // Position of Warining Circle
+        const yWarn = infoBBox.y + 0.27 * infoBBox.height;
+        const xAlert = infoBBox.x + 0.45 * infoBBox.width; // Position of Alert Circle
+        const yAlert = yWarn;
+        const xPin = infoBBox.x + 0.83 * infoBBox.width;
+        const yPin = yWarn;
+        const xStrategy = xAlert - flagCircleRadius;
+        const yStrategy = infoBBox.y + 0.60 * infoBBox.height;
+        const xOpMode = xStrategy;
+        const yOpMode = infoBBox.y + 0.8 * infoBBox.height;
+        const xSettings = infoBBox.x + infoBBox.width + (Math.sqrt(2) / 2 - 1) * this.infoRadius;
+        const ySettings = infoBBox.y + infoBBox.height + (Math.sqrt(2) / 2 - 1) * this.infoRadius;
 
         this.addWarn(snap, xWarn, yWarn, flagCircleRadius);
         this.addAlert(snap, xAlert, yAlert, flagCircleRadius);
@@ -193,10 +190,10 @@ export class Flag {
             });
         } else {
             pinIcon.path(Icon.getIcon('pinOn'));
-                pinIcon.attr({
+            pinIcon.attr({
                     class: 'pinIconOn'
                 });
-                pinCircle.attr({
+            pinCircle.attr({
                     class: 'flagPinCircle pinned'
                 });
         }
@@ -205,7 +202,7 @@ export class Flag {
             pinIcon.clear();
             if (this.pinned) {
                 this.resetBackground();
-                this.currentService.pinned = false;
+                this.pinned = false;
                 pinIcon.path(Icon.getIcon('pinOff'));
                 pinIcon.attr({
                     class: 'pinIconOff'
@@ -217,7 +214,7 @@ export class Flag {
                 this.pinned = false;
             } else {
                 this.resetBackground();
-                this.currentService.pinned = true;
+                this.pinned = true;
                 pinIcon.path(Icon.getIcon('pinOn'));
                 pinIcon.attr({
                     class: 'pinIconOn'
@@ -247,7 +244,6 @@ export class Flag {
         const iconScale = 0.9 * settingsCircle.getBBox().width;
         const xSettingsIcon = xSettings - 0.5 * iconScale;
         const ySettingsIcon = ySettings - 0.5 * iconScale;
-
 
         const settingsIcon = snap.svg(
             xSettings - 0.5 * 0.9 * settingsCircle.getBBox().width,
