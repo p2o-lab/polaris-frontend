@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatChipsModule, MatFormField, MatInputModule, MatSnackBarModule, MatStepperModule} from '@angular/material';
+import {MatChipsModule, MatInputModule, MatSnackBarModule, MatStepperModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SettingsService} from '../_services/settings.service';

@@ -9,15 +9,15 @@ import {RecipeInterface} from '@p2olab/polaris-interface';
 })
 export class RecipeService {
 
-    constructor(private http: HttpClient,
-                private settings: SettingsService) {
-        this.refreshRecipes();
+    get recipes(): Observable<RecipeInterface[]> {
+        return this._recipes.asObservable();
     }
 
     private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
-    get recipes(): Observable<RecipeInterface[]> {
-        return this._recipes.asObservable();
+    constructor(private http: HttpClient,
+                private settings: SettingsService) {
+        this.refreshRecipes();
     }
 
     refreshRecipes() {

@@ -1,13 +1,13 @@
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, TestBed} from '@angular/core/testing';
 import {MatBadge, MatIcon, MatNavList, MatSidenavModule, MatSnackBarModule, MatToolbar} from '@angular/material';
-import {AppComponent} from './app.component';
-import {SettingsService} from './_services/settings.service';
-import {WebsocketService, websocketServiceStub} from './_services/websocket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {settingsServiceStub} from './_services/settings.service.spec';
 import {LoadingBarComponent} from '@ngx-loading-bar/core';
+import {SettingsService} from './_services/settings.service';
+import {settingsServiceStub} from './_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from './_services/websocket.service';
+import {AppComponent} from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

@@ -8,7 +8,6 @@ export class WebsocketService {
   public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
-      //console.log('Successfully connected: ' + url);
     }
     return this.subject;
   }
@@ -35,8 +34,7 @@ export class WebsocketService {
             }
         };
         return Subject.create(observer, observable);
-    }
-    catch (e) {
+    } catch (e) {
       console.log('Could not connect to websocket of server', e);
       return Subject.create(undefined, undefined);
     }
@@ -45,4 +43,4 @@ export class WebsocketService {
 }
 
 export const
-    websocketServiceStub = { connect: (url) => { return Subject.create(undefined, undefined)}};
+    websocketServiceStub = { connect: (url) => Subject.create(undefined, undefined)};

@@ -14,7 +14,4 @@ describe('SettingsService', () => {
   }));
 });
 
-
-export const
-    settingsServiceStub = {apiUrl: 'http://test.com/api'};
-
+export const settingsServiceStub = {apiUrl: 'http://test.com/api'};
