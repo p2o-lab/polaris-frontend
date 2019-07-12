@@ -1,15 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {
-    ConditionOptions, ConditionType, ParameterInterface, PlayerInterface, RecipeInterface, StepOptions,
-    TransitionOptions
-} from '@p2olab/polaris-interface';
-import {Subscription, timer} from 'rxjs';
-import {BackendService} from '../_services/backend.service';
+import {PlayerInterface, RecipeInterface, StepOptions} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
-import {SettingsService} from '../_services/settings.service';
-import {StepFormatterService} from '../step-formatter.service';
+import {Subscription, timer} from 'rxjs';
 import {PlayerService} from '../_services/player.service';
+import {SettingsService} from '../_services/settings.service';
+import {StepFormatterService} from '../_services/step-formatter.service';
 
 @Component({
     selector: 'app-player',
@@ -19,7 +15,7 @@ import {PlayerService} from '../_services/player.service';
 export class PlayerComponent implements OnInit, OnDestroy {
     public player: PlayerInterface;
     public currentRecipe: RecipeInterface = undefined;
-    public currentStep: StepOptions | undefined;
+    public currentStep: StepOptions;
     private timer: Subscription;
     private changeDuration: string;
 
@@ -34,14 +30,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.backend.player.subscribe((player) => {
             console.log('Got new info for player', player);
             this.player = player;
-            if (player) {
-                this.currentRecipe = player.playlist[player.currentItem];
-            }
-            if (this.currentRecipe) {
-                const newStep = this.currentRecipe.options.steps
-                    .find((step) => step.name === this.currentRecipe.currentStep);
-                this.currentStep = newStep;
-            }
         });
 
         this.timer = timer(0, 1000)
@@ -73,11 +61,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
     start() {
         this.backend.startPlayer().subscribe(
             (data) => {
-                    console.log('start player', data);
-                    this.backend.refreshPlayer();
-                },
+                console.log('start player', data);
+                this.backend.refreshPlayer();
+            },
             (error) => this.snackBar.open(error.error.error, 'Dismiss')
-            );
+        );
     }
 
     reset() {
@@ -97,7 +85,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
 
     forceTransition(nextStep) {
-        this.backend.playerForceTransition(this.currentStep.name, nextStep).subscribe((data) => console.log(data));
+        this.backend.playerForceTransition(this.player.currentRecipe.currentStep.name, nextStep)
+            .subscribe((data) => console.log('transitions forced', data));
     }
 
     remove(id: number) {
@@ -107,10 +96,18 @@ export class PlayerComponent implements OnInit, OnDestroy {
         );
     }
 
+    public getTime(time): string {
+        return moment(time).calendar();
+    }
+
+    public getDuration(startTime, endTime): string {
+        return moment.duration(moment(startTime).diff(moment(endTime))).humanize();
+    }
+
     private updateDuration() {
-        if (this.currentRecipe) {
-            this.currentRecipe.lastChange = this.currentRecipe.lastChange + 1;
-            this.changeDuration = moment.duration(-this.currentRecipe.lastChange, 'seconds').humanize();
+        if (this.player && this.player.currentRecipe && this.player.currentRecipe.lastChange) {
+            this.player.currentRecipe.lastChange = this.player.currentRecipe.lastChange + 1;
+            this.changeDuration = moment.duration(-this.player.currentRecipe.lastChange, 'seconds').humanize();
         }
     }
 }

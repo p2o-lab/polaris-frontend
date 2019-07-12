@@ -1,15 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LogComponent} from './log.component';
-import {
-    MatIcon, MatIconModule, MatList, MatListItem, MatListModule, MatRipple, MatSnackBar,
-    MatSnackBarModule
-} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatIconModule, MatListModule, MatSnackBarModule} from '@angular/material';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
-import {Overlay} from '@angular/cdk/overlay';
 import {settingsServiceStub} from '../_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {LogComponent} from './log.component';
 
 describe('LogComponent', () => {
   let component: LogComponent;

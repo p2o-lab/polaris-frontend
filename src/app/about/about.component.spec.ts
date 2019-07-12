@@ -31,5 +31,5 @@ describe('AboutComponent', () => {
 
   it('should have correct API URL', () => {
     expect(component.apiDocUrl).toEqual('http://test.com/api/../doc');
-  })
+  });
 });

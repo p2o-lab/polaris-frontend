@@ -2,12 +2,12 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {timeout} from 'rxjs/internal/operators';
+import {ModuleService} from './module.service';
+import {PlayerService} from './player.service';
+import {RecipeService} from './recipe.service';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
-import {RecipeService} from './recipe.service';
-import {PlayerService} from './player.service';
-import {ModuleService} from './module.service';
-import {timeout} from 'rxjs/internal/operators';
 
 export interface VariableInterface {
     variableName: string;
@@ -22,16 +22,16 @@ export interface ModuleVariableInterface {
 }
 
 export interface UpdatedVariableInterface {
-    module: string,
+    module: string;
     variable: string;
-    value: any,
-    unit: string,
-    timestamp: Date
+    value: any;
+    unit: string;
+    timestamp: Date;
 }
 
 export interface SeriesInterface {
-    name: string,
-    data: number[][]
+    name: string;
+    data: number[][];
 }
 
 @Injectable({
@@ -43,22 +43,27 @@ export class BackendService {
     get updatedVariable(): Observable<UpdatedVariableInterface> {
         return this._updatedVariable.asObservable();
     }
-    private _updatedVariable: BehaviorSubject<UpdatedVariableInterface> = new BehaviorSubject(undefined);
-
 
     // current value of all variables from all modules
     get variables(): Observable<ModuleVariableInterface[]> {
         return this._variables.asObservable();
     }
-    private _variables: BehaviorSubject<ModuleVariableInterface[]> = new BehaviorSubject([]);
-
 
     // timeseries of all variables for last 5 min
     get series(): Observable<SeriesInterface[]> {
         return this._series.asObservable();
     }
-    public _series: BehaviorSubject<SeriesInterface[]> = new BehaviorSubject([]);
 
+    get autoReset(): boolean {
+        return this._autoReset;
+    }
+
+    set autoReset(value: boolean) {
+        this.setAutoReset(value);
+    }
+    public _series: BehaviorSubject<SeriesInterface[]> = new BehaviorSubject([]);
+    private _updatedVariable: BehaviorSubject<UpdatedVariableInterface> = new BehaviorSubject(undefined);
+    private _variables: BehaviorSubject<ModuleVariableInterface[]> = new BehaviorSubject([]);
 
     private pingTimeout: any;
     private _autoReset: boolean;
@@ -75,11 +80,58 @@ export class BackendService {
         this.refreshAutoReset();
     }
 
+    public refreshAutoReset() {
+        this.http.get(`${this.settings.apiUrl}/autoReset`)
+            .pipe(timeout(2000))
+            .subscribe(
+            (data: any) => {
+                this._autoReset = data.autoReset;
+            },
+            (error) => {
+                this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
+            }
+        );
+    }
+
+    public getLogs() {
+        return this.http.get(`${this.settings.apiUrl}/logs`);
+    }
+
+    public abortAllServices() {
+        return this.http.post(`${this.settings.apiUrl}/abort`, {});
+    }
+
+    public convertMtp(file) {
+        const formData: FormData = new FormData();
+        formData.append('upload', file);
+        return this.http.post(`${this.settings.mtpConverterUrl}/json`, formData);
+    }
+
+    public shutdown() {
+        return this.http.post(`${this.settings.apiUrl}/shutdown`, null);
+    }
+
+    public getVersion() {
+        return this.http.get(`${this.settings.apiUrl}/version`);
+    }
+
+    private heartbeat() {
+        clearTimeout(this.pingTimeout);
+
+        // Use `WebSocket#terminate()` and not `WebSocket#close()`. Delay should be
+        // equal to the interval at which your server sends out pings plus a
+        // conservative assumption of the latency.
+        this.pingTimeout = setTimeout(() => {
+            console.log('Connection to backend lost');
+            this.snackBar.open('Connection to backend lost');
+        }, 3000 + 1000);
+    }
+
     private connectToWebsocket() {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
                 const data: { message: string, data: any } = JSON.parse(msg.data);
-                //console.log('ws received', data.message, data.data);
+                // console.log('ws received', data.message, data.data);
                 if (data.message === 'ping') {
                     this.heartbeat();
                 }
@@ -110,24 +162,24 @@ export class BackendService {
     }
 
     private addData(data) {
-        const name = <string> data.variable;
-        const module = <string> data.module;
+        const name = data.variable as string;
+        const module = data.module as string;
         const value = data.value;
         const unit = data.unit;
         const timestamp = new Date(data.timestampPfe);
 
-        let variables: ModuleVariableInterface[] = this._variables.value;
+        const variables: ModuleVariableInterface[] = this._variables.value;
         let m: ModuleVariableInterface = variables
-            .find((m: ModuleVariableInterface) => {
-                return (m.moduleName == module);
+            .find((mod: ModuleVariableInterface) => {
+                return (mod.moduleName === module);
             });
         if (!m) {
             m = {moduleName: module, variables: []};
             variables.push(m);
         }
-        let v = m.variables.find(v => v.variableName == name);
+        let v = m.variables.find((moduleVariable) => moduleVariable.variableName === name);
         if (!v) {
-            v = {variableName: name, recentValue: value, timestamp: timestamp, unit: unit};
+            v = {variableName: name, recentValue: value, timestamp, unit};
             m.variables.push(v);
         } else {
             v.recentValue = value;
@@ -136,23 +188,21 @@ export class BackendService {
         }
         this._variables.next(variables);
 
+        this._updatedVariable.next({module, variable: name, value, timestamp, unit});
 
-        this._updatedVariable.next({module: module, variable: name, value: value, timestamp: timestamp, unit: unit});
-
-
-        let series: SeriesInterface[] = this._series.value;
+        const series: SeriesInterface[] = this._series.value;
         const seriesName = `${module}.${name}`;
-        const serie = series.find(s => s.name === seriesName);
+        const serie = series.find((s) => s.name === seriesName);
         if (serie) {
-            if (timestamp.getTime() > serie.data[serie.data.length-1][0]) {
-                serie.data.push([timestamp.getTime(), value*1]);
+            if (timestamp.getTime() > serie.data[serie.data.length - 1][0]) {
+                serie.data.push([timestamp.getTime(), value * 1]);
                 const firstTimestamp = serie.data[0][0];
                 if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
                     serie.data.shift();
                 }
             }
         } else {
-            series.push(<any>{
+            series.push({
                 name: seriesName,
                 type: 'line',
                 tooltip: {
@@ -160,69 +210,14 @@ export class BackendService {
                     valueSuffix: ` ${data.unit}`
                 },
                 data: [[timestamp.getTime(), value]]
-            });
+            } as any);
         }
         this._series.next(series);
-    }
-
-    heartbeat() {
-        clearTimeout(this.pingTimeout);
-
-        // Use `WebSocket#terminate()` and not `WebSocket#close()`. Delay should be
-        // equal to the interval at which your server sends out pings plus a
-        // conservative assumption of the latency.
-        this.pingTimeout = setTimeout(() => {
-            console.log('Connection to backend lost');
-            this.snackBar.open('Connection to backend lost');
-        }, 3000 + 1000);
-    }
-
-    get autoReset(): boolean {
-        return this._autoReset;
-    }
-
-    set autoReset(value: boolean) {
-        this.setAutoReset(value);
-    }
-
-    public refreshAutoReset() {
-        this.http.get(`${this.settings.apiUrl}/autoReset`)
-            .pipe(timeout(2000))
-            .subscribe(
-            (data: any) => {
-                this._autoReset = data.autoReset;
-            },
-            (error) => {
-  //              this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
-            }
-        );
     }
 
     private setAutoReset(value: boolean) {
         this.http.post(`${this.settings.apiUrl}/autoReset`, {autoReset: value}).subscribe((data: any) => {
             this._autoReset = data.autoReset;
         });
-    }
-
-    public getLogs() {
-        return this.http.get(`${this.settings.apiUrl}/logs`);
-    }
-
-    abortAllServices() {
-        return this.http.post(`${this.settings.apiUrl}/abort`, {});
-    }
-
-    public convertMtp(file) {
-        const formData: FormData = new FormData();
-        formData.append('upload', file);
-        return this.http.post(`${this.settings.mtpConverterUrl}/json`, formData);
-    }
-
-    public shutdown() {
-        return this.http.post(`${this.settings.apiUrl}/shutdown`, null);
-    }
-
-    public getVersion() {
-        return this.http.get(`${this.settings.apiUrl}/version`);
     }
 }

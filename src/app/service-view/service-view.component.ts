@@ -1,7 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import * as moment from 'moment';
+import {MatSnackBar} from '@angular/material';
 import {ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
+import * as moment from 'moment';
 import {Subscription, timer} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 
@@ -20,7 +21,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     public changeDuration: string;
     private timer: Subscription;
 
-    constructor(private backend: ModuleService) {
+    constructor(private backend: ModuleService,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -36,11 +38,23 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                         .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
                 });
                 this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
-                    .subscribe((data) => console.log('strategy changed', strategy, data));
+                    .subscribe(
+                        (data) => {
+                            console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}: ` +
+                                `${JSON.stringify(data)}`);
+                        },
+                        (err) => {
+                            console.log(`Error while changing Service ${this.service.name} to strategy ${strategy}: ` +
+                                `${JSON.stringify(err)}`);
+                            this.snackBar.open(`Error while changing Service ${this.service.name} ` +
+                                `to strategy ${strategy}`, 'Ok');
+                        }
+                    );
                 this.strategyParameterFormGroup.valueChanges
                     .subscribe((data) => {
                         console.log('Strategy parameter changed', this.module.id, this.service.name, data);
-                        this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value, this.getParameter())
+                        this.backend.configureStrategy(this.module, this.service,
+                            this.strategyFormControl.value, this.getParameter())
                             .subscribe((strategyReturn) => {
                                 console.log('parameter sent', strategyReturn);
                             });
@@ -61,7 +75,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     disabled() {
-        return this.service.opMode.source=='internal'
+        return this.service.opMode.source === 'internal';
     }
 
     sendCommand(command: string) {
@@ -74,19 +88,26 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     * get parameters to be sent to backend (only writeable values)
+     * @returns {ParameterOptions[]}
+     */
     private getParameter(): ParameterOptions[] {
-        return Object.keys(this.strategyParameterFormGroup.value)
-            .map((key) => {
+        return this.strategyFormControl.value.parameters
+            .filter((param) => !param.readonly)
+            .map((param) => {
                 return {
-                    name: key,
-                    value: this.strategyParameterFormGroup.value[key]
+                    name: param.name,
+                    value: this.strategyParameterFormGroup.value[param.name]
                 };
             });
     }
 
     private updateDuration() {
-        this.service.lastChange = this.service.lastChange + 1;
-        this.changeDuration = moment.duration(-this.service.lastChange, 'seconds').humanize();
+        if (this.service && this.service.lastChange) {
+            this.service.lastChange = this.service.lastChange + 1;
+            this.changeDuration = moment.duration(-this.service.lastChange, 'seconds').humanize();
+        }
     }
 
 }

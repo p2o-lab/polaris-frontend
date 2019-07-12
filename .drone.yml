@@ -9,11 +9,16 @@ platform:
 steps:
 
 - name: test
-  image: trion/ng-cli-karma:7.3.7
+  image: trion/ng-cli-karma:8.0.2
   commands:
   - npm install
   - ng test --watch=false --progress=false
-  - ng e2e
+
+- name: e2e
+  image: trion/ng-cli-karma:8.0.2
+  commands:
+    - npm install
+    - ng e2e
 
 - name: docker
   image: plugins/docker
@@ -28,6 +33,7 @@ steps:
 - name: docker-arm
   image: plugins/docker
   settings:
+    dockerfile: Dockerfile.arm
     username:
       from_secret: docker_username
     password:
@@ -38,6 +44,6 @@ steps:
 
 ---
 kind: signature
-hmac: 7cb8d98f20170fdc2c64104994b25ad6e0d176c944b0a0dd204432af242781d5
+hmac: e30a77c0ca1de6b3e41d9ea2df1e0afcb7f62430316290ce4ebcc7105f346ed4
 
 ...

@@ -1,9 +1,9 @@
-import {SettingsService} from './settings.service';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {ModuleInterface, ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface/dist/interfaces';
 import {ParameterOptions} from '@p2olab/polaris-interface/dist/RecipeOptions';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {SettingsService} from './settings.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,6 @@ export class ModuleService {
         return this._modules.asObservable();
     }
     private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject([]);
-
 
     constructor(private http: HttpClient,
                 private settings: SettingsService) {
@@ -29,7 +28,7 @@ export class ModuleService {
     public updateModuleState(data) {
         if (data) {
             if (data.module) {
-                let modules = this._modules.value;
+                const modules = this._modules.value;
                 const newModule = modules.find((module) => module.id === data.module);
                 if (newModule && newModule.services && data.service) {
                     const newService = newModule.services.find((service) => service.name === data.service);
@@ -72,7 +71,7 @@ export class ModuleService {
     }
 
     disconnect(module: string) {
-        let modules = this._modules.value;
+        const modules = this._modules.value;
         const index = modules.findIndex((mod) => module === mod.id);
         modules.splice(index, 1);
         return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
@@ -100,7 +99,7 @@ export class ModuleService {
 
     configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters?: ParameterOptions[]) {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
-            {strategy: strategy.name, parameters: parameters});
+            {strategy: strategy.name, parameters});
     }
 
 }

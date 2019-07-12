@@ -1,21 +1,14 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-
 import {LayoutModule} from '@angular/cdk/layout';
 import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-
-import { ChartModule } from 'angular-highcharts';
-
-import 'hammerjs';
-
 import {
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
     MatBadgeModule,
     MatButtonModule,
     MatCardModule,
-    MatCheckboxModule, MatChipsModule,
+    MatCheckboxModule,
+    MatChipsModule,
     MatDialogModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -24,17 +17,27 @@ import {
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatPaginatorModule, MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
     MatSnackBarModule,
-    MatSortModule, MatStepperModule,
+    MatSortModule,
+    MatStepperModule,
     MatTableModule,
-    MatToolbarModule, MatTooltipModule
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { ChartModule } from 'angular-highcharts';
+import 'hammerjs';
 import * as moment from 'moment';
 import {WebStorageModule} from 'ngx-store';
+import { environment } from '../environments/environment';
 import {BackendService} from './_services/backend.service';
 import {SettingsService} from './_services/settings.service';
 import {WebsocketService} from './_services/websocket.service';
@@ -53,9 +56,6 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import { TimeSeriesViewComponent } from './time-series-view/time-series-view.component';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 moment.updateLocale('en', {
     relativeTime : {

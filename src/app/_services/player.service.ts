@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {PlayerInterface, RecipeState, Repeat} from '@p2olab/polaris-interface';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {PlayerInterface, RecipeState, Repeat} from '@p2olab/polaris-interface';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 
 @Injectable({
@@ -9,14 +9,15 @@ import {SettingsService} from './settings.service';
 })
 export class PlayerService {
     private _player: BehaviorSubject<PlayerInterface> = new BehaviorSubject<PlayerInterface>(
-        {    playlist: [],
+        {   playlist: [],
+            currentRecipe: undefined,
             currentItem: undefined,
             repeat: Repeat.none,
             status: RecipeState.idle,
             recipeRuns: []});
 
     constructor(private http: HttpClient,
-                private settings: SettingsService,) {
+                private settings: SettingsService) {
         this.refreshPlayer();
     }
 
@@ -24,11 +25,10 @@ export class PlayerService {
         return this._player.asObservable();
     }
 
-    refreshPlayer(player: PlayerInterface = undefined) {
+    refreshPlayer(player?: PlayerInterface) {
         if (!player) {
             this.http.get(`${this.settings.apiUrl}/player`)
                 .subscribe((data: PlayerInterface) => {
-                        console.log('player update via http get', data);
                         this._player.next(data);
                     }
                 );
@@ -67,7 +67,6 @@ export class PlayerService {
 
     playerForceTransition(currentStep: string, nextStep: string) {
         const body = {stepName: currentStep, nextStepName: nextStep};
-        console.log("body", body);
         return this.http.post(`${this.settings.apiUrl}/player/forceTransition`, body);
     }
 

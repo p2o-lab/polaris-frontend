@@ -1,9 +1,9 @@
 <h1 class="mat-h1">About Polaris</h1>
 
-<p>Polaris is a HTML visualization for the <i>Process Orchestration Layer</i> (POL) tool proudly presented by the <a
-        href="https://tu-dresden.de/ing/elektrotechnik/ifa/plt">P2O-Lab</a> from TU Dresden. It helps you to control the
-    modules connected to the POL and perform service orchestration with them. Thus, you can
-    integrate modules (precisly named Process Equipment Assemblies) by loading its interface descriptions stored in a JSON file.
+<p>Polaris is a process orchestration layer (POL) tool for orchestrating process equipment assemblies (PEA) in a modular plant proudly presented by the <a
+        href="https://tu-dresden.de/ing/elektrotechnik/ifa/plt">P2O-Lab</a> from TU Dresden.</p>
+<p>It provides mechanisms to observe and control services and process values provided by PEAs and perform recipes defined in a JSON.
+  You can easily integrate PEAs into Polaris by loading its interface descriptions stored in a JSON file.
     This JSON file can automatically be
     generated from a MTP of this module.
 </p>
@@ -19,25 +19,41 @@
 </p>
 
 <h2 class="mat-h2">Modules</h2>
-<p>The POL can control multiple modules. Modules are loaded via JSON files which describe the necessary communication
+<p>Polaris can control multiple PEAs, also known as modules. Modules are loaded via JSON files which describe the necessary communication
     variables to interact with. </p>
+<p>The Module JSON contains all information necessary to interact with the module. This information is automatically extracted from an MTP (module type package) of the module.</p>
+
 
 
 <h2 class="mat-h2">Service</h2>
-<img width="60%" src="assets/service_state_machine.png">
+<img width="600px" src="assets/service_state_machine.png">
 <p>Each service consists of a finite state machine which is used to control the service. For that,
     commands on the <a routerLink="/modules">modules view</a> are used to trigger state transitions.</p>
+<p>You can send commands (e.g. <code>start</code>, <code>pause</code>, <code>stop</code> etc.) to specific services by clicking the appropriate buttons. If the buttons are disabled (greyed out), the module is not ready to perform this command. All services follow the state machine defined in the VDI/VDE/NAMUR 2658. So only some commands are available in specific states. Furthermore, the module can also have more restrictions to start or restart a service: 1) Additional constraints for the service parameters (change the parameters, then the appropriate command should be available) 2) interlocks between services (bring the service that interlocks the desired one to IDLE; then this service should be able to start)</p>
 
 
 <h2 class="mat-h2">Recipes</h2>
-<p>Recipes are also loaded via JSON. They describe in a declarative way which steps should be executed one after another
+<p><a routerLink="/recipe">Recipes</a> are also loaded via JSON. They describe in a declarative way which steps should be executed one after another
     and which actions should be taken in each step (e.g. starting or stopping a service). Furthermore, each step defines
     a set of transitions which lead under a defined condition to a next step.</p>
 
 <h2 class="mat-h2">Playlist</h2>
-<p>You can dynamically enqueue recipes in a playlist which then can started. This allows to define a set of recipes
+<p>You can dynamically enqueue recipes in a <a routerLink="/player">playlist</a> which then can started. This allows to define a set of recipes
     which will be executed one after another. The external trigger can also be used to start the playlist.
     If external trigger is true and the playlist is currently not running, the playlist will be started.</p>
 
-<h2 class="mat-h2">API</h2>
+<h2 class="mat-h2">Settings</h2>
+<p>The <a routerLink="/settings">settings view</a> allows you to adapt settings of Polaris. The settings are persisted in your browser.</p>
+
+<p>As first option, you can change the URI of the Polaris backend (if you want to host the frontend somewhere else than the backend). The default value of the URI refers to the same server as the frontend. The same way you can change the URI of the MTP converter which runs
+    also as a webservice and converts MTPs into module JSON files.</p>
+<p>Furthermore, you can enable <em>AutoReset</em>. If this feature is enabled, Polaris will automatically reset a service (thus, bring it to IDLE) if the service has <code>COMPLETED</code>. This reduces additional service calls from the user or the recipe engine. The default option of <em>AutoReset</em> is on.</p>
+<p>Lastly, you can see the version of both frontend and backend. Additionally, you can shutdown the backend (which than should be automatically restarted if started via docker-compose)</p>
+
+<h2 class="mat-h2">Development</h2>
+<p>
+Polaris is open source and is developed on <a href="https://github.com/p2o-lab/polaris-backend">https://github.com/p2o-lab/polaris-backend</a>. Issues and Pull Requests are welcome.
+</p>
+<p>
 <a [href]="apiDocUrl">Here</a> is a documentation about the API of Polaris.
+</p>

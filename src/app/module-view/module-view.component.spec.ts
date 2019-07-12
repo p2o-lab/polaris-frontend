@@ -1,57 +1,56 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ModuleViewComponent} from './module-view.component';
-import {
-    MatAccordion,
-    MatButton, MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule, MatCardSubtitle, MatCardTitle,
-    MatCheckbox,
-    MatCheckboxModule, MatDialogModule,
-    MatExpansionModule, MatExpansionPanel,
-    MatExpansionPanelActionRow,
-    MatExpansionPanelDescription, MatExpansionPanelHeader,
-    MatExpansionPanelTitle, MatFormField, MatFormFieldControl, MatHint,
-    MatIcon, MatIconModule, MatInputModule, MatMenu, MatMenuModule,
-    MatMenuTrigger, MatOption, MatPseudoCheckbox, MatPseudoCheckboxModule, MatRipple, MatSelect, MatSelectModule,
-    MatSnackBarModule
-} from '@angular/material';
-import {ServiceViewComponent} from '../service-view/service-view.component';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Template} from '@angular/compiler/src/render3/r3_ast';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {
+    MatCardModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatPseudoCheckboxModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatTooltipModule
+} from '@angular/material';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {ServiceViewComponent} from '../service-view/service-view.component';
+import {ModuleViewComponent} from './module-view.component';
 
 describe('ModuleViewComponent', () => {
-  let component: ModuleViewComponent;
-  let fixture: ComponentFixture<ModuleViewComponent>;
+    let component: ModuleViewComponent;
+    let fixture: ComponentFixture<ModuleViewComponent>;
 
     // create new instance of FormBuilder
     const formBuilder: FormBuilder = new FormBuilder();
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ModuleViewComponent, ServiceViewComponent],
-        imports: [CommonModule, ReactiveFormsModule, HttpClientTestingModule,
-            MatExpansionModule, MatPseudoCheckboxModule, MatCardModule, MatIconModule,
-            MatInputModule, MatSelectModule, MatMenuModule, MatSnackBarModule, MatDialogModule],
-        providers: [
-            {provide: SettingsService, useValue: settingsServiceStub},
-            {provide: WebsocketService, useValue: websocketServiceStub}
-        ]
-    })
-      .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ModuleViewComponent, ServiceViewComponent],
+            imports: [CommonModule, ReactiveFormsModule, HttpClientTestingModule,
+                MatExpansionModule, MatPseudoCheckboxModule, MatCardModule, MatIconModule,
+                MatInputModule, MatSelectModule, MatMenuModule, MatSnackBarModule, MatDialogModule,
+                MatTooltipModule
+            ],
+            providers: [
+                {provide: SettingsService, useValue: settingsServiceStub},
+                {provide: WebsocketService, useValue: websocketServiceStub}
+            ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ModuleViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ModuleViewComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
