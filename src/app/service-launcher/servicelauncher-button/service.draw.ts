@@ -119,7 +119,7 @@ export class ServiceVisualisation {
             this.serviceStateText
         );
 
-        // hover function for Service; If hoverd show Service State; If not hoverd hide Service State todo: fix
+        // hover function for Service; If hoverd show Service State; If not hoverd hide Service State
         serviceGroup.hover(
             () => {
                 if (! this.clickedService) {
@@ -182,15 +182,11 @@ export class ServiceVisualisation {
         this.serviceNameText.animate({
             transform: 'translate(115, 5)'
         }, 300);
-
         // make background visible
         this.background[0].style.display = 'block';
-
-        // todo: z-Index
-        // snap.style.zIndex = 4;
-        const elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.zIndex = '4';
+        const elements = Array.from(document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>);
+        for (const item of elements) {
+          item.style.zIndex = '4';
         }
         this.clickedService = true;
     }
@@ -198,11 +194,9 @@ export class ServiceVisualisation {
     unclickService() {
        this.resetBackground();
 
-      // document.getElementById(this.serviceName).style.zIndex = '1';
-       const elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
-
-       for (let i = 0; i < elements.length; i++) {
-           elements[i].style.zIndex = '1';
+       const elements = Array.from(document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>);
+       for (const item of elements) {
+         item.style.zIndex = '1';
        }
 
        this.annotation.unclickService();
