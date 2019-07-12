@@ -1,23 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {ModuleInterface} from '@p2olab/polaris-interface';
-import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
+import {Observable} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
+import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
     selector: 'app-module-view',
     templateUrl: './module-view.component.html',
     styleUrls: ['./module-view.component.css']
 })
-export class ModuleViewComponent implements OnInit {
+export class ModuleViewComponent {
 
-    modules$ = this.backend.modules;
+    public modules$: Observable<ModuleInterface[]> = this.backend.modules;
 
     constructor(public backend: ModuleService,
                 public dialog: MatDialog) {
-    }
-
-    ngOnInit() {
     }
 
     connect(module: string) {

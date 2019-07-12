@@ -8,11 +8,10 @@ import {SettingsService} from '../_services/settings.service';
 })
 export class AboutComponent {
 
-  apiDocUrl = this.settings.apiUrl + '/../doc';
+  public apiDocUrl: string = this.settings.apiUrl + '/../doc';
 
   constructor(private settings: SettingsService){
 
   }
-
 
 }

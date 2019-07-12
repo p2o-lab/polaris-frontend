@@ -17,7 +17,8 @@ describe('RecipeOverviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecipeOverviewComponent],
-        imports: [MatIconModule, MatMenuModule, MatCardModule, RouterTestingModule, HttpClientTestingModule, MatSnackBarModule],
+        imports: [MatIconModule, MatMenuModule, MatCardModule, MatSnackBarModule,
+          RouterTestingModule, HttpClientTestingModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}

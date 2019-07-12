@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {Subscription, timer} from 'rxjs';
 import {PlayerService} from '../_services/player.service';
 import {SettingsService} from '../_services/settings.service';
-import {StepFormatterService} from '../step-formatter.service';
+import {StepFormatterService} from '../_services/step-formatter.service';
 
 @Component({
     selector: 'app-player',

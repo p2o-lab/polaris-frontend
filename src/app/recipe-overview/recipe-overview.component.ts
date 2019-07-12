@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {RecipeInterface} from '@p2olab/polaris-interface';
-import {RecipeService} from '../_services/recipe.service';
 import {PlayerService} from '../_services/player.service';
+import {RecipeService} from '../_services/recipe.service';
 
 @Component({
   selector: 'app-recipe-overview',

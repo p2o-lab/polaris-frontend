@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BackendService, ModuleVariableInterface} from '../_services/backend.service';
 import {Chart} from 'angular-highcharts';
 import {first} from 'rxjs/internal/operators';
+import {BackendService} from '../_services/backend.service';
 
 @Component({
     selector: 'app-time-series-view',
@@ -11,7 +11,7 @@ import {first} from 'rxjs/internal/operators';
 export class TimeSeriesViewComponent implements OnInit {
 
     chart: Chart;
-    chartOptions = {
+    chartOptions: any = {
         chart: {
             type: 'line'
         },
@@ -27,7 +27,7 @@ export class TimeSeriesViewComponent implements OnInit {
         },
         series: []
     };
-    private highChart = undefined;
+    private highChart: any = undefined;
 
     constructor(public backend: BackendService) {
     }
@@ -38,18 +38,18 @@ export class TimeSeriesViewComponent implements OnInit {
             this.chartOptions.series = data;
         });
 
-        this.chart = new Chart(<any>this.chartOptions);
+        this.chart = new Chart(this.chartOptions);
 
         this.chart.ref$.subscribe((chart) => this.highChart = chart);
 
         this.backend.updatedVariable.subscribe((data) => {
-            if (data  && this.highChart && this.highChart.series) {
-            const seriesName = `${data.module}.${data.variable}`;
-                let index = this.highChart.series.findIndex(s => s.name === seriesName);
+            if (data && this.highChart && this.highChart.series) {
+                const seriesName = `${data.module}.${data.variable}`;
+                const index = this.highChart.series.findIndex((s) => s.name === seriesName);
 
-                if (index != -1) {
+                if (index !== -1) {
                     const firstTimestamp = this.highChart.series[index].data[0].x;
-                    this.chart.addPoint([data.timestamp.getTime(), data.value*1], index,
+                    this.chart.addPoint([data.timestamp.getTime(), data.value * 1], index,
                         true, data.timestamp.getTime() - firstTimestamp > 1000 * 60 * 5);
                 } else {
                     this.chart.addSeries({
@@ -57,7 +57,7 @@ export class TimeSeriesViewComponent implements OnInit {
                         type: 'line',
                         tooltip: {
                             valueDecimals: 3,
-                            valueSuffix: ` ${data.unit? data.unit : ''}`
+                            valueSuffix: ` ${data.unit ? data.unit : ''}`
                         },
                         data: [[data.timestamp.getTime(), data.value]]
                     }, true, true);

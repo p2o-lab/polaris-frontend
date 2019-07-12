@@ -6,8 +6,6 @@ import {ConditionOptions, ConditionType, ParameterInterface} from '@p2olab/polar
 })
 export class StepFormatterService {
 
-  constructor() { }
-
     /**
      * format parameters
      * @param {ParameterInterface[]} parameter
@@ -34,9 +32,9 @@ export class StepFormatterService {
             }
         }
         if (condition.type === ConditionType.variable) {
-            let result = "";
+            let result = '';
             if (condition.module) {
-                result = result.concat(condition.module,'.');
+                result = result.concat(condition.module, '.');
             }
             result = result.concat(condition.dataAssembly);
             if (condition.variable) {
