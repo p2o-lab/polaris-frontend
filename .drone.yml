@@ -15,6 +15,12 @@ steps:
   - ng test --watch=false --progress=false
   - ng e2e
 
+- name: e2e
+  image: trion/ng-cli-karma:8.0.2
+  commands:
+    - npm install
+    - ng e2e
+
 - name: docker
   image: plugins/docker
   settings:
@@ -39,6 +45,6 @@ steps:
 
 ---
 kind: signature
-hmac: 7a8d142b050b6d23338f17494910b850fe602c0450e36f2ec7d8f3356a411cbf
+hmac: e30a77c0ca1de6b3e41d9ea2df1e0afcb7f62430316290ce4ebcc7105f346ed4
 
 ...
