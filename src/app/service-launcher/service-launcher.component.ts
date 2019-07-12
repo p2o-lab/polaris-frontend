@@ -4,7 +4,6 @@ import {MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar} from '@angular/ma
 import {ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {Observable, Subscription, timer} from 'rxjs';
-import { Module } from '../../models/module.model';
 import { Service } from '../../models/service.model';
 import { Subplant } from '../../models/subplant.model';
 import { ModuleService} from '../_services/module.service';
@@ -16,7 +15,7 @@ import { ServiceSettingsComponent } from './service-settings/service-settings.co
     styleUrls: ['./service-launcher.component.scss']
 })
 export class ServiceLauncherComponent implements OnInit, OnDestroy {
-  modules$ = this.backend.modules;
+  modules$: Observable<ModuleInterface[]> = this.backend.modules;
   modulesWithServices: ModuleInterface[];
   services: ServiceInterface[];
 
