@@ -13,7 +13,6 @@ steps:
   commands:
   - npm install
   - ng test --watch=false --progress=false
-  - ng e2e
 
 - name: e2e
   image: trion/ng-cli-karma:8.0.2
