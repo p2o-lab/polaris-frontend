@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {ModuleInterface} from '@p2olab/polaris-interface';
+import {ModuleInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
+import {Observable} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 import {NewModuleComponent} from '../new-module/new-module.component';
 import {NewVirtualServiceComponent} from '../new-virtual-service/new-virtual-service.component';
@@ -13,9 +14,9 @@ import {ServiceParameterDialogComponent} from '../service-parameter-dialog/servi
 })
 export class ModuleViewComponent {
 
-    modules$ = this.backend.modules;
+    public modules$: Observable<ModuleInterface[]> = this.backend.modules;
 
-    virtualServices$ = this.backend.virtualServices;
+    public virtualServices$: Observable<VirtualServiceInterface[]> = this.backend.virtualServices;
 
     constructor(public backend: ModuleService,
                 private dialog: MatDialog) {

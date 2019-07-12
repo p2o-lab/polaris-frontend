@@ -9,15 +9,15 @@ import {SettingsService} from './settings.service';
 })
 export class RecipeService {
 
+    get recipes(): Observable<RecipeInterface[]> {
+        return this._recipes.asObservable();
+    }
+
     private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
     constructor(private http: HttpClient,
                 private settings: SettingsService) {
         this.refreshRecipes();
-    }
-
-    get recipes(): Observable<RecipeInterface[]> {
-        return this._recipes.asObservable();
     }
 
     refreshRecipes() {

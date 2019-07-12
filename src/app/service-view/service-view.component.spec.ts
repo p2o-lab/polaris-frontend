@@ -1,17 +1,16 @@
+import {CommonModule} from '@angular/common';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {ServiceViewComponent} from './service-view.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
     MatSelectModule, MatSnackBarModule
 } from '@angular/material';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {ServiceViewComponent} from './service-view.component';
 
 describe('ServiceViewComponent', () => {
   let component: ServiceViewComponent;

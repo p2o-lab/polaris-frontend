@@ -1,9 +1,10 @@
-import {SettingsService} from './settings.service';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ModuleInterface, ServiceInterface, StrategyInterface, VirtualServiceInterface} from '@p2olab/polaris-interface/dist/interfaces';
+import {ModuleInterface, ServiceInterface, StrategyInterface,
+    VirtualServiceInterface} from '@p2olab/polaris-interface/dist/interfaces';
 import {ParameterOptions} from '@p2olab/polaris-interface/dist/RecipeOptions';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {SettingsService} from './settings.service';
 
 @Injectable({
     providedIn: 'root'

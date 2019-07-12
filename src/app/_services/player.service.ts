@@ -17,7 +17,7 @@ export class PlayerService {
             recipeRuns: []});
 
     constructor(private http: HttpClient,
-                private settings: SettingsService,) {
+                private settings: SettingsService) {
         this.refreshPlayer();
     }
 

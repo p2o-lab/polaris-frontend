@@ -1,8 +1,8 @@
 import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
+import {version} from '../../../package.json';
 import {BackendService} from '../_services/backend.service';
 import {SettingsService} from '../_services/settings.service';
-import {version} from '../../../package.json';
 
 @Component({
     selector: 'app-settings',
@@ -10,8 +10,8 @@ import {version} from '../../../package.json';
     styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-    public backendVersion: Object;
-    public frontendVersion;
+    public backendVersion: string;
+    public frontendVersion: string;
 
     constructor(private location: Location,
                 public settings: SettingsService,
@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
         this.backend.refreshAutoReset();
-        this.backend.getVersion().subscribe(data => this.backendVersion = data['version']);
+        this.backend.getVersion().subscribe((data: {version: string}) => this.backendVersion = data.version);
     }
 
     back() {

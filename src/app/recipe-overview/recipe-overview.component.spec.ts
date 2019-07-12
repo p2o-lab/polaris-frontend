@@ -1,15 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RecipeOverviewComponent} from './recipe-overview.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     MatCardModule, MatDialogModule, MatDialogRef, MatIconModule, MatMenuModule,
     MatSnackBarModule
 } from '@angular/material';
-import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
-import {settingsServiceStub} from '../_services/settings.service.spec';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {SettingsService} from '../_services/settings.service';
+import {settingsServiceStub} from '../_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {RecipeOverviewComponent} from './recipe-overview.component';
 
 describe('RecipeOverviewComponent', () => {
   let component: RecipeOverviewComponent;

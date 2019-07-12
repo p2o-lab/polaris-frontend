@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {RecipeInterface} from '@p2olab/polaris-interface';
-import {RecipeService} from '../_services/recipe.service';
 import {PlayerService} from '../_services/player.service';
-import {NewVirtualServiceComponent} from '../new-virtual-service/new-virtual-service.component';
+import {RecipeService} from '../_services/recipe.service';
 import {NewRecipeComponent} from '../new-recipe/new-recipe.component';
 
 @Component({
@@ -34,7 +33,7 @@ export class RecipeOverviewComponent implements OnInit {
             this.snackBar.open(`Recipe has been added to playlist`, 'Ok');
         },
       (err) => {
-          console.log(err)
+          console.log(err);
       }
     );
   }

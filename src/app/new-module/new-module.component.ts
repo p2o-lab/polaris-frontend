@@ -28,22 +28,22 @@ export class NewModuleComponent {
       const file: File = event.target.files[0];
       await new Promise((resolve) => {
           if (file.name.endsWith('.mtp') || file.name.endsWith('.zip')) {
-              this.backend.convertMtp(file).subscribe((data) => {
-                  this.modules = <ModuleOptions[]> data['modules'];
+              this.backend.convertMtp(file).subscribe((data: {modules: ModuleOptions[]}) => {
+                  this.modules = data.modules;
                   this.myStepper.next();
                   resolve();
               });
           } else {
               const reader: FileReader = new FileReader();
               reader.onload = (e: Event) => {
-                  this.modules = <ModuleOptions[]> JSON.parse(reader.result.toString()).modules;
+                  this.modules = JSON.parse(reader.result.toString()).modules as ModuleOptions[];
                   this.myStepper.next();
                   resolve();
               };
               reader.readAsText(file);
           }
       });
-      this.modules.forEach((mod) => mod.opcua_server_url = this.addDefaultPort(mod.opcua_server_url));
+      this.modules.forEach((module) => module.opcua_server_url = this.addDefaultPort(module.opcua_server_url));
   }
 
   /**
