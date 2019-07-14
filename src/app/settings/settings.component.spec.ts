@@ -19,9 +19,15 @@ describe('SettingsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SettingsComponent],
-        imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
-            RouterTestingModule, BrowserAnimationsModule,
-            MatCheckboxModule, MatFormFieldModule, MatSnackBarModule, MatInputModule],
+        imports: [
+            FormsModule,
+            HttpClientTestingModule,
+            RouterTestingModule,
+            BrowserAnimationsModule,
+            MatCheckboxModule,
+            MatFormFieldModule,
+            MatSnackBarModule,
+            MatInputModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}
