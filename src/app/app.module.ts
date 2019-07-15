@@ -135,7 +135,9 @@ moment.relativeTimeThreshold('ss', 5);
     ServiceParameterDialogComponent
   ],
   providers: [
-      SettingsService, BackendService, WebsocketService,
+      SettingsService,
+      BackendService,
+      WebsocketService,
       {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],
   bootstrap: [AppComponent]
