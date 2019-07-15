@@ -7,6 +7,7 @@ import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {RecipeDetailComponent} from './recipe-detail.component';
 import {StepFormatterService} from '../_services/step-formatter.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('RecipeDetailComponent', () => {
   let component: RecipeDetailComponent;
@@ -20,6 +21,7 @@ describe('RecipeDetailComponent', () => {
         MatExpansionModule,
         MatListModule,
         MatIconModule,
+        NoopAnimationsModule,
         RouterTestingModule,
         HttpClientTestingModule],
       providers: [

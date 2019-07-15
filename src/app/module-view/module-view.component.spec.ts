@@ -17,6 +17,7 @@ import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {ServiceViewComponent} from '../service-view/service-view.component';
 import {ModuleViewComponent} from './module-view.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ModuleViewComponent', () => {
     let component: ModuleViewComponent;
@@ -31,6 +32,7 @@ describe('ModuleViewComponent', () => {
             imports: [
                 ReactiveFormsModule,
                 HttpClientTestingModule,
+                NoopAnimationsModule,
                 MatExpansionModule,
                 MatCardModule,
                 MatIconModule,

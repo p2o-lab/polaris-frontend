@@ -15,6 +15,7 @@ import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {PlayerComponent} from './player.component';
 import {StepFormatterService} from '../_services/step-formatter.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('PlayerComponent', () => {
     let component: PlayerComponent;
@@ -25,6 +26,7 @@ describe('PlayerComponent', () => {
             declarations: [PlayerComponent],
             imports: [RouterTestingModule,
                 HttpClientTestingModule,
+                NoopAnimationsModule,
                 MatCardModule,
                 MatIconModule,
                 MatListModule,

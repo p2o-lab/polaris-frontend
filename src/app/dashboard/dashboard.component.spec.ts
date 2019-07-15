@@ -3,6 +3,7 @@ import 'zone.js/dist/zone-testing';
 
 import {MatCardModule, MatGridListModule, MatIconModule, MatMenuModule} from '@angular/material';
 import {DashboardComponent} from './dashboard.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -12,6 +13,7 @@ describe('DashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DashboardComponent],
       imports: [
+        NoopAnimationsModule,
         MatCardModule,
         MatIconModule,
         MatCardModule,
