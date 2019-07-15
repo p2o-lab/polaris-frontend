@@ -16,7 +16,7 @@ export class ModuleViewComponent {
 
     public modules$: Observable<ModuleInterface[]> = this.moduleService.modules;
 
-    public virtualServices$: Observable<VirtualServiceInterface[]> = this.backend.virtualServices;
+    public virtualServices$: Observable<VirtualServiceInterface[]> = this.moduleService.virtualServices;
 
     constructor(private moduleService: ModuleService,
                 private dialog: MatDialog) {
