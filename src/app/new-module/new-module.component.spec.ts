@@ -1,17 +1,21 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-    MatChipsModule, MatDialogModule, MatDialogRef, MatFormField, MatInputModule, MatSnackBarModule,
-    MatStepperModule
+    MatChipsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatStepperModule,
+    MatDialogRef
 } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {NewModuleComponent} from './new-module.component';
+import {FormsModule} from '@angular/forms';
 
 describe('NewModuleComponent', () => {
   let component: NewModuleComponent;
@@ -20,9 +24,16 @@ describe('NewModuleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NewModuleComponent],
-        imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule,
-            MatSnackBarModule, MatStepperModule, MatChipsModule, MatInputModule, MatDialogModule,
-            BrowserAnimationsModule, RouterTestingModule],
+        imports: [
+            FormsModule,
+            HttpClientTestingModule,
+            MatFormFieldModule,
+            MatSnackBarModule,
+            MatStepperModule,
+            MatChipsModule,
+            MatInputModule,
+            NoopAnimationsModule,
+            RouterTestingModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub},

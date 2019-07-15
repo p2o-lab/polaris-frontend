@@ -49,7 +49,7 @@ export class BackendService {
         return this._variables.asObservable();
     }
 
-    // timeseries of all variables for last 5 min
+    // time series of all variables for last 5 min
     get series(): Observable<SeriesInterface[]> {
         return this._series.asObservable();
     }
@@ -77,7 +77,6 @@ export class BackendService {
                 public moduleService: ModuleService) {
 
         this.connectToWebsocket();
-        this.refreshAutoReset();
     }
 
     public refreshAutoReset() {
@@ -88,7 +87,8 @@ export class BackendService {
                 this._autoReset = data.autoReset;
             },
             (error) => {
-                this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
+                // this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
+                console.log(`Backend does not respond (${this.settings.apiUrl}).`);
             }
         );
     }

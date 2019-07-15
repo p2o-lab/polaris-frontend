@@ -19,7 +19,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private timer: Subscription;
     private changeDuration: string;
 
-    constructor(private backend: PlayerService,
+    constructor(private playerService: PlayerService,
                 public settings: SettingsService,
                 private snackBar: MatSnackBar,
                 private formatter: StepFormatterService) {
@@ -27,7 +27,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         /* Continuously update data from backend service */
-        this.backend.player.subscribe((player) => {
+        this.playerService.player.subscribe((player) => {
             console.log('Got new info for player', player);
             this.player = player;
         });
@@ -59,39 +59,39 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
 
     start() {
-        this.backend.startPlayer().subscribe(
+        this.playerService.startPlayer().subscribe(
             (data) => {
                 console.log('start player', data);
-                this.backend.refreshPlayer();
+                this.playerService.refreshPlayer();
             },
             (error) => this.snackBar.open(error.error.error, 'Dismiss')
         );
     }
 
     reset() {
-        this.backend.resetPlayer().subscribe((data) => this.backend.refreshPlayer());
+        this.playerService.resetPlayer().subscribe((data) => this.playerService.refreshPlayer());
     }
 
     pause() {
-        this.backend.pausePlayer().subscribe((data) => this.backend.refreshPlayer());
+        this.playerService.pausePlayer().subscribe((data) => this.playerService.refreshPlayer());
     }
 
     resume() {
-        this.backend.resumePlayer().subscribe((data) => this.backend.refreshPlayer());
+        this.playerService.resumePlayer().subscribe((data) => this.playerService.refreshPlayer());
     }
 
     stop() {
-        this.backend.stopPlayer().subscribe((data) => this.backend.refreshPlayer());
+        this.playerService.stopPlayer().subscribe((data) => this.playerService.refreshPlayer());
     }
 
     forceTransition(nextStep) {
-        this.backend.playerForceTransition(this.player.currentRecipe.currentStep.name, nextStep)
+        this.playerService.playerForceTransition(this.player.currentRecipe.currentStep.name, nextStep)
             .subscribe((data) => console.log('transitions forced', data));
     }
 
     remove(id: number) {
-        this.backend.removeRecipeFromPlaylist(id).subscribe((data) => {
-                this.backend.refreshPlayer();
+        this.playerService.removeRecipeFromPlaylist(id).subscribe((data) => {
+                this.playerService.refreshPlayer();
             }
         );
     }

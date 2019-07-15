@@ -5,7 +5,7 @@ import {
     MatCheckboxModule, MatFormFieldModule, MatInputModule,
     MatSnackBarModule
 } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
@@ -19,9 +19,15 @@ describe('SettingsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SettingsComponent],
-        imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
-            RouterTestingModule, BrowserAnimationsModule,
-            MatCheckboxModule, MatFormFieldModule, MatSnackBarModule, MatInputModule],
+        imports: [
+            FormsModule,
+            HttpClientTestingModule,
+            RouterTestingModule,
+            NoopAnimationsModule,
+            MatCheckboxModule,
+            MatFormFieldModule,
+            MatSnackBarModule,
+            MatInputModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}

@@ -2,7 +2,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {MatCardModule, MatGridListModule, MatSnackBarModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
@@ -17,8 +17,12 @@ describe('TimeSeriesViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TimeSeriesViewComponent ],
         imports: [
-            MatGridListModule, MatCardModule, MatSnackBarModule,
-            NgxChartsModule, HttpClientTestingModule, BrowserAnimationsModule],
+            MatGridListModule,
+            MatCardModule,
+            MatSnackBarModule,
+            NgxChartsModule,
+            HttpClientTestingModule,
+            NoopAnimationsModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}

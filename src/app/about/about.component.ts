@@ -10,7 +10,7 @@ export class AboutComponent {
 
   public apiDocUrl: string = this.settings.apiUrl + '/../doc';
 
-  constructor(private settings: SettingsService){
+  constructor(private settings: SettingsService) {
 
   }
 

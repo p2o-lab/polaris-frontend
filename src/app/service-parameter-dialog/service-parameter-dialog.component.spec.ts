@@ -1,9 +1,12 @@
-import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {
-    MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatFormFieldModule, MatInputModule,
+    MAT_DIALOG_DATA,
+    MatDialogModule,
+    MatDialogRef,
+    MatFormFieldModule,
+    MatInputModule,
     MatSnackBarModule
 } from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,30 +16,36 @@ import {WebsocketService, websocketServiceStub} from '../_services/websocket.ser
 import {ServiceParameterDialogComponent} from './service-parameter-dialog.component';
 
 describe('ServiceParameterDialogComponent', () => {
-  let component: ServiceParameterDialogComponent;
-  let fixture: ComponentFixture<ServiceParameterDialogComponent>;
+    let component: ServiceParameterDialogComponent;
+    let fixture: ComponentFixture<ServiceParameterDialogComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ServiceParameterDialogComponent],
-        imports:   [CommonModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, NoopAnimationsModule,
-            MatInputModule, MatDialogModule, MatFormFieldModule, MatSnackBarModule],
-        providers: [
-            {provide: SettingsService, useValue: settingsServiceStub},
-            {provide: WebsocketService, useValue: websocketServiceStub},
-            {provide: MatDialogRef, useValue: {}},
-            {provide: MAT_DIALOG_DATA, useValue: [] }]
-    })
-      .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ServiceParameterDialogComponent],
+            imports: [
+                FormsModule,
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                MatInputModule,
+                MatDialogModule,
+                MatFormFieldModule,
+                MatSnackBarModule],
+            providers: [
+                {provide: SettingsService, useValue: settingsServiceStub},
+                {provide: WebsocketService, useValue: websocketServiceStub},
+                {provide: MatDialogRef, useValue: {}},
+                {provide: MAT_DIALOG_DATA, useValue: []}]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ServiceParameterDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ServiceParameterDialogComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
