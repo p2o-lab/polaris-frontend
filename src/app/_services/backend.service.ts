@@ -141,6 +141,9 @@ export class BackendService {
                 if (data.message === 'module') {
                    this.moduleService.updateModuleState(data.data);
                 }
+                if (data.message === 'virtualService') {
+                    this.moduleService.refreshVirtualServices();
+                }
                 if (data.message === 'player') {
                     this.playerService.refreshPlayer(data.data);
                 }

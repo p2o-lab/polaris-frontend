@@ -1,12 +1,19 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RecipeOverviewComponent} from './recipe-overview.component';
-import {MatCardModule, MatIconModule, MatMenuModule, MatSnackBarModule} from '@angular/material';
-import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {
+  MatCardModule,
+  MatDialogModule,
+  MatDialogRef,
+  MatIconModule,
+  MatMenuModule,
+  MatSnackBarModule
+} from '@angular/material';
+import {RouterTestingModule} from '@angular/router/testing';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {RecipeOverviewComponent} from './recipe-overview.component';
 
 describe('RecipeOverviewComponent', () => {
   let component: RecipeOverviewComponent;
@@ -17,6 +24,7 @@ describe('RecipeOverviewComponent', () => {
       declarations: [RecipeOverviewComponent],
       imports: [
         MatIconModule,
+        MatDialogModule,
         MatMenuModule,
         MatCardModule,
         MatSnackBarModule,
@@ -24,7 +32,8 @@ describe('RecipeOverviewComponent', () => {
         HttpClientTestingModule],
       providers: [
         {provide: SettingsService, useValue: settingsServiceStub},
-        {provide: WebsocketService, useValue: websocketServiceStub}
+        {provide: WebsocketService, useValue: websocketServiceStub},
+        {provide: MatDialogRef, useValue: {}}
       ]
     })
         .compileComponents();

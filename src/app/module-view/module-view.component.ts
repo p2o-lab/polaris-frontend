@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {ModuleInterface} from '@p2olab/polaris-interface';
+import {ModuleInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
 import {Observable} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
+import {NewModuleComponent} from '../new-module/new-module.component';
+import {NewVirtualServiceComponent} from '../new-virtual-service/new-virtual-service.component';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
@@ -13,6 +15,8 @@ import {ServiceParameterDialogComponent} from '../service-parameter-dialog/servi
 export class ModuleViewComponent {
 
     public modules$: Observable<ModuleInterface[]> = this.moduleService.modules;
+
+    public virtualServices$: Observable<VirtualServiceInterface[]> = this.moduleService.virtualServices;
 
     constructor(private moduleService: ModuleService,
                 private dialog: MatDialog) {
@@ -35,9 +39,19 @@ export class ModuleViewComponent {
     }
 
     configure(module: ModuleInterface) {
-        const dialogRef = this.dialog.open(ServiceParameterDialogComponent, {
+        this.dialog.open(ServiceParameterDialogComponent, {
             data: module
         });
     }
 
+    instantiateVirtualService() {
+        this.dialog.open(NewVirtualServiceComponent, {});
+    }
+
+    newModule() {
+        this.dialog.open(NewModuleComponent, {
+            width: '800px',
+            height: '800px'
+        });
+    }
 }

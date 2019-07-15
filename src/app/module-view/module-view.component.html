@@ -1,10 +1,10 @@
-<h1 class="mat-h1">Modules <small>(PEAs)</small></h1>
+<h1 class="mat-h1 with-icon">Modules <small>(PEAs)</small>
+    <button mat-button matTooltip="Add Module" (click)="newModule()">
+        <mat-icon>add</mat-icon>
+    </button>
+</h1>
 
-<button mat-button routerLink="/modules/new">
-    <mat-icon>add</mat-icon>
-    Add Module
-</button>
-<p *ngIf="(modules$ | async).length==0">No modules loaded yet</p>
+
 <div *ngIf="modules$ | async as modulesObject">
     <mat-card class="dashboard-card" *ngFor="let module of modulesObject">
         <mat-card-header>
@@ -32,8 +32,25 @@
                 </app-service-view>
             </mat-accordion>
         </mat-card-content>
-        <mat-card-actions>
-
-        </mat-card-actions>
     </mat-card>
 </div>
+
+<mat-card class="dashboard-card" *ngIf="virtualServices$ |async as virtualServices">
+    <mat-card-header>
+        <mat-card-title>
+            <h2 class="mat-h2">Virtual Services</h2>
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="instantiateVirtualService()">Instantiate new Virtual Service</button>
+            </mat-menu>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+        <mat-accordion multi="true">
+            <app-service-view *ngFor="let service of virtualServices" [service]="service" virtualService="true">
+            </app-service-view>
+        </mat-accordion>
+    </mat-card-content>
+</mat-card>

@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {MatSnackBar, MatStepper} from '@angular/material';
-import {Router} from '@angular/router';
+import {MatDialogRef, MatSnackBar, MatStepper} from '@angular/material';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
 
@@ -17,7 +16,7 @@ export class NewModuleComponent {
 
   constructor(private backend: BackendService,
               private moduleService: ModuleService,
-              private router: Router,
+              private dialogRef: MatDialogRef<NewModuleComponent>,
               private snackBar: MatSnackBar) {
   }
 
@@ -68,12 +67,8 @@ export class NewModuleComponent {
                   this.snackBar.open(JSON.stringify(error.error), 'Dismiss');
               });
       });
-      this.router.navigate(['/modules']);
+      this.dialogRef.close();
 
-  }
-
-  public cancel() {
-    this.router.navigate(['/modules']);
   }
 }
 
