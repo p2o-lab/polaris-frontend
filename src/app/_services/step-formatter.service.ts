@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ConditionOptions, ConditionType, ParameterInterface} from '@p2olab/polaris-interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class StepFormatterService {
 
     /**
@@ -51,6 +49,9 @@ export class StepFormatterService {
         }
         if (condition.type === ConditionType.or) {
             return condition.conditions.map((c) => `(${this.conditionToString(c)})`).join(' || ');
+        }
+        if (condition.type === ConditionType.expression) {
+            return condition.expression;
         }
     }
 }
