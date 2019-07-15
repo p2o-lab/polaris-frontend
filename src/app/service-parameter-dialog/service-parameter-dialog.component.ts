@@ -13,7 +13,7 @@ export class ServiceParameterDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public module: ModuleInterface,
-              private backend: ModuleService) {
+              private moduleService: ModuleService) {
   }
 
   save(parameterForm: NgForm) {
@@ -34,10 +34,10 @@ export class ServiceParameterDialogComponent {
                     .filter((item) => service.name === item.service)
                     .map((item) => ({name: item.parameter, value: item.value, continuous: false}));
                 console.log('Parameters', service.name, parameterOptions);
-                this.backend.configureServiceParameters(this.module, service, parameterOptions)
+                this.moduleService.configureServiceParameters(this.module, service, parameterOptions)
                     .subscribe((data) => {
                         console.log('Configuration parameters updated', data);
-                        this.backend.refreshModules();
+                        this.moduleService.refreshModules();
                     });
             });
         }
