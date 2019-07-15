@@ -12,26 +12,26 @@ import {ServiceParameterDialogComponent} from '../service-parameter-dialog/servi
 })
 export class ModuleViewComponent {
 
-    public modules$: Observable<ModuleInterface[]> = this.backend.modules;
+    public modules$: Observable<ModuleInterface[]> = this.moduleService.modules;
 
-    constructor(public backend: ModuleService,
-                public dialog: MatDialog) {
+    constructor(private moduleService: ModuleService,
+                private dialog: MatDialog) {
     }
 
     connect(module: string) {
-        this.backend.connect(module).subscribe((data) => {
+        this.moduleService.connect(module).subscribe((data) => {
             console.log('Connect result', data);
         });
     }
 
     disconnect(module: string) {
-        this.backend.disconnect(module).subscribe((data) => {
+        this.moduleService.disconnect(module).subscribe((data) => {
             console.log('Disconnect result', data);
         });
     }
 
     remove(module: string) {
-        this.backend.removeModule(module).subscribe((data) => console.log('Remove result', data));
+        this.moduleService.removeModule(module).subscribe((data) => console.log('Remove result', data));
     }
 
     configure(module: ModuleInterface) {
