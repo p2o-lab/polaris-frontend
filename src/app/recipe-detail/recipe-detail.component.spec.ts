@@ -6,6 +6,7 @@ import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {RecipeDetailComponent} from './recipe-detail.component';
+import {StepFormatterService} from '../_services/step-formatter.service';
 
 describe('RecipeDetailComponent', () => {
   let component: RecipeDetailComponent;
@@ -14,14 +15,20 @@ describe('RecipeDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecipeDetailComponent],
-        imports: [MatCardModule, MatExpansionModule, MatListModule, MatIconModule,
-          RouterTestingModule, HttpClientTestingModule],
-        providers: [
-            {provide: SettingsService, useValue: settingsServiceStub},
-            {provide: WebsocketService, useValue: websocketServiceStub}
-        ]
+      imports: [
+        MatCardModule,
+        MatExpansionModule,
+        MatListModule,
+        MatIconModule,
+        RouterTestingModule,
+        HttpClientTestingModule],
+      providers: [
+        StepFormatterService,
+        {provide: SettingsService, useValue: settingsServiceStub},
+        {provide: WebsocketService, useValue: websocketServiceStub}
+      ]
     })
-      .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {

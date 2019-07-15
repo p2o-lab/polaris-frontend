@@ -5,7 +5,7 @@ import {
     MatCheckboxModule, MatFormFieldModule, MatInputModule,
     MatSnackBarModule
 } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
@@ -23,7 +23,7 @@ describe('SettingsComponent', () => {
             FormsModule,
             HttpClientTestingModule,
             RouterTestingModule,
-            BrowserAnimationsModule,
+            NoopAnimationsModule,
             MatCheckboxModule,
             MatFormFieldModule,
             MatSnackBarModule,

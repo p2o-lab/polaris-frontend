@@ -14,6 +14,7 @@ import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {PlayerComponent} from './player.component';
+import {StepFormatterService} from '../_services/step-formatter.service';
 
 describe('PlayerComponent', () => {
     let component: PlayerComponent;
@@ -22,11 +23,17 @@ describe('PlayerComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [PlayerComponent],
-            imports: [RouterTestingModule, HttpClientTestingModule,
-                MatCardModule, MatIconModule, MatListModule, MatInputModule, MatSnackBarModule,
+            imports: [RouterTestingModule,
+                HttpClientTestingModule,
+                MatCardModule,
+                MatIconModule,
+                MatListModule,
+                MatInputModule,
+                MatSnackBarModule,
                 MatTooltipModule
             ],
             providers: [
+                StepFormatterService,
                 {provide: SettingsService, useValue: settingsServiceStub},
                 {provide: WebsocketService, useValue: websocketServiceStub}
             ]

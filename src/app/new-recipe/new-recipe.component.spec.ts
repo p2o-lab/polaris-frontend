@@ -1,8 +1,8 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {MatInputModule, MatSnackBarModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
@@ -16,14 +16,19 @@ describe('NewRecipeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NewRecipeComponent],
-        imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule, MatInputModule,
-          BrowserAnimationsModule, RouterTestingModule, MatSnackBarModule],
-        providers: [
-            {provide: SettingsService, useValue: settingsServiceStub},
-            {provide: WebsocketService, useValue: websocketServiceStub}
-            ]
+      imports: [
+        FormsModule,
+        HttpClientTestingModule,
+        MatInputModule,
+        NoopAnimationsModule,
+        RouterTestingModule,
+        MatSnackBarModule],
+      providers: [
+        {provide: SettingsService, useValue: settingsServiceStub},
+        {provide: WebsocketService, useValue: websocketServiceStub}
+      ]
     })
-      .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {

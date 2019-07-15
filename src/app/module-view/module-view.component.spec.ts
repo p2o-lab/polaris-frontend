@@ -1,6 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {
@@ -10,9 +9,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatPseudoCheckboxModule,
     MatSelectModule,
-    MatSnackBarModule,
     MatTooltipModule
 } from '@angular/material';
 import {SettingsService} from '../_services/settings.service';
@@ -31,9 +28,16 @@ describe('ModuleViewComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ModuleViewComponent, ServiceViewComponent],
-            imports: [CommonModule, ReactiveFormsModule, HttpClientTestingModule,
-                MatExpansionModule, MatPseudoCheckboxModule, MatCardModule, MatIconModule,
-                MatInputModule, MatSelectModule, MatMenuModule, MatSnackBarModule, MatDialogModule,
+            imports: [
+                ReactiveFormsModule,
+                HttpClientTestingModule,
+                MatExpansionModule,
+                MatCardModule,
+                MatIconModule,
+                MatInputModule,
+                MatSelectModule,
+                MatMenuModule,
+                MatDialogModule,
                 MatTooltipModule
             ],
             providers: [

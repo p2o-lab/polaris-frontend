@@ -14,6 +14,8 @@ describe('DashboardComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
+        MatCardModule,
+        MatMenuModule,
         MatGridListModule],
       providers: []
     })
