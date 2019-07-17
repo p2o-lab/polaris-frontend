@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -11,30 +12,6 @@ import { ChartModule } from 'angular-highcharts';
 
 import 'hammerjs';
 
-import {
-    MAT_SNACK_BAR_DEFAULT_OPTIONS,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule, MatChipsModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatPaginatorModule, MatProgressSpinnerModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatSortModule, MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule, MatTooltipModule
-} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
@@ -49,6 +26,7 @@ import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LogComponent} from './log/log.component';
+import { MaterialModule } from './material/material.module';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
@@ -57,6 +35,7 @@ import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
 import {ServiceLauncherComponent} from './service-launcher/service-launcher.component';
 import {ServiceSettingsComponent} from './service-launcher/service-settings/service-settings.component';
+// tslint:disable-next-line:max-line-length
 import {ServicelauncherButtonComponent} from './service-launcher/servicelauncher-button/servicelauncher-button.component';
 import {ServiceParameterDialogComponent} from './service-parameter-dialog/service-parameter-dialog.component';
 import {ServiceViewComponent} from './service-view/service-view.component';
@@ -110,34 +89,10 @@ moment.relativeTimeThreshold('ss', 5);
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatGridListModule,
-    MatInputModule,
-    MatCardModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatExpansionModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatSliderModule,
-    MatBadgeModule,
-    MatCheckboxModule,
-    MatDialogModule,
+    MaterialModule,
     AppRoutingModule,
     HttpClientModule,
     WebStorageModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatChipsModule,
-    MatStepperModule,
-      MatTooltipModule,
-      MatProgressSpinnerModule,
-    MatTabsModule,
     NgxChartsModule,
       ChartModule,
       LoadingBarHttpClientModule,
