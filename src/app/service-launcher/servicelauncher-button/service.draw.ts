@@ -30,6 +30,8 @@ export class ServiceVisualisation {
     serviceState: string;
     serviceDiv;
     pinned: boolean;
+    sc: boolean = false;
+    strategy: string = '';
 
     // Variables for reuse in the methodes
     clickedService: boolean; // true, if Service is clicked
@@ -69,12 +71,20 @@ export class ServiceVisualisation {
 
         document.getElementById('buttonDiv');
 
+        // get current strategy id & sc for drawing
+        currentService.strategies.forEach((currValue, i) => {
+          if (currValue.name === currentService.currentStrategy) {
+            this.strategy = currValue.id;
+            this.sc = currValue.sc;
+          }
+        });
+
         // add all SVGs
         // generate flag for Service
         this.flag = new Flag(service, serviceRadius, xMid, yMid, currentService,
           dialog, openSettings, pinService, this.pinned);
         this.setService(service, this.serviceState); // generate Service
-        this.annotation = new Annotation(service, serviceRadius, xMid, yMid);
+        this.annotation = new Annotation(service, serviceRadius, xMid, yMid, this.sc, this.strategy);
         this.action = new Action(service, serviceRadius, xMid, yMid, this.serviceState, setAction);
     }
 
