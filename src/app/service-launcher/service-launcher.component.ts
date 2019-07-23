@@ -17,8 +17,8 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
   modulesWithServices: ModuleInterface[];
   services: ServiceInterface[];
 
-  data: Subplant;
-  pinnedServiceArray: Observable<Service[]>;
+  data;
+  pinnedServiceArray: Observable<ServiceInterface[]>;
   sorting: string;
 
   strategyFormControl: FormControl = new FormControl('', new FormControl());
@@ -75,7 +75,7 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
      * open dialog and set current service in appState to this service
      * @param service - clicked service
      */
-  openDialog(service: Service) {
+  openDialog(service: ServiceInterface) {
          const config = new MatDialogConfig();
          const modal: MatDialogRef<ServiceSettingsComponent> = this.dialog.open(ServiceSettingsComponent, config);
          // set selected service in ngrx state
@@ -88,7 +88,7 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
      * dispatch newly pinned or unpinned service in ngrx store => all lists get updated
      * @param service - clicked service
      */
-  pinService(service: Service) {
+  pinService(service: ServiceInterface) {
         const newPinnedService = service;
 /*        this.store$.dispatch(new UpdateService(
           {service: {id: Number(service.id), changes: service = newPinnedService}})); */
