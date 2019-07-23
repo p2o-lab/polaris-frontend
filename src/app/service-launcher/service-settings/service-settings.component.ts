@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
+import {ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
 
 @Component({
     selector: 'app-service-settings',
@@ -10,9 +11,9 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
 
     unitMapping;
     subscriptions;
-    currentService: Service;
-    serviceStrategies: Strategy[];
-    currentStrategy: Strategy;
+    currentService: ServiceInterface;
+    serviceStrategies: StrategyInterface[];
+    currentStrategy: StrategyInterface;
     serviceParameter = [];
     strategyParameter = [];
 
