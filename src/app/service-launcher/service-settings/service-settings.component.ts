@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
-import {Service} from '../../../models/service.model';
-import {Strategy} from '../../../models/strategy.model';
 
 @Component({
     selector: 'app-service-settings',
