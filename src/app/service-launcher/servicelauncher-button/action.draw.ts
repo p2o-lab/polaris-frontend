@@ -53,89 +53,89 @@ export class Action {
         // todo: maybe add ActionArray
 
         switch (state) {
-            case 'running':
+            case 'EXECUTE':
                 this.setPause(snap);
                 this.setStop(snap);
                 this.setHold(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'completing');
+                this.setStateChange(snap, 'COMPLETING');
                 // todo: add restart
                 break;
-            case 'completed':
+            case 'COMPLETED':
                 this.setReset(snap);
                 this.setAbort(snap);
                 this.setStop(snap);
                 break;
-            case 'pausing':
+            case 'PAUSING':
                 this.setAbort(snap);
                 this.setStop(snap);
                 this.setHold(snap);
-                this.setStateChange(snap, 'paused');
+                this.setStateChange(snap, 'PAUSED');
                 break;
-            case 'paused':
+            case 'PAUSED':
                 this.setAbort(snap);
                 this.setStop(snap);
                 this.setHold(snap);
                 // todo: add resume
                 break;
-            case 'stopping':
+            case 'STOPPING':
                 this.setAbort(snap);
-                this.setStateChange(snap, 'stopped');
+                this.setStateChange(snap, 'STOPPED');
                 break;
-            case 'stopped':
+            case 'STOPPED':
                 this.setAbort(snap);
                 this.setReset(snap);
                 break;
-            case 'aborting':
-                this.setStateChange(snap, 'aborted');
+            case 'ABORTING':
+                this.setStateChange(snap, 'ABORTED');
                 break;
-            case 'aborted':
+            case 'ABORTED':
                 this.setReset(snap);
                 break;
-            case'holding':
+            case'HOLDING':
                 this.setStop(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'held');
+                this.setStateChange(snap, 'HELD');
                 break;
-            case 'held':
+            case 'HELD':
                 this.setStop(snap);
                 this.setAbort(snap);
                 // todo: add unhold
                 break;
-            case 'unholding':
+            case 'UNHOLDING':
                 this.setStop(snap);
                 this.setHold(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'running');
+                this.setStateChange(snap, 'EXECUTE');
                 break;
-            case 'idle':
+            case 'IDLE':
                 // todo: set active = false
                 this.setStop(snap);
                 this.setAbort(snap);
                 this.setStart(snap);
                 break;
-            case 'resetting':
+            case 'RESETTING':
                 this.setStart(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'idle');
+                this.setStateChange(snap, 'IDLE');
                 break;
-            case 'starting':
+            case 'STARTING':
                 this.setStop(snap);
                 this.setHold(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'running');
+                this.setStateChange(snap, 'EXECUTE');
                 break;
-            case 'resuming':
+            case 'RESUMING':
                 this.setStop(snap);
                 this.setHold(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'running');
+                this.setStateChange(snap, 'EXECUTE');
                 break;
-            case 'completing':
+            case 'COMPLETING':
                 this.setStop(snap);
                 this.setHold(snap);
                 this.setAbort(snap);
-                this.setStateChange(snap, 'completed');
+                this.setStateChange(snap, 'COMPLETED');
                 break;
             default:
         }
@@ -218,7 +218,7 @@ export class Action {
             width: 40,
             height: 40
         });
-        startIcon.path(Icon.getIcon('start')); // add Icon-Path
+        startIcon.path(Icon.getIcon('START')); // add Icon-Path
         startIcon.node.style.transformOrigin = '50% 50%';
         startIcon.node.style.pointerEvents = 'none';
 
@@ -275,7 +275,7 @@ export class Action {
             textAnchor: 'middle',
             dominantBaseline: 'central'
         });
-        pauseIcon.path(Icon.getIcon('pause')); // add Icon-Path
+        pauseIcon.path(Icon.getIcon('PAUSE')); // add Icon-Path
         pauseIcon.node.style.transformOrigin = '50% 50%';
         pauseIcon.node.style.pointerEvents = 'none';
 
@@ -310,7 +310,7 @@ export class Action {
             pauseText.attr({
                 class: 'actionText'
             });
-        }).click(() => {this.emitAction('pause'); });
+        }).click(() => {this.emitAction('PAUSE'); });
     }
 
     setStop(snap: Snap.Paper) {
@@ -330,7 +330,7 @@ export class Action {
             width: 40,
             height: 40
         });
-        stopIcon.path(Icon.getIcon('stop')); // add Icon-Path
+        stopIcon.path(Icon.getIcon('STOP')); // add Icon-Path
         stopIcon.node.style.transformOrigin = '50% 50%';
         stopIcon.node.style.pointerEvents = 'none';
 
@@ -365,7 +365,7 @@ export class Action {
             stopText.attr({
                 class: 'actionText'
             });
-        }).click(() => {this.emitAction('stop'); });
+        }).click(() => {this.emitAction('STOP'); });
     }
 
     setHold(snap: Snap.Paper) {
@@ -385,7 +385,7 @@ export class Action {
             width: 40,
             height: 40
         });
-        holdIcon.path(Icon.getIcon('hold')); // add Icon-Path
+        holdIcon.path(Icon.getIcon('HOLD')); // add Icon-Path
         holdIcon.node.style.transformOrigin = '50% 50%';
         holdIcon.node.style.pointerEvents = 'none';
 
@@ -420,7 +420,7 @@ export class Action {
             holdText.attr({
                 class: 'actionText'
             });
-        }).click(() => {this.emitAction('hold'); });
+        }).click(() => {this.emitAction('HOLD'); });
     }
 
     setAbort(snap: Snap.Paper) {
@@ -440,7 +440,7 @@ export class Action {
             width: 40,
             height: 40
         });
-        abortIcon.path(Icon.getIcon('abort')); // add Icon-Path
+        abortIcon.path(Icon.getIcon('ABORT')); // add Icon-Path
         abortIcon.node.style.transformOrigin = '50% 50%';
         abortIcon.node.style.pointerEvents = 'none';
 
@@ -477,7 +477,7 @@ export class Action {
                     class: 'actionText'
                 });
             }
-        ).click(() => {this.emitAction('abort'); });
+        ).click(() => {this.emitAction('ABORT'); });
     }
 
     setReset(snap: Snap.Paper) {
@@ -497,7 +497,7 @@ export class Action {
             width: 40,
             height: 40
         });
-        resetIcon.path(Icon.getIcon('reset')); // add Icon-Path
+        resetIcon.path(Icon.getIcon('RESET')); // add Icon-Path
         resetIcon.node.style.transformOrigin = '50% 50%';
         resetIcon.node.style.pointerEvents = 'none';
 
@@ -532,7 +532,7 @@ export class Action {
             resetText.attr({
                 class: 'actionText'
             });
-        }).click(() => {this.emitAction('reset'); });
+        }).click(() => {this.emitAction('RESET'); });
     }
 
     calculateActionRadius(serviceRadius: number) {

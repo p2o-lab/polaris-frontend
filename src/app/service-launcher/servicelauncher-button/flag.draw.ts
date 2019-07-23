@@ -40,7 +40,6 @@ export class Flag {
 
         this.background = document.getElementsByClassName('background');
 
-        // todo: get strategyName and OperationMode dynamic
         this.strategyName = currentService.currentStrategy;
         this.operationMode = currentService.opMode.source + ' ' + currentService.opMode.state;
 
