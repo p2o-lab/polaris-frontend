@@ -1,6 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
-import {ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ParameterInterface, ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
+import * as moment from 'moment';
+import {Subscription, timer} from 'rxjs';
 
 @Component({
     selector: 'app-service-settings',
@@ -10,42 +12,37 @@ import {ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
 export class ServiceSettingsComponent implements OnInit, OnDestroy {
 
     unitMapping;
-    subscriptions;
     currentService: ServiceInterface;
     serviceStrategies: StrategyInterface[];
     currentStrategy: StrategyInterface;
-    serviceParameter = [];
-    strategyParameter = [];
+    serviceParameter: ParameterInterface[] = [];
+    strategyParameter: ParameterInterface[] = [];
+
+    public changeDuration: string;
+
+    private timer: Subscription;
 
     constructor(
-        private dialogRef: MatDialogRef<ServiceSettingsComponent>
-    ) {}
+        private dialogRef: MatDialogRef<ServiceSettingsComponent>,
+        @Inject(MAT_DIALOG_DATA) data
+    ) {
+      this.currentService = data.service;
+    }
 
-    /**
-     * subscribe to unit mapping for translation
-     * subscribe to current module selection
-     */
     ngOnInit() {
-       /* this.subscriptions = this.unitMappingService.getUnitMapping().subscribe((_unitMapping) => {
-            this.unitMapping = _unitMapping;
-            this.serviceParameter.map((_param) => {
-                if (this.unitMapping[_param.unit]) {
-                    _param.unit = this.unitMapping[_param.unit].unit;
-                }
-            });
-            this.strategyParameter.map((_param) => {
-                if (this.unitMapping[_param.unit]) {
-                    _param.unit = this.unitMapping[_param.unit].unit;
-                }
-            });
-        });
-        this.subscriptions.add(this.store$.pipe(select(selectCurrentSelectionIDs)).subscribe(
-            (_selection) => {
-                if ((_selection.selService !== undefined) || (_selection.selService !== this.currentService.id)) {
-                    this.getService(_selection.selService);
-                }
-            })
-        );*/
+       // fill the modal with data
+      this.serviceParameter = this.currentService.parameters;
+      this.serviceStrategies = this.currentService.strategies;
+
+      this.currentService.strategies.forEach((strategy, index) => {
+        if (strategy.name === this.currentService.currentStrategy) {
+          this.currentStrategy = strategy;
+          this.strategyParameter = strategy.parameters;
+        }
+      });
+
+      this.timer = timer(0, 1000)
+        .subscribe(() => this.updateDuration());
     }
 
      /**
@@ -202,7 +199,14 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
      * unsubscribe from all subscriptions
      */
     ngOnDestroy() {
-        this.subscriptions.unsubscribe();
+      this.timer.unsubscribe();
     }
+
+  private updateDuration() {
+    if (this.currentService && this.currentService.lastChange) {
+      this.currentService.lastChange = this.currentService.lastChange + 1;
+      this.changeDuration = moment.duration(-this.currentService.lastChange, 'seconds').humanize();
+    }
+  }
 
 }

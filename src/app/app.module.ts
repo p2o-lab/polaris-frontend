@@ -99,7 +99,8 @@ moment.relativeTimeThreshold('ss', 5);
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
-    ServiceParameterDialogComponent
+    ServiceParameterDialogComponent,
+    ServiceSettingsComponent
   ],
   providers: [
       SettingsService, BackendService, WebsocketService,

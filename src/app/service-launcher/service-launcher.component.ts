@@ -77,9 +77,10 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
      */
   openDialog(service: ServiceInterface) {
          const config = new MatDialogConfig();
+         config.data = {
+           'service': service
+         };
          const modal: MatDialogRef<ServiceSettingsComponent> = this.dialog.open(ServiceSettingsComponent, config);
-         // set selected service in ngrx state
-//         this.appStateService.setService(service.id);
     }
 
     /**
@@ -191,4 +192,31 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
                 break;
         }
     }
+  /*
+    Send opcua control command via backend service
+   */
+  sendCommand(command: string) {
+    const strategy: string = this.strategyFormControl.value.name;
+    const parameters: any[] = this.getParameter();
+
+    this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
+      .subscribe((data) => {
+        console.log('command sent', data);
+      });
+  }
+
+  /**
+   * get parameters to be sent to backend (only writeable values)
+   * @returns {ParameterOptions[]}
+   */
+  private getParameter(): ParameterOptions[] {
+    return this.strategyFormControl.value.parameters
+      .filter((param) => !param.readonly)
+      .map((param) => {
+        return {
+          name: param.name,
+          value: this.strategyParameterFormGroup.value[param.name]
+        };
+      });
+  }
 }
