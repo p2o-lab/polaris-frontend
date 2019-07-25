@@ -69,6 +69,7 @@ moment.relativeTimeThreshold('ss', 5);
     ModuleViewComponent,
     NewRecipeComponent,
     NewModuleComponent,
+    NewVirtualServiceComponent,
     ServiceViewComponent,
     AboutComponent,
     RecipeDetailComponent,
