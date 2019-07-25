@@ -1,18 +1,16 @@
-<h1 class="mat-display-1">New Recipe</h1>
+<h1 mat-dialog-title>New Recipe</h1>
+<mat-dialog-content>
+  <mat-form-field class="example-container">
+    <textarea matInput placeholder="Recipe options" matTextareaAutosize
+                      matAutosizeMinRows="5"
+                      matAutosizeMaxRows="30"
+                      [(ngModel)]="recipe"></textarea>
 
-<p>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="submitRecipe()">Apply</button>
   <button type="button" mat-button (click)="imgFileInput.click()">Load from file</button>
   <input hidden type="file" #imgFileInput (change)="previewFile($event)"/>
-</p>
-
-<mat-form-field class="example-container">
-  <textarea matInput placeholder="Recipe options" matTextareaAutosize
-                    matAutosizeMinRows="5"
-                    matAutosizeMaxRows="30"
-                    [(ngModel)]="recipe"></textarea>
-
-</mat-form-field>
-<p>
-  <button mat-button (click)="editRecipe()">Apply</button>
-  <button mat-button (click)="cancel()">Cancel</button>
-</p>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

@@ -1,9 +1,8 @@
-<h1 class="mat-h1">Recipe</h1>
-
-<button mat-button routerLink="/recipe/new">
+<h1 class="mat-h1 with-icon">Recipe <button matTooltip="Add Recipe" mat-button (click)="newRecipe()">
   <mat-icon>library_add</mat-icon>
-  Add Recipe
-</button>
+</button></h1>
+
+
 
 <p *ngIf="recipes.length==0">No recipes loaded yet</p>
 
@@ -20,7 +19,7 @@
     </mat-card-title>
       <mat-card-subtitle class="with-icon">
           <mat-icon>linear_scale</mat-icon>
-          {{recipe.options.steps.length}} Steps &nbsp;
+          {{recipe.options.steps.length}} Steps
           <mat-icon>history</mat-icon>&nbsp;{{recipe.options.version}} &nbsp;
           <mat-icon>person</mat-icon>&nbsp;{{recipe.options.author}}
     </mat-card-subtitle>

@@ -1,8 +1,9 @@
+<h1 mat-dialog-title>Load new module</h1>
+<mat-dialog-content>
 <mat-horizontal-stepper linear="true" #stepper>
     <mat-step label="Load MTP or JSON">
         <button type="button" mat-button color="primary" (click)="imgFileInput.click()">Load from file</button>
         <input hidden type="file" #imgFileInput (change)="previewFile($event)"/>
-        <button mat-button color="warn" (click)="cancel()">Cancel</button>
     </mat-step>
     <mat-step label="Configure PEA">
         <div *ngFor="let module of modules">
@@ -23,12 +24,10 @@
             <h2 class="mat-h2">Process values</h2>
             {{module.process_values.length}}
         </div>
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button color="primary" [disabled]="modules==undefined" (click)="addModule()">Add</button>
-            <button mat-button color="warn" (click)="cancel()">Cancel</button>
-        </div>
     </mat-step>
 </mat-horizontal-stepper>
-
-
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" [disabled]="modules==undefined" (click)="addModule()">Add</button>
+    <button mat-button color="warn" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

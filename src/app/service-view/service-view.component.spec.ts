@@ -1,17 +1,15 @@
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {ServiceViewComponent} from './service-view.component';
+import {ReactiveFormsModule} from '@angular/forms';
 import {
-    MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
+    MatExpansionModule, MatFormFieldModule, MatIconModule,
     MatSelectModule, MatSnackBarModule
 } from '@angular/material';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {settingsServiceStub} from '../_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {ServiceViewComponent} from './service-view.component';
 
 describe('ServiceViewComponent', () => {
   let component: ServiceViewComponent;
@@ -20,8 +18,15 @@ describe('ServiceViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ServiceViewComponent],
-        imports: [CommonModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, BrowserAnimationsModule,
-            MatInputModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatSnackBarModule],
+        imports: [
+            ReactiveFormsModule,
+            HttpClientTestingModule,
+            NoopAnimationsModule,
+            MatExpansionModule,
+            MatFormFieldModule,
+            MatIconModule,
+            MatSelectModule,
+            MatSnackBarModule],
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub}

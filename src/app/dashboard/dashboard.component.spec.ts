@@ -1,11 +1,9 @@
-import 'zone.js/dist/zone-testing';
 import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import 'zone.js/dist/zone-testing';
 
-import {DashboardComponent} from './dashboard.component';
 import {MatCardModule, MatGridListModule, MatIconModule, MatMenuModule} from '@angular/material';
-import {SettingsService} from '../_services/settings.service';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
-import {settingsServiceStub} from '../_services/settings.service.spec';
+import {DashboardComponent} from './dashboard.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('PfeDashboardComponent', () => {
   let component: DashboardComponent;
@@ -14,13 +12,16 @@ describe('PfeDashboardComponent', () => {
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DashboardComponent],
-        imports: [MatCardModule, MatMenuModule, MatIconModule, MatGridListModule],
-        providers: [
-            {provide: SettingsService, useValue: settingsServiceStub},
-            {provide: WebsocketService, useValue: websocketServiceStub}
-        ]
+      imports: [
+        NoopAnimationsModule,
+        MatCardModule,
+        MatIconModule,
+        MatCardModule,
+        MatMenuModule,
+        MatGridListModule],
+      providers: []
     })
-      .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;

@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {RecipeInterface} from '@p2olab/polaris-interface';
-import {RecipeService} from '../_services/recipe.service';
 import {PlayerService} from '../_services/player.service';
+import {RecipeService} from '../_services/recipe.service';
+import {NewRecipeComponent} from '../new-recipe/new-recipe.component';
 
 @Component({
   selector: 'app-recipe-overview',
@@ -15,7 +16,8 @@ export class RecipeOverviewComponent implements OnInit {
 
   constructor(private recipeService: RecipeService,
               private playerService: PlayerService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -30,7 +32,9 @@ export class RecipeOverviewComponent implements OnInit {
             this.playerService.refreshPlayer();
             this.snackBar.open(`Recipe has been added to playlist`, 'Ok');
         },
-      (err) => console.log(err)
+      (err) => {
+          console.log(err);
+      }
     );
   }
 
@@ -42,4 +46,8 @@ export class RecipeOverviewComponent implements OnInit {
         this.snackBar.open(`Error while removing recipe: ${JSON.stringify(err)}`, 'Dismiss');
       });
   }
+
+    newRecipe() {
+        this.dialog.open(NewRecipeComponent, {});
+    }
 }

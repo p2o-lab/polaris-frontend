@@ -1,9 +1,10 @@
-import {SettingsService} from './settings.service';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ModuleInterface, ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface/dist/interfaces';
+import {ModuleInterface, ServiceInterface, StrategyInterface,
+    VirtualServiceInterface} from '@p2olab/polaris-interface/dist/interfaces';
 import {ParameterOptions} from '@p2olab/polaris-interface/dist/RecipeOptions';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {SettingsService} from './settings.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,10 +17,15 @@ export class ModuleService {
     }
     private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject([]);
 
+    get virtualServices(): Observable<VirtualServiceInterface[]> {
+        return this._virtualServices.asObservable();
+    }
+    private _virtualServices: BehaviorSubject<VirtualServiceInterface[]> = new BehaviorSubject([]);
 
     constructor(private http: HttpClient,
                 private settings: SettingsService) {
         this.refreshModules();
+        this.refreshVirtualServices();
     }
 
     /** update internal variables of module (service states, controlEnable of services, strategy parameters)
@@ -29,7 +35,7 @@ export class ModuleService {
     public updateModuleState(data) {
         if (data) {
             if (data.module) {
-                let modules = this._modules.value;
+                const modules = this._modules.value;
                 const newModule = modules.find((module) => module.id === data.module);
                 if (newModule && newModule.services && data.service) {
                     const newService = newModule.services.find((service) => service.name === data.service);
@@ -49,7 +55,7 @@ export class ModuleService {
                     }
 
                 }
-                this._modules.next(modules)
+                this._modules.next(modules);
             }
         } else {
             this.refreshModules();
@@ -60,6 +66,13 @@ export class ModuleService {
         this.http.get(`${this.settings.apiUrl}/module`).subscribe((modules: ModuleInterface[]) => {
             console.log('modules refreshed via HTTP GET', modules);
             this._modules.next(modules);
+        });
+    }
+
+    refreshVirtualServices() {
+        this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vservices: VirtualServiceInterface[]) => {
+            console.log('virtual services refreshed via HTTP GET', vservices);
+            this._virtualServices.next(vservices);
         });
     }
 
@@ -91,6 +104,14 @@ export class ModuleService {
             body.parameters = parameters;
         }
         return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
+    }
+
+    sendVirtualServiceCommand(service: string, command: string, parameters: object[]) {
+        const body: any = {};
+        if (parameters) {
+            body.parameters = parameters;
+        }
+        return this.http.post(`${this.settings.apiUrl}/virtualService/${service}/${command}`, body);
     }
 
     configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {

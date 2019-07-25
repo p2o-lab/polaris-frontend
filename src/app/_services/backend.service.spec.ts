@@ -1,11 +1,11 @@
 import {inject, TestBed} from '@angular/core/testing';
 
-import {BackendService} from './backend.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatSnackBarModule} from '@angular/material';
+import {BackendService} from './backend.service';
 import {SettingsService} from './settings.service';
-import {WebsocketService, websocketServiceStub} from './websocket.service';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material';
 import {settingsServiceStub} from './settings.service.spec';
+import {WebsocketService, websocketServiceStub} from './websocket.service';
 
 describe('BackendService', () => {
   beforeEach(() => {

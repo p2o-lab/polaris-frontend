@@ -1,9 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AboutComponent} from './about.component';
-import {MatGridList, MatGridTile} from '@angular/material';
+import {MatGridListModule} from '@angular/material';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -11,12 +12,16 @@ describe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AboutComponent, MatGridList, MatGridTile],
-        providers: [
-            {provide: SettingsService, useValue: settingsServiceStub}
-        ]
+      declarations: [AboutComponent],
+      imports: [
+        MatGridListModule,
+        NoopAnimationsModule
+      ],
+      providers: [
+        {provide: SettingsService, useValue: settingsServiceStub}
+      ]
     })
-      .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {

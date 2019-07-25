@@ -1,6 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {
@@ -10,9 +9,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatPseudoCheckboxModule,
     MatSelectModule,
-    MatSnackBarModule,
     MatTooltipModule
 } from '@angular/material';
 import {SettingsService} from '../_services/settings.service';
@@ -20,6 +17,7 @@ import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {ServiceViewComponent} from '../service-view/service-view.component';
 import {ModuleViewComponent} from './module-view.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ModuleViewComponent', () => {
     let component: ModuleViewComponent;
@@ -31,9 +29,17 @@ describe('ModuleViewComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ModuleViewComponent, ServiceViewComponent],
-            imports: [CommonModule, ReactiveFormsModule, HttpClientTestingModule,
-                MatExpansionModule, MatPseudoCheckboxModule, MatCardModule, MatIconModule,
-                MatInputModule, MatSelectModule, MatMenuModule, MatSnackBarModule, MatDialogModule,
+            imports: [
+                ReactiveFormsModule,
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                MatExpansionModule,
+                MatCardModule,
+                MatIconModule,
+                MatInputModule,
+                MatSelectModule,
+                MatMenuModule,
+                MatDialogModule,
                 MatTooltipModule
             ],
             providers: [

@@ -4,10 +4,10 @@
       {{service.name}}
     </mat-panel-title>
     <mat-panel-description>
-      <span class="serviceState">{{service.status}}</span> <small>{{service.opMode.state}} - {{service.opMode.source}} (since {{changeDuration}})</small>
+      <span class="serviceState">{{service.status}}</span> <small><span *ngIf="service.opMode">{{service.opMode.state}} - {{service.opMode.source}}</span> (since {{changeDuration}})</small>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <div class="form">
+  <div class="form" *ngIf="service.strategies">
     <mat-form-field class="field">
       <mat-select [formControl]="strategyFormControl" placeholder="Strategy">
         <mat-option *ngFor="let strategy of service.strategies" [value]="strategy">

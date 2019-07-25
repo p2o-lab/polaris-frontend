@@ -1,45 +1,57 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {ModuleInterface} from '@p2olab/polaris-interface';
-import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
+import {ModuleInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
+import {Observable} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
+import {NewModuleComponent} from '../new-module/new-module.component';
+import {NewVirtualServiceComponent} from '../new-virtual-service/new-virtual-service.component';
+import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
     selector: 'app-module-view',
     templateUrl: './module-view.component.html',
     styleUrls: ['./module-view.component.css']
 })
-export class ModuleViewComponent implements OnInit {
+export class ModuleViewComponent {
 
-    modules$ = this.backend.modules;
+    public modules$: Observable<ModuleInterface[]> = this.moduleService.modules;
 
-    constructor(public backend: ModuleService,
-                public dialog: MatDialog) {
-    }
+    public virtualServices$: Observable<VirtualServiceInterface[]> = this.moduleService.virtualServices;
 
-    ngOnInit() {
+    constructor(private moduleService: ModuleService,
+                private dialog: MatDialog) {
     }
 
     connect(module: string) {
-        this.backend.connect(module).subscribe((data) => {
+        this.moduleService.connect(module).subscribe((data) => {
             console.log('Connect result', data);
         });
     }
 
     disconnect(module: string) {
-        this.backend.disconnect(module).subscribe((data) => {
+        this.moduleService.disconnect(module).subscribe((data) => {
             console.log('Disconnect result', data);
         });
     }
 
     remove(module: string) {
-        this.backend.removeModule(module).subscribe((data) => console.log('Remove result', data));
+        this.moduleService.removeModule(module).subscribe((data) => console.log('Remove result', data));
     }
 
     configure(module: ModuleInterface) {
-        const dialogRef = this.dialog.open(ServiceParameterDialogComponent, {
+        this.dialog.open(ServiceParameterDialogComponent, {
             data: module
         });
     }
 
+    instantiateVirtualService() {
+        this.dialog.open(NewVirtualServiceComponent, {});
+    }
+
+    newModule() {
+        this.dialog.open(NewModuleComponent, {
+            width: '800px',
+            height: '800px'
+        });
+    }
 }
