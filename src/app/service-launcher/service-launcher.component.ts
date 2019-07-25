@@ -199,10 +199,10 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
     const strategy: string = this.strategyFormControl.value.name;
     const parameters: any[] = this.getParameter();
 
-    this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
-      .subscribe((data) => {
-        console.log('command sent', data);
-      });
+    // this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
+    //   .subscribe((data) => {
+    //     console.log('command sent', data);
+    //   });
   }
 
   /**
