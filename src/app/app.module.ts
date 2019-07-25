@@ -1,11 +1,10 @@
 
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {LayoutModule} from '@angular/cdk/layout';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ChartModule } from 'angular-highcharts';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceWorkerModule} from '@angular/service-worker';
@@ -40,7 +39,6 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
-
 
 moment.updateLocale('en', {
     relativeTime: {
