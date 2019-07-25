@@ -1,0 +1,58 @@
+@import '~@angular/material/theming';
+
+/* Component Boxes */
+.component-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  // div {
+  //   padding: 8px 16px;
+  // }
+}
+
+.component-card-header {
+  padding: 8px 16px;
+
+  @include mat-elevation(2);
+  background-color: $primary;
+  height: 24px;
+  vertical-align: center;
+  font-size: mat-font-size($typo-config, subheading-2);
+  font-family: mat-font-size($typo-config, subheading-2);
+  color: white;
+  span {
+    display: inline-flex;
+    vertical-align: middle;
+
+    .nav-text {
+      padding: 5px;
+      border-radius: 5px;
+      display: inline;
+      background: rgba(207, 207, 207, 0.2);
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      // for rounded background around link
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+
+      background: rgba(207, 207, 207, 0.2);
+
+      &:hover {
+        background: #3e5058;
+      }
+    }
+  }
+}
+
+.component-card-content {
+  padding: 8px 16px;
+
+    flex: 1 1 auto;
+    overflow: hidden;
+    height: 100%;
+    @include mat-elevation(1);
+}

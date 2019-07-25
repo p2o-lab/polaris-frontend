@@ -1,0 +1,90 @@
+@import "../../styles/colors";
+@import "../../styles/mixins";
+@import '../../../node_modules/@angular/material/theming';
+
+.service-launcher-card-header{
+    display: grid;
+    grid-template-columns: [start] 20% [search] 10% [search-icon] 10% [sort] 50% [end];
+    width: 100%;
+    vertical-align: center;
+
+}
+.mat-form-field{
+    height: 24px !important;
+    position:absolute;
+    top:-20px;
+}
+
+.field{
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    vertical-align: center;
+    display: inline-flex;
+
+    &.search{
+        // todo: fix size: make dynamic
+        position: relative;
+        grid-column: search / search-icon ;
+        &.icon{
+            grid-column: search-icon / sort;
+            position: absolute;
+            right: -48px;
+
+        }
+    }
+    &.sort{
+        grid-column: sort / end;
+        position: relative;
+
+    }
+}
+.service-launcher-card-content{
+    display: grid;
+    grid-template-rows: [pinned_services] auto [divider] auto [all_services] auto [end];
+    height: 100%;
+}
+
+.background{
+    display:none;
+    grid-row: pinned_services / end;
+    background: rgba(28, 49, 58, 0.5);
+    width: 67%;
+    height: 100%;
+    z-index: 3;
+    margin: 0;
+    position: fixed; // ??
+    // flex: 1 1 auto;
+    overflow: hidden;
+    // @include mat-elevation(1);
+}
+
+.section_pinned_services {
+    display: flex;
+    overflow: visible;
+    grid-row: pinned_services / divider;
+    flex-direction: row;
+    padding-right: 90px; // for flag, when service clicked
+    padding-bottom:50px;
+}
+
+.section_services {
+    // todo: remove scrollbar
+    overflow: auto;
+    grid-row: all_services / end;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 90px; // for flag, when service clicked
+    padding-bottom: 70px; // for actions, when service clicked
+}
+
+.test {
+    height: 150px;
+    width: 150px;
+    // z-index: 2;
+    // position: relative;
+    display: inline-block;
+    background: green;
+    margin: 5px 5px 5px 5px ;
+}

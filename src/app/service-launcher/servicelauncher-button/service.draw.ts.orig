@@ -1,0 +1,262 @@
+import * as Snap from 'snapsvg-cjs';
+
+import { Icon } from './icon.draw';
+import {Annotation} from './annotation.draw';
+import {Flag} from './flag.draw';
+import {Action} from './action.draw';
+import {Service} from '../../../models/service.model';
+import {element} from 'protractor';
+import {MatDialog} from '@angular/material';
+
+export class ServiceVisualisation {
+    // Instance in Service
+    flag: Flag;
+    annotation: Annotation;
+    action: Action;
+
+    // Constance
+    path: Icon;
+    radius: number;
+    radiusClicked: number;
+    xMid: number;
+    yMid: number;
+    iconScale = 40;
+    background;
+    serviceLauncherDiv;
+
+    // variables for current Service
+    serviceName: string;
+    serviceState: string;
+    serviceDiv;
+
+    // Variables for reuse in the methodes
+    clickedService: boolean; // true, if Service is clicked
+    serviceCircle: Snap.Paper; // Circle of Service
+    iconSvg: Snap.Paper; // Icon of Service
+    serviceStateText: Snap.Paper; // Shows Service State
+    serviceNameText: Snap.Paper; // Shows Name of Service
+
+    constructor (
+        service: Snap.Paper,
+        serviceRadius,
+        xMid,
+        yMid,
+        currentService: Service,
+        dialog: MatDialog,
+        openSettings,
+        pinService,
+        setAction) {
+        // set Constance
+        this.serviceState = 'running'; // todo: dynamic
+        // todo: get Module Name
+        this.serviceName = currentService.name;
+
+        this.path = Icon.getIcon(this.serviceState);
+        this.radius = serviceRadius;
+        this.radiusClicked = 1.5 * this.radius; // set Radius for clicked Service
+        this.xMid = xMid;
+        this.yMid = yMid;
+        this.clickedService = false; // Service is not clicked by default
+
+        // set background
+        this.background = document.getElementsByClassName('background');
+       // this.resetBackground(); // reset by default
+       // this.background[0].onclick = this.resetBackground(); // todo: do not work
+
+        // get Div of serviceLauncher to; todo
+<<<<<<< HEAD
+        //document.getElementById('buttonDiv').id = this.serviceName
+=======
+        // document.getElementById('buttonDiv').id = this.serviceName
+>>>>>>> dev
+        let element = document.getElementById('buttonDiv');
+        element.id = this.serviceName;
+        element.classList.add(this.serviceName);
+
+        document.getElementById('buttonDiv');
+         // set individual ID for div; todo: check, if really individual
+
+        // add all SVGs
+        // generate flag for Service
+        this.flag = new Flag(service, serviceRadius, xMid, yMid, currentService, dialog, openSettings, pinService);
+        this.setService(service, this.serviceState); // generate Service
+        this.annotation = new Annotation(service, serviceRadius, xMid, yMid);
+        this.action = new Action(service, serviceRadius, xMid, yMid, this.serviceState, setAction);
+    }
+
+    setService(snap: Snap.Paper, serviceStateTyp) {
+        // set Constance. Is nessecary because snap can not use global variables
+        const radius = this.radius;
+        const clickedServiceRadius = this.radiusClicked;
+
+        // ToDo: Get Name and State Text dynamic
+        // const serviceName = 'Test';
+        const serviceState = serviceStateTyp; // todo: capitalize first Letter
+
+
+        // Setup Service Circle
+        this.serviceCircle = snap.circle(this.xMid, this.yMid, this.radius).attr({
+            class: 'service unclicked_service',
+        });
+        this.serviceCircle.node.style.cursor = 'pointer';
+
+        // add Icon
+        this.iconSvg = snap.svg(this.xMid - 0.5 * this.iconScale, this.yMid - 0.5 * this.iconScale).attr({
+            class: 'serviceIcon',
+            viewBox: '0 0 24 24',
+            width: 40,
+            height: 40
+        });
+        this.iconSvg.node.style.transformOrigin = '50% 50%';
+        this.iconSvg.node.style.pointerEvents = 'none';
+        this.iconSvg.path(this.path); // set Path for Icon
+
+        this.serviceStateText = snap.text(this.xMid, this.yMid - this.radius - 10, serviceState).attr({
+            class: 'serviceState unclicked_service'
+        });
+
+        // Setup Service Name, Text under Service circle
+        this.serviceNameText = snap.text(this.xMid, this.yMid + this.radius + 20, this.serviceName).attr({
+            class: 'serviceName'
+        });
+
+        // Setup Service SVG
+        const serviceGroup = snap.group(
+            this.serviceCircle,
+            this.iconSvg,
+            this.serviceNameText,
+            this.serviceStateText
+        );
+
+        // hover function for Service; If hoverd show Service State; If not hoverd hide Service State todo: fix
+        serviceGroup.hover(
+            () => {
+                if (! this.clickedService) {
+                    this.serviceStateText.attr({
+                        class: 'serviceState unclicked_service hover',
+                    });
+                }
+            },
+            () => {
+                if (! this.clickedService) {
+                    this.serviceStateText.attr({
+                        class: 'serviceState unclicked_service'
+                    });
+                }
+            }
+        );
+
+        // click function for Service; If clicked show Actions and Flag
+        this.serviceCircle.click(() => {
+            if (this.clickedService) {
+                this.unclickService();
+                this.serviceStateText.attr({
+                    class: 'serviceState clicked_service'
+                });
+            } else {
+                this.clickService(snap);
+            }
+        });
+    }
+
+    clickService(snap: Snap.Paper) {
+        this.annotation.clickService();
+        this.action.clickService();
+        this.flag.clickService();
+
+        this.serviceCircle.attr({
+            class: 'service clicked_service'
+        });
+        // snap.node.style.overflow = 'visible';
+
+        // animate Circle
+        this.serviceCircle.animate({
+            r: this.radiusClicked
+        }, 200, mina.easein(0));
+        // animate Icon
+        this.iconSvg.animate({
+            x: this.xMid - 0.75 * this.iconScale,
+            y: this.yMid - 0.75 * this.iconScale,
+            height: 1.5 * this.iconScale,
+            width: 1.5 * this.iconScale
+        }, 200, mina.easein(0));
+
+        // move Text
+        this.serviceStateText.animate({
+            transform: 'translate(115, -5)'
+        }, 300);
+        this.serviceStateText.attr({
+            class: 'serviceState clicked_service'
+        });
+        this.serviceNameText.animate({
+            transform: 'translate(115, 5)'
+        }, 300);
+
+        // make background visible
+        this.background[0].style.display = 'block';
+
+        // todo: z-Index
+        // snap.style.zIndex = 4;
+        let elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.zIndex = '4';
+        }
+        this.clickedService = true;
+    }
+
+    unclickService() {
+       this.resetBackground();
+
+      // document.getElementById(this.serviceName).style.zIndex = '1';
+       let elements = document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>;
+
+<<<<<<< HEAD
+       for ( let i = 0; i < elements.length; i++) {
+=======
+       for (let i = 0; i < elements.length; i++) {
+>>>>>>> dev
+           elements[i].style.zIndex = '1';
+       }
+
+        this.annotation.unclickService();
+        this.action.unclickService();
+        this.flag.unclickService();
+
+        this.serviceCircle.attr({
+            class: 'service unclicked_service'
+        });
+
+        // animate Circle
+        this.serviceCircle.animate({
+            r: this.radius
+        }, 200, mina.easein(0));
+        // animate Icon
+        this.iconSvg.animate({
+            x: this.xMid - 0.5 * this.iconScale,
+            y: this.yMid - 0.5 * this.iconScale,
+            height: this.iconScale,
+            width: this.iconScale
+        }, 150, mina.easein(0));
+
+        // move text
+        this.serviceStateText.animate({
+            transform: 'translate(0)'
+        }, 30);
+        this.serviceStateText.attr({
+            class: 'serviceState unclicked_service'
+        });
+        this.serviceNameText.animate({
+            transform: 'transform(0)'
+        }, 30);
+
+        // todo: z-Index
+
+
+        this.clickedService = false;
+        // test
+    }
+
+    resetBackground() {
+        this.background[0].style.display = 'none';
+    }
+}

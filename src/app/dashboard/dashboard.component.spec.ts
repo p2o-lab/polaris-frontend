@@ -5,7 +5,7 @@ import {MatCardModule, MatGridListModule, MatIconModule, MatMenuModule} from '@a
 import {DashboardComponent} from './dashboard.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('DashboardComponent', () => {
+describe('PfeDashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 

@@ -1,33 +1,11 @@
+
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {LayoutModule} from '@angular/cdk/layout';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {
-    MAT_SNACK_BAR_DEFAULT_OPTIONS,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatTooltipModule
-} from '@angular/material';
+import { ChartModule } from 'angular-highcharts';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceWorkerModule} from '@angular/service-worker';
@@ -46,6 +24,7 @@ import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LogComponent} from './log/log.component';
+import { MaterialModule } from './material/material.module';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
@@ -53,10 +32,15 @@ import {NewVirtualServiceComponent} from './new-virtual-service/new-virtual-serv
 import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
+import {ServiceLauncherComponent} from './service-launcher/service-launcher.component';
+import {ServiceSettingsComponent} from './service-launcher/service-settings/service-settings.component';
+// tslint:disable-next-line:max-line-length
+import {ServicelauncherButtonComponent} from './service-launcher/servicelauncher-button/servicelauncher-button.component';
 import {ServiceParameterDialogComponent} from './service-parameter-dialog/service-parameter-dialog.component';
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
+
 
 moment.updateLocale('en', {
     relativeTime: {
@@ -79,73 +63,50 @@ moment.updateLocale('en', {
 moment.relativeTimeThreshold('ss', 5);
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        DashboardComponent,
-        RecipeOverviewComponent,
-        SettingsComponent,
-        ModuleViewComponent,
-        NewRecipeComponent,
-        NewModuleComponent,
-        ServiceViewComponent,
-        AboutComponent,
-        RecipeDetailComponent,
-        PlayerComponent,
-        LogComponent,
-        ServiceParameterDialogComponent,
-        TimeSeriesViewComponent,
-        NewVirtualServiceComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        LayoutModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatGridListModule,
-        MatInputModule,
-        MatCardModule,
-        MatMenuModule,
-        MatFormFieldModule,
-        MatExpansionModule,
-        MatSelectModule,
-        MatSnackBarModule,
-        MatBadgeModule,
-        MatCheckboxModule,
-        MatDialogModule,
-        AppRoutingModule,
-        HttpClientModule,
-        WebStorageModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatChipsModule,
-        MatStepperModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        NgxChartsModule,
-        ChartModule,
-        LoadingBarHttpClientModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
-    ],
-    entryComponents: [
-        ServiceParameterDialogComponent,
-        NewVirtualServiceComponent,
-        NewRecipeComponent,
-        NewModuleComponent
-    ],
-    providers: [
-        SettingsService,
-        BackendService,
-        WebsocketService,
-        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    RecipeOverviewComponent,
+    SettingsComponent,
+    ModuleViewComponent,
+    NewRecipeComponent,
+    NewModuleComponent,
+    ServiceViewComponent,
+    AboutComponent,
+    RecipeDetailComponent,
+    PlayerComponent,
+    ServiceLauncherComponent,
+    ServiceSettingsComponent,
+    ServicelauncherButtonComponent,
+    LogComponent,
+    ServiceParameterDialogComponent,
+    TimeSeriesViewComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    MaterialModule,
+    AppRoutingModule,
+    HttpClientModule,
+    WebStorageModule,
+    NgxChartsModule,
+      ChartModule,
+      LoadingBarHttpClientModule,
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+  ],
+  entryComponents: [
+    ServiceParameterDialogComponent,
+    ServiceSettingsComponent
+  ],
+  providers: [
+      SettingsService, BackendService, WebsocketService,
+      {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
