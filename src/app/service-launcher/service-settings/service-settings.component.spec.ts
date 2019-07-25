@@ -1,8 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ServiceSettingsComponent } from './service-settings.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {ObserversModule} from '@angular/cdk/observers';
+import {Portal, PortalModule} from '@angular/cdk/portal';
+import {CommonModule} from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Store, StoreModule } from '@ngrx/store';
-import { metaReducers, reducers } from '../../../reducers';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, NgModel } from '@angular/forms';
 import {
   MatDialogActions,
   MatDialogRef,
@@ -15,17 +17,11 @@ import {
   MatTab, MatTabBody,
   MatTabGroup, MatTabHeader, MatTabLabel
 } from '@angular/material';
-import { FormsModule, NgModel } from '@angular/forms';
-import { UnitMappingService } from '../../../services/unit-mapping.service';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {ObserversModule} from '@angular/cdk/observers';
-import {CommonModule} from '@angular/common';
-import {Portal, PortalModule} from '@angular/cdk/portal';
+import { ServiceSettingsComponent } from './service-settings.component';
 
 describe('ServiceSettingsComponent', () => {
   let component: ServiceSettingsComponent;
   let fixture: ComponentFixture<ServiceSettingsComponent>;
-  let store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +31,6 @@ describe('ServiceSettingsComponent', () => {
         MatTabHeader, MatTabBody, MatTabLabel],
       imports: [
         HttpClientModule,
-        StoreModule.forRoot(reducers, { metaReducers }),
         FormsModule,
         DragDropModule,
         ObserversModule,
@@ -44,7 +39,6 @@ describe('ServiceSettingsComponent', () => {
           MatRippleModule
       ],
       providers: [
-        UnitMappingService,
         {provide: MatDialogRef, useValue: {}}
       ]
     })
@@ -54,14 +48,10 @@ describe('ServiceSettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ServiceSettingsComponent);
     component = fixture.componentInstance;
-    store = fixture.debugElement.injector.get(Store);
 
     fixture.detectChanges();
   });
   xit('should create', () => {
     expect(component).toBeTruthy();
   });
-  xit('expect store to be defined', async(() => {
-    expect(store).toBeTruthy();
-  }));
 });

@@ -1,9 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-
 import {HttpClientModule} from '@angular/common/http';
-import {metaReducers, reducers} from '../../../reducers';
-import { MaterialModule } from '../../../../material/material.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule} from '../../material/material.module';
 import {ServicelauncherButtonComponent} from './servicelauncher-button.component';
 
 describe('ServicelauncherButtonComponent', () => {
