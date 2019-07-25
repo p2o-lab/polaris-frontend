@@ -20,7 +20,7 @@
             <div class="strategy-parameter margin">
                 <div class="strategy-parameter-name">
                     <mat-form-field>
-                        <mat-select placeholder="Strategy" [(value)] = "currentStrategy" (selectionChange)="showStrategyParameter()">
+                        <mat-select placeholder="Strategy" [(value)] = "currentStrategy" (selectionChange)="showStrategyParameters()">
                           <mat-option *ngFor="let strategy of serviceStrategies" [value]="strategy">
                             {{strategy.name}}
                           </mat-option>
