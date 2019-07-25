@@ -1,7 +1,7 @@
 # polaris-frontend
 Visualisation for Polaris recipe engine [polaris-backend](https://github.com/p2o-lab/polaris-backend)
 
-[![Build Status](https://cloud.drone.io/api/badges/p2o-lab/polaris-frontend/status.svg?ref=/refs/heads/develop)](https://cloud.drone.io/p2o-lab/polaris-frontend)
+[![Build Status](https://cloud.drone.io/api/badges/p2o-lab/polaris-frontend/status.svg)](https://cloud.drone.io/p2o-lab/polaris-frontend)
 [![](https://images.microbadger.com/badges/version/p2olab/polaris-frontend.svg)](https://microbadger.com/images/p2olab/polaris-frontend) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/p2o-lab/polaris-frontend.svg)](https://greenkeeper.io/)
 [![CodeFactor](https://www.codefactor.io/repository/github/p2o-lab/polaris-frontend/badge)](https://www.codefactor.io/repository/github/p2o-lab/polaris-frontend)
