@@ -29,7 +29,6 @@ describe('ServiceLauncherComponent', () => {
         fixture.detectChanges();
     });
 
-    // TODO fix tests with mockup values
     xit('should create', () => {
         expect(component).toBeTruthy();
     });
