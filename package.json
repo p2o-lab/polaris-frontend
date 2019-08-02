@@ -32,7 +32,7 @@
     "@types/snapsvg": "^0.5.0",
     "@p2olab/polaris-interface": "^1.25.0",
     "@swimlane/ngx-charts": "^10.1.0",
-    "angular-highcharts": "^7.2.0",
+    "angular-highcharts": "^8.0.3",
     "hammerjs": "^2.0.8",
     "highcharts": "^7.1.2",
     "moment": "^2.24.0",
