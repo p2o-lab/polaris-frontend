@@ -1,6 +1,7 @@
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {LayoutModule} from '@angular/cdk/layout';
+import {ViewportScroller} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -17,6 +18,7 @@ import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
 import {BackendService} from './_services/backend.service';
 import {SettingsService} from './_services/settings.service';
+import {StepFormatterService} from './_services/step-formatter.service';
 import {WebsocketService} from './_services/websocket.service';
 import {AboutComponent} from './about/about.component';
 import {AppRoutingModule} from './app-routing';
@@ -102,7 +104,7 @@ moment.relativeTimeThreshold('ss', 5);
     ServiceSettingsComponent
   ],
   providers: [
-      SettingsService, BackendService, WebsocketService,
+      SettingsService, BackendService, WebsocketService, StepFormatterService,
       {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],
   bootstrap: [AppComponent]
