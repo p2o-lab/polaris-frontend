@@ -1,8 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {ModuleInterface, ServiceInterface, StrategyInterface,
-    VirtualServiceInterface} from '@p2olab/polaris-interface/dist/interfaces';
-import {ParameterOptions} from '@p2olab/polaris-interface/dist/RecipeOptions';
+import {
+  ModuleInterface,
+  ParameterOptions,
+  ServiceInterface,
+  StrategyInterface,
+  VirtualServiceInterface
+} from '@p2olab/polaris-interface';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 
@@ -114,12 +118,14 @@ export class ModuleService {
         return this.http.post(`${this.settings.apiUrl}/virtualService/${service}/${command}`, body);
     }
 
-    configureServiceParameters(module: ModuleInterface, service: ServiceInterface, parameterOptions: ParameterOptions[]) {
+    configureServiceParameters(module: ModuleInterface, service: ServiceInterface,
+                               parameterOptions: ParameterOptions[]) {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/parameter`,
             {parameters: parameterOptions});
     }
 
-    configureStrategy(module: ModuleInterface, service: ServiceInterface, strategy: StrategyInterface, parameters?: ParameterOptions[]) {
+    configureStrategy(module: ModuleInterface, service: ServiceInterface,
+                      strategy: StrategyInterface, parameters?: ParameterOptions[]) {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
             {strategy: strategy.name, parameters});
     }
