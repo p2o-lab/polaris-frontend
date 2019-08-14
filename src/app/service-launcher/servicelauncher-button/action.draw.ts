@@ -15,18 +15,9 @@ export class Action {
     actionMidPoint: number;
     iconScale: number = 40;
 
-    // Actions
-    stateChangeAction;
-    startAction;
-    pauseAction;
-    stopAction;
-    holdAction;
-    abortAction;
-    resetAction;
-
-    actionArray = [];
-    serviceMask;
-    maskedGroup;
+    actionArray: any[] = [];
+    serviceMask: any;
+    maskedGroup: any;
 
     constructor(action: Snap.Paper, serviceRadius, xMid, yMid, state: string, public setAction) {
         this.serviceRadius = serviceRadius;
