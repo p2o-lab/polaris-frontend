@@ -15,18 +15,9 @@ export class Action {
     actionMidPoint: number;
     iconScale: number = 40;
 
-    // Actions
-    stateChangeAction;
-    startAction;
-    pauseAction;
-    stopAction;
-    holdAction;
-    abortAction;
-    resetAction;
-
-    actionArray = [];
-    serviceMask;
-    maskedGroup;
+    actionArray: any[] = [];
+    serviceMask: any;
+    maskedGroup: any;
 
     constructor(action: Snap.Paper, serviceRadius, xMid, yMid, state: string, public setAction) {
         this.serviceRadius = serviceRadius;
@@ -543,7 +534,7 @@ export class Action {
         return serviceRadius * this.actionMidPointPercent;
     }
 
-    capitalizeFirstLetter(text: String) {
+    capitalizeFirstLetter(text: string) {
         return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
@@ -554,8 +545,8 @@ export class Action {
             }, 1);
         }, 30);
 
-        for (let i = 0; i < this.actionArray.length; i ++) {
-            if (this.actionArray[i] !== undefined) {
+        for (const i of this.actionArray) {
+            if (i !== undefined) {
                 // todo: make Action clickable;
             }
         }
