@@ -31,7 +31,7 @@ export class ServicelauncherButtonComponent implements OnInit, AfterViewInit {
     @Output() pinService: EventEmitter<any> = new EventEmitter();
     @Output() setAction: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('myButton', {static: true}) svg;
+    @ViewChild('myButton', {static: true}) svg: any;
 
     constructor(
         public dialog: MatDialog
