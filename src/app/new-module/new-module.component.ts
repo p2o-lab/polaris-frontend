@@ -12,7 +12,7 @@ export class NewModuleComponent {
 
   public modules: ModuleOptions[];
 
-  @ViewChild('stepper') private myStepper: MatStepper;
+  @ViewChild('stepper',{static: false}) private myStepper: MatStepper;
 
   constructor(private backend: BackendService,
               private moduleService: ModuleService,
