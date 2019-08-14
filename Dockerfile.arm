@@ -1,5 +1,5 @@
 # build app
-FROM catchdigital/node-sass as build
+FROM node:lts as build
 WORKDIR /app
 COPY . .
 RUN npm install
