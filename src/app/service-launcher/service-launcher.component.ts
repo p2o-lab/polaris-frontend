@@ -12,7 +12,7 @@ import {ServiceSettingsComponent} from './service-settings/service-settings.comp
   templateUrl: './service-launcher.component.html',
   styleUrls: ['./service-launcher.component.scss']
 })
-export class ServiceLauncherComponent implements OnInit, OnDestroy {
+export class ServiceLauncherComponent implements OnInit {
   modules$: Observable<ModuleInterface[]> = this.backend.modules;
   modulesWithServices: ModuleInterface[] = [];
   services: ServiceInterface[] = [];
@@ -67,10 +67,6 @@ export class ServiceLauncherComponent implements OnInit, OnDestroy {
         console.log('ServiceLauncher got ' + data.length + ' modules to render.');
       }
     });
-  }
-
-  ngOnDestroy(): void {
-
   }
 
   /**
