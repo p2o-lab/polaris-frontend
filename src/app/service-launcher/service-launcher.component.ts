@@ -1,9 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar} from '@angular/material';
-import {ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
-import * as moment from 'moment';
-import {Observable, Subscription, timer} from 'rxjs';
+import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
+import {Observable, Subscription} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 import {ServiceSettingsComponent} from './service-settings/service-settings.component';
 
@@ -115,11 +114,7 @@ export class ServiceLauncherComponent implements OnInit {
   }
 
   /**
-   * sort all services by sorting option
-   * @param sorting -  sorting option, selection in DropDown menu
-   *
-   * TODO : sort by activity and by state, implement state and activity for services and reducer,
-   * TODO : which filters services by corresponding arguments
+   * sort all services by selected sorting option
    */
   onSelect() {
 
@@ -136,7 +131,7 @@ export class ServiceLauncherComponent implements OnInit {
       case this.sortingOptions.state:
         this.sorting = this.sortingOptions.state;
         // create object with all the states
-        this.services.forEach((service, index) => {
+        this.services.forEach((service) => {
           // short memo if the state was found
           let reminder: number = 0;
           // check already existing array, if the current state is already in there
@@ -156,7 +151,7 @@ export class ServiceLauncherComponent implements OnInit {
         this.sorting = this.sortingOptions.activity;
         // create array with the active services
         this.activeServices = [{activity: true, services: []}, {activity: false, services: []}];
-        this.services.forEach((service, index) => {
+        this.services.forEach((service) => {
           // check if the service is idling
           if (service.status === 'IDLE') {
             this.activeServices[0].services.push(service);
