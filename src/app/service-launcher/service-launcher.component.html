@@ -34,17 +34,42 @@
                         [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)"  (setAction)="setAction($event)">
                 </app-servicelauncher-button>
             </div>
-            <div class="section_services" *ngIf="sorting === sortingOptions.module || sorting === sortingOptions.state || sorting === sortingOptions.activity">
-                <div *ngFor ="let item of services">
-                        <h2>{{item.id}}</h2>
+            <div class="section_services" *ngIf="sorting === sortingOptions.module">
+                <div *ngFor ="let module of modulesWithServices">
+                        <h2>{{module.id}}</h2>
                         <div class ="section_services">
                             <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
-                                *ngFor="let service of item.value"
+                                *ngFor="let service of module.services"
                                 [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event)">
                             </app-servicelauncher-button>
                         </div>
                     <mat-divider></mat-divider>
                 </div>
+            </div>
+            <div class="section_services" *ngIf="sorting === sortingOptions.state">
+                <div *ngFor ="let item of states">
+                    <h2>{{item.state}}</h2>
+                    <div class ="section_services">
+                        <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
+                                                     *ngFor="let service of item.services"
+                                                     [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event)">
+                        </app-servicelauncher-button>
+                    </div>
+                  <mat-divider></mat-divider>
+              </div>
+            </div>
+            <div class="section_services" *ngIf="sorting === sortingOptions.activity">
+              <div *ngFor ="let item of activeServices">
+                <h2 *ngIf="(item.activity == true)&&(item.services.length>0)">Aktiv</h2>
+                <h2 *ngIf="(item.activity == false)&&(item.services.length>0)">Inaktiv</h2>
+                <div class ="section_services" *ngIf="(item.services.length>0)">
+                  <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
+                                               *ngFor="let service of item.services"
+                                               [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event)">
+                  </app-servicelauncher-button>
+                </div>
+                <mat-divider *ngIf="(item.services.length>0)"></mat-divider>
+              </div>
             </div>
         </div>
     </div>
