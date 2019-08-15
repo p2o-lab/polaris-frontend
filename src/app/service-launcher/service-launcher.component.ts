@@ -16,11 +16,11 @@ export class ServiceLauncherComponent implements OnInit {
   modules$: Observable<ModuleInterface[]> = this.backend.modules;
   modulesWithServices: ModuleInterface[] = [];
   services: ServiceInterface[] = [];
+  pinnedServiceArray: ServiceInterface[] = [];
   states: any[] = [];
   activeServices: any[];
 
   data: any;
-  pinnedServiceArray: Observable<ServiceInterface[]>;
   sorting: string;
 
   strategyFormControl: FormControl = new FormControl('', new FormControl());
@@ -90,9 +90,18 @@ export class ServiceLauncherComponent implements OnInit {
    * @param service - clicked service
    */
   pinService(service: ServiceInterface) {
-    const newPinnedService = service;
-    /*        this.store$.dispatch(new UpdateService(
-              {service: {id: Number(service.id), changes: service = newPinnedService}})); */
+    let reminder: number = 0;
+    this.pinnedServiceArray.forEach((pinnedService, index) => {
+      if (pinnedService.name === service.name) {
+        // if element is found, delete it from the pin list
+        reminder++;
+        this.pinnedServiceArray.splice(index, 1);
+      }
+    });
+    // if it's not in the list, put it in
+    if (reminder === 0) {
+      this.pinnedServiceArray.push(service);
+    }
   }
 
   /**

@@ -25,7 +25,7 @@
         <div class="background"></div>
         <div cdkDropList cdkDropListOrientation="horizontal"   (cdkDropListDropped)="dropedInPinnedSection($event)"  #pinnedList="cdkDropList" [cdkDropListConnectedTo]="[unpinnedList]" class="section_pinned_services " >
             <app-servicelauncher-button (openSettings)="openDialog(service)" (pinService)="pinService(service)"
-                                        (setAction)="setAction($event)" *ngFor="let service of pinnedServiceArray | async"
+                                        (setAction)="setAction($event)" *ngFor="let service of pinnedServiceArray"
                                         [cdkDragData]="service" [currentService]="service"
                                         cdkDrag>
             </app-servicelauncher-button>
