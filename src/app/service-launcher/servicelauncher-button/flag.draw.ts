@@ -17,12 +17,12 @@ export class Flag {
     operationMode: string;
 
     // Variables
-    infoMask;
-    infoFlag;
-    infoGround;
-    servicePinned;
+    infoMask: any;
+    infoFlag: any;
+    infoGround: any;
+    servicePinned: boolean;
 
-    background;
+    background: any;
 
     // dialog
     // dialog: MatDialog;
