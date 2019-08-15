@@ -170,7 +170,7 @@ export class ServiceLauncherComponent implements OnInit {
    * drop function, service got dragged into pinned service section
    * @param $event -  DragAndDrop Event from angular cdk
    */
-  dropedInPinnedSection($event) {
+  droppedInPinnedSection($event) {
     const service = $event.item.data;
     if (service.pinned) {
       console.log('do nothing');
@@ -184,7 +184,7 @@ export class ServiceLauncherComponent implements OnInit {
    * drop function, service got dragged into normal (unpinned) service section
    * @param $event -  DragAndDrop Event from angular cdk
    */
-  dropedInUnpinnedSection($event) {
+  droppedInUnpinnedSection($event) {
     const service = $event.item.data;
     if (!service.pinned) {
       console.log('do nothing');
@@ -200,7 +200,7 @@ export class ServiceLauncherComponent implements OnInit {
    * @param action -  type of clicked action button
    *
    * TODO: react to events.
-   * TODO: Adding argument 'Action' to service and set it here + dispatch in ngrx store + commit to opcua server
+   * TODO: Adding argument 'Action' to service and set it here + commit to opcua server
    */
   setAction(action: string) {
     switch (action) {

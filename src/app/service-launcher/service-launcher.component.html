@@ -23,7 +23,7 @@
 
     <div class="component-card-content service-launcher-card-content"> 
         <div class="background"></div>
-        <div cdkDropList cdkDropListOrientation="horizontal"   (cdkDropListDropped)="dropedInPinnedSection($event)"  #pinnedList="cdkDropList" [cdkDropListConnectedTo]="[unpinnedList]" class="section_pinned_services " >
+        <div cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="droppedInPinnedSection($event)" #pinnedList="cdkDropList" [cdkDropListConnectedTo]="[unpinnedList]" class="section_pinned_services " >
             <app-servicelauncher-button (openSettings)="openDialog(service)" (pinService)="pinService(service)"
                                         (setAction)="setAction($event)" *ngFor="let service of pinnedServiceArray"
                                         [cdkDragData]="service" [currentService]="service"
@@ -31,7 +31,7 @@
             </app-servicelauncher-button>
         </div>
         <mat-divider></mat-divider>
-        <div class="section_services" cdkDropList cdkDropListOrientation="horizontal"   (cdkDropListDropped)="dropedInUnpinnedSection($event)"  #unpinnedList="cdkDropList" [cdkDropListConnectedTo]="[pinnedList]">
+        <div class="section_services" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="droppedInUnpinnedSection($event)" #unpinnedList="cdkDropList" [cdkDropListConnectedTo]="[pinnedList]">
             <div class="section_services" *ngIf="sorting === sortingOptions.default || sorting === sortingOptions.alphabetically"  >
                 <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
                         *ngFor="let service of services"

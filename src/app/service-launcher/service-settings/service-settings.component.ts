@@ -86,8 +86,8 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
     }
 
     /**
-    *
-    */
+     *
+     */
     showStrategyParameters() {
       // read form & display parameters
     }
