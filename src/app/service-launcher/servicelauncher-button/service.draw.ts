@@ -22,13 +22,13 @@ export class ServiceVisualisation {
     xMid: number;
     yMid: number;
     iconScale: number = 40;
-    background;
-    serviceLauncherDiv;
+    background: any;
+    serviceLauncherDiv: any;
 
     // variables for current Service
     serviceName: string;
     serviceState: string;
-    serviceDiv;
+    serviceDiv: any;
     pinned: boolean;
     sc: boolean = false;
     strategy: string = '';
