@@ -16,6 +16,7 @@ import 'hammerjs';
 import * as moment from 'moment';
 import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
+import {AmbientLightService} from './_services/ambient-light.service';
 import {BackendService} from './_services/backend.service';
 import {SettingsService} from './_services/settings.service';
 import {StepFormatterService} from './_services/step-formatter.service';
@@ -104,7 +105,7 @@ moment.relativeTimeThreshold('ss', 5);
     ServiceSettingsComponent
   ],
   providers: [
-      SettingsService, BackendService, WebsocketService, StepFormatterService,
+      SettingsService, BackendService, WebsocketService, StepFormatterService, AmbientLightService,
       {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],
   bootstrap: [AppComponent]
