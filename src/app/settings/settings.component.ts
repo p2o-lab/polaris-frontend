@@ -1,6 +1,7 @@
 import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {version} from '../../../package.json';
+import {AmbientLightService} from '../_services/ambient-light.service';
 import {BackendService} from '../_services/backend.service';
 import {SettingsService} from '../_services/settings.service';
 
@@ -12,10 +13,12 @@ import {SettingsService} from '../_services/settings.service';
 export class SettingsComponent implements OnInit {
     public backendVersion: string;
     public frontendVersion: string;
+    private forceDarkmode: boolean = false;
 
     constructor(private location: Location,
                 public settings: SettingsService,
-                public backend: BackendService) {
+                public backend: BackendService,
+                public ambientLight: AmbientLightService) {
         this.frontendVersion = version;
     }
 
@@ -30,6 +33,14 @@ export class SettingsComponent implements OnInit {
 
     shutdown() {
         this.backend.shutdown().subscribe(() => console.log('shutdown sent'));
+    }
+
+  /**
+   * toggles the darkmode globally
+   */
+  toggleDarkmode() {
+      this.forceDarkmode = !this.forceDarkmode;
+      this.ambientLight.setDarkmode(this.forceDarkmode);
     }
 
 }

@@ -37,8 +37,18 @@ export class AmbientLightService {
     //   });
   }
 
+  /**
+   * Method for retrieving the current darkmode status
+   */
   public getDarkmode(): boolean {
     return this.darkmode;
+  }
+
+  /**
+   * Method for forcing a darkmode setting. This overwrites the internal darkmode settings.
+   */
+  public setDarkmode(value: boolean) {
+      this.darkmode = value;
   }
 
   /**

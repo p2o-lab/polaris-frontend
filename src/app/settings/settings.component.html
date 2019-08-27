@@ -1,5 +1,6 @@
 <h1 class="mat-h1">Settings</h1>
 
+<h2 class="mat-h2">URLs</h2>
 <form>
 <mat-form-field class="example-container">
   <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
@@ -17,6 +18,12 @@
 <p>
   <button mat-flat-button color="primary" (click)="back()">Save & Back</button>
 </p>
+
+<h2 class="mat-h2">Appearance</h2>
+<form>
+  <mat-checkbox name="forceDarkmode" (click)="toggleDarkmode()">Force Darkmode of Polaris Frontend
+  </mat-checkbox>
+</form>
 
 <h2 class="mat-h2">Maintenance</h2>
 <p>Version Backend: {{backendVersion }}</p>
