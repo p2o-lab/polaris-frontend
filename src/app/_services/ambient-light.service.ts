@@ -27,7 +27,7 @@ export class AmbientLightService {
           }
         },
         (error: PositionError) => {
-          this.snackBar.open('Geolocation Access not granted, Ambient Light not available.')
+          this.snackBar.open('Geolocation Access not granted, Ambient Light not available.');
           console.log(error);
         });
     } else {
