@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {RecipeInterface} from '@p2olab/polaris-interface';
+import {PlayerInterface, RecipeInterface} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {BehaviorSubject, Observable, timer} from 'rxjs';
 import {SettingsService} from './settings.service';
@@ -13,7 +13,7 @@ export class AmbientLightService {
   private location: Position;
   private sunrise: Date;
   private sunset: Date;
-  private darkmode: boolean;
+  private isDark: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient,
               private snackBar: MatSnackBar,
@@ -45,15 +45,15 @@ export class AmbientLightService {
   /**
    * Method for retrieving the current darkmode status
    */
-  public getDarkmode(): boolean {
-    return this.darkmode;
+  get darkmode(): Observable<boolean> {
+    return this.isDark.asObservable();
   }
 
   /**
    * Method for forcing a darkmode setting. This overwrites the internal darkmode settings.
    */
   public setDarkmode(value: boolean) {
-      this.darkmode = value;
+      this.isDark.next(value);
   }
 
   /**
@@ -65,9 +65,9 @@ export class AmbientLightService {
 
     // compare current time with sunrise/ sunset time
     if ((now < this.sunrise) || (now > this.sunset)) {
-      this.darkmode = true;
+      this.isDark.next(true);
     } else {
-      this.darkmode = false;
+      this.isDark.next(false);
     }
   }
 
