@@ -21,7 +21,6 @@ export class AmbientLightService {
       navigator.geolocation.getCurrentPosition((position: Position) => {
           if (position) {
             this.location = position;
-            console.log(position);
             this.getSunsetSunrise(position.coords);
           }
         },
@@ -48,8 +47,8 @@ export class AmbientLightService {
    */
   public calcDarkmode() {
     const now = new Date();
-    // compare current time with sunrise/ sunset time
 
+    // compare current time with sunrise/ sunset time
     if ((now < this.sunrise) || (now > this.sunset)) {
       this.darkmode = true;
     } else {
@@ -63,12 +62,16 @@ export class AmbientLightService {
       this.sunrise = new Date(moment(json.results.sunrise, 'LTS').format());
       this.sunset = new Date(moment(json.results.sunset, 'LTS').format());
 
+      // correct for timezone Berlin
+      moment(this.sunrise).add(1, 'h');
+      moment(this.sunset).add(1, 'h');
+
       // correct for daylight saving time
       if (moment(this.sunrise).isDST()) {
-        this.sunrise.setHours(this.sunrise.getHours() + 1);
+        moment(this.sunrise).add(1, 'h');
       }
       if (moment(this.sunset).isDST()) {
-        this.sunset.setHours(this.sunset.getHours() + 1);
+        moment(this.sunset).add(1, 'h');
       }
 
       this.calcDarkmode();
