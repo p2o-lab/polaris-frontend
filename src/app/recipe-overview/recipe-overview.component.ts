@@ -48,6 +48,9 @@ export class RecipeOverviewComponent implements OnInit {
   }
 
     newRecipe() {
-        this.dialog.open(NewRecipeComponent, {});
+      this.dialog.open(NewRecipeComponent, {
+        width: '600px',
+        height: '800px'
+      });
     }
 }
