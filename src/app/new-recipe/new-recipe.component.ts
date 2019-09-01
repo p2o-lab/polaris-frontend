@@ -12,7 +12,7 @@ export class NewRecipeComponent {
 
   public recipe: string;
 
-  constructor(private dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
+  constructor(private dialogRef: MatDialogRef<NewRecipeComponent>,
               private backend: RecipeService,
               private snackBar: MatSnackBar) {
   }
