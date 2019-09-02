@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {
     MatCardModule,
     MatDialogModule,
@@ -9,7 +9,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatSelectModule,
+    MatSelectModule, MatSnackBarModule,
     MatTooltipModule
 } from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -32,9 +32,11 @@ describe('ModuleViewComponent', () => {
                 NoopAnimationsModule,
                 MatExpansionModule,
                 MatCardModule,
+                MatDialogModule,
                 MatIconModule,
                 MatInputModule,
                 MatSelectModule,
+                MatSnackBarModule,
                 MatMenuModule,
                 MatDialogModule,
                 MatTooltipModule

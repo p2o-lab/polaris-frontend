@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormsModule} from '@angular/forms';
 import {
+    MAT_DIALOG_DATA,
     MatChipsModule, MatDialogModule,
     MatDialogRef,
     MatFormFieldModule,
@@ -38,7 +39,8 @@ describe('NewModuleComponent', () => {
         providers: [
             {provide: SettingsService, useValue: settingsServiceStub},
             {provide: WebsocketService, useValue: websocketServiceStub},
-            {provide: MatDialogRef, useValue: {}}
+            {provide: MatDialogRef, useValue: {}},
+            { provide: MAT_DIALOG_DATA, useValue: {} }
         ]
     })
       .compileComponents();
