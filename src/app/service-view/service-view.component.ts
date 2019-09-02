@@ -127,7 +127,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     private updateDuration() {
-        if (this.service && this.service.lastChange) {
+        if (this.service && this.service.lastChange != null) {
             this.service.lastChange = this.service.lastChange + 1;
             this.changeDuration = moment.duration(-this.service.lastChange, 'seconds').humanize();
         }
