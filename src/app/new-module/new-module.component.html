@@ -1,33 +1,49 @@
-<h1 mat-dialog-title>Load new module</h1>
+<h1 mat-dialog-title>Load new Process Equipment Assembly</h1>
 <mat-dialog-content>
-<mat-horizontal-stepper linear="true" #stepper>
-    <mat-step label="Load MTP or JSON">
-        <button type="button" mat-button color="primary" (click)="imgFileInput.click()">Load from file</button>
-        <input hidden type="file" #imgFileInput (change)="previewFile($event)"/>
-    </mat-step>
-    <mat-step label="Configure PEA">
-        <div *ngFor="let module of modules">
-            <h2 class="mat-h2">Instance information</h2>
+    <mat-vertical-stepper #stepper>
+        <mat-step label="Identification">
             <form>
                 <mat-form-field>
-                    <input matInput type="text" [(ngModel)]="module.id" placeholder="ID" name="id">
+                    <input [(ngModel)]="module.id" matInput name="id" placeholder="ID" required type="text">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput type="text" [(ngModel)]="module.opcua_server_url" placeholder="OPC UA Server URL" name="opcua">
+                    <input [(ngModel)]="module.description" matInput name="description" placeholder="PEA description"
+                           type="text">
                 </mat-form-field>
             </form>
-
-            <h2 class="mat-h2">Services</h2>
-            <mat-chip-list selectable="false">
-                <mat-chip *ngFor="let service of module.services">{{service.name}}</mat-chip>
+        </mat-step>
+        <mat-step label="Edit Connection">
+            <form>
+                <mat-form-field>
+                    <input [(ngModel)]="module.opcua_server_url" matInput name="opcua"
+                           placeholder="OPC UA Server URL" required type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <input [(ngModel)]="module.username" matInput name="username" placeholder="OPC UA username"
+                           type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <input [(ngModel)]="module.password" matInput name="password" placeholder="OPC UA password"
+                           type="password">
+                </mat-form-field>
+            </form>
+        </mat-step>
+        <mat-step label="Rename Services">
+            <form>
+                <mat-form-field *ngFor="let service of module.services">
+                    <input [(ngModel)]="service.name" matInput name="service_name" placeholder="Name of service"
+                           required type="text">
+                </mat-form-field>
+            </form>
+        </mat-step>
+        <mat-step label="Select Process Values">
+            <mat-chip-list>
+                <mat-chip *ngFor="let pv of module.process_values">{{pv.name}}</mat-chip>
             </mat-chip-list>
-            <h2 class="mat-h2">Process values</h2>
-            {{module.process_values.length}}
-        </div>
-    </mat-step>
-</mat-horizontal-stepper>
+        </mat-step>
+    </mat-vertical-stepper>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" [disabled]="modules==undefined" (click)="addModule()">Add</button>
-    <button mat-button color="warn" mat-dialog-close>Cancel</button>
+    <button (click)="addModule()" color="primary" mat-raised-button>Add PEA</button>
+    <button color="warn" mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
