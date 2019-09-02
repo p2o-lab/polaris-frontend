@@ -1,7 +1,5 @@
-
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {LayoutModule} from '@angular/cdk/layout';
-import {ViewportScroller} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -26,7 +24,7 @@ import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LogComponent} from './log/log.component';
-import { MaterialModule } from './material/material.module';
+import {MaterialModule} from './material/material.module';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
