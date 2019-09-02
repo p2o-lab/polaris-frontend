@@ -9,7 +9,8 @@ import {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatSelectModule, MatSnackBarModule,
+    MatSelectModule,
+    MatSnackBarModule,
     MatTooltipModule
 } from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
