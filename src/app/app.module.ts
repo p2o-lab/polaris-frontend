@@ -39,6 +39,7 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 moment.updateLocale('en', {
     relativeTime: {

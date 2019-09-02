@@ -1,7 +1,9 @@
-<h1 class="mat-h1 with-icon">Modules <small>(PEAs)</small>
-    <button mat-button matTooltip="Add Module" (click)="newModule()">
+<h1 class="mat-h1 with-icon">Modules&nbsp;<small>(PEAs)</small>
+    <button mat-button matTooltip="Add Module" matTooltip="Load new PEA from MTP file or JSON file"
+            (click)="inputFileInput.click()">
         <mat-icon>add</mat-icon>
     </button>
+    <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, *mtp, *.zip">
 </h1>
 
 
