@@ -4,11 +4,11 @@
 <form>
 <mat-form-field class="example-container">
   <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
-         placeholder="URL for Backend API" name="apiUrl">
+         placeholder="URL for Backend API">
 </mat-form-field>
 <mat-form-field class="example-container">
   <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text" [(ngModel)]="settings.mtpConverterUrl"
-           placeholder="URL for MTP Converter API" name="mtpConverterUrl">
+           placeholder="URL for MTP Converter API">
 </mat-form-field>
 
 <mat-checkbox [(ngModel)]="backend.autoReset" name="autoReset">AutoReset (POL automatically resets a service when it goes to COMPLETED)
@@ -19,15 +19,23 @@
   <button mat-flat-button color="primary" (click)="back()">Save & Back</button>
 </p>
 
-<h2 class="mat-h2">Appearance</h2>
+<h2 class="mat-h2"
+    matTooltip="This feature is part of the demonstrator for the fall colloqium 2019 of the PhD Project of Sebastian Heinze">
+  Appearance
+</h2>
 <form>
-  <mat-checkbox name="forceDarkmode" (click)="toggleDarkmode()">Force Darkmode
+  <mat-checkbox name="forceDarkmode" (click)="toggleDarkmode()">
+    Force Darkmode
   </mat-checkbox>
 </form>
 
-<h2 class="mat-h2">Orientation assistance</h2>
+<h2 class="mat-h2"
+    matTooltip="This feature is part of the demonstrator for the fall colloqium 2019 of the PhD Project of Sebastian Heinze">
+  Orientation assistance</h2>
 <form>
-  <mat-checkbox name="enableOrientationAssistance" checked="true">Enable orientation assistance
+  <mat-checkbox name="enableOrientationAssistance"
+                checked="true">
+    Enable orientation assistance
   </mat-checkbox>
 </form>
 
