@@ -33,8 +33,7 @@
     matTooltip="This feature is part of the demonstrator for the fall colloqium 2019 of the PhD Project of Sebastian Heinze">
   Orientation assistance</h2>
 <form>
-  <mat-checkbox name="enableOrientationAssistance"
-                checked="true">
+  <mat-checkbox name="enableOrientationAssistance" checked="true" [(ngModel)]="settings.orientationAssistance">
     Enable orientation assistance
   </mat-checkbox>
 </form>

@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AmbientLightService} from './_services/ambient-light.service';
 import {BackendService} from './_services/backend.service';
+import {SettingsService} from './_services/settings.service';
 // tslint:disable-next-line:max-line-length
 import {OrientationReferralSnackbarComponent} from './orientation-referral-snackbar/orientation-referral-snackbar.component';
 
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               public backend: BackendService,
               private ambientLight: AmbientLightService,
+              private settings: SettingsService,
               private overlayContainer: OverlayContainer,
               private snackBar: MatSnackBar) {
     // set color theme
@@ -102,7 +104,7 @@ export class AppComponent implements OnInit {
    */
   checkOrientation(component: string, currentOrientation: ScreenOrientation) {
     // check if the device is a handset, otherwise exit
-    if (this.handset) {
+    if (this.handset && this.settings.orientationAssistance) {
       // save current path
       this.currentPath =  component;
 
