@@ -25,17 +25,23 @@ export class AppComponent implements OnInit {
   @HostBinding('class') activeThemeCssClass: string;
   activeTheme: string;
   darkmode: boolean = false;
+  currentPath: string = 'modules';
+  currentOrientation: ScreenOrientation;
 
   constructor(private breakpointObserver: BreakpointObserver,
               public backend: BackendService,
               private ambientLight: AmbientLightService,
               private overlayContainer: OverlayContainer,
               private snackBar: MatSnackBar) {
+    // set color theme
     this.setActiveTheme('indigo-purple', /* darkness: */ this.darkmode);
+
+    // set the screen orientation to access it in html
+    this.currentOrientation = window.screen.orientation;
   }
 
   ngOnInit(): void {
-    // subscripe to the darkmode observer of the ambient light service
+    // subscribe to the darkmode observer of the ambient light service
     this.ambientLight.darkmode.subscribe((darkmode) => {
       switch (darkmode) {
         // set theme accordingly to the darkmode parameter
@@ -50,13 +56,8 @@ export class AppComponent implements OnInit {
 
     // listen for orientation changes of the device
     window.addEventListener('orientationchange', () => {
-      this.snackBar.openFromComponent(OrientationReferralSnackbarComponent, {
-        data: {
-          message: 'The content display in your current orientation is not optimal. ' +
-            'Please consider switching the orientation.',
-            icon: 'screen_rotation'
-        }
-      });
+      this.currentOrientation = window.screen.orientation;
+      this.checkOrientation(this.currentPath, window.screen.orientation);
     });
   }
 
@@ -86,5 +87,77 @@ export class AppComponent implements OnInit {
       classList.add(cssClass);
     }
     this.activeThemeCssClass = cssClass;
+  }
+
+  /**
+   * checks the given component for it's screen orientation needs
+   *
+   * @param component route name of the component
+   * @param currentOrientation orientation of the device when called
+   */
+  checkOrientation(component: string, currentOrientation: ScreenOrientation) {
+    // save current path
+    this.currentPath =  component;
+
+    // determine which orientation the content currently needs
+    switch (component) {
+      case 'playlist': {
+        if (currentOrientation.type.includes('landscape')) {
+          this.notifyOrientationReferral(false);
+        }
+        break;
+      }
+      case 'recipes': {
+        if (currentOrientation.type.includes('landscape')) {
+          this.notifyOrientationReferral(false);
+        }
+        break;
+      }
+      case 'modules': {
+        if (currentOrientation.type.includes('portrait')) {
+          this.notifyOrientationReferral(true);
+        }
+        break;
+      }
+      case 'trendview': {
+        if (currentOrientation.type.includes('portrait')) {
+          this.notifyOrientationReferral(true);
+        }
+        break;
+      }
+      case 'logs': {
+        if (currentOrientation.type.includes('landscape')) {
+          this.notifyOrientationReferral(false);
+        }
+        break;
+      }
+      case 'default': {
+        // do nothing
+      }
+    }
+  }
+
+  /**
+   * notifies the user, if an orientation change is useful
+   *
+   * @param horizontal true, if horizontal orientation is needed, false for vertical
+   */
+  notifyOrientationReferral(horizontal: boolean) {
+    let displayedReferral: string;
+    if (horizontal) {
+      displayedReferral = 'The currently displayed content does not fit optimal at your screen orientation.' +
+        ' Please rotate device into horizontal orientation.';
+    } else {
+      displayedReferral = 'The currently displayed content does not fit optimal at your screen orientation.' +
+        ' Please rotate device into vertical orientation.';
+    }
+
+    this.snackBar.openFromComponent(OrientationReferralSnackbarComponent, {
+      data: {
+        message: displayedReferral,
+        icon: 'screen_rotation'
+      },
+      duration: 5000
+    });
   }
 }
