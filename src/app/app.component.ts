@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   @HostBinding('class') activeThemeCssClass: string;
   activeTheme: string;
   darkmode: boolean = false;
+  handset: boolean = false;
   currentPath: string = 'modules';
   currentOrientation: ScreenOrientation;
 
@@ -38,6 +39,10 @@ export class AppComponent implements OnInit {
 
     // set the screen orientation to access it in html
     this.currentOrientation = window.screen.orientation;
+
+    this.isHandset$.subscribe((next) => {
+      this.handset = next;
+    });
   }
 
   ngOnInit(): void {
@@ -96,43 +101,46 @@ export class AppComponent implements OnInit {
    * @param currentOrientation orientation of the device when called
    */
   checkOrientation(component: string, currentOrientation: ScreenOrientation) {
-    // save current path
-    this.currentPath =  component;
+    // check if the device is a handset, otherwise exit
+    if (this.handset) {
+      // save current path
+      this.currentPath =  component;
 
-    // determine which orientation the content currently needs
-    switch (component) {
-      case 'playlist': {
-        if (currentOrientation.type.includes('landscape')) {
-          this.notifyOrientationReferral(false);
+      // determine which orientation the content currently needs
+      switch (component) {
+        case 'playlist': {
+          if (currentOrientation.type.includes('landscape')) {
+            this.notifyOrientationReferral(false);
+          }
+          break;
         }
-        break;
-      }
-      case 'recipes': {
-        if (currentOrientation.type.includes('landscape')) {
-          this.notifyOrientationReferral(false);
+        case 'recipes': {
+          if (currentOrientation.type.includes('landscape')) {
+            this.notifyOrientationReferral(false);
+          }
+          break;
         }
-        break;
-      }
-      case 'modules': {
-        if (currentOrientation.type.includes('portrait')) {
-          this.notifyOrientationReferral(true);
+        case 'modules': {
+          if (currentOrientation.type.includes('portrait')) {
+            this.notifyOrientationReferral(true);
+          }
+          break;
         }
-        break;
-      }
-      case 'trendview': {
-        if (currentOrientation.type.includes('portrait')) {
-          this.notifyOrientationReferral(true);
+        case 'trendview': {
+          if (currentOrientation.type.includes('portrait')) {
+            this.notifyOrientationReferral(true);
+          }
+          break;
         }
-        break;
-      }
-      case 'logs': {
-        if (currentOrientation.type.includes('landscape')) {
-          this.notifyOrientationReferral(false);
+        case 'logs': {
+          if (currentOrientation.type.includes('landscape')) {
+            this.notifyOrientationReferral(false);
+          }
+          break;
         }
-        break;
-      }
-      case 'default': {
-        // do nothing
+        case 'default': {
+          // do nothing
+        }
       }
     }
   }
