@@ -1,10 +1,13 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {OverlayContainer} from '@angular/cdk/overlay';
 import {Component, HostBinding, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AmbientLightService} from './_services/ambient-light.service';
 import {BackendService} from './_services/backend.service';
+// tslint:disable-next-line:max-line-length
+import {OrientationReferralSnackbarComponent} from './orientation-referral-snackbar/orientation-referral-snackbar.component';
 
 const THEME_DARKNESS_SUFFIX = `-dark`;
 
@@ -26,13 +29,16 @@ export class AppComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               public backend: BackendService,
               private ambientLight: AmbientLightService,
-              private overlayContainer: OverlayContainer) {
+              private overlayContainer: OverlayContainer,
+              private snackBar: MatSnackBar) {
     this.setActiveTheme('indigo-purple', /* darkness: */ this.darkmode);
   }
 
   ngOnInit(): void {
+    // subscripe to the darkmode observer of the ambient light service
     this.ambientLight.darkmode.subscribe((darkmode) => {
       switch (darkmode) {
+        // set theme accordingly to the darkmode parameter
         case true:
           this.setActiveTheme('deeppurple-amber', darkmode);
           break;
@@ -40,6 +46,11 @@ export class AppComponent implements OnInit {
           this.setActiveTheme('indigo-purple', darkmode);
           break;
       }
+    });
+
+    // listen for orientation changes of the device
+    window.addEventListener('orientationchange', () => {
+      this.snackBar.openFromComponent(OrientationReferralSnackbarComponent);
     });
   }
 

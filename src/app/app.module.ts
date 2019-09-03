@@ -40,6 +40,8 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
+// tslint:disable-next-line:max-line-length
+import { OrientationReferralSnackbarComponent } from './orientation-referral-snackbar/orientation-referral-snackbar.component';
 
 moment.updateLocale('en', {
     relativeTime: {
@@ -80,7 +82,8 @@ moment.relativeTimeThreshold('ss', 5);
     ServicelauncherButtonComponent,
     LogComponent,
     ServiceParameterDialogComponent,
-    TimeSeriesViewComponent
+    TimeSeriesViewComponent,
+    OrientationReferralSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +103,8 @@ moment.relativeTimeThreshold('ss', 5);
   ],
   entryComponents: [
     ServiceParameterDialogComponent,
-    ServiceSettingsComponent
+    ServiceSettingsComponent,
+    OrientationReferralSnackbarComponent
   ],
   providers: [
       SettingsService, BackendService, WebsocketService, StepFormatterService, AmbientLightService,
