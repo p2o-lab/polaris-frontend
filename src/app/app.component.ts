@@ -50,7 +50,13 @@ export class AppComponent implements OnInit {
 
     // listen for orientation changes of the device
     window.addEventListener('orientationchange', () => {
-      this.snackBar.openFromComponent(OrientationReferralSnackbarComponent);
+      this.snackBar.openFromComponent(OrientationReferralSnackbarComponent, {
+        data: {
+          message: 'The content display in your current orientation is not optimal. ' +
+            'Please consider switching the orientation.',
+            icon: 'screen_rotation'
+        }
+      });
     });
   }
 

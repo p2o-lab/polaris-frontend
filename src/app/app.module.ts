@@ -29,6 +29,8 @@ import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewVirtualServiceComponent} from './new-virtual-service/new-virtual-service.component';
+// tslint:disable-next-line:max-line-length
+import { OrientationReferralSnackbarComponent } from './orientation-referral-snackbar/orientation-referral-snackbar.component';
 import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
@@ -40,8 +42,6 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
-// tslint:disable-next-line:max-line-length
-import { OrientationReferralSnackbarComponent } from './orientation-referral-snackbar/orientation-referral-snackbar.component';
 
 moment.updateLocale('en', {
     relativeTime: {
