@@ -56,8 +56,8 @@ export class AppComponent implements OnInit {
 
   /**
    * Sets the color theme for the complete app
-   * @param theme
-   * @param darkness
+   * @param theme namestring of the theme to set
+   * @param darkness boolean if darkmode should be enabled
    */
   setActiveTheme(theme: string, darkness: boolean = null) {
     if (darkness === null) {
