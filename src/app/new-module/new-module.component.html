@@ -30,14 +30,17 @@
         </mat-step>
         <mat-step label="Rename Services">
             <form>
-                <mat-form-field *ngFor="let service of module.services">
-                    <input [(ngModel)]="service.name" matInput name="service_name" placeholder="Name of service"
-                           required type="text">
+                <mat-form-field *ngFor="let service of module.services; let i = index">
+                    <input matInput required type="text"
+                           [(ngModel)]="service.name"
+                           name="service_name_{{i+1}}"
+                           placeholder="{{i+1}}. service"
+                           >
                 </mat-form-field>
             </form>
         </mat-step>
-        <mat-step label="Select Process Values">
-            <mat-chip-list>
+        <mat-step label="Show Process Values">
+            <mat-chip-list selectable="false">
                 <mat-chip *ngFor="let pv of module.process_values">{{pv.name}}</mat-chip>
             </mat-chip-list>
         </mat-step>
