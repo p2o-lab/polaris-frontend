@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {timeout} from 'rxjs/internal/operators';
 import {ModuleService} from './module.service';
@@ -74,7 +75,8 @@ export class BackendService {
                 private snackBar: MatSnackBar,
                 public recipeService: RecipeService,
                 public playerService: PlayerService,
-                public moduleService: ModuleService) {
+                public moduleService: ModuleService,
+                private logger: NGXLogger) {
 
         this.connectToWebsocket();
     }
@@ -87,8 +89,7 @@ export class BackendService {
                 this._autoReset = data.autoReset;
             },
             (error) => {
-                // this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
-                console.log(`Backend does not respond (${this.settings.apiUrl}).`);
+                this.logger.warn(`Backend does not respond (${this.settings.apiUrl})`, error);
             }
         );
     }
@@ -122,7 +123,7 @@ export class BackendService {
         // equal to the interval at which your server sends out pings plus a
         // conservative assumption of the latency.
         this.pingTimeout = setTimeout(() => {
-            console.log('Connection to backend lost');
+            this.logger.warn('Connection to backend lost');
             this.snackBar.open('Connection to backend lost');
         }, 3000 + 1000);
     }
@@ -131,7 +132,7 @@ export class BackendService {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
                 const data: { message: string, data: any } = JSON.parse(msg.data);
-                // console.log('ws received', data.message, data.data);
+                this.logger.trace('ws received', data.message, data.data);
                 if (data.message === 'ping') {
                     this.heartbeat();
                 }

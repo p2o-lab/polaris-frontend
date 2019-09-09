@@ -12,6 +12,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
 import 'hammerjs';
 import * as moment from 'moment';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
 import {BackendService} from './_services/backend.service';
@@ -95,7 +96,9 @@ moment.relativeTimeThreshold('ss', 5);
         NgxChartsModule,
         ChartModule,
         LoadingBarHttpClientModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        LoggerModule.forRoot(
+            {serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
     ],
     entryComponents: [
         ServiceParameterDialogComponent,
