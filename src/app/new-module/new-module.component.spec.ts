@@ -46,7 +46,7 @@ describe('NewModuleComponent', () => {
                 {provide: SettingsService, useValue: settingsServiceStub},
                 {provide: WebsocketService, useValue: websocketServiceStub},
                 {provide: MatDialogRef, useValue: {}},
-                {provide: MAT_DIALOG_DATA, useValue: {}}
+                {provide: MAT_DIALOG_DATA, useValue: {id: 'test'}}
             ]
         })
             .compileComponents();
@@ -60,6 +60,7 @@ describe('NewModuleComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+        expect(component.module.id).toEqual('test');
     });
 
     it('be anonymous without module options', () => {
