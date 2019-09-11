@@ -1,7 +1,8 @@
 import {inject, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MatSnackBarModule} from '@angular/material';
+import {LoggerTestingModule} from 'ngx-logger/testing';
+import {MaterialModule} from '../material/material.module';
 import {BackendService} from './backend.service';
 import {SettingsService} from './settings.service';
 import {settingsServiceStub} from './settings.service.spec';
@@ -11,10 +12,10 @@ describe('BackendService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [BackendService,
-          {provide: SettingsService, useValue: settingsServiceStub},
-          {provide: WebsocketService, useValue: websocketServiceStub}
+        {provide: SettingsService, useValue: settingsServiceStub},
+        {provide: WebsocketService, useValue: websocketServiceStub}
       ],
-        imports: [HttpClientTestingModule, MatSnackBarModule]
+      imports: [HttpClientTestingModule, MaterialModule, LoggerTestingModule]
     });
   });
 

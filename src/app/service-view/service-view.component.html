@@ -4,7 +4,7 @@
       {{service.name}}
     </mat-panel-title>
     <mat-panel-description>
-      <span class="serviceState">{{service.status}}</span> <small><span *ngIf="service.opMode">{{service.opMode.state}} - {{service.opMode.source}}</span> (since {{changeDuration}})</small>
+      <span class="serviceState">{{service.status}}</span> <small><span *ngIf="service.opMode">{{service.opMode.state}} - {{service.opMode.source}}</span><span *ngIf="changeDuration">&nbsp;(since {{changeDuration}})</span></small>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="form" *ngIf="service.strategies">

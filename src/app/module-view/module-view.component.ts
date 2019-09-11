@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {ModuleInterface, ModuleOptions, VirtualServiceInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
@@ -21,23 +22,24 @@ export class ModuleViewComponent {
 
     constructor(private moduleService: ModuleService,
                 private dialog: MatDialog,
-                private backend: BackendService) {
+                private backend: BackendService,
+                private logger: NGXLogger) {
     }
 
     connect(module: string) {
         this.moduleService.connect(module).subscribe((data) => {
-            console.log('Connect result', data);
+            this.logger.debug('Connect result', data);
         });
     }
 
     disconnect(module: string) {
         this.moduleService.disconnect(module).subscribe((data) => {
-            console.log('Disconnect result', data);
+            this.logger.debug('Disconnect result', data);
         });
     }
 
     remove(module: string) {
-        this.moduleService.removeModule(module).subscribe((data) => console.log('Remove result', data));
+        this.moduleService.removeModule(module).subscribe((data) => this.logger.debug('Remove result', data));
     }
 
     configure(module: ModuleInterface) {
@@ -61,7 +63,7 @@ export class ModuleViewComponent {
                 });
             } else {
                 const reader: FileReader = new FileReader();
-                reader.onload = (e: Event) => {
+                reader.onload = () => {
                     module = JSON.parse(reader.result.toString()).modules[0] as ModuleOptions;
                     resolve();
                 };
@@ -87,10 +89,7 @@ export class ModuleViewComponent {
         });
     }
 
-    newModule() {
-        this.dialog.open(NewModuleComponent, {
-            width: '800px',
-            height: '800px'
-        });
+    public newModule() {
+        this.dialog.open(NewModuleComponent);
     }
 }
