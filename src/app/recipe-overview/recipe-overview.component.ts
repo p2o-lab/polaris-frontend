@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {RecipeInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {PlayerService} from '../_services/player.service';
 import {RecipeService} from '../_services/recipe.service';
 import {NewRecipeComponent} from '../new-recipe/new-recipe.component';
@@ -17,7 +18,8 @@ export class RecipeOverviewComponent implements OnInit {
   constructor(private recipeService: RecipeService,
               private playerService: PlayerService,
               private snackBar: MatSnackBar,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
@@ -31,15 +33,17 @@ export class RecipeOverviewComponent implements OnInit {
             // this.router.navigate(['/player']);
             this.playerService.refreshPlayer();
             this.snackBar.open(`Recipe has been added to playlist`, 'Ok');
+            this.logger.debug('Added to playlist', id);
         },
       (err) => {
-          console.log(err);
+          this.logger.error('error during adding to playlist', err);
       }
     );
   }
 
   remove(id: string) {
     this.recipeService.removeRecipe(id).subscribe((data) => {
+        this.logger.debug('Remove recipe', id, data);
         this.snackBar.open(`Recipe removed`, 'Ok');
       },
       (err) => {

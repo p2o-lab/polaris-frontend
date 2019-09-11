@@ -4,7 +4,8 @@
         <mat-step label="Identification">
             <form>
                 <mat-form-field>
-                    <input [(ngModel)]="module.id" matInput name="id" placeholder="ID" required type="text">
+                    <input [(ngModel)]="module.id" matInput name="id" required type="text"
+                           placeholder="ID">
                 </mat-form-field>
                 <mat-form-field>
                     <input [(ngModel)]="module.description" matInput name="description" placeholder="PEA description"
@@ -19,13 +20,23 @@
                            placeholder="OPC UA Server URL" required type="text">
                 </mat-form-field>
                 <mat-form-field>
-                    <input [(ngModel)]="module.username" matInput name="username" placeholder="OPC UA username"
+                    <mat-label>Authentication Settings</mat-label>
+                    <mat-select [(value)]="authenticationOption">
+                        <mat-option value="anonymous">Anonymous</mat-option>
+                        <mat-option value="password">Username/Password</mat-option>
+                        <mat-option value="certificate" disabled>Certificate</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf="authenticationOption=='password'">
+                <mat-form-field>
+                    <input [(ngModel)]="module.username" matInput name="username" placeholder="OPC UA username" required
                            type="text">
                 </mat-form-field>
                 <mat-form-field>
-                    <input [(ngModel)]="module.password" matInput name="password" placeholder="OPC UA password"
+                    <input [(ngModel)]="module.password" matInput name="password" placeholder="OPC UA password" required
                            type="password">
                 </mat-form-field>
+                </div>
             </form>
         </mat-step>
         <mat-step label="Rename Services">
@@ -35,6 +46,7 @@
                            [(ngModel)]="service.name"
                            name="service_name_{{i+1}}"
                            placeholder="{{i+1}}. service"
+                           required
                            >
                 </mat-form-field>
             </form>

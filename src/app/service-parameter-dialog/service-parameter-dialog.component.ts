@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {ModuleService} from '../_services/module.service';
 
 @Component({
@@ -13,12 +14,13 @@ export class ServiceParameterDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public module: ModuleInterface,
-              private moduleService: ModuleService) {
+              private moduleService: ModuleService,
+              private logger: NGXLogger) {
   }
 
   save(parameterForm: NgForm) {
     const parameters = [];
-    console.log('set configuation parameters', parameterForm);
+    this.logger.info('set configuration parameters', parameterForm);
     if (parameterForm) {
       Object.keys(parameterForm.value).forEach((key) => {
         let service;
@@ -26,17 +28,17 @@ export class ServiceParameterDialogComponent {
         [service, param] = key.split('>');
         parameters.push({service, parameter: param, value: parameterForm.value[key]});
       });
-      console.log('Collected Parameters', parameters);
+      this.logger.debug('Collected Parameters', parameters);
 
       if (this.module.services) {
             this.module.services.forEach((service: ServiceInterface) => {
                 const parameterOptions: ParameterOptions[] = parameters
                     .filter((item) => service.name === item.service)
                     .map((item) => ({name: item.parameter, value: item.value, continuous: false}));
-                console.log('Parameters', service.name, parameterOptions);
+                this.logger.debug('Parameters', service.name, parameterOptions);
                 this.moduleService.configureServiceParameters(this.module, service, parameterOptions)
                     .subscribe((data) => {
-                        console.log('Configuration parameters updated', data);
+                        this.logger.debug('Configuration parameters updated', data);
                         this.moduleService.refreshModules();
                     });
             });
