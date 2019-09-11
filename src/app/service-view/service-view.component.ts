@@ -6,6 +6,7 @@ import {
     StrategyInterface
 } from '@p2olab/polaris-interface';
 import * as moment from 'moment';
+import {NGXLogger} from 'ngx-logger';
 import {Subscription, timer} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 
@@ -26,7 +27,8 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     private timer: Subscription;
 
     constructor(private backend: ModuleService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private logger: NGXLogger) {
     }
 
     ngOnInit() {
@@ -40,7 +42,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                 newStrategy = this.service.strategies.find((strategy) => strategy.default);
             }
             if (!newStrategy) {
-                newStrategy = {parameters: this.service.parameters, name: 'default', default: true, id: "1", sc: true};
+                newStrategy = {parameters: this.service.parameters, name: 'default', default: true, id: '1', sc: true};
             }
             this.strategyFormControl.valueChanges.subscribe((strategy: StrategyInterface) => {
                 this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
@@ -48,15 +50,15 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                     this.strategyParameterFormGroup
                         .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
                 });
-                if (this.module) {
+                if (this.module && this.module.connected) {
                     this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
                         .subscribe(
                             (data) => {
-                                console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}: ` +
-                                    `${JSON.stringify(data)}`);
+                                this.logger.debug(`Service ${this.service.name} has changed to strategy ` +
+                                    `${strategy.name}: ${JSON.stringify(data)}`);
                             },
                             (err) => {
-                                console.log(`Error while changing Service ${this.service.name} ` +
+                                this.logger.error(`Error while changing Service ${this.service.name} ` +
                                     `to strategy ${strategy.name}: ${JSON.stringify(err)}`);
                                 this.snackBar.open(`Error while changing Service ${this.service.name} ` +
                                     `to strategy ${strategy.name}`, 'Ok');
@@ -65,16 +67,16 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                 }
                 this.strategyParameterFormGroup.valueChanges
                     .subscribe((data) => {
-                        console.log('Strategy parameter changed', this.module.id, this.service.name, data);
+                        this.logger.debug('Strategy parameter changed', this.module.id, this.service.name, data);
                         this.backend.configureStrategy(this.module, this.service,
                             this.strategyFormControl.value, this.getParameter())
                             .subscribe((strategyReturn) => {
-                                console.log('parameter sent', strategyReturn);
+                                this.logger.debug('parameter sent', strategyReturn);
                             });
                     });
             });
             this.strategyFormControl.setValue(newStrategy);
-            console.log('new strat', newStrategy)
+            this.logger.trace('new stratety', newStrategy);
             if (!this.service.strategies || this.service.strategies.length === 1) {
                 this.strategyFormControl.disable();
             }
@@ -89,7 +91,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     disabled() {
-        return !(this.service.opMode === undefined || this.service.opMode.source === 'external');
+        return !this.module.connected || this.service.opMode === undefined || this.service.opMode.source !== 'external';
     }
 
     sendCommand(command: string) {
@@ -99,13 +101,12 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         if (!this.virtualService) {
             this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
                 .subscribe((data) => {
-                    console.log('command sent', data);
+                    this.logger.debug('command sent', data);
                 });
         } else {
-            console.log('command sent virtual service');
             this.backend.sendVirtualServiceCommand(this.service.name, command, parameters)
                 .subscribe((data) => {
-                    console.log('command sent virtual service', data);
+                    this.logger.debug('command sent virtual service', data);
                 });
         }
     }
@@ -127,7 +128,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     private updateDuration() {
-        if (this.service && this.service.lastChange) {
+        if (this.service && this.service.lastChange != null) {
             this.service.lastChange = this.service.lastChange + 1;
             this.changeDuration = moment.duration(-this.service.lastChange, 'seconds').humanize();
         }

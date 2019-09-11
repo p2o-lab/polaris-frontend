@@ -7,6 +7,7 @@ import {
   StrategyInterface,
   VirtualServiceInterface
 } from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 
@@ -27,7 +28,8 @@ export class ModuleService {
     private _virtualServices: BehaviorSubject<VirtualServiceInterface[]> = new BehaviorSubject([]);
 
     constructor(private http: HttpClient,
-                private settings: SettingsService) {
+                private settings: SettingsService,
+                private logger: NGXLogger) {
         this.refreshModules();
         this.refreshVirtualServices();
     }
@@ -68,14 +70,14 @@ export class ModuleService {
 
     refreshModules() {
         this.http.get(`${this.settings.apiUrl}/module`).subscribe((modules: ModuleInterface[]) => {
-            console.log('modules refreshed via HTTP GET', modules);
+            this.logger.debug('modules refreshed via HTTP GET', modules);
             this._modules.next(modules);
         });
     }
 
     refreshVirtualServices() {
         this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vservices: VirtualServiceInterface[]) => {
-            console.log('virtual services refreshed via HTTP GET', vservices);
+            this.logger.debug('virtual services refreshed via HTTP GET', vservices);
             this._virtualServices.next(vservices);
         });
     }
@@ -89,13 +91,11 @@ export class ModuleService {
     }
 
     disconnect(module: string) {
-        const modules = this._modules.value;
-        const index = modules.findIndex((mod) => module === mod.id);
-        modules.splice(index, 1);
         return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
     }
 
     removeModule(module: string) {
+        this.removeModuleFromInternalStorage(module);
         return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
     }
 
@@ -130,4 +130,13 @@ export class ModuleService {
             {strategy: strategy.name, parameters});
     }
 
+    private removeModuleFromInternalStorage(id: string) {
+        this.logger.info(`remove module ${id}`);
+        const modules = this._modules.value;
+        const index = modules.findIndex((module) => module.id === id);
+        if (index >= 0) {
+            modules.splice(index, 1);
+            this._modules.next(modules);
+        }
+    }
 }

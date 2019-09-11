@@ -1,18 +1,13 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
-import {
-    MAT_DIALOG_DATA,
-    MatDialogModule,
-    MatDialogRef,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule
-} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
 import {ServiceParameterDialogComponent} from './service-parameter-dialog.component';
 
 describe('ServiceParameterDialogComponent', () => {
@@ -26,10 +21,8 @@ describe('ServiceParameterDialogComponent', () => {
                 FormsModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                MatInputModule,
-                MatDialogModule,
-                MatFormFieldModule,
-                MatSnackBarModule],
+                MaterialModule,
+                LoggerTestingModule],
             providers: [
                 {provide: SettingsService, useValue: settingsServiceStub},
                 {provide: WebsocketService, useValue: websocketServiceStub},
