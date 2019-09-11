@@ -1,7 +1,5 @@
-
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {LayoutModule} from '@angular/cdk/layout';
-import {ViewportScroller} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -14,6 +12,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
 import 'hammerjs';
 import * as moment from 'moment';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
 import {BackendService} from './_services/backend.service';
@@ -25,7 +24,7 @@ import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LogComponent} from './log/log.component';
-import { MaterialModule } from './material/material.module';
+import {MaterialModule} from './material/material.module';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
@@ -63,51 +62,56 @@ moment.updateLocale('en', {
 moment.relativeTimeThreshold('ss', 5);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    RecipeOverviewComponent,
-    SettingsComponent,
-    ModuleViewComponent,
-    NewRecipeComponent,
-    NewModuleComponent,
-    NewVirtualServiceComponent,
-    ServiceViewComponent,
-    AboutComponent,
-    RecipeDetailComponent,
-    PlayerComponent,
-    ServiceLauncherComponent,
-    ServiceSettingsComponent,
-    ServicelauncherButtonComponent,
-    LogComponent,
-    ServiceParameterDialogComponent,
-    TimeSeriesViewComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DragDropModule,
-    MaterialModule,
-    AppRoutingModule,
-    HttpClientModule,
-    WebStorageModule,
-    NgxChartsModule,
-      ChartModule,
-      LoadingBarHttpClientModule,
-      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-  ],
-  entryComponents: [
-    ServiceParameterDialogComponent,
-    ServiceSettingsComponent
-  ],
-  providers: [
-      SettingsService, BackendService, WebsocketService, StepFormatterService,
-      {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        RecipeOverviewComponent,
+        SettingsComponent,
+        ModuleViewComponent,
+        NewRecipeComponent,
+        NewModuleComponent,
+        NewVirtualServiceComponent,
+        ServiceViewComponent,
+        AboutComponent,
+        RecipeDetailComponent,
+        PlayerComponent,
+        ServiceLauncherComponent,
+        ServiceSettingsComponent,
+        ServicelauncherButtonComponent,
+        LogComponent,
+        ServiceParameterDialogComponent,
+        TimeSeriesViewComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DragDropModule,
+        MaterialModule,
+        AppRoutingModule,
+        HttpClientModule,
+        WebStorageModule,
+        NgxChartsModule,
+        ChartModule,
+        LoadingBarHttpClientModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        LoggerModule.forRoot(
+            {serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
+    ],
+    entryComponents: [
+        ServiceParameterDialogComponent,
+        ServiceSettingsComponent,
+        NewModuleComponent,
+        NewRecipeComponent,
+        NewVirtualServiceComponent
+    ],
+    providers: [
+        SettingsService, BackendService, WebsocketService, StepFormatterService,
+        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -1,10 +1,33 @@
 import {NgModule} from '@angular/core';
 import {
-    MatAutocompleteModule, MatBadgeModule, MatButtonModule,
-    MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatDividerModule, MatExpansionModule,
-    MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-    MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSnackBarModule,
-    MatSortModule, MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -14,7 +37,7 @@ import {
         MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
         MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatSliderModule,
         MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule,
-        MatTooltipModule
+        MatTooltipModule, MatRadioModule
     ],
     exports: [
         MatAutocompleteModule, MatBadgeModule, MatButtonModule,
@@ -22,7 +45,7 @@ import {
         MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
         MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatSliderModule,
         MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule,
-        MatTooltipModule
+        MatTooltipModule, MatRadioModule
     ],
 })
 export class MaterialModule {

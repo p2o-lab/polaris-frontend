@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
 import {RecipeService} from '../_services/recipe.service';
-import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
 @Component({
   selector: 'app-new-recipe',
@@ -12,7 +11,7 @@ export class NewRecipeComponent {
 
   public recipe: string;
 
-  constructor(private dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
+  constructor(private dialogRef: MatDialogRef<NewRecipeComponent>,
               private backend: RecipeService,
               private snackBar: MatSnackBar) {
   }

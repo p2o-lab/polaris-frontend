@@ -1,21 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatTooltipModule
-} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
-import {PlayerComponent} from './player.component';
 import {StepFormatterService} from '../_services/step-formatter.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
+import {PlayerComponent} from './player.component';
 
 describe('PlayerComponent', () => {
     let component: PlayerComponent;
@@ -27,12 +21,8 @@ describe('PlayerComponent', () => {
             imports: [RouterTestingModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                MatCardModule,
-                MatIconModule,
-                MatListModule,
-                MatInputModule,
-                MatSnackBarModule,
-                MatTooltipModule
+                MaterialModule,
+                LoggerTestingModule
             ],
             providers: [
                 StepFormatterService,
