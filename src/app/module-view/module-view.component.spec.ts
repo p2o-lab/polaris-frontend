@@ -2,21 +2,12 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ReactiveFormsModule} from '@angular/forms';
-import {
-    MatCardModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatTooltipModule
-} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
 import {ServiceViewComponent} from '../service-view/service-view.component';
 import {ModuleViewComponent} from './module-view.component';
 
@@ -31,16 +22,8 @@ describe('ModuleViewComponent', () => {
                 ReactiveFormsModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                MatExpansionModule,
-                MatCardModule,
-                MatDialogModule,
-                MatIconModule,
-                MatInputModule,
-                MatSelectModule,
-                MatSnackBarModule,
-                MatMenuModule,
-                MatDialogModule,
-                MatTooltipModule
+                MaterialModule,
+                LoggerTestingModule
             ],
             providers: [
                 {provide: SettingsService, useValue: settingsServiceStub},

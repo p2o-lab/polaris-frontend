@@ -1,20 +1,14 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {
-    MatBadgeModule,
-    MatIconModule,
-    MatListModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    MatToolbarModule
-} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
-import {AppComponent} from './app.component';
-import {WebsocketService, websocketServiceStub} from './_services/websocket.service';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from './_services/settings.service';
 import {settingsServiceStub} from './_services/settings.service.spec';
+import {WebsocketService, websocketServiceStub} from './_services/websocket.service';
+import {AppComponent} from './app.component';
+import {MaterialModule} from './material/material.module';
 
 describe('AppComponent', () => {
     let component: AppComponent;
@@ -23,18 +17,14 @@ describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatSidenavModule,
-                MatSnackBarModule,
-                MatToolbarModule,
-                MatIconModule,
-                MatListModule,
-                MatBadgeModule,
+                MaterialModule,
+                LoggerTestingModule,
                 NoopAnimationsModule,
                 RouterTestingModule,
                 HttpClientTestingModule,
                 LoadingBarModule
             ],
-            declarations: [ AppComponent ],
+            declarations: [AppComponent],
             providers: [
                 // TODO: use stub of Backend service instead
                 {provide: SettingsService, useValue: settingsServiceStub},
