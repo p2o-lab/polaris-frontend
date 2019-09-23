@@ -40,6 +40,9 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { ParameterViewComponent } from './parameter-view/parameter-view.component';
+import { ParameterChangeDialogComponent } from './parameter-change-dialog/parameter-change-dialog.component';
 
 moment.updateLocale('en', {
     relativeTime: {
@@ -80,7 +83,9 @@ moment.relativeTimeThreshold('ss', 5);
         ServicelauncherButtonComponent,
         LogComponent,
         ServiceParameterDialogComponent,
-        TimeSeriesViewComponent
+        TimeSeriesViewComponent,
+        ParameterViewComponent,
+        ParameterChangeDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -95,6 +100,7 @@ moment.relativeTimeThreshold('ss', 5);
         WebStorageModule,
         NgxChartsModule,
         ChartModule,
+        FlexLayoutModule,
         LoadingBarHttpClientModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         LoggerModule.forRoot(
@@ -105,7 +111,8 @@ moment.relativeTimeThreshold('ss', 5);
         ServiceSettingsComponent,
         NewModuleComponent,
         NewRecipeComponent,
-        NewVirtualServiceComponent
+        NewVirtualServiceComponent,
+        ParameterChangeDialogComponent
     ],
     providers: [
         SettingsService, BackendService, WebsocketService, StepFormatterService,
