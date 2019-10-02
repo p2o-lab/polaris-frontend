@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {BackendNotification} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {timeout} from 'rxjs/internal/operators';
@@ -9,7 +10,6 @@ import {PlayerService} from './player.service';
 import {RecipeService} from './recipe.service';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
-import {BackendNotification} from '@p2olab/polaris-interface';
 
 export interface VariableInterface {
     variableName: string;

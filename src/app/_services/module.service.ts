@@ -7,10 +7,10 @@ import {
     StrategyInterface,
     VirtualServiceInterface
 } from '@p2olab/polaris-interface';
+import * as assignDeep from 'assign-deep';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
-import * as assignDeep from 'assign-deep';
 
 @Injectable({
     providedIn: 'root'
