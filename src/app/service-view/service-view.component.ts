@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {
-    ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface,
+    ModuleInterface, ParameterOptions, ServiceInterface,
     StrategyInterface
 } from '@p2olab/polaris-interface';
 import * as moment from 'moment';
@@ -38,37 +38,39 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (this.service && this.service.strategies) {
-            let strat = this.service.strategies.find((strategy) => strategy.name === this.service.currentStrategy);
-            if (!strat) {
-                strat = this.service.strategies.find((strategy) => strategy.default);
+        if (this.service ) {
+            if (this.service.strategies) {
+                let strat = this.service.strategies.find((strategy) => strategy.name === this.service.currentStrategy);
+                if (!strat) {
+                    strat = this.service.strategies.find((strategy) => strategy.default);
+                }
+                this.selectedStrategyId = strat.id;
             }
-            this.selectedStrategyId = strat.id;
-        }
 
-        this.strategyFormControl.valueChanges.subscribe((strategyId: string) => {
-            this.selectedStrategyId = strategyId;
-            if (this.module && this.module.connected) {
-                this.backend.configureService(this.module, this.service, this.selectedStrategy.name)
-                    .subscribe(
-                        (data) => {
-                            this.logger.trace(`Service ${this.service.name} has changed to strategy ` +
-                                `${this.selectedStrategy.name}: ${JSON.stringify(data)}`);
-                        },
-                        (err) => {
-                            this.logger.error(`Error while changing Service ${this.service.name} ` +
-                                `to strategy ${this.selectedStrategy.name}: ${JSON.stringify(err)}`);
-                            this.snackBar.open(`Error while changing Service ${this.service.name} ` +
-                                `to strategy ${this.selectedStrategy.name}`, 'Ok');
-                        }
-                    );
+            this.strategyFormControl.valueChanges.subscribe((strategyId: string) => {
+                this.selectedStrategyId = strategyId;
+                if (this.module && this.module.connected) {
+                    this.backend.configureService(this.module, this.service, this.selectedStrategy.name)
+                        .subscribe(
+                            (data) => {
+                                this.logger.trace(`Service ${this.service.name} has changed to strategy ` +
+                                    `${this.selectedStrategy.name}: ${JSON.stringify(data)}`);
+                            },
+                            (err) => {
+                                this.logger.error(`Error while changing Service ${this.service.name} ` +
+                                    `to strategy ${this.selectedStrategy.name}: ${JSON.stringify(err)}`);
+                                this.snackBar.open(`Error while changing Service ${this.service.name} ` +
+                                    `to strategy ${this.selectedStrategy.name}`, 'Ok');
+                            }
+                        );
+                }
+            });
+            this.strategyFormControl.setValue(this.selectedStrategyId);
+            if (!this.service.strategies || this.service.strategies.length === 1) {
+                this.strategyFormControl.disable();
             }
-        });
-        this.strategyFormControl.setValue(this.selectedStrategyId);
-        if (!this.service.strategies || this.service.strategies.length === 1) {
-            this.strategyFormControl.disable();
+            this.timer = timer(0, 1000).subscribe(() => this.updateDuration());
         }
-        this.timer = timer(0, 1000).subscribe(() => this.updateDuration());
     }
 
     ngOnDestroy() {

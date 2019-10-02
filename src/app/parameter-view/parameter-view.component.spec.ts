@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {LoggerTestingModule} from 'ngx-logger/testing';
+import {MaterialModule} from '../material/material.module';
 import { ParameterViewComponent } from './parameter-view.component';
 
 describe('ParameterViewComponent', () => {
@@ -8,7 +12,9 @@ describe('ParameterViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParameterViewComponent ]
+      declarations: [ ParameterViewComponent ],
+      imports: [NoopAnimationsModule, MaterialModule, LoggerTestingModule,
+        HttpClientTestingModule],
     })
     .compileComponents();
   }));

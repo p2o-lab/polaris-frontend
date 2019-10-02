@@ -1,6 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ParameterChangeDialogComponent } from './parameter-change-dialog.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FormsModule} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {LoggerTestingModule} from 'ngx-logger/testing';
+import {MaterialModule} from '../material/material.module';
+import {ParameterChangeDialogComponent} from './parameter-change-dialog.component';
 
 describe('ParameterChangeDialogComponent', () => {
   let component: ParameterChangeDialogComponent;
@@ -8,9 +14,15 @@ describe('ParameterChangeDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParameterChangeDialogComponent ]
+      declarations: [ParameterChangeDialogComponent],
+      imports: [NoopAnimationsModule, MaterialModule, LoggerTestingModule, FormsModule,
+        HttpClientTestingModule],
+      providers: [
+        {provide: MAT_DIALOG_DATA, useValue: {name: 'test', value: 10}},
+        {provide: MatDialogRef, useValue: {}}
+      ]
     })
-    .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {
