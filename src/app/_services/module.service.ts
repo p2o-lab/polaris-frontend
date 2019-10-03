@@ -4,7 +4,6 @@ import {
     ModuleInterface,
     ParameterOptions,
     ServiceInterface,
-    StrategyInterface,
     VirtualServiceInterface
 } from '@p2olab/polaris-interface';
 import * as assignDeep from 'assign-deep';

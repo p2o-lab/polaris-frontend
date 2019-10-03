@@ -6,7 +6,6 @@
     <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
 </h1>
 
-
 <div *ngIf="modules$ | async as modulesObject">
     <mat-card class="dashboard-card" *ngFor="let module of modulesObject">
         <mat-card-header>
