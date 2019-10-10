@@ -6,6 +6,11 @@
         <span matSuffix>{{param.unit}}</span>
         <mat-hint *ngIf="param.min && param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
     </mat-form-field>
+    <p><i>You can use the names of data assemblies in the expression in the form of
+        ModuleName.Service.ParameterName</i></p>
+    <p><i>
+        For example: 2 + 3 * ModuleTestServer.Service1.PVIn
+    </i></p>
 </div>
 
 <div mat-dialog-actions>
