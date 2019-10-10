@@ -36,7 +36,7 @@ export class ServiceParameterDialogComponent {
                     .filter((item) => service.name === item.service)
                     .map((item) => ({name: item.parameter, value: item.value, continuous: false}));
                 this.logger.debug('Parameters', service.name, parameterOptions);
-                this.moduleService.configureServiceParameters(this.module, service, parameterOptions)
+                this.moduleService.configureService(this.module, service, undefined, parameterOptions)
                     .subscribe((data) => {
                         this.logger.debug('Configuration parameters updated', data);
                         this.moduleService.refreshModules();
