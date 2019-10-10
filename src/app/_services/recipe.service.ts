@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {RecipeInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 
@@ -16,7 +17,8 @@ export class RecipeService {
     private _recipes: BehaviorSubject<RecipeInterface[]> = new BehaviorSubject<RecipeInterface[]>([]);
 
     constructor(private http: HttpClient,
-                private settings: SettingsService) {
+                private settings: SettingsService,
+                private logger: NGXLogger) {
         this.refreshRecipes();
     }
 
@@ -28,6 +30,9 @@ export class RecipeService {
         this.http.get(`${this.settings.apiUrl}/recipe`).subscribe(
             (data: RecipeInterface[]) => {
                 this._recipes.next(data);
+            },
+            (error) => {
+                this.logger.warn(`Something went wrong during getting recipes:`, error);
             });
     }
 

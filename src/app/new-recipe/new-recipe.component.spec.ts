@@ -1,12 +1,14 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
-import {MatDialogModule, MatDialogRef, MatInputModule, MatSnackBarModule} from '@angular/material';
+import {MatDialogRef} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
 import {NewRecipeComponent} from './new-recipe.component';
 
 describe('NewRecipeComponent', () => {
@@ -19,11 +21,11 @@ describe('NewRecipeComponent', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        MatInputModule,
-        MatDialogModule,
+        MaterialModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        MatSnackBarModule],
+        LoggerTestingModule
+      ],
       providers: [
         {provide: SettingsService, useValue: settingsServiceStub},
         {provide: WebsocketService, useValue: websocketServiceStub},
