@@ -25,16 +25,16 @@ export class PlayerService {
         return this._player.asObservable();
     }
 
-    refreshPlayer(player?: PlayerInterface) {
-        if (!player) {
-            this.http.get(`${this.settings.apiUrl}/player`)
-                .subscribe((data: PlayerInterface) => {
-                        this._player.next(data);
-                    }
-                );
-        } else {
-            this._player.next(player);
-        }
+    public updatePlayer(player: PlayerInterface) {
+        this._player.next(player);
+    }
+
+    refreshPlayer() {
+        this.http.get(`${this.settings.apiUrl}/player`)
+            .subscribe((data: PlayerInterface) => {
+                    this._player.next(data);
+                }
+            );
     }
 
     startPlayer() {
