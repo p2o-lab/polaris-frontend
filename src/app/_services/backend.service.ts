@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {BackendNotification} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {timeout} from 'rxjs/internal/operators';
@@ -131,38 +132,30 @@ export class BackendService {
     private connectToWebsocket() {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
-                const data: { message: string, data: any } = JSON.parse(msg.data);
-                this.logger.trace('ws received', data.message, data.data);
-                if (data.message === 'ping') {
+                const notification: BackendNotification = JSON.parse(msg.data);
+                this.logger.trace('ws received', notification);
+                if (notification.message === 'ping') {
                     this.heartbeat();
                 }
-                if (data.message === 'recipes') {
-                    this.recipeService.refreshRecipes();
+                if (notification.message === 'recipes') {
+                    this.recipeService.updateRecipes(notification.recipes);
                 }
-                if (data.message === 'module') {
-                   this.moduleService.updateModuleState(data.data);
+                if (notification.message === 'module') {
+                   this.moduleService.updateModuleState(notification.module);
                 }
-                if (data.message === 'virtualService') {
-                    this.moduleService.refreshVirtualServices();
+                if (notification.message === 'service') {
+                    this.moduleService.updateService(notification.moduleId, notification.service);
                 }
-                if (data.message === 'player') {
-                    this.playerService.refreshPlayer(data.data);
+                if (notification.message === 'virtualService') {
+                    this.moduleService.updateVirtualServices(notification.virtualService);
                 }
-                if (data.message === 'action') {
-                    this.handleAction(data.data);
+                if (notification.message === 'player') {
+                    this.playerService.updatePlayer(notification.player);
                 }
-                if (data.message === 'variable') {
-                    this.addData(data.data);
+                if (notification.message === 'variable') {
+                    this.addData(notification.variable);
                 }
             });
-    }
-
-    private handleAction(data: string) {
-        if (data === 'recipeCompleted') {
-            this.snackBar.open('Recipe completed', 'Dismiss', {
-                duration: 3500,
-            });
-        }
     }
 
     private addData(data) {

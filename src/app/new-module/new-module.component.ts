@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatStepper} from '@angular/material';
-import {ModuleOptions} from '@p2olab/polaris-interface';
+import {ModuleInterface, ModuleOptions} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
@@ -38,10 +38,10 @@ export class NewModuleComponent implements OnInit {
             this.module.password = null;
         }
         this.moduleService.addModule(this.module).subscribe(
-            (data) => {
+            (data: ModuleInterface[]) => {
                 this.snackBar.open(`Module ${this.module.id} succesfully added`, 'Dismiss');
-                this.logger.debug('new module added', data);
-                this.moduleService.updateModuleState({module: data});
+                this.logger.debug('new module added', data[0]);
+                this.moduleService.updateModuleState(data[0]);
             },
             (error) => {
                 this.snackBar.open(JSON.stringify(error.error), 'Dismiss', {duration: 20000});
