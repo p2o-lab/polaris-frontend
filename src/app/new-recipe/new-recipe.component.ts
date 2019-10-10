@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
 import {RecipeService} from '../_services/recipe.service';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-new-recipe',
@@ -13,7 +14,8 @@ export class NewRecipeComponent {
 
   constructor(private dialogRef: MatDialogRef<NewRecipeComponent>,
               private backend: RecipeService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private logger: NGXLogger) {
   }
 
   public previewFile(event) {
@@ -31,6 +33,7 @@ export class NewRecipeComponent {
       this.snackBar.dismiss();
       this.backend.submitNewRecipe(recipe).subscribe(
         (data) => {
+          this.logger.debug('submitted new recipe', data);
           this.dialogRef.close();
         },
         (error) => {

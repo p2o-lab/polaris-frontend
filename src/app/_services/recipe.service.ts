@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {RecipeInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
-import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +32,7 @@ export class RecipeService {
                 this._recipes.next(data);
             },
             (error) => {
-                this.logger.warn(`Something went wrong during getting recipes:`, error)
+                this.logger.warn(`Something went wrong during getting recipes:`, error);
             });
     }
 
