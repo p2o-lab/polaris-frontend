@@ -11,7 +11,6 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
-import 'hammerjs';
 import * as moment from 'moment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import {WebStorageModule} from 'ngx-store';
