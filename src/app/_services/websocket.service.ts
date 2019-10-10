@@ -22,6 +22,9 @@ export class WebsocketService {
         ws.onopen = () => {
             this.logger.info('WebSocket open');
         };
+        ws.onerror = (err) => {
+            this.logger.warn('Websocket error occurred', err);
+        };
 
         const observable = Observable.create(
             (obs: Observer<MessageEvent>) => {
