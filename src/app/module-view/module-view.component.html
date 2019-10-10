@@ -6,7 +6,6 @@
     <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
 </h1>
 
-
 <div *ngIf="modules$ | async as modulesObject">
     <mat-card class="dashboard-card" *ngFor="let module of modulesObject">
         <mat-card-header>
@@ -37,7 +36,8 @@
         </mat-card-content>
     </mat-card>
 </div>
-<div *ngIf="(modules$ | async).length==0">
+
+<div *ngIf="(modules$ | async)?.length==0">
     <mat-card class="dashboard-card">
         <mat-card-header>
             <mat-card-title>
@@ -49,10 +49,11 @@
                 (click)="inputFileInput.click()">
             <mat-icon>add</mat-icon> Add PEA
         </button>
-        <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
+        <input #inputFileInput2 type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
         </mat-card-content>
     </mat-card>
 </div>
+
 
 <mat-card class="dashboard-card" *ngIf="virtualServices$ |async as virtualServices">
     <mat-card-header>

@@ -1,14 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {LoggerTestingModule} from 'ngx-logger/testing';
+import {ModuleService} from '../_services/module.service';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {MaterialModule} from '../material/material.module';
-import {ServiceViewComponent} from '../service-view/service-view.component';
 import {ModuleViewComponent} from './module-view.component';
 
 describe('ModuleViewComponent', () => {
@@ -17,7 +18,9 @@ describe('ModuleViewComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ModuleViewComponent, ServiceViewComponent],
+            declarations: [
+                ModuleViewComponent
+            ],
             imports: [
                 ReactiveFormsModule,
                 HttpClientTestingModule,
@@ -27,8 +30,10 @@ describe('ModuleViewComponent', () => {
             ],
             providers: [
                 {provide: SettingsService, useValue: settingsServiceStub},
-                {provide: WebsocketService, useValue: websocketServiceStub}
-            ]
+                {provide: WebsocketService, useValue: websocketServiceStub},
+                {provide: ModuleService, useValue: module}
+            ],
+            schemas: [ NO_ERRORS_SCHEMA ]
         })
             .compileComponents();
     }));

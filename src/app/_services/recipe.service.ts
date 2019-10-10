@@ -20,6 +20,10 @@ export class RecipeService {
         this.refreshRecipes();
     }
 
+    public updateRecipes(recipes: RecipeInterface[]) {
+        this._recipes.next(recipes);
+    }
+
     refreshRecipes() {
         this.http.get(`${this.settings.apiUrl}/recipe`).subscribe(
             (data: RecipeInterface[]) => {
