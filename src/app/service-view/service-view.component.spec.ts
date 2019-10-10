@@ -7,6 +7,7 @@ import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
 import {MaterialModule} from '../material/material.module';
+import {ParameterViewComponent} from '../parameter-view/parameter-view.component';
 import {ServiceViewComponent} from './service-view.component';
 
 describe('ServiceViewComponent', () => {
@@ -15,7 +16,8 @@ describe('ServiceViewComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ServiceViewComponent],
+            declarations: [ServiceViewComponent,
+            ParameterViewComponent],
             imports: [
                 ReactiveFormsModule,
                 HttpClientTestingModule,
