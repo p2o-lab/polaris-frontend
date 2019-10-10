@@ -2,11 +2,11 @@ import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {RecipeInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/internal/operators';
 import {RecipeService} from '../_services/recipe.service';
 import {StepFormatterService} from '../_services/step-formatter.service';
-import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-recipe-detail',

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
-import {RecipeService} from '../_services/recipe.service';
 import {NGXLogger} from 'ngx-logger';
+import {RecipeService} from '../_services/recipe.service';
 
 @Component({
   selector: 'app-new-recipe',
