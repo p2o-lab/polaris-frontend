@@ -20,8 +20,4 @@ export class ParameterChangeDialogComponent {
     };
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }
