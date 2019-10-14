@@ -39,7 +39,7 @@ export class ServiceParameterDialogComponent {
                 this.moduleService.configureService(this.module, service, undefined, parameterOptions)
                     .subscribe((data) => {
                         this.logger.debug('Configuration parameters updated', data);
-                        this.moduleService.refreshModules();
+                        this.moduleService.refreshModulesViaHttp();
                     });
             });
         }
