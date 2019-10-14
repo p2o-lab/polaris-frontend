@@ -26,32 +26,35 @@
       <p *ngFor="let param of selectedStrategy.parameters">
         <app-parameter-view [param]="param" (changed)="onChangeParameter($event)"></app-parameter-view>
       </p>
+      <p *ngIf="!selectedStrategy.parameters || selectedStrategy.parameters.length===0">---</p>
     </div>
     <div fxFlex>
       <h3 matTooltip="Processvalues In">PV In</h3>
       <p *ngFor="let param of selectedStrategy.processValuesIn">
         <app-parameter-view [param]="param" (changed)="onChangeParameter($event, true)"></app-parameter-view>
       </p>
+      <p *ngIf="!selectedStrategy.processValuesIn || selectedStrategy.processValuesIn.length===0">---</p>
     </div>
     <div fxFlex>
       <h3 matTooltip="Processvalues Out">PV Out</h3>
       <p *ngFor="let param of selectedStrategy.processValuesOut">
         <app-parameter-view [param]="param"></app-parameter-view>
       </p>
+      <p *ngIf="!selectedStrategy.processValuesOut || selectedStrategy.processValuesOut.length===0">---</p>
     </div>
     <div fxFlex>
       <h3>Report Values</h3>
-      <p *ngFor="let param of selectedStrategy.reportValues">
+      <p *ngFor="let param of selectedStrategy.reportParameters">
         <app-parameter-view [param]="param"></app-parameter-view>
       </p>
-      <p *ngIf="!selectedStrategy.reportValues">---</p>
+      <p *ngIf="!selectedStrategy.reportParameters || selectedStrategy.reportParameters.length===0">---</p>
     </div>
   </div>
   <mat-action-row *ngIf="service.controlEnable">
-    <button matTooltip="Start" mat-button [disabled]="disabled() || !service.controlEnable.start" color="primary" (click)="sendCommand('start', parameterForm)">
+    <button matTooltip="Start" mat-button [disabled]="disabled() || !service.controlEnable.start" color="primary" (click)="sendCommand('start')">
       <mat-icon matTooltip="Start">play_arrow</mat-icon><span *ngIf="service.controlEnable.start">Start</span>
     </button>
-    <button matTooltip="Restart" mat-button [disabled]="disabled() || !service.controlEnable.restart" color="primary" (click)="sendCommand('restart', parameterForm)">
+    <button matTooltip="Restart" mat-button [disabled]="disabled() || !service.controlEnable.restart" color="primary" (click)="sendCommand('restart')">
       <mat-icon>play_circle_outline</mat-icon><span *ngIf="service.controlEnable.restart">Restart</span>
     </button>
     <button mat-button matTooltip="Complete" [disabled]="disabled() || !service.controlEnable.complete" color="primary" (click)="sendCommand('complete')">

@@ -102,9 +102,11 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     public onChangeParameter(newParameter: ParameterOptions, continousParameter = false) {
-        newParameter.continuous = continousParameter;
-        this.backend.configureService(this.module, this.service, undefined, [newParameter])
-            .subscribe((data) => this.logger.debug('parameter changed', data));
+        if (newParameter) {
+            newParameter.continuous = continousParameter;
+            this.backend.configureService(this.module, this.service, undefined, [newParameter])
+                .subscribe((data) => this.logger.debug('parameter changed', data));
+        }
     }
 
     /**
