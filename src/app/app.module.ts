@@ -115,7 +115,7 @@ moment.relativeTimeThreshold('ss', 5);
     ],
     providers: [
         SettingsService, BackendService, WebsocketService, StepFormatterService,
-        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
     ],
     bootstrap: [AppComponent]
 })
