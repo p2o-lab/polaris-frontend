@@ -15,9 +15,8 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button class="mat-warn" mat-dialog-close>Abort & Close</button>
-        <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-        <button mat-button (click)="save(parameterForm)">Save & Close</button>
+        <button mat-button color="warn" mat-dialog-close>Abort & Close</button>
+        <button mat-button color="primary" (click)="save(parameterForm)">Save & Close</button>
     </mat-dialog-actions>
 </form>
 
