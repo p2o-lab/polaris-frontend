@@ -1,5 +1,7 @@
 <div *ngIf="param">
-    <em>{{param.name}}</em>: {{param.value}} {{param.unit}}
+    <em>{{param.name}}</em>:
+    <span *ngIf="param.type==='number'">{{param.value | number: "1.2" }} {{param.unit}}</span>
+    <span *ngIf="param.type!=='number'">{{param.value}}</span>
     <!--<small *ngIf="param.min && param.max">({{param.min | number}} - {{param.max | number}})</small>-->
     <button *ngIf="!param.readonly" (click)="changeParameter()" mat-icon-button>
         <mat-icon>edit</mat-icon>
