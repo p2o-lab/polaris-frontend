@@ -232,7 +232,7 @@ export class ServiceLauncherComponent implements OnInit {
     // const strategy: string = this.strategyFormControl.value.name;
     // const parameters: any[] = this.getParameter();
 
-    this.logger.info('Send command', command, this)
+    this.logger.debug('Send command', command, this);
     // this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
     //   .subscribe((data) => {
     //     console.log('command sent', data);
