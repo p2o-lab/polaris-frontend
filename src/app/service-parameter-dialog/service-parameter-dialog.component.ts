@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
@@ -39,7 +39,7 @@ export class ServiceParameterDialogComponent {
                 this.moduleService.configureService(this.module, service, undefined, parameterOptions)
                     .subscribe((data) => {
                         this.logger.debug('Configuration parameters updated', data);
-                        this.moduleService.refreshModules();
+                        this.moduleService.refreshModulesViaHttp();
                     });
             });
         }

@@ -1,21 +1,21 @@
 <h1 class="mat-h1">Settings</h1>
 
-<form>
-<mat-form-field class="example-container">
-  <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
-         placeholder="URL for Backend API" name="apiUrl">
-</mat-form-field>
-<mat-form-field class="example-container">
-  <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text" [(ngModel)]="settings.mtpConverterUrl"
-           placeholder="URL for MTP Converter API" name="mtpConverterUrl">
-</mat-form-field>
-
-<mat-checkbox [(ngModel)]="backend.autoReset" name="autoReset">AutoReset (POL automatically resets a service when it goes to COMPLETED)
-</mat-checkbox>
-
+<form class="example-container">
+    <mat-form-field>
+        <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
+               placeholder="URL for Backend API" name="apiUrl">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text"
+               [(ngModel)]="settings.mtpConverterUrl"
+               placeholder="URL for MTP Converter API" name="mtpConverterUrl">
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="backend.autoReset" name="autoReset">AutoReset (POL automatically resets a service when it
+        goes to COMPLETED)
+    </mat-checkbox>
 </form>
 <p>
-  <button mat-flat-button color="primary" (click)="back()">Save & Back</button>
+    <button mat-flat-button color="primary" (click)="reload()">Save & Reload</button>
 </p>
 
 <h2 class="mat-h2">Version information</h2>

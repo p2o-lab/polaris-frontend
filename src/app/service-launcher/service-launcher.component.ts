@@ -206,7 +206,8 @@ export class ServiceLauncherComponent implements OnInit {
    * TODO: react to events.
    * TODO: Adding argument 'Action' to service and set it here + commit to opcua server
    */
-  setAction(action: string) {
+  setAction(action: string, service) {
+    this.logger.debug('set action', action, service);
     switch (action) {
       case 'stateChange':
         break;
@@ -215,6 +216,9 @@ export class ServiceLauncherComponent implements OnInit {
       case 'hold':
         break;
       case 'stop':
+        break;
+      case 'start':
+        this.sendCommand('start');
         break;
       case 'pause':
         break;
@@ -225,9 +229,10 @@ export class ServiceLauncherComponent implements OnInit {
     Send opcua control command via backend service
    */
   sendCommand(command: string) {
-    const strategy: string = this.strategyFormControl.value.name;
-    const parameters: any[] = this.getParameter();
+    // const strategy: string = this.strategyFormControl.value.name;
+    // const parameters: any[] = this.getParameter();
 
+    this.logger.debug('Send command', command, this);
     // this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
     //   .subscribe((data) => {
     //     console.log('command sent', data);

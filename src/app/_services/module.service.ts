@@ -1,11 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {
-    ModuleInterface,
-    ParameterOptions,
-    ServiceInterface,
-    VirtualServiceInterface
-} from '@p2olab/polaris-interface';
+import {MatSnackBar} from '@angular/material';
+import {ModuleInterface, ParameterOptions, ServiceInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
 import * as assignDeep from 'assign-deep';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -16,7 +12,6 @@ import {SettingsService} from './settings.service';
 })
 export class ModuleService {
 
-    // all modules
     get modules(): Observable<ModuleInterface[]> {
         return this._modules.asObservable();
     }
@@ -31,9 +26,10 @@ export class ModuleService {
 
     constructor(private http: HttpClient,
                 private settings: SettingsService,
+                private snackBar: MatSnackBar,
                 private logger: NGXLogger) {
-        this.refreshModules();
-        this.refreshVirtualServices();
+        this.refreshModulesViaHttp();
+        this.refreshVirtualServicesViaHttp();
     }
 
     public updateService(moduleId: string, newService: ServiceInterface) {
@@ -93,14 +89,19 @@ export class ModuleService {
         }
     }
 
-    refreshModules() {
-        this.http.get(`${this.settings.apiUrl}/module`).subscribe((modules: ModuleInterface[]) => {
-            this.logger.debug('modules refreshed via HTTP GET', modules);
-            this._modules.next(modules);
-        });
+    refreshModulesViaHttp() {
+        this.http.get(`${this.settings.apiUrl}/module`).subscribe(
+            (modules: ModuleInterface[]) => {
+                this.logger.debug('modules refreshed via HTTP GET', modules);
+                this._modules.next(modules);
+            },
+            (error) => {
+                this.logger.warn(`Could not connect to ${this.settings.apiUrl}/module`);
+                this.snackBar.open(`Could not connect to ${this.settings.apiUrl}/module. Check settings`);
+            });
     }
 
-    refreshVirtualServices() {
+    refreshVirtualServicesViaHttp() {
         this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vservices: VirtualServiceInterface[]) => {
             this.logger.debug('virtual services refreshed via HTTP GET', vservices);
             this._virtualServices.next(vservices);

@@ -9,12 +9,11 @@
     <p><i>You can use the names of data assemblies in the expression in the form of
         ModuleName.Service.ParameterName</i></p>
     <p><i>
-        For example: 2 + 3 * ModuleTestServer.Service1.PVIn
+        For example: 2 + 3 * ModuleTestServer.Service1.PvIn
     </i></p>
 </div>
 
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button color="primary"  [mat-dialog-close]="newParamOptions">Change</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button color="primary" [mat-dialog-close]="newParamOptions">Change</button>
 </div>
-

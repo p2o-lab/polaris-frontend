@@ -16,12 +16,8 @@ export class ParameterChangeDialogComponent {
       @Inject(MAT_DIALOG_DATA) public param: ParameterInterface) {
     this.newParamOptions = {
       name: param.name,
-      value: param.value
+      value: param.requestedValue
     };
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
 }
