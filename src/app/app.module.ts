@@ -2,6 +2,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {LayoutModule} from '@angular/cdk/layout';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
@@ -10,7 +11,6 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
-import 'hammerjs';
 import * as moment from 'moment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import {WebStorageModule} from 'ngx-store';
@@ -29,6 +29,8 @@ import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewVirtualServiceComponent} from './new-virtual-service/new-virtual-service.component';
+import { ParameterChangeDialogComponent } from './parameter-change-dialog/parameter-change-dialog.component';
+import { ParameterViewComponent } from './parameter-view/parameter-view.component';
 import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
@@ -80,7 +82,9 @@ moment.relativeTimeThreshold('ss', 5);
         ServicelauncherButtonComponent,
         LogComponent,
         ServiceParameterDialogComponent,
-        TimeSeriesViewComponent
+        TimeSeriesViewComponent,
+        ParameterViewComponent,
+        ParameterChangeDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -95,6 +99,7 @@ moment.relativeTimeThreshold('ss', 5);
         WebStorageModule,
         NgxChartsModule,
         ChartModule,
+        FlexLayoutModule,
         LoadingBarHttpClientModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         LoggerModule.forRoot(
@@ -105,11 +110,12 @@ moment.relativeTimeThreshold('ss', 5);
         ServiceSettingsComponent,
         NewModuleComponent,
         NewRecipeComponent,
-        NewVirtualServiceComponent
+        NewVirtualServiceComponent,
+        ParameterChangeDialogComponent
     ],
     providers: [
         SettingsService, BackendService, WebsocketService, StepFormatterService,
-        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
     ],
     bootstrap: [AppComponent]
 })

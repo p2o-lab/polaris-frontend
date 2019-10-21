@@ -1,13 +1,14 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatExpansionModule, MatIconModule, MatListModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
-import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
-import {RecipeDetailComponent} from './recipe-detail.component';
 import {StepFormatterService} from '../_services/step-formatter.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
+import {RecipeDetailComponent} from './recipe-detail.component';
 
 describe('RecipeDetailComponent', () => {
   let component: RecipeDetailComponent;
@@ -17,13 +18,12 @@ describe('RecipeDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RecipeDetailComponent],
       imports: [
-        MatCardModule,
-        MatExpansionModule,
-        MatListModule,
-        MatIconModule,
+        MaterialModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        HttpClientTestingModule],
+        HttpClientTestingModule,
+        LoggerTestingModule
+      ],
       providers: [
         StepFormatterService,
         {provide: SettingsService, useValue: settingsServiceStub},

@@ -1,12 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {
-  ModuleInterface,
-  ParameterOptions,
-  ServiceInterface,
-  StrategyInterface,
-  VirtualServiceInterface
-} from '@p2olab/polaris-interface';
+import {MatSnackBar} from '@angular/material';
+import {ModuleInterface, ParameterOptions, ServiceInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
+import * as assignDeep from 'assign-deep';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
@@ -16,82 +12,113 @@ import {SettingsService} from './settings.service';
 })
 export class ModuleService {
 
-    // all modules
     get modules(): Observable<ModuleInterface[]> {
         return this._modules.asObservable();
     }
+
     private _modules: BehaviorSubject<ModuleInterface[]> = new BehaviorSubject([]);
 
     get virtualServices(): Observable<VirtualServiceInterface[]> {
         return this._virtualServices.asObservable();
     }
+
     private _virtualServices: BehaviorSubject<VirtualServiceInterface[]> = new BehaviorSubject([]);
 
     constructor(private http: HttpClient,
                 private settings: SettingsService,
+                private snackBar: MatSnackBar,
                 private logger: NGXLogger) {
-        this.refreshModules();
-        this.refreshVirtualServices();
+        this.refreshModulesViaHttp();
+        this.refreshVirtualServicesViaHttp();
     }
 
-    /** update internal variables of module (service states, controlEnable of services, strategy parameters)
-     * by searching according to the name of module, service, strategy and parameter provided in data
-     * @param data
-     */
-    public updateModuleState(data) {
-        if (data) {
-            if (data.module) {
-                const modules = this._modules.value;
-                const newModule = modules.find((module) => module.id === data.module);
-                if (newModule && newModule.services && data.service) {
-                    const newService = newModule.services.find((service) => service.name === data.service);
-                    if (newService && newService.strategies) {
-                        if (data.strategy) {
-                            const newStrategy = newService.strategies.find((strategy) => strategy.id === data.strategy);
-                            if (newStrategy && newStrategy.parameters && data.parameter ) {
-                                const newParameter = newStrategy.parameters
-                                    .find((parameter) => parameter.name === data.parameter);
-                                if (newParameter) {
-                                    Object.assign(newParameter, data);
-                                }
-                            }
-                        } else {
-                            Object.assign(newService, data);
-                        }
-                    }
-
-                }
-                this._modules.next(modules);
-            }
-        } else {
-            this.refreshModules();
+    public updateService(moduleId: string, newService: ServiceInterface) {
+        this.logger.trace('update service', newService);
+        const modules = this._modules.value;
+        const oldModule = modules.find((module) => module.id === moduleId);
+        if (oldModule) {
+            const oldService = oldModule.services.find((s) => s.name === newService.name);
+            oldService.controlEnable = newService.controlEnable;
+            oldService.status = newService.status;
+            oldService.lastChange = newService.lastChange;
+            oldService.operationMode = newService.operationMode;
+            oldService.sourceMode = newService.sourceMode;
+            newService.strategies.forEach((newStrategy) => {
+                const oldStrategy = oldService.strategies.find((s) => s.id === newStrategy.id);
+                newStrategy.parameters.forEach((newParam) => {
+                    const oldParam = oldStrategy.parameters.find((p) => p.name === newParam.name);
+                    Object.assign(oldParam, newParam);
+                });
+                newStrategy.processValuesIn.forEach((newParam) => {
+                    const oldParam = oldStrategy.processValuesIn.find((p) => p.name === newParam.name);
+                    Object.assign(oldParam, newParam);
+                });
+                newStrategy.processValuesOut.forEach((newParam) => {
+                    const oldParam = oldStrategy.processValuesOut.find((p) => p.name === newParam.name);
+                    Object.assign(oldParam, newParam);
+                });
+                newStrategy.reportParameters.forEach((newParam) => {
+                    const oldParam = oldStrategy.reportParameters.find((p) => p.name === newParam.name);
+                    Object.assign(oldParam, newParam);
+                });
+            });
         }
     }
 
-    refreshModules() {
-        this.http.get(`${this.settings.apiUrl}/module`).subscribe((modules: ModuleInterface[]) => {
-            this.logger.debug('modules refreshed via HTTP GET', modules);
-            this._modules.next(modules);
-        });
+    /**
+     * update internal variables of module (service states, controlEnable of services, strategy parameters)
+     */
+    public updateModuleState(moduleInterface: ModuleInterface) {
+        const modules = this._modules.value;
+        this.logger.debug('Update module', moduleInterface);
+        const oldModule = modules.find((module) => module.id === moduleInterface.id);
+        if (oldModule) {
+            assignDeep(oldModule, moduleInterface);
+        } else {
+            modules.push(moduleInterface);
+        }
     }
 
-    refreshVirtualServices() {
+    updateVirtualServices(vservice: VirtualServiceInterface) {
+        this.logger.info('Update virtual service');
+        const virtualServices = this._virtualServices.value;
+        const oldVirtualService = virtualServices.find((vs) => vs.name === vservice.name);
+        if (oldVirtualService) {
+            Object.assign(oldVirtualService, vservice);
+        } else {
+            virtualServices.push(vservice);
+        }
+    }
+
+    refreshModulesViaHttp() {
+        this.http.get(`${this.settings.apiUrl}/module`).subscribe(
+            (modules: ModuleInterface[]) => {
+                this.logger.debug('modules refreshed via HTTP GET', modules);
+                this._modules.next(modules);
+            },
+            (error) => {
+                this.logger.warn(`Could not connect to ${this.settings.apiUrl}/module`);
+                this.snackBar.open(`Could not connect to ${this.settings.apiUrl}/module. Check settings`);
+            });
+    }
+
+    refreshVirtualServicesViaHttp() {
         this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vservices: VirtualServiceInterface[]) => {
             this.logger.debug('virtual services refreshed via HTTP GET', vservices);
             this._virtualServices.next(vservices);
         });
     }
 
-    addModule(moduleOptions) {
-        return this.http.put(`${this.settings.apiUrl}/module`, {module: moduleOptions});
+    addModule(moduleOptions): Observable<ModuleInterface[]> {
+        return this.http.put<ModuleInterface[]>(`${this.settings.apiUrl}/module`, {module: moduleOptions});
     }
 
-    connect(module: string) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module}/connect`, {});
+    connect(module: string): Observable<ModuleInterface> {
+        return this.http.post<ModuleInterface>(`${this.settings.apiUrl}/module/${module}/connect`, {});
     }
 
-    disconnect(module: string) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
+    disconnect(module: string): Observable<ModuleInterface> {
+        return this.http.post<ModuleInterface>(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
     }
 
     removeModule(module: string) {
@@ -118,16 +145,10 @@ export class ModuleService {
         return this.http.post(`${this.settings.apiUrl}/virtualService/${service}/${command}`, body);
     }
 
-    configureServiceParameters(module: ModuleInterface, service: ServiceInterface,
-                               parameterOptions: ParameterOptions[]) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/parameter`,
-            {parameters: parameterOptions});
-    }
-
-    configureStrategy(module: ModuleInterface, service: ServiceInterface,
-                      strategy: StrategyInterface, parameters?: ParameterOptions[]) {
-        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}/strategy`,
-            {strategy: strategy.name, parameters});
+    configureService(module: ModuleInterface, service: ServiceInterface, strategyName?: string,
+                     parameterOptions?: ParameterOptions[]) {
+        return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}`,
+            {strategy: strategyName, parameters: parameterOptions});
     }
 
     private removeModuleFromInternalStorage(id: string) {

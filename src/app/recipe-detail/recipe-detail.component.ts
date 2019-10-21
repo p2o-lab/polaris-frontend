@@ -2,6 +2,7 @@ import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {RecipeInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/internal/operators';
 import {RecipeService} from '../_services/recipe.service';
@@ -18,7 +19,8 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private backend: RecipeService,
               private location: Location,
-              private formatter: StepFormatterService) {
+              private formatter: StepFormatterService,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
@@ -26,6 +28,7 @@ export class RecipeDetailComponent implements OnInit {
       switchMap((params: ParamMap) =>
         this.backend.getRecipe(params.get('id')))
     );
+    this.logger.trace('Load recipe on init', this.recipe$);
   }
 
   back() {

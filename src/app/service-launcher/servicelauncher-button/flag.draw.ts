@@ -41,7 +41,7 @@ export class Flag {
         this.background = document.getElementsByClassName('background');
 
         this.strategyName = currentService.currentStrategy;
-        this.operationMode = currentService.opMode.source + ' ' + currentService.opMode.state;
+        this.operationMode = currentService.sourceMode + ' ' + currentService.operationMode;
 
         this.infoHeight = 2.4 * serviceRadius;
         this.infoRadius = 0.5 * this.infoHeight;

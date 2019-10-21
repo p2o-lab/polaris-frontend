@@ -1,4 +1,3 @@
-import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {version} from '../../../package.json';
 import {BackendService} from '../_services/backend.service';
@@ -13,8 +12,7 @@ export class SettingsComponent implements OnInit {
     public backendVersion: string;
     public frontendVersion: string;
 
-    constructor(private location: Location,
-                public settings: SettingsService,
+    constructor(public settings: SettingsService,
                 public backend: BackendService) {
         this.frontendVersion = version;
     }
@@ -24,8 +22,9 @@ export class SettingsComponent implements OnInit {
         this.backend.getVersion().subscribe((data: {version: string}) => this.backendVersion = data.version);
     }
 
-    back() {
-        this.location.back();
+    reload() {
+        // use window.location reload method in order to load whole page resulting in fresh websocket connection
+        location.reload();
     }
 
 }
