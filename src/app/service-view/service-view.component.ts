@@ -2,7 +2,11 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {
-    ModuleInterface, ParameterOptions, ServiceInterface,
+    ModuleInterface,
+    OperationMode,
+    ParameterOptions,
+    ServiceInterface,
+    SourceMode,
     StrategyInterface
 } from '@p2olab/polaris-interface';
 import * as moment from 'moment';
@@ -81,7 +85,9 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         if (!this.module) {
             return false;
         }
-        return !this.module.connected || this.service.opMode === undefined || this.service.opMode.source !== 'external';
+        return !this.module.connected ||
+            this.service.operationMode !== OperationMode.Automatic ||
+            this.service.sourceMode !== SourceMode.Manual;
     }
 
     sendCommand(command: string) {
