@@ -32,8 +32,8 @@ import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewVirtualServiceComponent} from './new-virtual-service/new-virtual-service.component';
 // tslint:disable-next-line:max-line-length
 import { OrientationReferralSnackbarComponent } from './orientation-referral-snackbar/orientation-referral-snackbar.component';
-import { ParameterChangeDialogComponent } from './parameter-change-dialog/parameter-change-dialog.component';
-import { ParameterViewComponent } from './parameter-view/parameter-view.component';
+import {ParameterChangeDialogComponent} from './parameter-change-dialog/parameter-change-dialog.component';
+import {ParameterViewComponent} from './parameter-view/parameter-view.component';
 import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
@@ -87,7 +87,8 @@ moment.relativeTimeThreshold('ss', 5);
         ServiceParameterDialogComponent,
         TimeSeriesViewComponent,
         ParameterViewComponent,
-        ParameterChangeDialogComponent
+        ParameterChangeDialogComponent,
+        OrientationReferralSnackbarComponent,
     ],
     imports: [
         BrowserModule,
