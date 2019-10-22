@@ -41,7 +41,8 @@ export class ModuleService {
             oldService.controlEnable = newService.controlEnable;
             oldService.status = newService.status;
             oldService.lastChange = newService.lastChange;
-            oldService.opMode = newService.opMode;
+            oldService.operationMode = newService.operationMode;
+            oldService.sourceMode = newService.sourceMode;
             newService.strategies.forEach((newStrategy) => {
                 const oldStrategy = oldService.strategies.find((s) => s.id === newStrategy.id);
                 newStrategy.parameters.forEach((newParam) => {
