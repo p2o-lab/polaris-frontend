@@ -1,81 +1,51 @@
-import {Component, ViewChild} from '@angular/core';
-import {MatDialogRef, MatSnackBar, MatStepper} from '@angular/material';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatStepper} from '@angular/material';
+import {ModuleInterface, ModuleOptions} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
 
 @Component({
-  selector: 'app-new-module',
-  templateUrl: './new-module.component.html',
-  styleUrls: ['./new-module.component.css']
+    selector: 'app-new-module',
+    templateUrl: './new-module.component.html',
+    styleUrls: ['./new-module.component.css']
 })
-export class NewModuleComponent {
+export class NewModuleComponent implements OnInit {
 
-  public modules: ModuleOptions[];
+    authenticationOption: 'anonymous' | 'password' | 'certificate';
 
-  @ViewChild('stepper', {static: false}) private myStepper: MatStepper;
+    @ViewChild('stepper', {static: false}) private myStepper: MatStepper;
 
-  constructor(private backend: BackendService,
-              private moduleService: ModuleService,
-              private dialogRef: MatDialogRef<NewModuleComponent>,
-              private snackBar: MatSnackBar) {
-  }
+    constructor(@Inject(MAT_DIALOG_DATA) public module: ModuleOptions,
+                private backend: BackendService,
+                private moduleService: ModuleService,
+                private dialogRef: MatDialogRef<NewModuleComponent>,
+                private snackBar: MatSnackBar,
+                private logger: NGXLogger) {
+    }
 
-  /**
-   * Load content of file, convert it if it is an MTP, and save the results in this.modules
-   * @param event
-   */
-  public async previewFile(event) {
-      const file: File = event.target.files[0];
-      await new Promise((resolve) => {
-          if (file.name.endsWith('.mtp') || file.name.endsWith('.zip')) {
-              this.backend.convertMtp(file).subscribe((data: {modules: ModuleOptions[]}) => {
-                  this.modules = data.modules;
-                  this.myStepper.next();
-                  resolve();
-              });
-          } else {
-              const reader: FileReader = new FileReader();
-              reader.onload = (e: Event) => {
-                  this.modules = JSON.parse(reader.result.toString()).modules as ModuleOptions[];
-                  this.myStepper.next();
-                  resolve();
-              };
-              reader.readAsText(file);
-          }
-      });
-      this.modules.forEach((module) => module.opcua_server_url = this.addDefaultPort(module.opcua_server_url));
-  }
+    ngOnInit() {
+        if (this.module.username) {
+            this.authenticationOption = 'password';
+        } else {
+            this.authenticationOption = 'anonymous';
+        }
+    }
 
-  /**
-   * Add default port (4840) to server url if not present
-   * @param opcuaServerUrl
-   */
-  public addDefaultPort(opcuaServerUrl: string): string {
-      const re = new RegExp('(opc\.tcp):\/\/([^:\/]+)(:[0-9]+)?(\S*)?');
-      return opcuaServerUrl.replace(re, (match, scheme, host, port, path) => {
-          return `${scheme}://${host}${port || ':4840'}${path || ''}`;
-      });
-  }
-
-  public addModule() {
-      this.modules.forEach((module) => {
-          this.moduleService.addModule(module).subscribe(
-              (data) => {
-                  this.snackBar.open(`Module ${module.id} succesfully added`, 'Dismiss');
-              },
-              (error) => {
-                  this.snackBar.open(JSON.stringify(error.error), 'Dismiss');
-              });
-      });
-      this.dialogRef.close();
-
-  }
-}
-
-export interface ModuleOptions {
-    id: string;
-    opcua_server_url: string;
-    hmi_url?: string;
-    services: any[];
-    process_values: any[];
+    public addModule() {
+        if (this.authenticationOption === 'anonymous') {
+            this.module.username = null;
+            this.module.password = null;
+        }
+        this.moduleService.addModule(this.module).subscribe(
+            (data: ModuleInterface[]) => {
+                this.snackBar.open(`Module ${this.module.id} succesfully added`, 'Dismiss');
+                this.logger.debug('new module added', data[0]);
+                this.moduleService.updateModuleState(data[0]);
+            },
+            (error) => {
+                this.snackBar.open(JSON.stringify(error.error), 'Dismiss', {duration: 20000});
+            });
+        this.dialogRef.close();
+    }
 }

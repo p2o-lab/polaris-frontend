@@ -1,6 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {BackendNotification} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {timeout} from 'rxjs/internal/operators';
 import {ModuleService} from './module.service';
@@ -74,7 +76,8 @@ export class BackendService {
                 private snackBar: MatSnackBar,
                 public recipeService: RecipeService,
                 public playerService: PlayerService,
-                public moduleService: ModuleService) {
+                public moduleService: ModuleService,
+                private logger: NGXLogger) {
 
         this.connectToWebsocket();
     }
@@ -87,8 +90,7 @@ export class BackendService {
                 this._autoReset = data.autoReset;
             },
             (error) => {
-                // this.snackBar.open(`Backend does not respond (${this.settings.apiUrl}).`);
-                console.log(`Backend does not respond (${this.settings.apiUrl}).`);
+                this.logger.warn(`Backend does not respond (${this.settings.apiUrl})`, error);
             }
         );
     }
@@ -122,7 +124,7 @@ export class BackendService {
         // equal to the interval at which your server sends out pings plus a
         // conservative assumption of the latency.
         this.pingTimeout = setTimeout(() => {
-            console.log('Connection to backend lost');
+            this.logger.warn('Connection to backend lost');
             this.snackBar.open('Connection to backend lost');
         }, 3000 + 1000);
     }
@@ -130,38 +132,30 @@ export class BackendService {
     private connectToWebsocket() {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
-                const data: { message: string, data: any } = JSON.parse(msg.data);
-                // console.log('ws received', data.message, data.data);
-                if (data.message === 'ping') {
+                const notification: BackendNotification = JSON.parse(msg.data);
+                this.logger.trace('ws received', notification);
+                if (notification.message === 'ping') {
                     this.heartbeat();
                 }
-                if (data.message === 'recipes') {
-                    this.recipeService.refreshRecipes();
+                if (notification.message === 'recipes') {
+                    this.recipeService.updateRecipes(notification.recipes);
                 }
-                if (data.message === 'module') {
-                   this.moduleService.updateModuleState(data.data);
+                if (notification.message === 'module') {
+                   this.moduleService.updateModuleState(notification.module);
                 }
-                if (data.message === 'virtualService') {
-                    this.moduleService.refreshVirtualServices();
+                if (notification.message === 'service') {
+                    this.moduleService.updateService(notification.moduleId, notification.service);
                 }
-                if (data.message === 'player') {
-                    this.playerService.refreshPlayer(data.data);
+                if (notification.message === 'virtualService') {
+                    this.moduleService.updateVirtualServices(notification.virtualService);
                 }
-                if (data.message === 'action') {
-                    this.handleAction(data.data);
+                if (notification.message === 'player') {
+                    this.playerService.updatePlayer(notification.player);
                 }
-                if (data.message === 'variable') {
-                    this.addData(data.data);
+                if (notification.message === 'variable') {
+                    this.addData(notification.variable);
                 }
             });
-    }
-
-    private handleAction(data: string) {
-        if (data === 'recipeCompleted') {
-            this.snackBar.open('Recipe completed', 'Dismiss', {
-                duration: 3500,
-            });
-        }
     }
 
     private addData(data) {

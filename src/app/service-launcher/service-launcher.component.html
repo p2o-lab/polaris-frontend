@@ -25,7 +25,7 @@
         <div class="background"></div>
         <div cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="droppedInPinnedSection($event)" #pinnedList="cdkDropList" [cdkDropListConnectedTo]="[unpinnedList]" class="section_pinned_services " >
             <app-servicelauncher-button (openSettings)="openDialog(service)" (pinService)="pinService(service)"
-                                        (setAction)="setAction($event)" *ngFor="let service of pinnedServiceArray"
+                                        (setAction)="setAction($event, service)" *ngFor="let service of pinnedServiceArray"
                                         [cdkDragData]="service" [currentService]="service"
                                         cdkDrag>
             </app-servicelauncher-button>
@@ -35,7 +35,7 @@
             <div class="section_services" *ngIf="sorting === sortingOptions.default || sorting === sortingOptions.alphabetically"  >
                 <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
                         *ngFor="let service of services"
-                        [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)"  (setAction)="setAction($event)">
+                        [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)"  (setAction)="setAction($event, service)">
                 </app-servicelauncher-button>
             </div>
             <div class="section_services" *ngIf="sorting === sortingOptions.module">
@@ -44,7 +44,7 @@
                         <div class ="section_services">
                             <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
                                 *ngFor="let service of module.services"
-                                [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event)">
+                                [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event, service)">
                             </app-servicelauncher-button>
                         </div>
                     <mat-divider></mat-divider>
@@ -56,7 +56,7 @@
                     <div class ="section_services">
                         <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
                                                      *ngFor="let service of item.services"
-                                                     [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event)">
+                                                     [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event, service)">
                         </app-servicelauncher-button>
                     </div>
                   <mat-divider></mat-divider>
@@ -69,7 +69,7 @@
                 <div class ="section_services" *ngIf="(item.services.length>0)">
                   <app-servicelauncher-button  cdkDrag  [cdkDragData]="service"
                                                *ngFor="let service of item.services"
-                                               [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event)">
+                                               [currentService]="service" (openSettings)="openDialog(service)" (pinService) ="pinService(service)" (setAction)="setAction($event, service)">
                   </app-servicelauncher-button>
                 </div>
                 <mat-divider *ngIf="(item.services.length>0)"></mat-divider>

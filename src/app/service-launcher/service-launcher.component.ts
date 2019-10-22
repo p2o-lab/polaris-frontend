@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
+import {NGXLogger} from 'ngx-logger';
 import {Observable, Subscription} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 import {ServiceSettingsComponent} from './service-settings/service-settings.component';
@@ -41,7 +42,10 @@ export class ServiceLauncherComponent implements OnInit {
   sortingOptionsArray: string[] = ['default', 'alphabetisch', 'nach Modul', 'nach Zustand', 'nach Aktivität'];
   private timer: Subscription;
 
-  constructor(private backend: ModuleService, private snackBar: MatSnackBar, public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              private backend: ModuleService,
+              private snackBar: MatSnackBar,
+              private logger: NGXLogger) {
   }
 
   /**
@@ -63,7 +67,7 @@ export class ServiceLauncherComponent implements OnInit {
             }
           }
         }
-        console.log('ServiceLauncher got ' + data.length + ' modules to render.');
+        this.logger.info('ServiceLauncher got ' + data.length + ' modules to render.');
       }
     });
   }
@@ -161,7 +165,7 @@ export class ServiceLauncherComponent implements OnInit {
         });
         break;
       default:
-        console.warn('Sorting not available');
+        this.logger.warn('Sorting not available');
         break;
     }
   }
@@ -173,7 +177,7 @@ export class ServiceLauncherComponent implements OnInit {
   droppedInPinnedSection($event) {
     const service = $event.item.data;
     if (service.pinned) {
-      console.log('do nothing');
+      this.logger.debug('do nothing');
     } else {
       service.pinned = true;
       this.pinService(service);
@@ -187,7 +191,7 @@ export class ServiceLauncherComponent implements OnInit {
   droppedInUnpinnedSection($event) {
     const service = $event.item.data;
     if (!service.pinned) {
-      console.log('do nothing');
+      this.logger.debug('do nothing');
     } else {
       service.pinned = false;
       this.pinService(service);
@@ -202,7 +206,8 @@ export class ServiceLauncherComponent implements OnInit {
    * TODO: react to events.
    * TODO: Adding argument 'Action' to service and set it here + commit to opcua server
    */
-  setAction(action: string) {
+  setAction(action: string, service) {
+    this.logger.debug('set action', action, service);
     switch (action) {
       case 'stateChange':
         break;
@@ -211,6 +216,9 @@ export class ServiceLauncherComponent implements OnInit {
       case 'hold':
         break;
       case 'stop':
+        break;
+      case 'start':
+        this.sendCommand('start');
         break;
       case 'pause':
         break;
@@ -221,9 +229,10 @@ export class ServiceLauncherComponent implements OnInit {
     Send opcua control command via backend service
    */
   sendCommand(command: string) {
-    const strategy: string = this.strategyFormControl.value.name;
-    const parameters: any[] = this.getParameter();
+    // const strategy: string = this.strategyFormControl.value.name;
+    // const parameters: any[] = this.getParameter();
 
+    this.logger.debug('Send command', command, this);
     // this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
     //   .subscribe((data) => {
     //     console.log('command sent', data);

@@ -1,18 +1,13 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {
-  MatCardModule,
-  MatDialogModule,
-  MatDialogRef,
-  MatIconModule,
-  MatMenuModule,
-  MatSnackBarModule
-} from '@angular/material';
+import {MatDialogRef} from '@angular/material';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
 import {RecipeOverviewComponent} from './recipe-overview.component';
 
 describe('RecipeOverviewComponent', () => {
@@ -23,11 +18,8 @@ describe('RecipeOverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RecipeOverviewComponent],
       imports: [
-        MatIconModule,
-        MatDialogModule,
-        MatMenuModule,
-        MatCardModule,
-        MatSnackBarModule,
+        MaterialModule,
+        LoggerTestingModule,
         RouterTestingModule,
         HttpClientTestingModule],
       providers: [

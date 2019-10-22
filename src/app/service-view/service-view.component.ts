@@ -1,11 +1,16 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {
-    ModuleInterface, ParameterInterface, ParameterOptions, ServiceInterface,
+    ModuleInterface,
+    OperationMode,
+    ParameterOptions,
+    ServiceInterface,
+    SourceMode,
     StrategyInterface
 } from '@p2olab/polaris-interface';
 import * as moment from 'moment';
+import {NGXLogger} from 'ngx-logger';
 import {Subscription, timer} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 
@@ -19,69 +24,57 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     @Input() module: ModuleInterface;
     @Input() virtualService: boolean = false;
 
-    strategyFormControl: FormControl = new FormControl('', new FormControl());
-    strategyParameterFormGroup: FormGroup = new FormGroup({}, {updateOn: 'blur'});
-
+    public strategyFormControl: FormControl = new FormControl('', new FormControl());
     public changeDuration: string;
+    public selectedStrategyId: string;
+    public get selectedStrategy(): StrategyInterface {
+        if (this.service && this.service.strategies) {
+            return this.service.strategies.find((s) => s.id === this.selectedStrategyId);
+        } else {
+            return undefined;
+        }
+    }
     private timer: Subscription;
 
     constructor(private backend: ModuleService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private logger: NGXLogger) {
     }
 
     ngOnInit() {
-        if (this.service) {
-
-            let newStrategy;
+        if (this.service ) {
             if (this.service.strategies) {
-                newStrategy = this.service.strategies.find((strategy) => strategy.id === this.service.currentStrategy);
+                let strat = this.service.strategies.find((strategy) => strategy.name === this.service.currentStrategy);
+                if (!strat) {
+                    strat = this.service.strategies.find((strategy) => strategy.default);
+                }
+                this.selectedStrategyId = strat.id;
             }
-            if (!newStrategy && this.service.strategies) {
-                newStrategy = this.service.strategies.find((strategy) => strategy.default);
-            }
-            if (!newStrategy) {
-                newStrategy = {parameters: this.service.parameters, name: 'default', default: true, id: "1", sc: true};
-            }
-            this.strategyFormControl.valueChanges.subscribe((strategy: StrategyInterface) => {
-                this.strategyParameterFormGroup = new FormGroup({}, {updateOn: 'blur'});
-                strategy.parameters.forEach((param: ParameterInterface) => {
-                    this.strategyParameterFormGroup
-                        .registerControl(param.name, new FormControl({value: param.value, disabled: param.readonly}));
-                });
-                if (this.module) {
-                    this.backend.configureStrategy(this.module, this.service, this.strategyFormControl.value)
+
+            this.strategyFormControl.valueChanges.subscribe((strategyId: string) => {
+                this.selectedStrategyId = strategyId;
+                if (this.module && this.module.connected) {
+                    this.backend.configureService(this.module, this.service, this.selectedStrategy.name)
                         .subscribe(
                             (data) => {
-                                console.log(`Service ${this.service.name} has changed to strategy ${strategy.name}: ` +
-                                    `${JSON.stringify(data)}`);
+                                this.logger.trace(`Service ${this.service.name} has changed to strategy ` +
+                                    `${this.selectedStrategy.name}: ${JSON.stringify(data)}`);
                             },
                             (err) => {
-                                console.log(`Error while changing Service ${this.service.name} ` +
-                                    `to strategy ${strategy.name}: ${JSON.stringify(err)}`);
+                                this.logger.error(`Error while changing Service ${this.service.name} ` +
+                                    `to strategy ${this.selectedStrategy.name}: ${JSON.stringify(err)}`);
                                 this.snackBar.open(`Error while changing Service ${this.service.name} ` +
-                                    `to strategy ${strategy.name}`, 'Ok');
+                                    `to strategy ${this.selectedStrategy.name}`, 'Ok');
                             }
                         );
                 }
-                this.strategyParameterFormGroup.valueChanges
-                    .subscribe((data) => {
-                        console.log('Strategy parameter changed', this.module.id, this.service.name, data);
-                        this.backend.configureStrategy(this.module, this.service,
-                            this.strategyFormControl.value, this.getParameter())
-                            .subscribe((strategyReturn) => {
-                                console.log('parameter sent', strategyReturn);
-                            });
-                    });
             });
-            this.strategyFormControl.setValue(newStrategy);
-            console.log('new strat', newStrategy)
+            this.strategyFormControl.setValue(this.selectedStrategyId);
             if (!this.service.strategies || this.service.strategies.length === 1) {
                 this.strategyFormControl.disable();
             }
+            this.timer = timer(0, 1000).subscribe(() => this.updateDuration());
         }
-
-        this.timer = timer(0, 1000)
-            .subscribe(() => this.updateDuration());
     }
 
     ngOnDestroy() {
@@ -89,39 +82,51 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     disabled() {
-        return !(this.service.opMode === undefined || this.service.opMode.source === 'external');
+        if (!this.module) {
+            return false;
+        }
+        return !this.module.connected ||
+            this.service.operationMode !== OperationMode.Automatic ||
+            this.service.sourceMode !== SourceMode.Manual;
     }
 
     sendCommand(command: string) {
-        const strategy: string = this.strategyFormControl.value.name;
-        const parameters: any[] = this.getParameter();
+        const strategyName: string = this.selectedStrategy.name;
+        const parameters: ParameterOptions[] = this.getProcedureParameter();
 
         if (!this.virtualService) {
-            this.backend.sendCommand(this.module.id, this.service.name, command, strategy, parameters)
+            this.backend.sendCommand(this.module.id, this.service.name, command, strategyName, parameters)
                 .subscribe((data) => {
-                    console.log('command sent', data);
+                    this.logger.debug('command sent', data);
                 });
         } else {
-            console.log('command sent virtual service');
             this.backend.sendVirtualServiceCommand(this.service.name, command, parameters)
                 .subscribe((data) => {
-                    console.log('command sent virtual service', data);
+                    this.logger.debug('command sent virtual service', data);
                 });
         }
     }
 
+    public onChangeParameter(newParameter: ParameterOptions, continousParameter = false) {
+        if (newParameter) {
+            newParameter.continuous = continousParameter;
+            this.backend.configureService(this.module, this.service, undefined, [newParameter])
+                .subscribe((data) => this.logger.debug('parameter changed', data));
+        }
+    }
+
     /**
-     * get parameters to be sent to backend (only writeable values)
+     * get procedure parameters to be sent to backend (only writeable values)
      * @returns {ParameterOptions[]}
      */
-    private getParameter(): ParameterOptions[] {
-        const parameters = this.strategyFormControl.value.parameters;
+    private getProcedureParameter(): ParameterOptions[] {
+        const parameters = this.selectedStrategy.parameters;
         return parameters
             .filter((param) => !param.readonly)
             .map((param) => {
                 return {
                     name: param.name,
-                    value: this.strategyParameterFormGroup.value[param.name]
+                    value: this.selectedStrategy.parameters[param.name]
                 };
             });
     }

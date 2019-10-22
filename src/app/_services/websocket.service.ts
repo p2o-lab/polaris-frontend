@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
+import {NGXLogger} from 'ngx-logger';
 import {Observable, Observer, Subject} from 'rxjs';
 
 @Injectable()
 export class WebsocketService {
   private subject: Subject<MessageEvent>;
 
-  public connect(url): Subject<MessageEvent> {
+    constructor(private logger: NGXLogger) {
+    }
+
+    public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
     }
@@ -16,7 +20,10 @@ export class WebsocketService {
     try {
         const ws = new WebSocket(url);
         ws.onopen = () => {
-            console.log('WebSocket open');
+            this.logger.info('WebSocket open');
+        };
+        ws.onerror = (err) => {
+            this.logger.warn('Websocket error occurred', err);
         };
 
         const observable = Observable.create(
@@ -35,7 +42,7 @@ export class WebsocketService {
         };
         return Subject.create(observer, observable);
     } catch (e) {
-      console.log('Could not connect to websocket of server', e);
+      this.logger.error('Could not connect to websocket of server', e);
       return Subject.create(undefined, undefined);
     }
   }
@@ -43,4 +50,4 @@ export class WebsocketService {
 }
 
 export const
-    websocketServiceStub = { connect: (url) => Subject.create(undefined, undefined)};
+    websocketServiceStub = { connect: () => Subject.create(undefined, undefined)};

@@ -1,9 +1,10 @@
-<h1 class="mat-h1 with-icon">Modules <small>(PEAs)</small>
-    <button mat-button matTooltip="Add Module" (click)="newModule()">
+<h1 class="mat-h1 with-icon">Modules&nbsp;<small>(PEAs)</small>
+    <button mat-button matTooltip="Add Module" matTooltip="Load new PEA from MTP file or JSON file"
+            (click)="inputFileInput.click()">
         <mat-icon>add</mat-icon>
     </button>
+    <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
 </h1>
-
 
 <div *ngIf="modules$ | async as modulesObject">
     <mat-card class="dashboard-card" *ngFor="let module of modulesObject">
@@ -22,7 +23,8 @@
                 </mat-menu>
             </mat-card-title>
             <mat-card-subtitle class="with-icon">
-                <mat-icon>{{ module.connected ? 'link' : 'clear'}}</mat-icon> &nbsp;
+                <mat-icon *ngIf="module.connected" matTooltip="Connection to PEA established">phonelink</mat-icon> &nbsp;
+                <mat-icon *ngIf="!module.connected" matTooltip="Not connected">phonelink_off</mat-icon> &nbsp;
                 {{module.endpoint}} <span *ngIf="module.hmiUrl">- <a [href]="module.hmiUrl">{{module.hmiUrl}}</a></span>
             </mat-card-subtitle>
         </mat-card-header>
@@ -34,6 +36,24 @@
         </mat-card-content>
     </mat-card>
 </div>
+
+<div *ngIf="(modules$ | async)?.length==0">
+    <mat-card class="dashboard-card">
+        <mat-card-header>
+            <mat-card-title>
+                No PEAs loaded into Polaris yet ...
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <button mat-raised-button matTooltip="Add Module" matTooltip="Load new PEA from MTP file or JSON file"
+                (click)="inputFileInput.click()">
+            <mat-icon>add</mat-icon> Add PEA
+        </button>
+        <input #inputFileInput2 type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
+        </mat-card-content>
+    </mat-card>
+</div>
+
 
 <mat-card class="dashboard-card" *ngIf="virtualServices$ |async as virtualServices">
     <mat-card-header>
@@ -51,6 +71,10 @@
         <mat-accordion multi="true">
             <app-service-view *ngFor="let service of virtualServices" [service]="service" virtualService="true">
             </app-service-view>
+            <div *ngIf="virtualServices.length==0">
+                No Virtual Service defined yet.
+                <button mat-raised-button (click)="instantiateVirtualService()"><mat-icon>add</mat-icon> Instantiate new Virtual Service</button>
+            </div>
         </mat-accordion>
     </mat-card-content>
 </mat-card>

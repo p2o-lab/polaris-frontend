@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
+import {NGXLogger} from 'ngx-logger';
 import {RecipeService} from '../_services/recipe.service';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
@@ -14,7 +15,8 @@ export class NewVirtualServiceComponent {
 
     constructor(private dialogRef: MatDialogRef<ServiceParameterDialogComponent>,
                 private backend: RecipeService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private logger: NGXLogger) {
     }
 
     public previewFile(event) {
@@ -29,9 +31,10 @@ export class NewVirtualServiceComponent {
     public instantiate() {
         try {
             const virtualService = JSON.parse(this.virtualService);
-            console.log(virtualService);
+            this.logger.info('instantiate virtual service', virtualService);
             this.backend.instantiateVirtualService(virtualService).subscribe(
                 (data) => {
+                    this.logger.debug('instantiated virtual service result', data);
                     this.dialogRef.close();
                 },
                 (error) => {

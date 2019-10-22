@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {PlayerInterface, RecipeInterface, StepOptions} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
+import {NGXLogger} from 'ngx-logger';
 import {Subscription, timer} from 'rxjs';
 import {PlayerService} from '../_services/player.service';
 import {SettingsService} from '../_services/settings.service';
@@ -22,13 +23,14 @@ export class PlayerComponent implements OnInit, OnDestroy {
     constructor(private playerService: PlayerService,
                 public settings: SettingsService,
                 private snackBar: MatSnackBar,
-                private formatter: StepFormatterService) {
+                private formatter: StepFormatterService,
+                private logger: NGXLogger) {
     }
 
     ngOnInit() {
         /* Continuously update data from backend service */
         this.playerService.player.subscribe((player) => {
-            console.log('Got new info for player', player);
+            this.logger.debug('Got new info for player', player);
             this.player = player;
         });
 
@@ -61,7 +63,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     start() {
         this.playerService.startPlayer().subscribe(
             (data) => {
-                console.log('start player', data);
+                this.logger.debug('start player', data);
                 this.playerService.refreshPlayer();
             },
             (error) => this.snackBar.open(error.error.error, 'Dismiss')
@@ -69,28 +71,28 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
 
     reset() {
-        this.playerService.resetPlayer().subscribe((data) => this.playerService.refreshPlayer());
+        this.playerService.resetPlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
     pause() {
-        this.playerService.pausePlayer().subscribe((data) => this.playerService.refreshPlayer());
+        this.playerService.pausePlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
     resume() {
-        this.playerService.resumePlayer().subscribe((data) => this.playerService.refreshPlayer());
+        this.playerService.resumePlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
     stop() {
-        this.playerService.stopPlayer().subscribe((data) => this.playerService.refreshPlayer());
+        this.playerService.stopPlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
     forceTransition(nextStep) {
         this.playerService.playerForceTransition(this.player.currentRecipe.currentStep.name, nextStep)
-            .subscribe((data) => console.log('transitions forced', data));
+            .subscribe((data) => this.logger.debug('transitions forced', data));
     }
 
     remove(id: number) {
-        this.playerService.removeRecipeFromPlaylist(id).subscribe((data) => {
+        this.playerService.removeRecipeFromPlaylist(id).subscribe(() => {
                 this.playerService.refreshPlayer();
             }
         );

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Change {{newParamOptions.name}}</h1>
+<div mat-dialog-content>
+    <p>Provide a value or expression for {{newParamOptions.name}}</p>
+    <mat-form-field>
+        <input matInput [(ngModel)]="newParamOptions.value" [min]="param.min" [max]="param.max" cdkFocusInitial>
+        <span matSuffix>{{param.unit}}</span>
+        <mat-hint *ngIf="param.min && param.max">({{param.min | number}} - {{param.max | number}})</mat-hint>
+    </mat-form-field>
+    <p><i>You can use the names of data assemblies in the expression in the form of
+        ModuleName.Service.ParameterName</i></p>
+    <p><i>
+        For example: 2 + 3 * ModuleTestServer.Service1.PvIn
+    </i></p>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button color="primary" [mat-dialog-close]="newParamOptions">Change</button>
+</div>

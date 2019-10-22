@@ -22,7 +22,7 @@ $theme: mat-light-theme($palette-primary, $palette-accent, $palette-warn);
 
 // Define a custom typography config
 $custom-typography: mat-typography-config(
-        $font-family: "Open Sans"
+        $font-family: "'Open Sans', Roboto, sans-serif"
 );
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($custom-typography);
