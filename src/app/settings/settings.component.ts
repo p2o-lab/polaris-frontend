@@ -1,3 +1,4 @@
+import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {version} from '../../../package.json';
 import {AmbientLightService} from '../_services/ambient-light.service';
