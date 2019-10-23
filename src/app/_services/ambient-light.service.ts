@@ -10,10 +10,18 @@ import {SettingsService} from './settings.service';
   providedIn: 'root'
 })
 export class AmbientLightService {
+
+  /**
+   * Method for retrieving the current darkmode status
+   */
+  get darkmode(): Observable<boolean> {
+    return this.isDark.asObservable();
+  }
   private location: Position;
   private sunrise: Date;
   private sunset: Date;
   private isDark: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private enableAdaption: boolean = false;
 
   constructor(private http: HttpClient,
               private snackBar: MatSnackBar,
@@ -43,17 +51,12 @@ export class AmbientLightService {
   }
 
   /**
-   * Method for retrieving the current darkmode status
-   */
-  get darkmode(): Observable<boolean> {
-    return this.isDark.asObservable();
-  }
-
-  /**
    * Method for forcing a darkmode setting. This overwrites the internal darkmode settings.
    */
   public setDarkmode(value: boolean) {
-      this.isDark.next(value);
+      if (this.enableAdaption === true) {
+        this.isDark.next(value);
+      }
   }
 
   /**
@@ -62,13 +65,29 @@ export class AmbientLightService {
    */
   public calcDarkmode() {
     const now = new Date();
+    if (this.enableAdaption === true) {
+      // compare current time with sunrise/ sunset time
+      if ((now < this.sunrise) || (now > this.sunset)) {
+        this.isDark.next(true);
+      } else {
+        this.isDark.next(false);
+      }
+    }
+  }
 
-    // compare current time with sunrise/ sunset time
-    if ((now < this.sunrise) || (now > this.sunset)) {
-      this.isDark.next(true);
-    } else {
+  /**
+   * Method for enabling/ disabling the ambient light adaption globally
+   * @param state
+   */
+  public enableAmbientLightAdaption(state: boolean) {
+    this.enableAdaption = state;
+    if (state === false) {
       this.isDark.next(false);
     }
+  }
+
+  public getAmbientAdaptionEnabled() {
+    return this.enableAdaption;
   }
 
   /**

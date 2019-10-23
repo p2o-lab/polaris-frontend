@@ -24,9 +24,17 @@
   Appearance
 </h2>
 <form>
-  <mat-checkbox name="forceDarkmode" (click)="toggleDarkmode()">
+  <p>
+    <mat-checkbox name="enableAmbientAdaption" (change)="enableAmbientAdaption($event)">
+    Enable ambient light adaption
+    </mat-checkbox>
+  </p>
+  <p>
+    <mat-checkbox #forceDarkmodeCheckbox name="forceDarkmode" (change)="toggleDarkmode($event)">
     Force Darkmode
-  </mat-checkbox>
+    </mat-checkbox>
+  </p>
+
 </form>
 
 <h2 class="mat-h2"
@@ -34,7 +42,7 @@
   Orientation assistance</h2>
 <form>
   <mat-checkbox name="enableOrientationAssistance" checked="true" [(ngModel)]="settings.orientationAssistance">
-    Enable orientation assistance
+    Enable orientation assistance for mobile devices
   </mat-checkbox>
 </form>
 
