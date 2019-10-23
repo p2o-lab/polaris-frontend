@@ -1,0 +1,19 @@
+.snackbar {
+  max-width: 90% !important;
+  margin-left: auto !important; // center align from left
+  margin-right: auto !important; // center align from right margin-bottom: 1 rem !important;
+  padding: 10px !important; // spacing between the text and boundary background-color: #0b8357;
+  font-family: "Open Sans", Roboto, Ubuntu, sans-serif;
+  display: inline-flex;
+  vertical-align: middle;
+
+  .mat-button-wrapper {
+    color: black !important; // action text color
+  }
+
+}
+
+.snacktitle {
+  margin-left: 10px;
+  text-align: center;
+}
