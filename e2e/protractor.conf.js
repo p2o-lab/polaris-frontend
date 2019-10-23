@@ -8,12 +8,19 @@ exports.config = {
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-  capabilities: {
+  multiCapabilities: [{
     'browserName': 'chrome',
     'chromeOptions ': {
       args: [ "--headless", "--no-sandbox" ]
     }
   },
+    {
+      browserName: 'chrome',
+      'deviceName': 'Google Nexus 5',
+      'chromeOptions ': {
+        args: [ "--headless", "--no-sandbox" ]
+      }
+    }],
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
