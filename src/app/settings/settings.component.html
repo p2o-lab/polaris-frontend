@@ -1,23 +1,52 @@
 <h1 class="mat-h1">Settings</h1>
 
+<h2 class="mat-h2">URLs</h2>
 <form class="example-container">
-    <mat-form-field>
-        <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
-               placeholder="URL for Backend API" name="apiUrl">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text"
-               [(ngModel)]="settings.mtpConverterUrl"
-               placeholder="URL for MTP Converter API" name="mtpConverterUrl">
-    </mat-form-field>
-    <mat-checkbox [(ngModel)]="backend.autoReset" name="autoReset">AutoReset (POL automatically resets a service when it
-        goes to COMPLETED)
-    </mat-checkbox>
+  <mat-form-field>
+    <input matInput name="settings.apiUrl" #apiUrl="ngModel" type="text" [(ngModel)]="settings.apiUrl"
+           placeholder="URL for Backend API" name="apiUrl">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="settings.mtpConverterUrl" #mtpConverterUrl="ngModel" type="text"
+           [(ngModel)]="settings.mtpConverterUrl"
+           placeholder="URL for MTP Converter API" name="mtpConverterUrl">
+  </mat-form-field>
+  <mat-checkbox [(ngModel)]="backend.autoReset" name="autoReset">AutoReset (POL automatically resets a service when it
+    goes to COMPLETED)
+  </mat-checkbox>
 </form>
 <p>
     <button mat-flat-button color="primary" (click)="reload()">Save & Reload</button>
 </p>
 
+<h2 class="mat-h2"
+    matTooltip="This feature is part of the demonstrator for the fall colloqium 2019 of the PhD Project of Sebastian Heinze">
+  Appearance
+</h2>
+<form>
+  <p>
+    <mat-checkbox name="enableAmbientAdaption" (change)="enableAmbientAdaption($event)">
+    Enable ambient light adaption
+    </mat-checkbox>
+  </p>
+  <p>
+    <mat-checkbox #forceDarkmodeCheckbox name="forceDarkmode" (change)="toggleDarkmode($event)">
+    Force Darkmode
+    </mat-checkbox>
+  </p>
+
+</form>
+
+<h2 class="mat-h2"
+    matTooltip="This feature is part of the demonstrator for the fall colloqium 2019 of the PhD Project of Sebastian Heinze">
+  Orientation assistance</h2>
+<form>
+  <mat-checkbox name="enableOrientationAssistance" checked="true" [(ngModel)]="settings.orientationAssistance">
+    Enable orientation assistance for mobile devices
+  </mat-checkbox>
+</form>
+
+<h2 class="mat-h2">Maintenance</h2>
 <h2 class="mat-h2">Version information</h2>
 <p>Version Backend: {{backendVersion }}</p>
 <p>Version Frontend: {{frontendVersion}}</p>

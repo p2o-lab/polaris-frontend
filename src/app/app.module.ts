@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
+import {AmbientLightService} from './_services/ambient-light.service';
 import {BackendService} from './_services/backend.service';
 import {SettingsService} from './_services/settings.service';
 import {StepFormatterService} from './_services/step-formatter.service';
@@ -29,8 +30,10 @@ import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewVirtualServiceComponent} from './new-virtual-service/new-virtual-service.component';
-import { ParameterChangeDialogComponent } from './parameter-change-dialog/parameter-change-dialog.component';
-import { ParameterViewComponent } from './parameter-view/parameter-view.component';
+// tslint:disable-next-line:max-line-length
+import { OrientationReferralSnackbarComponent } from './orientation-referral-snackbar/orientation-referral-snackbar.component';
+import {ParameterChangeDialogComponent} from './parameter-change-dialog/parameter-change-dialog.component';
+import {ParameterViewComponent} from './parameter-view/parameter-view.component';
 import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
@@ -84,7 +87,8 @@ moment.relativeTimeThreshold('ss', 5);
         ServiceParameterDialogComponent,
         TimeSeriesViewComponent,
         ParameterViewComponent,
-        ParameterChangeDialogComponent
+        ParameterChangeDialogComponent,
+        OrientationReferralSnackbarComponent,
     ],
     imports: [
         BrowserModule,
@@ -114,7 +118,7 @@ moment.relativeTimeThreshold('ss', 5);
         ParameterChangeDialogComponent
     ],
     providers: [
-        SettingsService, BackendService, WebsocketService, StepFormatterService,
+        SettingsService, BackendService, WebsocketService, StepFormatterService, AmbientLightService,
         {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
     ],
     bootstrap: [AppComponent]
