@@ -45,6 +45,14 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
+import {VisualObjectComponent} from './hmi/visualObject/visual-object/visual-object.component';
+import {PumpComponent} from './hmi/visualObject/pump/pump.component';
+import {ValveComponent} from './hmi/visualObject/valve/valve.component';
+import {OperatorViewComponent} from './hmi/operator-view/operator-view.component';
+import {ConnectionComponent} from './hmi/visualObject/connection/connection.component';
+import {BaseSymbolComponent} from './hmi/visualObject/base-symbol/base-symbol.component';
+import {HeatExchangerComponent} from './hmi/visualObject/heat-exchanger/heat-exchanger.component';
+import {TankComponent} from './hmi/visualObject/tank/tank.component';
 
 moment.updateLocale('en', {
     relativeTime: {
@@ -89,6 +97,14 @@ moment.relativeTimeThreshold('ss', 5);
         ParameterViewComponent,
         ParameterChangeDialogComponent,
         OrientationReferralSnackbarComponent,
+        VisualObjectComponent,
+        PumpComponent,
+        ValveComponent,
+        OperatorViewComponent,
+        ConnectionComponent,
+        BaseSymbolComponent,
+        HeatExchangerComponent,
+        TankComponent
     ],
     imports: [
         BrowserModule,

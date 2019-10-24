@@ -1,0 +1,21 @@
+<svg #operatorView [attr.viewBox]="viewBox">
+    <svg:g app-visual-object *ngFor="let object of outObjects"
+           [id]="object.id"
+           [type]="object.type"
+           [x]="object.x"
+           [y]="object.y"
+           [rotation]="object.rotation"
+    ></svg:g>
+  <svg:g app-connection *ngFor="let connection of outConnections"
+         [edge]="connection"
+  ></svg:g>
+</svg>
+
+<p>
+{{outObjects | json}}
+</p>
+
+
+<p>
+    {{outConnections | json}}
+</p>

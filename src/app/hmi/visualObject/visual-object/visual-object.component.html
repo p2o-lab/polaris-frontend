@@ -1,0 +1,12 @@
+<svg:g class="visualObject" [attr.id]="id" attr.transform="translate({{x}},{{y}})">
+
+  <svg:g *ngIf="type==='valve'" app-valve [id]="id"></svg:g>
+  <svg:g *ngIf="type==='pump'" app-pump [id]="id" [rotation]="rotation"></svg:g>
+  <svg:g *ngIf="type==='heatexchanger'" app-heat-exchanger [id]="id"></svg:g>
+  <svg:g *ngIf="type==='base'" app-base-symbol [id]="id"></svg:g>
+
+  <!--
+  <svg:g [ngComponentOutlet]="component">
+  </svg:g>
+-->
+</svg:g>

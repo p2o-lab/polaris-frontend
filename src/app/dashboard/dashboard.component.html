@@ -1,7 +1,7 @@
 <h1 class="mat-h1">Dashboard</h1>
 <mat-grid-list cols="2" rowHeight="350px">
   <mat-grid-tile colspan="2" rowspan="1">
-    <mat-card class="dashboard-card" routerLink="/recipe">
+    <mat-card class="dashboard-card">
       <mat-card-header>
         <mat-card-title>
           Recipe
@@ -9,8 +9,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu" xPosition="before">
-            <button mat-menu-item>Expand</button>
-            <button mat-menu-item>Remove</button>
+            <button mat-menu-item routerLink="/recipe">Expand</button>
           </mat-menu>
         </mat-card-title>
       </mat-card-header>
@@ -30,7 +29,6 @@
           </button>
           <mat-menu #menu="matMenu" xPosition="before">
             <button mat-menu-item>Expand</button>
-            <button mat-menu-item>Remove</button>
           </mat-menu>
         </mat-card-title>
       </mat-card-header>

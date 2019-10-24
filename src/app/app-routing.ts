@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AboutComponent} from './about/about.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {OperatorViewComponent} from './hmi/operator-view/operator-view.component';
 import {LogComponent} from './log/log.component';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
@@ -17,14 +18,15 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'modules', component: ModuleViewComponent},
   {path: 'servicelauncher', component: ServiceLauncherComponent},
-  {path: 'modules/new', component: NewModuleComponent},
   {path: 'logs', component: LogComponent},
   {path: 'player', component: PlayerComponent},
   {path: 'recipe', component: RecipeOverviewComponent},
   {path: 'recipe/:id', component: RecipeDetailComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'trendview', component: TimeSeriesViewComponent},
-  {path: 'about', component: AboutComponent}
+  {path: 'about', component: AboutComponent},
+  {path: 'hmi', component: OperatorViewComponent}
+
 ];
 
 @NgModule({

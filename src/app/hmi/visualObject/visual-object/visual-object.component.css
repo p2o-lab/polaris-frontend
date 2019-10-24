@@ -1,0 +1,8 @@
+.visualObject {
+  transition: all ease 0.2s;
+  stroke-width: 1.5;
+  stroke: #000000;
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}

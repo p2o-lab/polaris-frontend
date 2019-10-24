@@ -1,0 +1,10 @@
+text {
+    stroke: none;
+    fill: black;
+    font-size: 10px;
+    font-style: normal;
+    font-variant: normal;
+}
+.active {
+    opacity: 0.5;
+}
