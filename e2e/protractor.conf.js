@@ -11,14 +11,14 @@ exports.config = {
   multiCapabilities: [{
     'browserName': 'chrome',
     'chromeOptions ': {
-      args: [ "--headless", "--no-sandbox" ]
+      args: [ "--headless", "--no-sandbox", "--disable-browser-side-navigation" ]
     }
   },
     {
       browserName: 'chrome',
-      'deviceName': 'Google Nexus 5',
+      'deviceName': 'Google Pixel 2',
       'chromeOptions ': {
-        args: [ "--headless", "--no-sandbox" ]
+        args: [ "--headless", "--no-sandbox", "--disable-browser-side-navigation" ]
       }
     }],
   directConnect: true,
@@ -26,7 +26,8 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 3000,
+    includeStackTrace: true,
     print: function() {}
   },
   onPrepare() {

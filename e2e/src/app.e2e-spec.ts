@@ -13,7 +13,11 @@ describe('workspace-project App', () => {
    */
   it('Show the loaded Message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toContain('Modules');
+    try {
+      expect(page.getParagraphText()).toContain('Modules');
+  } catch (e) {
+    return e;
+  }
   });
   it('should show module view component', () => {
     page.navigateTo();
