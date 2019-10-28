@@ -1,21 +1,21 @@
-<svg #operatorView [attr.viewBox]="viewBox">
-    <svg:g app-visual-object *ngFor="let object of outObjects"
-           [id]="object.id"
-           [type]="object.type"
-           [x]="object.x"
-           [y]="object.y"
-           [rotation]="object.rotation"
-    ></svg:g>
-  <svg:g app-connection *ngFor="let connection of outConnections"
-         [edge]="connection"
-  ></svg:g>
-</svg>
-
-<p>
-{{outObjects | json}}
-</p>
-
-
-<p>
-    {{outConnections | json}}
-</p>
+<h1 class="mat-h1">HMI</h1>
+<!--<button mat-raised-button color="primary" (click)="layout()">Layout</button>-->
+<mat-tab-group>
+    <mat-tab label="Test HMI">
+        <svg [attr.viewBox]="viewBox">
+            <svg:g app-visual-object *ngFor="let object of outObjects"
+                   [object]="object"/>
+            <svg:g app-connection *ngFor="let connection of outConnections"
+                   [edge]="connection"/>
+        </svg>
+    </mat-tab>
+    <mat-tab label="Dose HMI"> Content 2</mat-tab>
+    <mat-tab label="Debug">
+        <p>
+            {{visualObjects | json}}
+        </p>
+        <p>
+            {{outObjects | json}}
+        </p>
+    </mat-tab>
+</mat-tab-group>

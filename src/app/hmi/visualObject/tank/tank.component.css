@@ -1,0 +1,12 @@
+.fill-level {
+    fill: #4eacdf;
+    stroke-width: 0.5;
+}
+
+text {
+    stroke: none;
+    fill: black;
+    font-size: 10px;
+    font-style: normal;
+    font-variant: normal;
+}

@@ -28,6 +28,9 @@
         <mat-icon mat-list-icon>timeline</mat-icon>
         <span>TrendView</span>
       </a>
+      <a mat-list-item routerLink="/hmi" routerLinkActive="active">
+        <mat-icon mat-list-icon>dashboard</mat-icon><span>HMI</span>
+      </a>
       <a mat-list-item routerLink="/logs" routerLinkActive="active">
         <mat-icon mat-list-icon>history</mat-icon>
         <span (click)="checkOrientation('logs', currentOrientation)">Logs</span>

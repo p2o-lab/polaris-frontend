@@ -1,0 +1,8 @@
+<svg:g (click)="select()" [class.active]="active">
+  <circle r="10" cx="15" cy="15"/>
+  <path d="M 9,7 25,15 9,23"/>
+  <path d="M 5,15 0,15"/>
+  <path d="M 25,15 30,15"/>
+  <svg:text text-anchor="middle" x="15" y="35">{{active?'on':'off'}}</svg:text>
+  <svg:text x="15" y="0" text-anchor="middle">{{object.id}}</svg:text>
+</svg:g>

@@ -1,0 +1,10 @@
+<svg:g (click)="select()">
+  <path d="M 25,10 25,20 5,10 5,20 Z"/>
+  <circle r="2" cx="15" cy="15"/>
+  <path d="M 5,15 0,15" />
+  <path d="M 25,15 30,15" />
+  <!--<circle #input r="0.1" cx="-15" cy="0"  class="port input" orientation="up"/>
+  <path d="M 10,0 -15,0" class="port output" orientation="down"/>-->
+  <text x="15" y="30" text-anchor="middle">{{active?'open':'close'}}</text>
+  <text x="15" y="5" text-anchor="middle">{{object.id}}</text>
+</svg:g>

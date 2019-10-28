@@ -1,0 +1,14 @@
+<svg:g class="visualObject"
+       attr.transform="
+        translate({{object.x}},{{object.y}})
+        rotate({{object.rotation}},{{object.width/2}},{{object.height/2}})"
+        [attr.id]="object.id">
+<rect class="objectborder" x="0"  y="0" [attr.width]="object.width" [attr.height]="object.height"/>
+    <g *ngIf="object.type==='valve'" app-valve [object]="object"/>
+    <g *ngIf="object.type==='pump'" app-pump [object]="object"/>
+    <g *ngIf="object.type==='heatexchanger'" app-heat-exchanger [object]="object"/>
+    <g *ngIf="object.type==='base'" app-base-symbol [object]="object"/>
+    <g *ngIf="object.type==='tank'" app-tank [object]="object"/>
+
+   <!--<g id="1233445" #here />-->
+</svg:g>

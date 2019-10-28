@@ -6,3 +6,8 @@
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+
+.objectborder {
+  stroke-width: 0.5;
+  stroke: #888888;
+}

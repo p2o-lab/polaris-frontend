@@ -1,7 +1,31 @@
 import {Component, OnInit} from '@angular/core';
 import ELK from 'elkjs/lib/elk.bundled.js';
+import {NGXLogger} from 'ngx-logger';
+import {ElkJsonInterface, HmiService} from '../hmi.service';
 import {BaseSymbolComponent} from '../visualObject/base-symbol/base-symbol.component';
+import {HeatExchangerComponent} from '../visualObject/heat-exchanger/heat-exchanger.component';
 import {PumpComponent} from '../visualObject/pump/pump.component';
+import {ValveComponent} from '../visualObject/valve/valve.component';
+import {TankComponent} from '../visualObject/tank/tank.component';
+import {AbstractSymbolComponent} from '../visualObject/abstract-symbol.component';
+
+export interface ObjectInterface {
+    id: string;
+    type: string;
+    name?: string;
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+    rotation?: number;
+    properties?: object;
+    ports?: object[];
+}
+export interface EdgeInterface {
+    id: string;
+    sources: string[];
+    targets: string[];
+}
 
 @Component({
     selector: 'app-operator-view',
@@ -10,123 +34,59 @@ import {PumpComponent} from '../visualObject/pump/pump.component';
 })
 export class OperatorViewComponent implements OnInit {
 
-    public visualObjects = [
-        PumpComponent.getSymbolInformation('P001', 90),
-        PumpComponent.getSymbolInformation('P002', 45),
-        {
-            id: 'V001',
-            type: 'valve',
-            rotation: 0,
-            width: 30, height: 30,
-            x: 20, y: 20,
-            ports: [
-                { id: 'V001.In', x: 0, y: 15 },
-                { id: 'V001.Out', x: 30,  y: 15 }
-            ],
-            properties: {
-                portConstraints: 'FIXED_POS'
-
-            }
-        },
-        {
-            id: 'V002a',
-            type: 'valve',
-            rotation: 90,
-            x: 20, y: 50,
-            width: 30, height: 30,
-            ports: [
-                { id: 'V002.In', x: 0, y: 15 },
-                { id: 'V002.Out', x: 30,  y: 15 }
-            ],
-            properties: {
-                portConstraints: 'FIXED_POS'
-
-            }
-        },
-        {
-            id: 'V003',
-            type: 'valve',
-            rotation: 0,
-            width: 30, height: 30,
-            ports: [
-                { id: 'V003.In', x: 0, y: 15 },
-                { id: 'V003.Out', x: 30,  y: 15 }
-            ],
-            properties: {
-                portConstraints: 'FIXED_POS'
-
-            }
-        },
-        {
-            id: 'base001',
-            type: 'base',
-            rotation: 0,
-            width: BaseSymbolComponent.width, height: BaseSymbolComponent.height,
-            ports: [
-                { id: 'V004.In', x: 0, y: 15 },
-                { id: 'V004.Out', x: 30,  y: 15 }
-            ],
-            properties: {
-                portConstraints: 'FIXED_POS'
-
-            }
-        },
-        {
-            id: 'W001',
-            type: 'heatexchanger',
-            rotation: 0,
-            width: BaseSymbolComponent.width, height: BaseSymbolComponent.height,
-            ports: [
-                { id: 'W001.HIn', x: 0, y: 15 },
-                { id: 'W001.HOut', x: 30,  y: 15 },
-                { id: 'W001.CIn', x: 15, y: 5 },
-                { id: 'W001.COut', x: 15,  y: 25 }
-            ],
-            properties: {
-                portConstraints: 'FIXED_POS'
-
-            }
-        }
-    ];
-    public connections = [
-        {id: 'e1', sources: ['W001.HOut'], targets: ['V003.In']},
-        {id: 'e3', sources: ['P001.Out'], targets: ['V002.In']},
-        {id: 'e7', sources: ['P001.Out'], targets: ['V004.In']},
-        {id: 'e4', sources: ['V002.Out'], targets: ['P002.In']},
-        {id: 'e5', sources: ['P002.Out'], targets: ['V003.In']},
-        {id: 'e6', sources: ['V003.Out'], targets: ['P001.In']},
-        {id: 'e7', sources: ['V004.Out'], targets: ['W001.CIn']},
-        {id: 'e8', sources: ['W001.COut'], targets: ['P002.In']},
-        {id: 'e9', sources: ['P001.Out'], targets: ['W001.HIn']},
-    ];
-
-    public outObjects;
-
-    public outConnections;
+    public outObjects: ObjectInterface[];
+    public outConnections: EdgeInterface[];
 
     private viewBox: string;
+    private hmi: ElkJsonInterface;
 
-    constructor() {
+    constructor(
+        private hmiService: HmiService,
+        private logger: NGXLogger) {
     }
 
     ngOnInit() {
-        this.viewBox = `0 0 300 200`;
+        this.viewBox = `0 0 600 400`;
 
-        const elk = new ELK();
+        this.hmi = this.hmiService.getHmi('test');
+
+        this.hmi.children = this.prepare(this.hmi.children);
+        this.layout();
+    }
+
+    public prepare(input): ObjectInterface[] {
+        return input.map((object: ObjectInterface) => {
+            switch (object.type) {
+                case 'pump':
+                    return PumpComponent.getSymbolInformation(object);
+                case 'valve':
+                    return ValveComponent.getSymbolInformation(object);
+                case 'heatexchanger':
+                    return HeatExchangerComponent.getSymbolInformation(object);
+                case 'tank':
+                    return TankComponent.getSymbolInformation(object);
+                default:
+                    return BaseSymbolComponent.getSymbolInformation(object);
+            }
+        });
+    }
+
+    public async layout() {
+        this.logger.info('start layouting', this.hmi);
+        const elk: ELK = new ELK();
 
         const graph = {
             id: 'root',
             layoutOptions: {'elk.algorithm': 'layered'},
-            children: this.visualObjects,
-            edges: this.connections
+            ...this.hmi
         };
 
-        elk.layout(graph)
-            .then( (data) => {
-                this.outObjects = data.children;
-                this.outConnections = data.edges;
-            })
-            .catch(console.error);
+        console.log(this.hmi)
+        const data = await elk.layout(graph);
+        this.outObjects = data.children;
+        this.outConnections = data.edges;
+
+        this.logger.info('layouting finished', data.edges[0]);
     }
 
 }

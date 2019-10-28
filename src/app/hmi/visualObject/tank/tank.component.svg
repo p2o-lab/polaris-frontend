@@ -1,0 +1,7 @@
+<svg:g>
+  <svg:rect class="fill-level" width="30" [attr.height]="60*level/100" x="0" [attr.y]="60-(level/100*60)" />
+  <svg:rect width="30" height="60" x="0" y="0" />
+
+  <svg:text x="15" y="30" text-anchor="middle">{{object.id}}</svg:text>
+  <svg:text x="15" y="45" text-anchor="middle">{{level}}%</svg:text>
+</svg:g>

@@ -1,13 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ObjectInterface} from '../../operator-view/operator-view.component';
+import {AbstractSymbolComponent} from '../abstract-symbol.component';
 
 @Component({
-  selector: 'app-tank',
-  templateUrl: './tank.component.html',
+  selector: '[app-tank]',
+  templateUrl: './tank.component.svg',
   styleUrls: ['./tank.component.css']
 })
-export class TankComponent implements OnInit {
+export class TankComponent extends AbstractSymbolComponent implements OnInit {
+  static width: number = 30;
+  static height: number = 60;
 
-  constructor() { }
+  static getSymbolInformation(object: ObjectInterface): Partial<ObjectInterface> {
+    return {
+      ...super.getSymbolInformation(object),
+      type: 'tank',
+      ports: [
+        {
+          id: object.id + '.In',
+          x: 15,
+          y: 0
+        },
+        {
+          id: object.id + '.Out',
+          x: 15,
+          y: 60
+        }
+      ]
+    };
+  }
+
+  public level: number = 35;
 
   ngOnInit() {
   }

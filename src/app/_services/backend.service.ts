@@ -10,6 +10,7 @@ import {PlayerService} from './player.service';
 import {RecipeService} from './recipe.service';
 import {SettingsService} from './settings.service';
 import {WebsocketService} from './websocket.service';
+import {HmiService} from '../hmi/hmi.service';
 
 export interface VariableInterface {
     variableName: string;
@@ -77,6 +78,7 @@ export class BackendService {
                 public recipeService: RecipeService,
                 public playerService: PlayerService,
                 public moduleService: ModuleService,
+                public hmiService: HmiService,
                 private logger: NGXLogger) {
 
         this.connectToWebsocket();

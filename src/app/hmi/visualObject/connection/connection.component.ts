@@ -14,13 +14,19 @@ export class ConnectionComponent implements OnInit {
     set edge(edge: any) {
         this._edge = edge;
 
-        const startPoint = edge.sections[0].startPoint;
-        const bendPoints = edge.sections[0].bendPoints;
-        const endPoint = edge.sections[0].endPoint;
+        if (edge.sections) {
+            const startPoint = edge.sections[0].startPoint;
+            const endPoint = edge.sections[0].endPoint;
 
-        const bb = bendPoints ? bendPoints.reduce((acc, data) => acc + ' ' + data.x + ',' + data.y, '') : '';
-        this.path = `M ${startPoint.x},${startPoint.y} ${bb}
+            let bb = '';
+            if (edge.sections[0].bendPoints) {
+                const bendPoints = edge.sections[0].bendPoints;
+                bb = bendPoints ? bendPoints.reduce((acc, data) => acc + ' ' + data.x + ',' + data.y, '') : '';
+            }
+            this.path = `M ${startPoint.x},${startPoint.y} ${bb}
         ${endPoint.x},${endPoint.y} `;
+        }
+
     }
 
 

@@ -1,38 +1,35 @@
-import {Component, ComponentFactoryResolver, Input, OnInit, ViewChild} from '@angular/core';
-import {PumpComponent} from "../pump/pump.component";
+import {
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import {ObjectInterface} from '../../operator-view/operator-view.component';
 
 @Component({
   selector: '[app-visual-object]',
-  templateUrl: './visual-object.component.html',
+  templateUrl: './visual-object.component.svg',
   styleUrls: ['./visual-object.component.css']
 })
 export class VisualObjectComponent implements OnInit {
 
-  @Input() public id;
-  @Input() public x: number;
-  @Input() public y: number;
+  @Input() public object: ObjectInterface;
+  // TODO: https://angular.io/guide/dynamic-component-loader
+  // @ViewChild('here', {read: ViewContainerRef}) viewContainerRef: ViewContainerRef;
 
-  @Input() public rotation = 0;
+  /*const inputs = {
+    object: this.object
+  };*/
 
-  @Input() public type: string;
-
-
-
-    component = PumpComponent; //Math.random() > 0.5 ? ValveComponent : PumpComponent;
-
-
-    constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  /*constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  }*/
 
   ngOnInit() {
-      /*
-      let componentFactory = this.componentFactoryResolver.resolveComponentFactory(PumpComponent);
+    /*const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ValveComponent);
 
-      let viewContainerRef = this.adHost.viewContainerRef;
-      viewContainerRef.clear();
+    this.viewContainerRef.clear();
 
-      let componentRef = viewContainerRef.createComponent(componentFactory);
-
-      console.log(componentRef);
+    const componentRef = this.viewContainerRef.createComponent(componentFactory);
+    componentRef.instance.object = this.object;
 */
   }
 

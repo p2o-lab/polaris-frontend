@@ -24,6 +24,14 @@ import {AboutComponent} from './about/about.component';
 import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {OperatorViewComponent} from './hmi/operator-view/operator-view.component';
+import {BaseSymbolComponent} from './hmi/visualObject/base-symbol/base-symbol.component';
+import {ConnectionComponent} from './hmi/visualObject/connection/connection.component';
+import {HeatExchangerComponent} from './hmi/visualObject/heat-exchanger/heat-exchanger.component';
+import {PumpComponent} from './hmi/visualObject/pump/pump.component';
+import {TankComponent} from './hmi/visualObject/tank/tank.component';
+import {ValveComponent} from './hmi/visualObject/valve/valve.component';
+import {VisualObjectComponent} from './hmi/visualObject/visual-object/visual-object.component';
 import {LogComponent} from './log/log.component';
 import {MaterialModule} from './material/material.module';
 import {ModuleViewComponent} from './module-view/module-view.component';
@@ -45,14 +53,6 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
-import {VisualObjectComponent} from './hmi/visualObject/visual-object/visual-object.component';
-import {PumpComponent} from './hmi/visualObject/pump/pump.component';
-import {ValveComponent} from './hmi/visualObject/valve/valve.component';
-import {OperatorViewComponent} from './hmi/operator-view/operator-view.component';
-import {ConnectionComponent} from './hmi/visualObject/connection/connection.component';
-import {BaseSymbolComponent} from './hmi/visualObject/base-symbol/base-symbol.component';
-import {HeatExchangerComponent} from './hmi/visualObject/heat-exchanger/heat-exchanger.component';
-import {TankComponent} from './hmi/visualObject/tank/tank.component';
 
 moment.updateLocale('en', {
     relativeTime: {
