@@ -58,13 +58,11 @@
 <mat-card class="dashboard-card" *ngIf="virtualServices$ |async as virtualServices">
     <mat-card-header>
         <mat-card-title>
-            <h2 class="mat-h2">Virtual Services</h2>
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                <mat-icon>more_vert</mat-icon>
+            <h2 class="mat-h2 with-icon">Virtual Services
+            <button mat-icon-button (click)="instantiateVirtualService()">
+                <mat-icon>add</mat-icon>
             </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="instantiateVirtualService()">Instantiate new Virtual Service</button>
-            </mat-menu>
+            </h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content class="dashboard-card-content">
@@ -72,8 +70,7 @@
             <app-service-view *ngFor="let service of virtualServices" [service]="service" virtualService="true">
             </app-service-view>
             <div *ngIf="virtualServices.length==0">
-                No Virtual Service defined yet.
-                <button mat-raised-button (click)="instantiateVirtualService()"><mat-icon>add</mat-icon> Instantiate new Virtual Service</button>
+                <p>No Virtual Service defined yet.</p>
             </div>
         </mat-accordion>
     </mat-card-content>

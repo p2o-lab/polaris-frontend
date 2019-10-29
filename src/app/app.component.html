@@ -8,37 +8,37 @@
     [opened]="!(isHandset$ | async)">
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/player" routerLinkActive="active">
+      <a mat-list-item routerLink="/player" routerLinkActive="active" (click)="checkOrientation('playlist', currentOrientation)">
         <mat-icon mat-list-icon>playlist_play</mat-icon>
-        <span matBadgeOverlap="false" [matBadge]="(backend.playerService.player | async)?.playlist.length">Playlist</span>
+        <span matBadgeOverlap="false" [matBadge]="(backend.playerService.player | async)?.playlist.length" >Playlist</span>
       </a>
-      <a mat-list-item routerLink="/recipe" routerLinkActive="active">
+      <a mat-list-item routerLink="/recipe" routerLinkActive="active" (click)="checkOrientation('recipes', currentOrientation)">
         <mat-icon mat-list-icon>receipt</mat-icon>
-        <span matBadgeOverlap="false" [matBadge]="(backend.recipeService.recipes | async)?.length">Recipes</span>
+        <span matBadgeOverlap="false" [matBadge]="(backend.recipeService.recipes | async)?.length" >Recipes</span>
       </a>
-      <a mat-list-item routerLink="/modules" routerLinkActive="active">
+      <a mat-list-item routerLink="/modules" routerLinkActive="active" (click)="checkOrientation('modules', currentOrientation)">
         <mat-icon mat-list-icon>view_module</mat-icon>
-        <span matBadgeOverlap="false" [matBadge]="(backend.moduleService.modules | async)?.length">Modules</span>
+        <span matBadgeOverlap="false" [matBadge]="(backend.moduleService.modules | async)?.length" >Modules</span>
       </a>
-      <a mat-list-item routerLink="/servicelauncher" routerLinkActive="active">
+      <a mat-list-item routerLink="/servicelauncher" routerLinkActive="active" (click)="checkOrientation('servicelauncher', currentOrientation)">
         <mat-icon mat-list-icon>donut_large</mat-icon>
         <span>Service Launcher</span>
       </a>
-      <a mat-list-item routerLink="/trendview" routerLinkActive="active">
+      <a mat-list-item routerLink="/trendview" routerLinkActive="active" (click)="checkOrientation('trendview', currentOrientation)">
         <mat-icon mat-list-icon>timeline</mat-icon>
         <span>TrendView</span>
       </a>
       <a mat-list-item routerLink="/logs" routerLinkActive="active">
         <mat-icon mat-list-icon>history</mat-icon>
-        Logs
+        <span (click)="checkOrientation('logs', currentOrientation)">Logs</span>
       </a>
-      <a mat-list-item routerLink="/settings" routerLinkActive="active">
+      <a mat-list-item routerLink="/settings" routerLinkActive="active" (click)="checkOrientation('settings', currentOrientation)">
         <mat-icon mat-list-icon>settings</mat-icon>
-        Settings
+        <span>Settings</span>
       </a>
-      <a mat-list-item routerLink="/about" routerLinkActive="active">
+      <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="checkOrientation('about', currentOrientation)">
         <mat-icon mat-list-icon>help</mat-icon>
-        About
+        <span>About</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>

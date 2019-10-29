@@ -2,9 +2,9 @@
 
 @include mat-core();
 
-$pfe-app-primary: mat-palette($md-blue, 500, 300, 900);
-$pfe-app-accent : mat-palette($md-orange, 500, 300, 900);
-$pfe-app-warn : mat-palette($md-red, 500, 300, 900);
+$pfe-app-primary: mat-palette($mat-blue, 500, 300, 900);
+$pfe-app-accent : mat-palette($mat-orange, 500, 300, 900);
+$pfe-app-warn : mat-palette($mat-red, 500, 300, 900);
 
 $pfe-app-theme: mat-light-theme($pfe-app-primary, $pfe-app-accent, $pfe-app-warn);
 

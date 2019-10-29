@@ -166,4 +166,27 @@ describe('workspace-project App', () => {
     // check if the radius is 48, what means it expanded
     expect(element(by.tagName('cdk-overlay-container')).element(by.tagName('div')).isPresent()).toBeFalsy();
   });
+  /*
+  Ambient-Light
+   */
+  xit('should switch to dark theme when forced', () => {
+    page.navigateTo();
+    // switch to settings screen
+    element(by.css('[routerLink="/settings"]')).click();
+    // click on force dark theme checkbox
+    element(by.name('forceDarkmode')).click();
+    browser.debugger();
+    // check if the theme has changed
+    expect(element(by.tagName('app-root')).getAttribute('class')).toEqual('deeppurple-amber-dark');
+  });
+  xit('should switch back to light theme when forced', () => {
+    page.navigateTo();
+    // switch to settings screen
+    element(by.css('[routerLink="/settings"]')).click();
+    // click on force dark theme checkbox
+    element(by.name('forceDarkmode')).click();
+    element(by.name('forceDarkmode')).click();
+    // check if the theme has changed
+    expect(element(by.tagName('app-root')).getAttribute('class')).toEqual('indigo-purple');
+  });
 });
