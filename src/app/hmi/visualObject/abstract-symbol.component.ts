@@ -5,7 +5,7 @@ export abstract class AbstractSymbolComponent {
     static width: number = 30;
     static height: number = 30;
 
-    static getXY(x: number, y: number, rotation: number = 0): { x: number, y: number } {
+    static getXY(x: Readonly<number>, y: Readonly<number>, rotation: Readonly<number> = 0): { x: number, y: number } {
         const xCenter = x - this.width / 2;
         const yCenter = y - this.height / 2;
         const xRotated = xCenter * Math.cos(rotation * Math.PI / 180) - yCenter * Math.sin(rotation * Math.PI / 180);
@@ -16,7 +16,7 @@ export abstract class AbstractSymbolComponent {
         };
     }
 
-    static getSymbolInformation(object: MtpHmiObject): MtpHmiObject {
+    static getSymbolInformation(object: Readonly<MtpHmiObject>): MtpHmiObject {
         return {
             id: object.id,
             name: object.name || object.id,

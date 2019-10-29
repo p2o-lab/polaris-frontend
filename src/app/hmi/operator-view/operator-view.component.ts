@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import ELK from 'elkjs/lib/elk.bundled.js';
 import {NGXLogger} from 'ngx-logger';
-import {ElkEdge, ElkJsonInterface, ElkNode, HmiService, MtpHmiJson, MtpHmiObject} from '../hmi.service';
+import {ElkEdge, ElkNode} from '../elkjs';
+import {HmiService, MtpHmiJson, MtpHmiObject} from '../hmi.service';
 import {BaseSymbolComponent} from '../visualObject/base-symbol/base-symbol.component';
 import {HeatExchangerComponent} from '../visualObject/heat-exchanger/heat-exchanger.component';
 import {PumpComponent} from '../visualObject/pump/pump.component';
-import {ValveComponent} from '../visualObject/valve/valve.component';
 import {TankComponent} from '../visualObject/tank/tank.component';
-
+import {ValveComponent} from '../visualObject/valve/valve.component';
 
 @Component({
     selector: 'app-operator-view',
