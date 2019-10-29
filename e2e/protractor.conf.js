@@ -8,19 +8,25 @@ exports.config = {
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-  capabilities: {
+  multiCapabilities: [{
     'browserName': 'chrome',
     'chromeOptions ': {
-      args: [ "--headless", "--no-sandbox", "--disable-browser-side-navigation" ]
+      args: [ "--headless", "--no-sandbox" ]
     }
   },
+    {
+      'browserName': 'chrome',
+      'deviceName': 'Pixel 2',
+      'chromeOptions ': {
+        args: [ "--headless", "--no-sandbox" ]
+      }
+    }],
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 3000,
-    includeStackTrace: true,
+    defaultTimeoutInterval: 30000,
     print: function() {}
   },
   onPrepare() {
