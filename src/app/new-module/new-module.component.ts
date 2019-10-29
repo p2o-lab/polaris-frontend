@@ -4,6 +4,7 @@ import {ModuleInterface, ModuleOptions} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-new-module',
@@ -13,6 +14,7 @@ import {ModuleService} from '../_services/module.service';
 export class NewModuleComponent implements OnInit {
 
     authenticationOption: 'anonymous' | 'password' | 'certificate';
+    firstFormGroup: FormGroup;
 
     @ViewChild('stepper', {static: false}) private myStepper: MatStepper;
 
@@ -21,7 +23,8 @@ export class NewModuleComponent implements OnInit {
                 private moduleService: ModuleService,
                 private dialogRef: MatDialogRef<NewModuleComponent>,
                 private snackBar: MatSnackBar,
-                private logger: NGXLogger) {
+                private logger: NGXLogger,
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -30,6 +33,12 @@ export class NewModuleComponent implements OnInit {
         } else {
             this.authenticationOption = 'anonymous';
         }
+
+        this.firstFormGroup = this.formBuilder.group({
+            id: [Validators.required, Validators.minLength(3)],
+            opcua: [Validators.required, Validators.pattern('opc.tcp://(.*)')]
+        });
+
     }
 
     public addModule() {

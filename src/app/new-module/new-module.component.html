@@ -1,23 +1,19 @@
 <h1 mat-dialog-title>Load new Process Equipment Assembly</h1>
 <mat-dialog-content>
     <mat-vertical-stepper #stepper>
-        <mat-step label="Identification">
-            <form>
+        <mat-step label="Identification & Connection" [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
                 <mat-form-field>
                     <input [(ngModel)]="module.id" matInput name="id" required type="text"
-                           placeholder="ID">
+                           placeholder="ID" formControlName="id">
                 </mat-form-field>
                 <mat-form-field>
-                    <input [(ngModel)]="module.description" matInput name="description" placeholder="PEA description"
-                           type="text">
+                    <input [(ngModel)]="module.description" matInput name="description"
+                           placeholder="Optional description of PEA" type="text">
                 </mat-form-field>
-            </form>
-        </mat-step>
-        <mat-step label="Edit Connection">
-            <form>
                 <mat-form-field>
                     <input [(ngModel)]="module.opcua_server_url" matInput name="opcua"
-                           placeholder="OPC UA Server URL" required type="text">
+                           placeholder="OPC UA Server URL" required type="text" formControlName="opcua">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Authentication Settings</mat-label>
@@ -59,6 +55,6 @@
     </mat-vertical-stepper>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button (click)="addModule()" color="primary" mat-raised-button>Add PEA</button>
-    <button color="warn" mat-button mat-dialog-close>Cancel</button>
+    <button color="warn" mat-stroked-button mat-dialog-close>Cancel</button>
+    <button (click)="addModule()" color="primary" mat-raised-button [disabled]="!firstFormGroup.valid">Add PEA</button>
 </mat-dialog-actions>

@@ -8,8 +8,8 @@
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button (click)="instantiate()">Instantiate</button>
-    <button type="button" mat-button (click)="imgFileInput.click()">Load from file</button>
     <input hidden type="file" #imgFileInput (change)="previewFile($event)"/>
-    <button mat-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-stroked-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-raised-button (click)="imgFileInput.click()">Load from file</button>
+    <button mat-raised-button color="primary" (click)="instantiate()">Instantiate</button>
 </mat-dialog-actions>
