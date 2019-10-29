@@ -1,40 +1,36 @@
 <h1 mat-dialog-title>Load new Process Equipment Assembly</h1>
 <mat-dialog-content>
     <mat-vertical-stepper #stepper>
-        <mat-step label="Identification">
-            <form>
+        <mat-step label="Identification & Connection" [stepControl]="formGroup">
+            <form [formGroup]="formGroup">
                 <mat-form-field>
-                    <input [(ngModel)]="module.id" matInput name="id" required type="text"
-                           placeholder="ID">
+                    <input matInput name="id" required type="text"
+                           placeholder="ID" formControlName="id">
                 </mat-form-field>
                 <mat-form-field>
-                    <input [(ngModel)]="module.description" matInput name="description" placeholder="PEA description"
-                           type="text">
+                    <input matInput name="description"
+                           placeholder="Optional description of PEA" type="text" formControlName="description">
                 </mat-form-field>
-            </form>
-        </mat-step>
-        <mat-step label="Edit Connection">
-            <form>
                 <mat-form-field>
-                    <input [(ngModel)]="module.opcua_server_url" matInput name="opcua"
-                           placeholder="OPC UA Server URL" required type="text">
+                    <input matInput name="opcua"
+                           placeholder="OPC UA Server URL" required type="text" formControlName="opcua">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Authentication Settings</mat-label>
-                    <mat-select [(value)]="authenticationOption">
+                    <mat-select formControlName="authentication">
                         <mat-option value="anonymous">Anonymous</mat-option>
                         <mat-option value="password">Username/Password</mat-option>
                         <mat-option value="certificate" disabled>Certificate</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div *ngIf="authenticationOption=='password'">
+                <div [hidden]="formGroup.value.authentication!=='password'">
                 <mat-form-field>
-                    <input [(ngModel)]="module.username" matInput name="username" placeholder="OPC UA username" required
-                           type="text">
+                    <input matInput name="username" placeholder="OPC UA username" required
+                           type="text" formControlName="username">
                 </mat-form-field>
                 <mat-form-field>
-                    <input [(ngModel)]="module.password" matInput name="password" placeholder="OPC UA password" required
-                           type="password">
+                    <input matInput name="password" placeholder="OPC UA password" required
+                           type="password" formControlName="password">
                 </mat-form-field>
                 </div>
             </form>
@@ -59,6 +55,6 @@
     </mat-vertical-stepper>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button (click)="addModule()" color="primary" mat-raised-button>Add PEA</button>
-    <button color="warn" mat-button mat-dialog-close>Cancel</button>
+    <button color="warn" mat-stroked-button mat-dialog-close>Cancel</button>
+    <button (click)="addModule()" color="primary" mat-raised-button [disabled]="!formGroup.valid">Add PEA</button>
 </mat-dialog-actions>

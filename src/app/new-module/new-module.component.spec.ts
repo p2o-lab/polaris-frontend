@@ -1,17 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MAT_DIALOG_DATA,
-    MatChipsModule,
-    MatDialogModule,
     MatDialogRef,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatStepperModule
 } from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -19,6 +12,7 @@ import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';
 import {settingsServiceStub} from '../_services/settings.service.spec';
 import {WebsocketService, websocketServiceStub} from '../_services/websocket.service';
+import {MaterialModule} from '../material/material.module';
 import {NewModuleComponent} from './new-module.component';
 
 describe('NewModuleComponent', () => {
@@ -31,16 +25,11 @@ describe('NewModuleComponent', () => {
             imports: [
                 FormsModule,
                 HttpClientTestingModule,
-                MatSelectModule,
-                MatFormFieldModule,
-                MatSnackBarModule,
-                MatStepperModule,
-                MatChipsModule,
-                MatInputModule,
-                MatDialogModule,
+                MaterialModule,
                 NoopAnimationsModule,
                 RouterTestingModule,
-                LoggerTestingModule
+                LoggerTestingModule,
+                ReactiveFormsModule
             ],
             providers: [
                 {provide: SettingsService, useValue: settingsServiceStub},
@@ -64,7 +53,7 @@ describe('NewModuleComponent', () => {
     });
 
     it('be anonymous without module options', () => {
-        expect(component.authenticationOption).toEqual('anonymous');
+        expect(component.formGroup.value.authentication).toEqual('anonymous');
     });
 
 });
