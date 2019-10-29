@@ -8,19 +8,12 @@ exports.config = {
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-  multiCapabilities: [{
+  capabilities: {
     'browserName': 'chrome',
     'chromeOptions ': {
       args: [ "--headless", "--no-sandbox", "--disable-browser-side-navigation" ]
     }
   },
-    {
-      browserName: 'chrome',
-      'deviceName': 'Google Pixel 2',
-      'chromeOptions ': {
-        args: [ "--headless", "--no-sandbox", "--disable-browser-side-navigation" ]
-      }
-    }],
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
