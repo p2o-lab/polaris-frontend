@@ -3,7 +3,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import {ObjectInterface} from '../../operator-view/operator-view.component';
+import {MtpHmiObject} from '../../hmi.service';
 
 @Component({
   selector: '[app-visual-object]',
@@ -12,7 +12,8 @@ import {ObjectInterface} from '../../operator-view/operator-view.component';
 })
 export class VisualObjectComponent implements OnInit {
 
-  @Input() public object: ObjectInterface;
+  @Input() public object: MtpHmiObject;
+
   // TODO: https://angular.io/guide/dynamic-component-loader
   // @ViewChild('here', {read: ViewContainerRef}) viewContainerRef: ViewContainerRef;
 

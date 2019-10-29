@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
-import {ObjectInterface} from '../../operator-view/operator-view.component';
-import {subscribeOn} from 'rxjs/operators';
+import {MtpHmiObject} from '../../hmi.service';
 
 @Component({
     selector: '[app-base-symbol]',
@@ -12,7 +11,7 @@ export class BaseSymbolComponent extends AbstractSymbolComponent implements OnIn
     static width: number = 30;
     static height: number = 30;
 
-    static getSymbolInformation(object: ObjectInterface): Partial<ObjectInterface> {
+    static getSymbolInformation(object: MtpHmiObject): MtpHmiObject {
         return {
             ...super.getSymbolInformation(object),
             type: 'base',

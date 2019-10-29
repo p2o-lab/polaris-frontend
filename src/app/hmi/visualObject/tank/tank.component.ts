@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ObjectInterface} from '../../operator-view/operator-view.component';
+import {MtpHmiObject} from '../../hmi.service';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
 
 @Component({
@@ -11,7 +11,7 @@ export class TankComponent extends AbstractSymbolComponent implements OnInit {
   static width: number = 30;
   static height: number = 60;
 
-  static getSymbolInformation(object: ObjectInterface): Partial<ObjectInterface> {
+  static getSymbolInformation(object: MtpHmiObject): MtpHmiObject {
     return {
       ...super.getSymbolInformation(object),
       type: 'tank',

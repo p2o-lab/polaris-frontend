@@ -1,14 +1,90 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import * as hmiJson from './asset/hmi_dose.json';
 import {NGXLogger} from 'ngx-logger';
 import {SettingsService} from '../_services/settings.service';
-import {EdgeInterface, ObjectInterface} from './operator-view/operator-view.component';
+import * as hmiJson from './asset/hmi_dose.json';
+
+export interface MtpHmiJson {
+    children: MtpHmiObject[];
+    edges: ElkEdge[];
+}
 
 export interface ElkJsonInterface {
-    children: ObjectInterface[];
-    edges: EdgeInterface[];
+    children: ElkNode[];
+    edges: ElkEdge[];
+}
+
+export interface ElkObject {
+    id: string;
+    layoutOptions?: object;
+}
+
+export interface ElkNodePortLabel extends ElkObject {
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+    labels?: ElkLabel[];
+}
+
+export interface ElkNode extends ElkNodePortLabel {
+    ports?: ElkPort[];
+    children?: ElkNode[];
+    edges?: ElkEdge[];
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface ElkPort extends ElkNodePortLabel {
+
+}
+
+export type ElkEdge = ElkPrimitiveEdge | ElkExtendedEdge;
+
+export interface ElkPoint {
+    x: number;
+    y: number;
+}
+
+export interface ElkLabel extends ElkObject {
+    text: string;
+}
+
+export interface ElkPrimitiveEdge extends ElkObject {
+    source: string;
+    sourcePort?: string;
+    target: string;
+    targetPort?: string;
+    sourcePoint?: ElkPoint;
+    targetPoint?: ElkPoint;
+    bendPoints?: ElkPoint[];
+    labels?: ElkLabel[];
+}
+
+export interface ElkExtendedEdge extends ElkObject {
+    sources: string[];
+    targets: string[];
+    sections?: ElkEdgeSection[];
+    labels?: ElkLabel[];
+}
+
+export interface ElkEdgeSection extends ElkObject {
+    startPoint: ElkPoint;
+    endPoint: ElkPoint;
+    bendPoints?: ElkPoint[];
+    incomingShape?: string;
+    outgoingShape?: string;
+    incomingSections?: ElkEdgeSection[];
+    outgoingSections?: ElkEdgeSection[];
+}
+
+
+
+export interface MtpHmiObject extends ElkNode {
+    type: string;
+    name?: string;
+    rotation?: number;
+    properties?: object;
 }
 
 @Injectable({
@@ -16,13 +92,14 @@ export interface ElkJsonInterface {
 })
 export class HmiService {
 
-
-    public testHmi: ElkJsonInterface = {
+    public testHmi: MtpHmiJson = {
         children: [
             {
                 id: 'P001',
                 name: 'P1',
-                type: 'pump'
+                type: 'pump',
+                x: 100,
+                y: 200
             },
             {
                 id: 'P002',
@@ -58,7 +135,7 @@ export class HmiService {
             }
         ],
         edges: [
-            {id: 'h1', sources: ['W001.HOut'], targets: ['V001.In']},
+            {id: 'h1', source: 'W001', sourcePort: 'W001.HOut', target: 'V001', targetPort: 'V001.In'},
             {id: 'h2', sources: ['V001.Out'], targets: ['T001.In']},
             {id: 'h3', sources: ['T001.Out'], targets: ['P001.In']},
             {id: 'h4', sources: ['P001.Out'], targets: ['W001.HIn']},
@@ -71,19 +148,18 @@ export class HmiService {
         ]
     };
 
-
     constructor(private http: HttpClient,
                 private settings: SettingsService,
                 private snackBar: MatSnackBar,
                 private logger: NGXLogger) {
     }
 
-    getHmi(hmi: string): ElkJsonInterface {
+    getHmi(hmi: string): MtpHmiJson {
         switch (hmi) {
             case 'test':
                 return this.testHmi;
             case 'dose':
-                return hmiJson as ElkJsonInterface;
+                return hmiJson as MtpHmiJson;
         }
     }
 

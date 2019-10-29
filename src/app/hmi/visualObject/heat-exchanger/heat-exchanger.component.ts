@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ObjectInterface} from '../../operator-view/operator-view.component';
+import {Component} from '@angular/core';
+import {MtpHmiObject} from '../../hmi.service';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
 
 @Component({
@@ -7,12 +7,12 @@ import {AbstractSymbolComponent} from '../abstract-symbol.component';
   templateUrl: './heat-exchanger.component.html',
   styleUrls: ['./heat-exchanger.component.css']
 })
-export class HeatExchangerComponent extends AbstractSymbolComponent implements OnInit {
+export class HeatExchangerComponent extends AbstractSymbolComponent {
 
   static width: number = 30;
   static height: number = 30;
 
-  static getSymbolInformation(object: ObjectInterface): Partial<ObjectInterface> {
+  static getSymbolInformation(object: MtpHmiObject): MtpHmiObject {
     return {
       ...super.getSymbolInformation(object),
       type: 'heatexchanger',
@@ -36,8 +36,4 @@ export class HeatExchangerComponent extends AbstractSymbolComponent implements O
       ]
     };
   }
-
-  ngOnInit() {
-  }
-
 }

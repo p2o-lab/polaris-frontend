@@ -1,31 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import ELK from 'elkjs/lib/elk.bundled.js';
 import {NGXLogger} from 'ngx-logger';
-import {ElkJsonInterface, HmiService} from '../hmi.service';
+import {ElkEdge, ElkJsonInterface, ElkNode, HmiService, MtpHmiJson, MtpHmiObject} from '../hmi.service';
 import {BaseSymbolComponent} from '../visualObject/base-symbol/base-symbol.component';
 import {HeatExchangerComponent} from '../visualObject/heat-exchanger/heat-exchanger.component';
 import {PumpComponent} from '../visualObject/pump/pump.component';
 import {ValveComponent} from '../visualObject/valve/valve.component';
 import {TankComponent} from '../visualObject/tank/tank.component';
-import {AbstractSymbolComponent} from '../visualObject/abstract-symbol.component';
 
-export interface ObjectInterface {
-    id: string;
-    type: string;
-    name?: string;
-    x?: number;
-    y?: number;
-    width?: number;
-    height?: number;
-    rotation?: number;
-    properties?: object;
-    ports?: object[];
-}
-export interface EdgeInterface {
-    id: string;
-    sources: string[];
-    targets: string[];
-}
 
 @Component({
     selector: 'app-operator-view',
@@ -34,11 +16,11 @@ export interface EdgeInterface {
 })
 export class OperatorViewComponent implements OnInit {
 
-    public outObjects: ObjectInterface[];
-    public outConnections: EdgeInterface[];
+    public outObjects: MtpHmiObject[];
+    public outConnections: ElkEdge[];
 
     private viewBox: string;
-    private hmi: ElkJsonInterface;
+    private hmi: MtpHmiJson;
 
     constructor(
         private hmiService: HmiService,
@@ -51,11 +33,13 @@ export class OperatorViewComponent implements OnInit {
         this.hmi = this.hmiService.getHmi('test');
 
         this.hmi.children = this.prepare(this.hmi.children);
+        this.outObjects = this.hmi.children as MtpHmiObject[];
+        //this.outConnections = this.hmi.edges;
         this.layout();
     }
 
-    public prepare(input): ObjectInterface[] {
-        return input.map((object: ObjectInterface) => {
+    public prepare(input: MtpHmiObject[]): MtpHmiObject[] {
+        return input.map((object: MtpHmiObject) => {
             switch (object.type) {
                 case 'pump':
                     return PumpComponent.getSymbolInformation(object);
@@ -72,21 +56,19 @@ export class OperatorViewComponent implements OnInit {
     }
 
     public async layout() {
-        this.logger.info('start layouting', this.hmi);
         const elk: ELK = new ELK();
 
-        const graph = {
+        const graph: ElkNode = {
             id: 'root',
             layoutOptions: {'elk.algorithm': 'layered'},
             ...this.hmi
         };
 
-        console.log(this.hmi)
         const data = await elk.layout(graph);
         this.outObjects = data.children;
         this.outConnections = data.edges;
 
-        this.logger.info('layouting finished', data.edges[0]);
+        this.logger.info('layouting finished', data);
     }
 
 }

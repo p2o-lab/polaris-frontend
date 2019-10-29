@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseSymbolComponent} from '../base-symbol/base-symbol.component';
+import {MtpHmiObject} from '../../hmi.service';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
-import {ObjectInterface} from '../../operator-view/operator-view.component';
 
 @Component({
     selector: 'svg:g[app-valve]',
@@ -13,7 +12,7 @@ export class ValveComponent extends AbstractSymbolComponent implements OnInit {
     static width: number = 30;
     static height: number = 30;
 
-    static getSymbolInformation(object: ObjectInterface): Partial<ObjectInterface> {
+    static getSymbolInformation(object: MtpHmiObject): MtpHmiObject {
         return {
             ...super.getSymbolInformation(object),
             type: 'valve',

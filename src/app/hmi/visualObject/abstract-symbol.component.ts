@@ -1,27 +1,29 @@
 import {Input} from '@angular/core';
-import {ObjectInterface} from '../operator-view/operator-view.component';
-import {cos} from 'snapsvg';
+import {MtpHmiObject} from '../hmi.service';
 
 export abstract class AbstractSymbolComponent {
     static width: number = 30;
     static height: number = 30;
 
     static getXY(x: number, y: number, rotation: number = 0): { x: number, y: number } {
-        const x_center = x - this.width / 2;
-        const y_center = y - this.height / 2;
-        const x_new = x_center * Math.cos(rotation * Math.PI / 180) - y_center * Math.sin(rotation * Math.PI / 180);
-        const y_new = x_center * Math.sin(rotation * Math.PI / 180) + y_center * Math.cos(rotation * Math.PI / 180);
+        const xCenter = x - this.width / 2;
+        const yCenter = y - this.height / 2;
+        const xRotated = xCenter * Math.cos(rotation * Math.PI / 180) - yCenter * Math.sin(rotation * Math.PI / 180);
+        const yRotated = xCenter * Math.sin(rotation * Math.PI / 180) + yCenter * Math.cos(rotation * Math.PI / 180);
         return {
-            x: x_new + this.width /2,
-            y: y_new + this.height/2
+            x: xRotated + this.width / 2,
+            y: yRotated + this.height / 2
         };
     }
 
-    static getSymbolInformation(object: ObjectInterface): Partial<ObjectInterface> {
+    static getSymbolInformation(object: MtpHmiObject): MtpHmiObject {
         return {
             id: object.id,
             name: object.name || object.id,
+            type: object.type || 'base',
             rotation: object.rotation || 0,
+            x: object.x || 10,
+            y: object.y || 10,
             width: this.width,
             height: this.height,
             properties: {
@@ -30,7 +32,6 @@ export abstract class AbstractSymbolComponent {
         };
     }
 
-
-    @Input() public object: ObjectInterface;
+    @Input() public object: MtpHmiObject;
     protected active: boolean = false;
 }
