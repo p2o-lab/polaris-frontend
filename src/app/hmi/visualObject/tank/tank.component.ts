@@ -35,4 +35,9 @@ export class TankComponent extends AbstractSymbolComponent implements OnInit {
   ngOnInit() {
   }
 
+  select() {
+    console.log('switch');
+    this.level += 10;
+  }
+
 }

@@ -29,6 +29,7 @@ export abstract class AbstractSymbolComponent {
             properties: {
                 portConstraints: 'FIXED_POS'
             }
+
         };
     }
 

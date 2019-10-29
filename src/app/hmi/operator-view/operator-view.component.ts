@@ -34,7 +34,7 @@ export class OperatorViewComponent implements OnInit {
 
         this.hmi.children = this.prepare(this.hmi.children);
         this.outObjects = this.hmi.children as MtpHmiObject[];
-        //this.outConnections = this.hmi.edges;
+        this.outConnections = this.hmi.edges;
         this.layout();
     }
 
@@ -58,15 +58,24 @@ export class OperatorViewComponent implements OnInit {
     public async layout() {
         const elk: ELK = new ELK();
 
+        /* https://rtsys.informatik.uni-kiel.de/elklive/json.html
+        *  https://github.com/OpenKieler/elkjs
+        *  https://www.eclipse.org/elk/reference.html
+        * */
         const graph: ElkNode = {
             id: 'root',
-            layoutOptions: {'elk.algorithm': 'layered'},
+            layoutOptions: {
+                'elk.algorithm': 'elk.layered',
+                'elk.direction': 'RIGHT',
+                'elk.aspectRatio': 2
+            },
             ...this.hmi
         };
 
         const data = await elk.layout(graph);
         this.outObjects = data.children;
         this.outConnections = data.edges;
+        this.viewBox = `${data.x} ${data.y} ${data.width} ${data.height}`;
 
         this.logger.info('layouting finished', data);
     }

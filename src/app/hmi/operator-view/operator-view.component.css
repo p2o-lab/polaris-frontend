@@ -1,3 +1,4 @@
 .operatorView {
-  border: 1px black solid;
+  #border: 1px black solid;
+  max-height: 700px ;
 }

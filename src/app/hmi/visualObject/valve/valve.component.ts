@@ -30,6 +30,7 @@ export class ValveComponent extends AbstractSymbolComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('add valve symbol', this.object.id);
     }
 
     select() {

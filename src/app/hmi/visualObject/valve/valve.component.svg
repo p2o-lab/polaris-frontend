@@ -1,4 +1,4 @@
-<svg:g (click)="select()">
+<svg:g (click)="select()" [class.active]="active">
   <path d="M 25,10 25,20 5,10 5,20 Z"/>
   <circle r="2" cx="15" cy="15"/>
   <path d="M 5,15 0,15" />

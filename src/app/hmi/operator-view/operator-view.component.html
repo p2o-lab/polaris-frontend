@@ -2,7 +2,7 @@
 <!--<button mat-raised-button color="primary" (click)="layout()">Layout</button>-->
 <mat-tab-group>
     <mat-tab label="Test HMI">
-        <svg [attr.viewBox]="viewBox">
+        <svg [attr.viewBox]="viewBox" class="operatorView">
             <svg:g app-visual-object *ngFor="let object of outObjects"
                    [object]="object"/>
             <svg:g app-connection *ngFor="let connection of outConnections"
@@ -10,12 +10,6 @@
         </svg>
     </mat-tab>
     <mat-tab label="Dose HMI"> Content 2</mat-tab>
-    <mat-tab label="Debug">
-        <p>
-            {{visualObjects | json}}
-        </p>
-        <p>
-            {{outObjects | json}}
-        </p>
+    <mat-tab label="HMI 3">
     </mat-tab>
 </mat-tab-group>

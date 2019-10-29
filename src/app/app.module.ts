@@ -26,7 +26,7 @@ import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {OperatorViewComponent} from './hmi/operator-view/operator-view.component';
 import {BaseSymbolComponent} from './hmi/visualObject/base-symbol/base-symbol.component';
-import {ConnectionComponent} from './hmi/visualObject/connection/connection.component';
+import {ConnectionComponent} from './hmi/connection/connection.component';
 import {HeatExchangerComponent} from './hmi/visualObject/heat-exchanger/heat-exchanger.component';
 import {PumpComponent} from './hmi/visualObject/pump/pump.component';
 import {TankComponent} from './hmi/visualObject/tank/tank.component';
