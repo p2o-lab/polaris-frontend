@@ -1,6 +1,7 @@
 // Import material theming functions
 @import '~@angular/material/theming';
 @import 'app/recipe-overview/recipe-overview.component';
+@import 'styles/theme';
 
 @import '~open-sans-fontface/open-sans.css';
 
@@ -25,6 +26,33 @@ $custom-typography: mat-typography-config(
 );
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($custom-typography);
+
+// Dynamic style switcher
+$themes-map: (
+  indigo-purple: (
+    primary-base: $mat-indigo,
+    accent-base: $mat-purple,
+  ),
+
+  deeppurple-amber: (
+    primary-base: $mat-deep-purple,
+    accent-base: $mat-amber,
+  ),
+
+  pink-bluegrey: (
+    primary-base: $mat-pink,
+    accent-base: $mat-blue-gray,
+  ),
+
+  purple-green: (
+    primary-base: $mat-purple,
+    accent-base: $mat-green,
+  ),
+);
+
+// Import the module and do the job:
+@import '~angular-material-dynamic-themes/themes-core';
+@include make-stylesheets($themes-map);
 
 /** Custom CSS here **/
 html, body {
