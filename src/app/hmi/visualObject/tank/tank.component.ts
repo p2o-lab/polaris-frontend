@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MtpHmiObject} from '../../hmi.service';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
+import {ElkPort} from '../../elkjs';
 
 @Component({
   selector: '[app-tank]',
@@ -25,7 +26,15 @@ export class TankComponent extends AbstractSymbolComponent implements OnInit {
           id: object.id + '.Out',
           x: 15,
           y: 60
-        }
+        },
+        ...object.ports.map((value: ElkPort) => {
+          const a = (object.y + object.height / 2 >= value.y) ?
+              this.getXY(15, 0, object.rotation) : this.getXY(15, 60, object.rotation);
+          return {
+            id: value.id,
+            ...a
+          };
+        })
       ]
     };
   }

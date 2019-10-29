@@ -4,7 +4,7 @@ import {AbstractSymbolComponent} from '../abstract-symbol.component';
 
 @Component({
   selector: '[app-heat-exchanger]',
-  templateUrl: './heat-exchanger.component.html',
+  templateUrl: './heat-exchanger.component.svg',
   styleUrls: ['./heat-exchanger.component.css']
 })
 export class HeatExchangerComponent extends AbstractSymbolComponent {

@@ -18,11 +18,11 @@ export class ValveComponent extends AbstractSymbolComponent implements OnInit {
             type: 'valve',
             ports: [
                 {
-                    id: object.id + '.In',
+                    id: object.ports[0] ? object.ports[0].id : object.id + '.In',
                     ...this.getXY(0, 15, object.rotation)
                 },
                 {
-                    id: object.id + '.Out',
+                    id: object.ports[1] ? object.ports[1].id : object.id + '.Out',
                     ...this.getXY(30, 15, object.rotation)
                 }
             ]

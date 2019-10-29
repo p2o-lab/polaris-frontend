@@ -30,7 +30,8 @@ export class OperatorViewComponent implements OnInit {
     ngOnInit() {
         this.viewBox = `0 0 600 400`;
 
-        this.hmi = this.hmiService.getHmi('test');
+        this.hmi = this.hmiService.getHmi('dose');
+        console.log(this.hmi)
 
         this.hmi.children = this.prepare(this.hmi.children);
         this.outObjects = this.hmi.children as MtpHmiObject[];
@@ -42,12 +43,15 @@ export class OperatorViewComponent implements OnInit {
         return input.map((object: MtpHmiObject) => {
             switch (object.type) {
                 case 'pump':
+                case '36419090':
                     return PumpComponent.getSymbolInformation(object);
                 case 'valve':
+                case '37010201':
                     return ValveComponent.getSymbolInformation(object);
                 case 'heatexchanger':
                     return HeatExchangerComponent.getSymbolInformation(object);
                 case 'tank':
+                case '36020190':
                     return TankComponent.getSymbolInformation(object);
                 default:
                     return BaseSymbolComponent.getSymbolInformation(object);

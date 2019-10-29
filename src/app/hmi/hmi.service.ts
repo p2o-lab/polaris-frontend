@@ -3,8 +3,8 @@ import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {NGXLogger} from 'ngx-logger';
 import {SettingsService} from '../_services/settings.service';
-import * as hmiJson from './asset/hmi_dose.json';
 import {ElkEdge, ElkNode} from './elkjs';
+import {hmiDoseJson} from './asset/hmi_dose';
 
 export interface MtpHmiJson {
     children: MtpHmiObject[];
@@ -109,7 +109,7 @@ export class HmiService {
             case 'test':
                 return this.testHmi;
             case 'dose':
-                return hmiJson as MtpHmiJson;
+                return hmiDoseJson as MtpHmiJson;
         }
     }
 

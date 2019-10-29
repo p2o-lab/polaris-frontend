@@ -4,5 +4,5 @@
   <path d="M 5,15 0,15"/>
   <path d="M 25,15 30,15"/>
   <svg:text text-anchor="middle" x="15" y="35">{{active?'on':'off'}}</svg:text>
-  <svg:text x="15" y="0" text-anchor="middle">{{object.id}}</svg:text>
+  <svg:text x="15" y="0" text-anchor="middle">{{object.name}}</svg:text>
 </svg:g>
