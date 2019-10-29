@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatStepper} from '@angular/material';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ModuleInterface, ModuleOptions} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {BackendService} from '../_services/backend.service';
@@ -13,39 +13,31 @@ import {ModuleService} from '../_services/module.service';
 })
 export class NewModuleComponent implements OnInit {
 
-    authenticationOption: 'anonymous' | 'password' | 'certificate';
-    firstFormGroup: FormGroup;
-
-    @ViewChild('stepper', {static: false}) private myStepper: MatStepper;
+    public formGroup: FormGroup;
 
     constructor(@Inject(MAT_DIALOG_DATA) public module: ModuleOptions,
                 private backend: BackendService,
                 private moduleService: ModuleService,
                 private dialogRef: MatDialogRef<NewModuleComponent>,
                 private snackBar: MatSnackBar,
-                private logger: NGXLogger,
-                private formBuilder: FormBuilder) {
+                private logger: NGXLogger) {
     }
 
     ngOnInit() {
-        if (this.module.username) {
-            this.authenticationOption = 'password';
-        } else {
-            this.authenticationOption = 'anonymous';
-        }
-
-        this.firstFormGroup = this.formBuilder.group({
-            id: [Validators.required, Validators.minLength(3)],
-            opcua: [Validators.required, Validators.pattern('opc.tcp://(.*)')]
+        this.formGroup = new FormGroup({
+            id: new FormControl(this.module.id, [Validators.required, Validators.minLength(3)]),
+            description: new FormControl(this.module.description),
+            opcua: new FormControl(this.module.opcua_server_url,
+                [Validators.required, Validators.pattern('opc.tcp://(.*)')]),
+            authentication: new FormControl(this.module.username ? 'password' : 'anonymous'),
+            username: new FormControl(this.module.username, Validators.minLength(3)),
+            password: new FormControl(this.module.password, Validators.minLength(3))
         });
-
     }
 
     public addModule() {
-        if (this.authenticationOption === 'anonymous') {
-            this.module.username = null;
-            this.module.password = null;
-        }
+        this.module = { ...this.module, ...this.formGroup.value};
+        this.logger.debug('Send new module options to backend', this.module);
         this.moduleService.addModule(this.module).subscribe(
             (data: ModuleInterface[]) => {
                 this.snackBar.open(`Module ${this.module.id} succesfully added`, 'Dismiss');
