@@ -30,8 +30,8 @@ export class NewModuleComponent implements OnInit {
             opcua: new FormControl(this.module.opcua_server_url,
                 [Validators.required, Validators.pattern('opc.tcp://(.*)')]),
             authentication: new FormControl(this.module.username ? 'password' : 'anonymous'),
-            username: new FormControl(this.module.username, Validators.minLength(3)),
-            password: new FormControl(this.module.password, Validators.minLength(3))
+            username: new FormControl(),
+            password: new FormControl()
         });
     }
 
