@@ -4,16 +4,16 @@
         <mat-step label="Identification & Connection" [stepControl]="formGroup">
             <form [formGroup]="formGroup">
                 <mat-form-field>
-                    <input matInput name="id" required type="text"
+                    <input matInput required type="text"
                            placeholder="ID" formControlName="id">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput name="description"
+                    <input matInput
                            placeholder="Optional description of PEA" type="text" formControlName="description">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput name="opcua"
-                           placeholder="OPC UA Server URL" required type="text" formControlName="opcua">
+                    <input matInput
+                           placeholder="OPC UA Server URL" required type="text" formControlName="opcua_server_url">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Authentication Settings</mat-label>
