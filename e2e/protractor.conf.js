@@ -14,13 +14,16 @@ exports.config = {
       args: [ "--headless", "--no-sandbox" ]
     }
   },
-    {
-      'browserName': 'chrome',
-      'deviceName': 'Pixel 2',
-      'chromeOptions ': {
-        args: [ "--headless", "--no-sandbox" ]
-      }
-    }],
+  {
+    'browserName': 'chrome',
+    'deviceName': 'Pixel 2',
+    'chromeOptions ': {
+      args: [ "--headless", "--no-sandbox" ]
+    }
+  },
+  {
+    'browserName': 'firefox',
+  }],
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
