@@ -1,15 +1,13 @@
 <h1 class="mat-h1">HMI</h1>
-<!--<button mat-raised-button color="primary" (click)="layout()">Layout</button>-->
+
 <mat-tab-group>
     <mat-tab label="Test HMI">
-        <svg [attr.viewBox]="viewBox" class="operatorView">
-            <svg:g app-visual-object *ngFor="let object of outObjects"
-                   [object]="object"/>
-            <svg:g app-connection *ngFor="let connection of outConnections"
-                   [edge]="connection"/>
-        </svg>
+        <app-hmi-view hmiName="test"></app-hmi-view>
     </mat-tab>
-    <mat-tab label="Dose HMI"> Content 2</mat-tab>
+    <mat-tab label="Dose HMI">
+        <app-hmi-view hmiName="dose"></app-hmi-view>
+    </mat-tab>
     <mat-tab label="HMI 3">
+        <app-hmi-view hmiName="thirdOption"></app-hmi-view>
     </mat-tab>
 </mat-tab-group>

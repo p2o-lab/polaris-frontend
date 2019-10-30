@@ -24,11 +24,13 @@ import {AboutComponent} from './about/about.component';
 import {AppRoutingModule} from './app-routing';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {ConnectionComponent} from './hmi/connection/connection.component';
 import {OperatorViewComponent} from './hmi/operator-view/operator-view.component';
 import {BaseSymbolComponent} from './hmi/visualObject/base-symbol/base-symbol.component';
-import {ConnectionComponent} from './hmi/connection/connection.component';
 import {HeatExchangerComponent} from './hmi/visualObject/heat-exchanger/heat-exchanger.component';
 import {PumpComponent} from './hmi/visualObject/pump/pump.component';
+import {SinkComponent} from './hmi/visualObject/sink/sink.component';
+import {SourceComponent} from './hmi/visualObject/source/source.component';
 import {TankComponent} from './hmi/visualObject/tank/tank.component';
 import {ValveComponent} from './hmi/visualObject/valve/valve.component';
 import {VisualObjectComponent} from './hmi/visualObject/visual-object/visual-object.component';
@@ -53,6 +55,7 @@ import {ServiceParameterDialogComponent} from './service-parameter-dialog/servic
 import {ServiceViewComponent} from './service-view/service-view.component';
 import {SettingsComponent} from './settings/settings.component';
 import {TimeSeriesViewComponent} from './time-series-view/time-series-view.component';
+import { HmiViewComponent } from './hmi/hmi-view/hmi-view.component';
 
 moment.updateLocale('en', {
     relativeTime: {
@@ -104,7 +107,10 @@ moment.relativeTimeThreshold('ss', 5);
         ConnectionComponent,
         BaseSymbolComponent,
         HeatExchangerComponent,
-        TankComponent
+        TankComponent,
+        SourceComponent,
+        SinkComponent,
+        HmiViewComponent
     ],
     imports: [
         BrowserModule,

@@ -9,6 +9,8 @@
     <g *ngIf="object.type==='heatexchanger'" app-heat-exchanger [object]="object"/>
     <g *ngIf="object.type==='base'" app-base-symbol [object]="object"/>
     <g *ngIf="object.type==='tank'" app-tank [object]="object"/>
+    <g *ngIf="object.type==='source'" app-source [object]="object"/>
+    <g *ngIf="object.type==='sink'" app-sink [object]="object"/>
 
    <!--<g id="1233445" #here />-->
 </svg:g>

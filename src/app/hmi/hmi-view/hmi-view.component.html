@@ -1,0 +1,7 @@
+<button mat-raised-button color="primary" (click)="layout()">Layout</button>
+<svg [attr.viewBox]="viewBox" class="operatorView">
+    <svg:g app-visual-object *ngFor="let object of outObjects"
+           [object]="object"/>
+    <svg:g app-connection *ngFor="let connection of outConnections"
+           [edge]="connection"/>
+</svg>
