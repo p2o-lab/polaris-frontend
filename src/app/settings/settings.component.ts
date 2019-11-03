@@ -1,5 +1,4 @@
-import {Location} from '@angular/common';
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
 import {version} from '../../../package.json';
 import {AmbientLightService} from '../_services/ambient-light.service';
@@ -20,8 +19,7 @@ export class SettingsComponent implements OnInit {
 
   private forceDarkmode: boolean = false;
 
-  constructor(private location: Location,
-              public settings: SettingsService,
+  constructor(public settings: SettingsService,
               public backend: BackendService,
               public ambientLight: AmbientLightService) {
     this.frontendVersion = version;
