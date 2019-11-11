@@ -4,16 +4,20 @@ import { AppPage } from './app.po';
 describe('workspace-project App', () => {
   let page: AppPage;
 
-  beforeEach(() => {
+  beforeEach((done) => {
     page = new AppPage();
+    done();
   });
 
   /*
   General
    */
-  it('Show the loaded Message', () => {
+  it('Show the loaded Message', (done) => {
     page.navigateTo();
     expect(page.getParagraphText()).toContain('Modules');
+    setTimeout(() => {
+      done();
+    }, 9000);
   });
   it('should show module view component', () => {
     page.navigateTo();

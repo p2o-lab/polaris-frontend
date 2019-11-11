@@ -6,7 +6,7 @@
         <mat-panel-description>
             <span class="serviceState">{{service.status}}</span>
             <small>
-                <span *ngIf="service.operationMode">{{service.operationMode}} - {{service.sourceMode}}</span>
+                {{service.operationMode}} - {{service.sourceMode}}
                 <span *ngIf="changeDuration">&nbsp;(since {{changeDuration}})</span>
             </small>
         </mat-panel-description>
