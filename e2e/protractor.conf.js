@@ -21,10 +21,11 @@ exports.config = {
       args: [ "--headless", "--no-sandbox" ]
     }
   },
-  {
+/*  {
     'browserName': 'firefox',
-  }],
-  directConnect: false,
+  }*/
+  ],
+  directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
