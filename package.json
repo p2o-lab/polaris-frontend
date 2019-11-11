@@ -1,6 +1,6 @@
 {
   "name": "@p2olab/polaris-frontend",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Markus Graube <markus.graube@tu-dresden.de>",
   "repository": "https://github.com/p2o-lab/polaris-interface.git",
   "homepage": "https://github.com/p2o-lab/polaris-interface",
@@ -30,7 +30,7 @@
     "@angular/service-worker": "^8.2.2",
     "@ngx-loading-bar/core": "^4.2.0",
     "@ngx-loading-bar/http-client": "^4.2.0",
-    "@p2olab/polaris-interface": "^2.3.0",
+    "@p2olab/polaris-interface": "~2.3.0",
     "@swimlane/ngx-charts": "^12.0.1",
     "@types/snapsvg": "^0.5.0",
     "angular-highcharts": "^8.0.3",
