@@ -45,7 +45,7 @@ export class NewModuleComponent implements OnInit {
                 this.moduleService.updateModuleState(data[0]);
             },
             (error) => {
-                this.snackBar.open(JSON.stringify(error.error), 'Dismiss', {duration: 20000});
+                this.snackBar.open(`Could not add PEA`, 'Dismiss', {duration: 20000});
             });
         this.dialogRef.close();
     }
