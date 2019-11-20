@@ -1,18 +1,18 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {ElkExtendedEdge, ElkNode, ElkPrimitiveEdge} from 'elkjs/lib/elk.bundled';
 import {NGXLogger} from 'ngx-logger';
 import {SettingsService} from '../_services/settings.service';
-import {ElkEdge, ElkNode} from './elkjs';
 import {hmiDoseJson} from './asset/hmi_dose';
 
 export interface MtpHmiJson {
     children: MtpHmiObject[];
-    edges: ElkEdge[];
+    edges: Array<ElkPrimitiveEdge | ElkExtendedEdge>;
 }
 
 export interface MtpHmiObject extends ElkNode {
-    type: string;
+    type?: string;
     name?: string;
     rotation?: number;
     properties?: object;
@@ -82,19 +82,19 @@ export class HmiService {
         ],
         edges: [
             {id: 'h1', source: 'W001', sourcePort: 'W001.HOut', target: 'V001', targetPort: 'V001.In'},
-            {id: 'h2', sources: ['V001.Out'], targets: ['T001.In']},
-            {id: 'h3', sources: ['T001.Out'], targets: ['V005.In']},
-            {id: 'h3', sources: ['V005.Out'], targets: ['P001.In']},
-            {id: 'h4', sources: ['P001.Out'], targets: ['V004.In']},
-            {id: 'h4', sources: ['V004.Out'], targets: ['W001.HIn']},
-            {id: 'h5', sources: ['P001.Out'], targets: ['V003.In']},
-            {id: 'h6', source: 'V003', sourcePort: 'V003.Out', target: 'T003', targetPort: 'T003.In'},
+            {id: 'h2', source: 'V001', sourcePort: 'V001.Out', target: 'T001', targetPort: 'T001.In'},
+            {id: 'h3', source: 'T001', sourcePort: 'T001.Out', target: 'V005', targetPort: 'V005.In'},
+            {id: 'h4', source: 'V005', sourcePort: 'V005.Out', target: 'P001', targetPort: 'P001.In'},
+            {id: 'h5', source: 'P001', sourcePort: 'P001.Out', target: 'V004', targetPort: 'V004.In'},
+            {id: 'h6', source: 'V004', sourcePort: 'V004.Out', target: 'W001', targetPort: 'W001.HIn'},
+            {id: 'h7', source: 'P001', sourcePort: 'P001.Out', target: 'V003', targetPort: 'V003.In'},
+            {id: 'h8', source: 'V003', sourcePort: 'V003.Out', target: 'T003', targetPort: 'T003.In'},
 
-            {id: 'c1', sources: ['base001.Out'], targets: ['V002.In']},
-            {id: 'c2', sources: ['V002.Out'], targets: ['T002.In']},
-            {id: 'c3', sources: ['T002.Out'], targets: ['P002.In']},
-            {id: 'c4', sources: ['P002.Out'], targets: ['W001.CIn']},
-            {id: 'c5', sources: ['W001.COut'], targets: ['T002.In']}
+            {id: 'c1', source: 'base001', sourcePort: 'base001.Out', target: 'V002', targetPort: 'V002.In'},
+            {id: 'c2', source: 'V002', sourcePort: 'V002.Out', target: 'T002', targetPort: 'T002.In'},
+            {id: 'c3', source: 'T002', sourcePort: 'T002.Out', target: 'P002', targetPort: 'P002.In'},
+            {id: 'c4', source: 'P002', sourcePort: 'P002.Out', target: 'W001', targetPort: 'W001.CIn'},
+            {id: 'c5', source: 'W001', sourcePort: 'W001.COut', target: 'T002', targetPort: 'T002.In'}
         ]
     };
 
@@ -110,6 +110,8 @@ export class HmiService {
                 return this.testHmi;
             case 'dose':
                 return hmiDoseJson as MtpHmiJson;
+            default:
+                return this.testHmi;
         }
     }
 

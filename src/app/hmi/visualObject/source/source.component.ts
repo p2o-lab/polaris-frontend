@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
 import {MtpHmiObject} from '../../hmi.service';
-import {ElkPort} from '../../elkjs';
+import {ElkPort} from 'elkjs';
 
 @Component({
     selector: '[app-source]',

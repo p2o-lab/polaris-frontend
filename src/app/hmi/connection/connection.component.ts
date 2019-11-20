@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ElkExtendedEdge} from '../elkjs';
+import {ElkExtendedEdge} from 'elkjs';
 
 @Component({
     selector: '[app-connection]',

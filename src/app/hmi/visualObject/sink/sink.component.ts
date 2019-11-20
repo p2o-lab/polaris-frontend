@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ElkPort} from '../../elkjs';
+import {ElkPort} from 'elkjs';
 import {MtpHmiObject} from '../../hmi.service';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
 

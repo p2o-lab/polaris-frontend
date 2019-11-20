@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractSymbolComponent} from '../abstract-symbol.component';
+import {ElkPort} from 'elkjs';
 import {MtpHmiObject} from '../../hmi.service';
-import {ElkPort} from '../../elkjs';
+import {AbstractSymbolComponent} from '../abstract-symbol.component';
 
 @Component({
     selector: '[app-base-symbol]',

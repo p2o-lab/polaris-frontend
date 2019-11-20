@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import ELK from 'elkjs/lib/elk.bundled.js';
+import {ElkEdge, ElkNode} from 'elkjs/lib/elk-api';
+import ELK from 'elkjs/lib/elk.bundled';
 import {NGXLogger} from 'ngx-logger';
-import {ElkEdge, ElkNode} from '../elkjs';
 import {HmiService, MtpHmiJson, MtpHmiObject} from '../hmi.service';
 import {BaseSymbolComponent} from '../visualObject/base-symbol/base-symbol.component';
 import {HeatExchangerComponent} from '../visualObject/heat-exchanger/heat-exchanger.component';
@@ -35,12 +35,10 @@ export class HmiViewComponent implements OnInit {
     this.viewBox = `0 0 1000 800`;
 
     this.hmi = this.hmiService.getHmi(this.hmiName);
-    console.log(this.hmiName, this.hmi)
 
     this.hmi.children = this.prepare(this.hmi.children);
     this.outObjects = this.hmi.children as MtpHmiObject[];
     this.outConnections = this.hmi.edges;
-    //this.layout();
   }
 
   public prepare(input: MtpHmiObject[]): MtpHmiObject[] {
@@ -80,7 +78,7 @@ export class HmiViewComponent implements OnInit {
       layoutOptions: {
         'elk.algorithm': 'elk.layered',
         'elk.direction': 'RIGHT',
-        'elk.aspectRatio': 2
+        'elk.aspectRatio': '2'
       },
       ...this.hmi
     };

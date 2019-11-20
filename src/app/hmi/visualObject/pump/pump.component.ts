@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MtpHmiObject} from '../../hmi.service';
 import {AbstractSymbolComponent} from '../abstract-symbol.component';
-import {ElkPort} from '../../elkjs';
+import {ElkPort} from 'elkjs';
 
 @Component({
     selector: '[app-pump]',
