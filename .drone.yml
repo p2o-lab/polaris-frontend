@@ -26,6 +26,12 @@ steps:
     - npm install
     - npm run build
 
+- name: codecov
+  image: robertstettner/drone-codecov
+  settings:
+    token:
+      from_secret: codecov_token
+
 - name: docker
   image: plugins/docker
   settings:
