@@ -49,6 +49,6 @@ npm run-script testserver
 docker pull p2olab/polaris-backend
 docker run -d -p 3000:3000 p2olab/polaris-backend
 ```
-### polaris-frontend setup
+### Run polaris-frontend
 
-Clone project, install dependencies and start the development server. The module view show now show the test PEA.
+Clone project, install dependencies (as described above) and start the development server. The test PEA can now added in the module view.
