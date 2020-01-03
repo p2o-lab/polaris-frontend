@@ -5,7 +5,13 @@ Polaris is a Process Orchestration Layer application for controlling process equ
 
 ## Features
 
-polaris-frontend shows
+polaris-frontend is able to provide several visualisations for orchestrating multiple PEAs:
+
+- Playlist for Recipes
+- Recipe View & Control
+- Module View & Control
+- Service Launcher
+- Trend View
 
 ## Installation and Deployment
 
@@ -51,4 +57,4 @@ docker run -d -p 3000:3000 p2olab/polaris-backend
 ```
 ### Run polaris-frontend
 
-Clone project, install dependencies (as described above) and start the development server. The test PEA can now added in the module view.
+Clone project, follow the above instructions to install dependencies and start the development server. The test PEA can now added in the module view.
