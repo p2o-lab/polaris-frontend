@@ -14,6 +14,12 @@ steps:
   - npm install
   - ng test --watch=false --progress=false
 
+- name: codecov
+  image: robertstettner/drone-codecov
+  settings:
+    token:
+      from_secret: codecov_token
+
 - name: e2e
   image: trion/ng-cli-karma:latest
   commands:
