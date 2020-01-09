@@ -1,0 +1,2577 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Created by yFiles for HTML 2.2.0.3-->
+<graphml xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.html/2.0/ygraphml.xsd " xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:demostyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/1.0" xmlns:icon-style="http://www.yworks.com/yed-live/icon-style/1.0" xmlns:bpmn="http://www.yworks.com/xml/yfiles-bpmn/2.0" xmlns:demotablestyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoTableStyle/1.0" xmlns:uml="http://www.yworks.com/yFilesHTML/demos/UMLDemoStyle/1.0" xmlns:compat="http://www.yworks.com/xml/yfiles-compat-arrows/1.0" xmlns:GraphvizNodeStyle="http://www.yworks.com/yFilesHTML/graphviz-node-style/1.0" xmlns:VuejsNodeStyle="http://www.yworks.com/demos/yfiles-vuejs-node-style/1.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:yjs="http://www.yworks.com/xml/yfiles-for-html/2.0/xaml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<key id="d0" for="node" attr.type="boolean" attr.name="Expanded" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/Expanded">
+		<default>true</default>
+	</key>
+	<key id="d1" for="node" attr.type="string" attr.name="url"/>
+	<key id="d2" for="node" attr.type="string" attr.name="description"/>
+	<key id="d3" for="node" attr.name="NodeLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeLabels"/>
+	<key id="d4" for="node" attr.name="NodeGeometry" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeGeometry"/>
+	<key id="d5" for="all" attr.name="UserTags" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/UserTags"/>
+	<key id="d6" for="node" attr.name="NodeStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeStyle"/>
+	<key id="d7" for="node" attr.name="NodeViewState" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/NodeViewState"/>
+	<key id="d8" for="edge" attr.type="string" attr.name="url"/>
+	<key id="d9" for="edge" attr.type="string" attr.name="description"/>
+	<key id="d10" for="edge" attr.name="EdgeLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeLabels"/>
+	<key id="d11" for="edge" attr.name="EdgeGeometry" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeGeometry"/>
+	<key id="d12" for="edge" attr.name="EdgeStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeStyle"/>
+	<key id="d13" for="edge" attr.name="EdgeViewState" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/EdgeViewState"/>
+	<key id="d14" for="port" attr.name="PortLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLabels"/>
+	<key id="d15" for="port" attr.name="PortLocationParameter" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLocationParameter">
+		<default>
+			<x:Static Member="y:FreeNodePortLocationModel.NodeCenterAnchored"/>
+		</default>
+	</key>
+	<key id="d16" for="port" attr.name="PortStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortStyle">
+		<default>
+			<x:Static Member="y:VoidPortStyle.Instance"/>
+		</default>
+	</key>
+	<key id="d17" for="port" attr.name="PortViewState" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/PortViewState"/>
+	<key id="d18" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData"/>
+	<data key="d18">
+		<y:SharedData>
+			<yjs:SolidColorFill x:Key="1" color="#FF607D8B"/>
+			<yjs:SolidColorFill x:Key="2" color="#FFA3F1BB"/>
+			<yjs:SolidColorFill x:Key="3" color="#FF607D8B"/>
+			<yjs:SolidColorFill x:Key="4" color="#FFA3F1BB"/>
+			<uml:UMLNodeStyle x:Key="5" fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+				<uml:UMLNodeStyle.model>
+					<uml:UMLClassModel stereotype="" constraint="" className="ModuleService" attributesOpen="true" operationsOpen="true">
+						<uml:UMLClassModel.attributes>
+							<x:Array Type="sys:Object">
+								<sys:String><![CDATA[- _modules: BehaviorSubject<ModuleInterface[]>]]></sys:String>
+								<sys:String><![CDATA[- _virtualServices: BehaviorSubject<VirtualServiceInterface[]>]]></sys:String>
+							</x:Array>
+						</uml:UMLClassModel.attributes>
+						<uml:UMLClassModel.operations>
+							<x:Array Type="sys:Object">
+								<sys:String><![CDATA[+ ModuleService(http: HttpClient, settings: SettingsService, snackBar: MatSnackBar, logger: NGXLogger)]]></sys:String>
+								<sys:String><![CDATA[+ updateService(moduleId: string, newService: ServiceInterface)]]></sys:String>
+								<sys:String><![CDATA[+ updateModuleState(moduleInterface: ModuleInterface)]]></sys:String>
+								<sys:String><![CDATA[+ updateVirtualServices(vservice: VirtualServiceInterface)]]></sys:String>
+								<sys:String><![CDATA[+ refreshModulesViaHttp()]]></sys:String>
+								<sys:String><![CDATA[+ refreshVirtualServicesViaHttp()]]></sys:String>
+								<sys:String><![CDATA[+ addModule(moduleOptions): Observable<ModuleInterface[]>]]></sys:String>
+								<sys:String><![CDATA[+ connect(module: string): Observable<ModuleInterface>]]></sys:String>
+								<sys:String><![CDATA[+ disconnect(module:string): Observable<ModuleInterface>]]></sys:String>
+								<sys:String><![CDATA[+ removeModule(module: string)]]></sys:String>
+								<sys:String><![CDATA[+ sendCommand(module: string, service: string, command: string, strategy: string, parameters, object[])]]></sys:String>
+								<sys:String><![CDATA[+ sendVirtualServiceCommand(service: string, command: string, parameters: object[])]]></sys:String>
+								<sys:String><![CDATA[+ configureService(module: ModuleInterface, service: ServiceInterface, strategyName?: string, parameterOption?: ParameterOptions[])]]></sys:String>
+								<sys:String><![CDATA[- removeModuleFromInternalStorage(id: string)]]></sys:String>
+								<sys:String><![CDATA[+ modules(): Oberservable<ModuleInterface[]>]]></sys:String>
+								<sys:String><![CDATA[+ virtualServices(): Observable<VirtualServiceInterface[]>]]></sys:String>
+							</x:Array>
+						</uml:UMLClassModel.operations>
+					</uml:UMLClassModel>
+				</uml:UMLNodeStyle.model>
+			</uml:UMLNodeStyle>
+			<yjs:PolylineEdgeStyle x:Key="6">
+				<yjs:PolylineEdgeStyle.stroke>
+					<yjs:Stroke fill="#FF000000" dashStyle="Dash"/>
+				</yjs:PolylineEdgeStyle.stroke>
+				<yjs:PolylineEdgeStyle.sourceArrow>
+					<yjs:Arrow type="TRIANGLE" stroke="#FF000000" fill="#FFFFFFFF"/>
+				</yjs:PolylineEdgeStyle.sourceArrow>
+			</yjs:PolylineEdgeStyle>
+			<yjs:Stroke x:Key="7" fill="#FF000000"/>
+			<yjs:Arrow x:Key="8" stroke="{y:GraphMLReference 7}" fill="#FF000000"/>
+			<yjs:Arrow x:Key="9" type="CROSS" stroke="#FF000000" fill="#FF000000" cropLength="5"/>
+			<yjs:PolylineEdgeStyle x:Key="10" stroke="{y:GraphMLReference 7}" targetArrow="{y:GraphMLReference 8}" sourceArrow="{y:GraphMLReference 9}"/>
+			<yjs:Stroke x:Key="11" fill="#FF000000"/>
+			<yjs:PolylineEdgeStyle x:Key="12" stroke="{y:GraphMLReference 11}">
+				<yjs:PolylineEdgeStyle.sourceArrow>
+					<yjs:Arrow type="DIAMOND" stroke="{y:GraphMLReference 11}" fill="#FFFFFFFF"/>
+				</yjs:PolylineEdgeStyle.sourceArrow>
+			</yjs:PolylineEdgeStyle>
+			<yjs:PolylineEdgeStyle x:Key="13" stroke="{y:GraphMLReference 7}" targetArrow="{y:GraphMLReference 8}"/>
+		</y:SharedData>
+	</data>
+	<graph id="G" edgedefault="directed">
+		<data key="d5">
+			<y:Json>{"version":"2.0.0","theme":{"name":"light","version":"1.0.0"},"layout":"layout-uml","config":{"noObf_useDrawingAsSketch":false,"noObf_selectedElementsIncrementally":false,"noObf_nodeToNodeDistance":30,"noObf_automaticEdgeGroupingEnabled":false,"noObf_considerNodeLabels":true,"noObf_edgeLabeling":0,"noObf_orientation":0}}</y:Json>
+		</data>
+		<node id="n0">
+			<data key="d4">
+				<y:RectD X="5915.274540286205" Y="1060" Width="300.42949085616164" Height="156"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="NewModuleComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ formGroup: FormGroup]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ NewModuleComponent(module: ModuleOptions)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ addModule()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7500000000000003,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5" Offset="7.389644451905042e-13,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.2500000000000021,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n1">
+			<data key="d4">
+				<y:RectD X="7543.068431153465" Y="1004" Width="697.0290107089423" Height="268"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ModuleViewComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ modules$: Observable<ModuleInterface[]>]]></sys:String>
+									<sys:String><![CDATA[+ virtualServices$: Observable<VirtualServiceInterface[]>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ModuleViewComponent(moduleService: ModuleService, dialog: MatDialog, backend: BackendService, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ connect(module: string)]]></sys:String>
+									<sys:String><![CDATA[+ disconnect (module: string)]]></sys:String>
+									<sys:String><![CDATA[+ remove(module: string)]]></sys:String>
+									<sys:String><![CDATA[+ configure(module: ModuleInterface)]]></sys:String>
+									<sys:String><![CDATA[+ instantiateVirtualService()]]></sys:String>
+									<sys:String><![CDATA[+ fileNameChanged(event)]]></sys:String>
+									<sys:String><![CDATA[+ addDefaultPort(opcuaServerUrl: string)]]></sys:String>
+									<sys:String><![CDATA[+ newModule()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999994,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666663,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333331,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999994,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n2">
+			<data key="d4">
+				<y:RectD X="846.8060553684525" Y="0" Width="745.9212225964284" Height="380"/>
+			</data>
+			<data key="d6">
+				<y:GraphMLReference ResourceKey="5"/>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p6">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p7">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p8">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p9">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p10">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p11">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n3">
+			<data key="d4">
+				<y:RectD X="3768.434523809524" Y="1092" Width="125" Height="92"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="MaterialModule" attributesOpen="false" operationsOpen="false">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+		</node>
+		<node id="n4">
+			<data key="d4">
+				<y:RectD X="7105.934148152454" Y="1044" Width="407.13408464747215" Height="188"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="LogComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ logs$: Observable<any>]]></sys:String>
+									<sys:String><![CDATA[+ logUrl: string]]></sys:String>
+									<sys:String><![CDATA[+ logVariableUrl: string]]></sys:String>
+									<sys:String><![CDATA[+ logServiceUrl: string]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ LogComponent(backend: BackendService, settings: SettingsService)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7499999999999991,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.25000000000000117,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666746,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000001,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333328,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n5">
+			<data key="d4">
+				<y:RectD X="5666.774206349206" Y="1092" Width="218.5" Height="92"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="DashboardComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.75,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.25,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n6">
+			<data key="d4">
+				<y:RectD X="5627.413929900464" Y="1812" Width="273.0864259133574" Height="124"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="AboutComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ apiDocUrl: string]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ AboutComponent(settings: SettingsService)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7499999999999992,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.250000000000002,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5" Offset="3.410605131648481e-13,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n7">
+			<data key="d4">
+				<y:RectD X="3237.114721264067" Y="1796" Width="819.94754159885" Height="156"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="New RecipeComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ recipe: string]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ NewRecipeComponent(dialogRef: MatDialogRef<NewRecipeComponent>, backend: RecipeService, snackBar: MatSnackBar, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ previewFile(event)]]></sys:String>
+									<sys:String><![CDATA[+ submitRecipe()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n8">
+			<data key="d4">
+				<y:RectD X="4087.062312339746" Y="1796" Width="925.1015657966992" Height="156"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="NewVirtualServiceComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ virtualService: string]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ NewVirtualServiceComponent(dialogRef: MatDialogRef<ServiceParameterDialogComponent>, backend: RecipeService, snackBar: MatSnackBar, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ previewFile(event)]]></sys:String>
+									<sys:String><![CDATA[+ instantiate()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999994,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999994,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n9">
+			<data key="d4">
+				<y:RectD X="1663.1380112337206" Y="1084" Width="311.7668346754156" Height="108"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="OrientationReferralSnackbarComponent" attributesOpen="false" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ OrientationReferralSnackbarComponent(data: any)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000002,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000002,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n10">
+			<data key="d4">
+				<y:RectD X="2852.852056432489" Y="1076" Width="730.5823950715308" Height="124"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ParameterChangeDialog" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ newParamOptions: ParameterOptions]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ParameterChangeDialogComponent(dialogRef: MatDialogRef<ParameterChangeDialogComponent>, param: ParameterInterface)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5" Offset="4.547473508864641e-13,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n11">
+			<data key="d4">
+				<y:RectD X="2922.240402324287" Y="1796" Width="284.87395725618796" Height="156"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ParameterViewComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ param: ParameterInterface]]></sys:String>
+									<sys:String><![CDATA[+ changed: EventEmitter<ParameterOptions>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ParameterViewComponent(dialog: MatDialog)]]></sys:String>
+									<sys:String><![CDATA[+ changeParameter()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000002,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n12">
+			<data key="d4">
+				<y:RectD X="4505.737144976883" Y="916" Width="796.6058687763932" Height="444"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="Player" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ player: PlayerInterface]]></sys:String>
+									<sys:String><![CDATA[+ currentRecipe: RecipeInterface]]></sys:String>
+									<sys:String><![CDATA[+ currentStep: StepOptions]]></sys:String>
+									<sys:String><![CDATA[+ timer: Subscription]]></sys:String>
+									<sys:String><![CDATA[+ changeDuration: string]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ Player(playerService: PlayerService, settings: SettingsService, snackBar: MatSnackBar, formatter: StepFormatterService, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ ngOnDestroy()]]></sys:String>
+									<sys:String><![CDATA[+ startAllowed()]]></sys:String>
+									<sys:String><![CDATA[+ stopAllowed()]]></sys:String>
+									<sys:String><![CDATA[+ pauseAllowed()]]></sys:String>
+									<sys:String><![CDATA[+ resetAllowed()]]></sys:String>
+									<sys:String><![CDATA[+ start()]]></sys:String>
+									<sys:String><![CDATA[+ reset()]]></sys:String>
+									<sys:String><![CDATA[+ pause()]]></sys:String>
+									<sys:String><![CDATA[+ resume()]]></sys:String>
+									<sys:String><![CDATA[+ stop()]]></sys:String>
+									<sys:String><![CDATA[+ forceTransition(nextStep)]]></sys:String>
+									<sys:String><![CDATA[+ remove(id: number)]]></sys:String>
+									<sys:String><![CDATA[+ getTime(time)]]></sys:String>
+									<sys:String><![CDATA[+ getDuration(startTime, endTime)]]></sys:String>
+									<sys:String><![CDATA[- updateDuration()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999956,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999956,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7499999999999999,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.24999999999999922,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n13">
+			<data key="d4">
+				<y:RectD X="1234.5166666666667" Y="552" Width="125" Height="92"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="OnDestroy" attributesOpen="false" operationsOpen="false">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n14">
+			<data key="d4">
+				<y:RectD X="2004.9051562913412" Y="1060" Width="817.9468302744602" Height="156"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="RecipeDetailComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ recipe$: Observable<RecipeInterface>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ RecipeDetailComponent(route: ActivatedRoute, backend: RecipeService, location: Location, formatter: StepFormatterService, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ back()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000001,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000001,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333335,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666669,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n15">
+			<data key="d4">
+				<y:RectD X="836.5319862467239" Y="1044" Width="796.6058687763932" Height="188"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="RecipeOverview" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ recipes: RecipeInterface[]: []]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ RecipeOverview(recipeService: RecipeService, playerService: PlayerService, snackBar: MatSnackBar, dialog: MatDialog, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ addToPlayList(id: string)]]></sys:String>
+									<sys:String><![CDATA[+ remove(id: string)]]></sys:String>
+									<sys:String><![CDATA[+ newRecipe()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666663,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333335,0"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7500000000000001,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.24999999999999992,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n16">
+			<data key="d4">
+				<y:RectD X="6400.704743386594" Y="900" Width="675.2294021157018" Height="476"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ServiceLauncherComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ module$: Observable<ModuleInterface[]>]]></sys:String>
+									<sys:String><![CDATA[+ moduleWithServices: ModuleInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ service: ServiceInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ pinnedServiceArray: ServiceInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ states: any[] = []]]></sys:String>
+									<sys:String><![CDATA[+ activeServices: any[]]]></sys:String>
+									<sys:String><![CDATA[+ data: any]]></sys:String>
+									<sys:String><![CDATA[+ sorting: string]]></sys:String>
+									<sys:String><![CDATA[+ strategyFormControl: FormControl]]></sys:String>
+									<sys:String><![CDATA[+ strategyParameterFormGroup: FormGroup]]></sys:String>
+									<sys:String><![CDATA[+ changeDuration: string]]></sys:String>
+									<sys:String><![CDATA[+ sortingOptions(default: string, activity: string, module: string, alphabetically: string, state: string)]]></sys:String>
+									<sys:String><![CDATA[+ sortingOptionsArray: string[] = ['default', 'alphabetisch', 'nach Modul', 'nach Zustand', 'nachAktivität']]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ServiceLauncherComponent(dialog: MatDialog, backend: ModuleService, snackBar: MatSnackBar, logger. NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ openDialog(service: ServiceInterface)]]></sys:String>
+									<sys:String><![CDATA[+ pinService(service: ServiceInterface)]]></sys:String>
+									<sys:String><![CDATA[+ onKey(event)]]></sys:String>
+									<sys:String><![CDATA[+ onSelect()]]></sys:String>
+									<sys:String><![CDATA[+ droppedInPinnedSection($event)]]></sys:String>
+									<sys:String><![CDATA[+ droppedInUnpinnedSection($event)]]></sys:String>
+									<sys:String><![CDATA[+ setAction(action: string, service)]]></sys:String>
+									<sys:String><![CDATA[+ sendCommand(command: string)]]></sys:String>
+									<sys:String><![CDATA[- getParameter(): ParameterOptions[]]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999967,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.24999999999999917,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7500000000000002,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n17">
+			<data key="d4">
+				<y:RectD X="681.531746031746" Y="1092" Width="125" Height="92"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="AfterViewInit" attributesOpen="false" operationsOpen="false">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n18">
+			<data key="d4">
+				<y:RectD X="832.4493264305197" Y="480" Width="342.06722015483354" Height="236"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ServiceLauncherButtonComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ currentService: ServiceInterface]]></sys:String>
+									<sys:String><![CDATA[+ openSettings: EventEmitter<any>]]></sys:String>
+									<sys:String><![CDATA[+ pinService: EventEmitter<any>]]></sys:String>
+									<sys:String><![CDATA[+ setAction: EventEmitter<any>]]></sys:String>
+									<sys:String><![CDATA[+ svg: any]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ServiceLauncherButtonComponent(dialog: MatDialog)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ ngAfterViewInit()]]></sys:String>
+									<sys:String><![CDATA[+ createNewButton(service, snap: Snap.Paper)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7499999999999999,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000001,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.2500000000000004,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n19">
+			<data key="d4">
+				<y:RectD X="35.000283158139496" Y="956" Width="586.531179715467" Height="364"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ServiceSettingsComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ currentService: ServiceInterface]]></sys:String>
+									<sys:String><![CDATA[+ serviceStrategies: StrategyInterface[]]]></sys:String>
+									<sys:String><![CDATA[+ currentStrategy: StrategyInterface]]></sys:String>
+									<sys:String><![CDATA[+ serviceParameter: ParameterInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ strategyParameter: ParameterInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ prevServiceParameters: ParameterInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ pervStrategyParameters: ParameterInterface[] = []]]></sys:String>
+									<sys:String><![CDATA[+ changeDuration: string]]></sys:String>
+									<sys:String><![CDATA[- timer: Subscription]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ServiceSettings(dialogRef: MatDialogRef<ServiceSettingsComponent>, data, snackBar: MatSnackBar)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ close()]]></sys:String>
+									<sys:String><![CDATA[+ apply()]]></sys:String>
+									<sys:String><![CDATA[+ reset()]]></sys:String>
+									<sys:String><![CDATA[+ showStrategyParameters()]]></sys:String>
+									<sys:String><![CDATA[+ ngOnDestroy()]]></sys:String>
+									<sys:String><![CDATA[- updateDuration()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n20">
+			<data key="d4">
+				<y:RectD X="229.92301088874183" Y="536" Width="572.5262004447386" Height="124"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ServiceParameterDialogComponent" attributesOpen="false" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ServiceParameterDialogComponent(dialogRef: MatDialogRef<ServiceParameterDialogComponent>, module: ModuleInterface, moduleService: ModuleService, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ save(parameterForm: NgForm)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n21">
+			<data key="d4">
+				<y:RectD X="3923.4345466191553" Y="964" Width="552.3023353331168" Height="348"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="ServiceViewComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ service: ServiceInterface]]></sys:String>
+									<sys:String><![CDATA[+ module: ModuleInterface]]></sys:String>
+									<sys:String><![CDATA[+ virtualService: boolean = false]]></sys:String>
+									<sys:String><![CDATA[+ strategyFormControl: FormControl]]></sys:String>
+									<sys:String><![CDATA[+ changeDuration: string]]></sys:String>
+									<sys:String><![CDATA[+ selectedStrategyId: string]]></sys:String>
+									<sys:String><![CDATA[- timer: Subscription]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ ServiceViewComponent(backend: ModuleService, snackBar: MatSnackBar, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ ngOnDestroy()]]></sys:String>
+									<sys:String><![CDATA[+ disabled()]]></sys:String>
+									<sys:String><![CDATA[+ sendCommand(command: string)]]></sys:String>
+									<sys:String><![CDATA[+ onChangeParameter(newParameter: ParameterOptions, continousParameter = false)]]></sys:String>
+									<sys:String><![CDATA[- getProcedureParameter(): ParameterOptions[]]]></sys:String>
+									<sys:String><![CDATA[- updateDuration()]]></sys:String>
+									<sys:String><![CDATA[+ selectedStrategy(): StrategyInterface]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000004,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000004,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.2500000000000002,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7499999999999998,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n22">
+			<data key="d4">
+				<y:RectD X="5332.34327340626" Y="1012" Width="304.4309135049412" Height="252"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="SettingsComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ backendVersion: string]]></sys:String>
+									<sys:String><![CDATA[+ frontendVersion: string]]></sys:String>
+									<sys:String><![CDATA[+ forceDarkModeCheckbox: MatCheckbox]]></sys:String>
+									<sys:String><![CDATA[- private forceDarkmode: boolean = false]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ SettingsComponent]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ reload()]]></sys:String>
+									<sys:String><![CDATA[+ toggleDarkmode(e: MatCheckboxChange)]]></sys:String>
+									<sys:String><![CDATA[+ enableAmbientAdaption(e: MatCheckboxChange)]]></sys:String>
+									<sys:String><![CDATA[- setCheckbox(state: boolean)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999917,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7499999999999988,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.24999999999999958,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n23">
+			<data key="d4">
+				<y:RectD X="1389.5167932613117" Y="512" Width="335.10847696944035" Height="172"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="TimeSeriesViewComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ chart: Chart]]></sys:String>
+									<sys:String><![CDATA[+ chartOptions: any]]></sys:String>
+									<sys:String><![CDATA[- highChart: any]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ TimeSeriesViewComponent(backend: BackendService)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.4999999999999999,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.4999999999999999,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.1666666666666664,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333334,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n24">
+			<data key="d4">
+				<y:RectD X="1240.32101292461" Y="1740" Width="1157.4008312936369" Height="268"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="AppComponent" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ isHandset$: Observable<boolean>]]></sys:String>
+									<sys:String><![CDATA[+ activeThemeCssClass: string]]></sys:String>
+									<sys:String><![CDATA[+ darkmode: boolean = false]]></sys:String>
+									<sys:String><![CDATA[+ handset: boolean = false]]></sys:String>
+									<sys:String><![CDATA[+ currentPath: string = 'modules']]></sys:String>
+									<sys:String><![CDATA[+ currentOrientation: ScreenOrientation]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ AppComponent(breakpointObserver: BreakpointObserver, backend: BackendService, ambientLight: AmbientLightService, settings: SettingsService, overlayContainer: OverlayContainer, snackBar: MatSnackBar)]]></sys:String>
+									<sys:String><![CDATA[+ ngOnInit()]]></sys:String>
+									<sys:String><![CDATA[+ setActiveTheme (theme: string, darkness: boolean = null)]]></sys:String>
+									<sys:String><![CDATA[+ checkOrientation(component: string, currentOrientation: ScreenOrientation)]]></sys:String>
+									<sys:String><![CDATA[+ notifyOrientationReferral(horizontal: boolean)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666657,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.4999999999999999,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333335,0"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333335,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666657,1"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.4999999999999999,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n25">
+			<data key="d4">
+				<y:RectD X="3613.434523809524" Y="1092" Width="125" Height="92"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="AppModule" attributesOpen="false" operationsOpen="false">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.11538461538461707,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7307692307692305,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.25,0"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8076923076923085,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.2692307692307695,1"/>
+				</data>
+			</port>
+			<port name="p6">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.9166666666666679,0"/>
+				</data>
+			</port>
+			<port name="p7">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.34615384615384753,1"/>
+				</data>
+			</port>
+			<port name="p8">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.961538461538461,1"/>
+				</data>
+			</port>
+			<port name="p9">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.42307692307692196,1"/>
+				</data>
+			</port>
+			<port name="p10">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.03846153846153902,1"/>
+				</data>
+			</port>
+			<port name="p11">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8846153846153829,1"/>
+				</data>
+			</port>
+			<port name="p12">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.6538461538461524,1"/>
+				</data>
+			</port>
+			<port name="p13">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5833333333333321,0"/>
+				</data>
+			</port>
+			<port name="p14">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5769230769230781,1"/>
+				</data>
+			</port>
+			<port name="p15">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.4166666666666679,0"/>
+				</data>
+			</port>
+			<port name="p16">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.75,0"/>
+				</data>
+			</port>
+			<port name="p17">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.19230769230769146,1"/>
+				</data>
+			</port>
+			<port name="p18">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+			<port name="p19">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.08333333333333212,0"/>
+				</data>
+			</port>
+			<port name="p20">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5"/>
+				</data>
+			</port>
+		</node>
+		<node id="n26">
+			<data key="d4">
+				<y:RectD X="6245.704365079365" Y="1084" Width="125" Height="108"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="AppRoutingModule" attributesOpen="true" operationsOpen="false">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ routes: Routes]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.625,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.1,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.875,0"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+				</data>
+			</port>
+			<port name="p6">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.125,0"/>
+				</data>
+			</port>
+			<port name="p7">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7,1"/>
+				</data>
+			</port>
+			<port name="p8">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.3,1"/>
+				</data>
+			</port>
+			<port name="p9">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.375,0"/>
+				</data>
+			</port>
+			<port name="p10">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.9,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n27">
+			<data key="d4">
+				<y:RectD X="5042.163888888889" Y="1732" Width="555.25" Height="284"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="AmbientLightService" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[- location: Position]]></sys:String>
+									<sys:String><![CDATA[- sunrise: Date]]></sys:String>
+									<sys:String><![CDATA[- sunset: Date]]></sys:String>
+									<sys:String><![CDATA[- isDark: BehaviorSubject<boolean>]]></sys:String>
+									<sys:String><![CDATA[- enableAdaption: boolean = false]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ AmbientLightService(http: HttpClient, snackBar: MatSnackBar, settings: SettingsService)]]></sys:String>
+									<sys:String><![CDATA[+ setDarkmode(value: boolean)]]></sys:String>
+									<sys:String><![CDATA[+ calcDarkmode()]]></sys:String>
+									<sys:String><![CDATA[+ enableAmbientLightAdaption(state: boolean)]]></sys:String>
+									<sys:String><![CDATA[+ getAmbientAdaptionEnabled()]]></sys:String>
+									<sys:String><![CDATA[- getSunsetSunrise(coords: Coordinates)]]></sys:String>
+									<sys:String><![CDATA[+ darkmode(): Observable<boolean>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.25,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.75,1"/>
+				</data>
+			</port>
+		</node>
+		<node id="n28">
+			<data key="d4">
+				<y:RectD X="7310.0877095730975" Y="1660" Width="1219.8729935522163" Height="428"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="BackendService" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ _series: BehaviorSubject<SeriesInterface[]>]]></sys:String>
+									<sys:String><![CDATA[- _updatedVariable: BehaviorSubject<UpdatedVariableInterface>]]></sys:String>
+									<sys:String><![CDATA[- _variables: BehaviorSubject<ModuleVariableInterface[]>]]></sys:String>
+									<sys:String><![CDATA[- pingTimeout: any]]></sys:String>
+									<sys:String><![CDATA[- _autoReset: boolean]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ BackendService(http: HttpClient, settings: SettingsService, ws: WebsocketService, snackBar: MatSnackBar, recipeService: RecipeService, playerService: PlayerService, moduleService: ModuleService, logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ refreshAutoReset()]]></sys:String>
+									<sys:String><![CDATA[+ getLogs()]]></sys:String>
+									<sys:String><![CDATA[+ abortAllServices()]]></sys:String>
+									<sys:String><![CDATA[+ convertMtp(file)]]></sys:String>
+									<sys:String><![CDATA[+ shutdown()]]></sys:String>
+									<sys:String><![CDATA[+ getVersion()]]></sys:String>
+									<sys:String><![CDATA[- heartbeat()]]></sys:String>
+									<sys:String><![CDATA[- connectToWebsocket()]]></sys:String>
+									<sys:String><![CDATA[- addData(data)]]></sys:String>
+									<sys:String><![CDATA[- setAutoReset(value: boolean)]]></sys:String>
+									<sys:String><![CDATA[+ updatedVariable(): Observable<UpdatedVariableInterface>]]></sys:String>
+									<sys:String><![CDATA[+ variables(): Observable<ModuleVariableInterface[]>]]></sys:String>
+									<sys:String><![CDATA[+ series(): Observable<SeriesInterface[]>]]></sys:String>
+									<sys:String><![CDATA[+ autoReset(): boolean]]></sys:String>
+									<sys:String><![CDATA[+ autoReset(value: boolean)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.625,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5" Offset="6.821210263296962e-13,0"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.37500000000000056,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8750000000000009,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.12500000000000044,1"/>
+				</data>
+			</port>
+			<port name="p6">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000003,0"/>
+				</data>
+			</port>
+			<port name="p7">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666727,0"/>
+				</data>
+			</port>
+			<port name="p8">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333333,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n29">
+			<data key="d4">
+				<y:RectD X="6534.166372828769" Y="1684" Width="745.9212225964284" Height="380"/>
+			</data>
+			<data key="d6">
+				<y:GraphMLReference ResourceKey="5"/>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="1,0.5" Offset="9.094947017729282e-13,0"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.8333333333333335,0"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000006,0"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.16666666666666768,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n30">
+			<data key="d4">
+				<y:RectD X="858.3229188813579" Y="1724" Width="351.9978130309352" Height="300"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="PlayerService" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[- _player: BehaviorSubject<PlayerInterface>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ PlayerService(http: HttpClient, settings: SettingsService)]]></sys:String>
+									<sys:String><![CDATA[+ updatePlayer(player: PlayerInterface)]]></sys:String>
+									<sys:String><![CDATA[+ refreshPlayer()]]></sys:String>
+									<sys:String><![CDATA[+ startPlayer()]]></sys:String>
+									<sys:String><![CDATA[+ resetPlayer()]]></sys:String>
+									<sys:String><![CDATA[+ pausePlayer()]]></sys:String>
+									<sys:String><![CDATA[+ resumePlayer()]]></sys:String>
+									<sys:String><![CDATA[+ stopPlayer()]]></sys:String>
+									<sys:String><![CDATA[+ enqueueRecipe(id: string)]]></sys:String>
+									<sys:String><![CDATA[+ removeRecipeFromPlaylist(index: number)]]></sys:String>
+									<sys:String><![CDATA[+ playerForceTransition(currentStep: string, nextStep: string)]]></sys:String>
+									<sys:String><![CDATA[+ player(): Observable<PlayerInterface>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.2500000000000002,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7500000000000003,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.5000000000000001,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n31">
+			<data key="d4">
+				<y:RectD X="2427.7221131339966" Y="1756" Width="452.4835515097844" Height="236"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="RecipeService" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[- _recipes: BehaviorSubject<RecipeInterface[]>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ RecipeService(http: HttpClient, settings: SettingsService, logger, NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ updateRecipes(recipes: RecipeInterface[])]]></sys:String>
+									<sys:String><![CDATA[+ refreshRecipes()]]></sys:String>
+									<sys:String><![CDATA[+ getRecipe(id:s string): Observable<RecipeInterface>]]></sys:String>
+									<sys:String><![CDATA[+ submitNewRecipe(recipeOptions)]]></sys:String>
+									<sys:String><![CDATA[+ removeRecipe(id: string)]]></sys:String>
+									<sys:String><![CDATA[+ instantiateVirtualService(virtualService: any)]]></sys:String>
+									<sys:String><![CDATA[+ recipes(): Observable<RecipeInterface[]>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.12500000000000086,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.37500000000000056,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.875,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.6250000000000003,1"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.7500000000000001,0"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.2500000000000007,0"/>
+				</data>
+			</port>
+		</node>
+		<node id="n32">
+			<data key="d4">
+				<y:RectD X="6266.092376211097" Y="1804" Width="238.07397773653636" Height="140"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="SettingsService" attributesOpen="true" operationsOpen="false">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ apiUrl: string]]></sys:String>
+									<sys:String><![CDATA[+ mtpConverterUrl: string]]></sys:String>
+									<sys:String><![CDATA[+ orientationAssistance: boolean = true]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999944,1"/>
+				</data>
+			</port>
+			<port name="p1">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.0999999999999976,1"/>
+				</data>
+			</port>
+			<port name="p2">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.9000000000000014,1"/>
+				</data>
+			</port>
+			<port name="p3">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.9999999999999989,0.5"/>
+				</data>
+			</port>
+			<port name="p4">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.30000000000000043,1"/>
+				</data>
+			</port>
+			<port name="p5">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.6999999999999985,1"/>
+				</data>
+			</port>
+			<port name="p6">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0.49999999999999944,0"/>
+				</data>
+			</port>
+			<port name="p7">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+		</node>
+		<node id="n33">
+			<data key="d4">
+				<y:RectD X="1622.7274204376122" Y="128" Width="317.768968648585" Height="124"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="StepFormatterService" attributesOpen="false" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object"/>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ parameterToString(parameter: ParameterInterface[])]]></sys:String>
+									<sys:String><![CDATA[+ conditionToString(condition: ConditionOptions)]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+		</node>
+		<node id="n34">
+			<data key="d4">
+				<y:RectD X="8559.960893720327" Y="1796" Width="324.52424430538025" Height="156"/>
+			</data>
+			<data key="d6">
+				<uml:UMLNodeStyle fill="{y:GraphMLReference 3}" highlightFill="{y:GraphMLReference 4}">
+					<uml:UMLNodeStyle.model>
+						<uml:UMLClassModel stereotype="" constraint="" className="WebsocketService" attributesOpen="true" operationsOpen="true">
+							<uml:UMLClassModel.attributes>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[- subject: Subject<MessageEvent>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.attributes>
+							<uml:UMLClassModel.operations>
+								<x:Array Type="sys:Object">
+									<sys:String><![CDATA[+ WebsocketService(logger: NGXLogger)]]></sys:String>
+									<sys:String><![CDATA[+ connect(url): Subject<MessageEvent>]]></sys:String>
+									<sys:String><![CDATA[- create(url): Subject<MessageEvent>]]></sys:String>
+								</x:Array>
+							</uml:UMLClassModel.operations>
+						</uml:UMLClassModel>
+					</uml:UMLNodeStyle.model>
+				</uml:UMLNodeStyle>
+			</data>
+			<port name="p0">
+				<data key="d15">
+					<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+				</data>
+			</port>
+		</node>
+		<edge id="e0" source="n2" target="n0" sourceport="p0" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="6140.596658428326,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e1" source="n2" target="n4" sourceport="p1" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="7411.284711638058,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e2" source="n2" target="n12" sourceport="p2" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="4904.04007936508,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e3" source="n13" target="n12" sourceport="p0" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1297.0166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="4904.04007936508,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e4" source="n2" target="n14" sourceport="p3" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="2413.8785714285714,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e5" source="n2" target="n15" sourceport="p4" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e6" source="n2" target="n16" sourceport="p5" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="6738.319444444444,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e7" source="n18" target="n17" sourceport="p0" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1088.9997415466448,741"/>
+					<y:Bend Location="1204.5166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="744.031746031746,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e8" source="n2" target="n18" sourceport="p6" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,430"/>
+					<y:Bend Location="1235.0166666666667,430"/>
+					<y:Bend Location="1235.0166666666667,455"/>
+					<y:Bend Location="1003.4829365079365,455"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e9" source="n2" target="n19" sourceport="p7" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="328.265873015873,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e10" source="n13" target="n19" sourceport="p1" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1297.0166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="328.265873015873,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e11" source="n13" target="n21" sourceport="p2" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1297.0166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,741"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="4199.585714285714,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e12" source="n2" target="n21" sourceport="p8" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="4199.585714285714,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e13" source="n2" target="n22" sourceport="p9" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="5484.55873015873,841"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e14" source="n2" target="n23" sourceport="p10" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,430"/>
+					<y:Bend Location="1235.0166666666667,430"/>
+					<y:Bend Location="1235.0166666666667,455"/>
+					<y:Bend Location="1557.0710317460318,455"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e15" source="n2" target="n24" sourceport="p11" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1219.7666666666667,405"/>
+					<y:Bend Location="1204.5166666666667,405"/>
+					<y:Bend Location="1204.5166666666667,766"/>
+					<y:Bend Location="969.2996031746031,766"/>
+					<y:Bend Location="969.2996031746031,841"/>
+					<y:Bend Location="651.531746031746,841"/>
+					<y:Bend Location="651.531746031746,1560"/>
+					<y:Bend Location="1433.2211514735493,1560"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="6"/>
+			</data>
+		</edge>
+		<edge id="e16" source="n24" target="n9" sourceport="p1" targetport="p0">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e17" source="n26" target="n1" sourceport="p0" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6323.829365079365,816"/>
+					<y:Bend Location="7891.582936507936,816"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 7}" targetArrow="{y:GraphMLReference 8}" sourceArrow="{y:GraphMLReference 9}"/>
+			</data>
+		</edge>
+		<edge id="e18" source="n26" target="n5" sourceport="p1" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6258.204365079365,1241"/>
+					<y:Bend Location="5830.649206349206,1241"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e19" source="n26" target="n16" sourceport="p2" targetport="p1">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e20" source="n26" target="n0" sourceport="p3" targetport="p1">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e21" source="n26" target="n4" sourceport="p4" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6355.079365079365,875"/>
+					<y:Bend Location="7207.717669314323,875"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e22" source="n26" target="n12" sourceport="p5" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6308.204365079365,1460"/>
+					<y:Bend Location="5103.191546559178,1460"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e23" source="n26" target="n15" sourceport="p6" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6261.329365079365,866"/>
+					<y:Bend Location="1234.8349206349205,866"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e24" source="n26" target="n14" sourceport="p7" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6333.204365079365,1485"/>
+					<y:Bend Location="2413.8785714285714,1485"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e25" source="n26" target="n22" sourceport="p8" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6283.204365079365,1289"/>
+					<y:Bend Location="5560.666458534965,1289"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e26" source="n26" target="n23" sourceport="p9" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6292.579365079365,734"/>
+					<y:Bend Location="1557.0710317460318,734"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e27" source="n26" target="n6" sourceport="p10" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="6358.204365079365,1610"/>
+					<y:Bend Location="5832.228749335482,1610"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="10"/>
+			</data>
+		</edge>
+		<edge id="e28" source="n25" target="n24" sourceport="p0" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3627.857600732601,1560"/>
+					<y:Bend Location="2204.8217056693074,1560"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e29" source="n25" target="n5" sourceport="p1" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3704.7806776556777,1435"/>
+					<y:Bend Location="5721.399206349206,1435"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e30" source="n25" target="n15" sourceport="p2" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3644.684523809524,1010"/>
+					<y:Bend Location="1500.3702102270518,1010"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e31" source="n25" target="n22" sourceport="p3" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3714.3960622710624,1410"/>
+					<y:Bend Location="5408.451001782495,1410"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e32" source="n25" target="n1" sourceport="p4" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3675.934523809524,1560"/>
+					<y:Bend Location="7659.239932938289,1560"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e33" source="n25" target="n7" sourceport="p5" targetport="p0">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e34" source="n25" target="n0" sourceport="p6" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3728.0178571428573,891"/>
+					<y:Bend Location="5990.381913000246,891"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e35" source="n25" target="n8" sourceport="p7" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3656.703754578755,1635"/>
+					<y:Bend Location="4549.613095238095,1635"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e36" source="n25" target="n21" sourceport="p8" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3733.6268315018315,1337"/>
+					<y:Bend Location="4061.5101304524346,1337"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e37" source="n25" target="n6" sourceport="p9" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3666.319139194139,1610"/>
+					<y:Bend Location="5695.685536378804,1610"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e38" source="n25" target="n14" sourceport="p10" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3618.2422161172162,1241"/>
+					<y:Bend Location="2686.5275148533915,1241"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e39" source="n25" target="n12" sourceport="p11" targetport="p3">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3724.0114468864467,1385"/>
+					<y:Bend Location="4704.888612170981,1385"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e40" source="n25" target="n16" sourceport="p12" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3695.165293040293,1510"/>
+					<y:Bend Location="6569.512093915519,1510"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e41" source="n25" target="n18" sourceport="p13" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3686.3511904761904,791"/>
+					<y:Bend Location="917.9661314692282,791"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e42" source="n25" target="n4" sourceport="p14" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3685.5499084249086,1535"/>
+					<y:Bend Location="7173.789828927033,1535"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e43" source="n25" target="n20" sourceport="p15" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3665.5178571428573,816"/>
+					<y:Bend Location="516.1861111111111,816"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e44" source="n25" target="n23" sourceport="p16" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3707.184523809524,766"/>
+					<y:Bend Location="1445.3682060895517,766"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e45" source="n25" target="n11" sourceport="p17" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3637.4729853479853,1585"/>
+					<y:Bend Location="3064.677380952381,1585"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e46" source="n25" target="n10" sourceport="p18" targetport="p0">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e47" source="n25" target="n9" sourceport="p19" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3623.8511904761904,1035"/>
+					<y:Bend Location="1819.0214285714285,1035"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e48" source="n25" target="n3" sourceport="p20" targetport="p0">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="12"/>
+			</data>
+		</edge>
+		<edge id="e49" source="n24" target="n27" sourceport="p3" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="2204.8217056693074,2067"/>
+					<y:Bend Location="5180.976388888889,2067"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e50" source="n24" target="n28" sourceport="p4" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1433.2211514735493,2192"/>
+					<y:Bend Location="8072.508330543233,2192"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e51" source="n24" target="n32" sourceport="p5" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1819.0214285714283,2117"/>
+					<y:Bend Location="6385.129365079365,2117"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e52" source="n27" target="n32" sourceport="p1" targetport="p1">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="5458.601388888889,2041"/>
+					<y:Bend Location="6289.89977398475,2041"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e53" source="n28" target="n34" sourceport="p1" targetport="p0">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e54" source="n28" target="n31" sourceport="p2" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="7767.540082155179,2142"/>
+					<y:Bend Location="2484.28255707272,2142"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e55" source="n28" target="n30" sourceport="p3" targetport="p0">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="8377.476578931288,2217"/>
+					<y:Bend Location="946.3223721390917,2217"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e56" source="n28" target="n29" sourceport="p4" targetport="p0">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e57" source="n28" target="n32" sourceport="p5" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="7462.571833767125,2113"/>
+					<y:Bend Location="6480.35895617398,2113"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e58" source="n29" target="n32" sourceport="p1" targetport="p3">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e59" source="n31" target="n32" sourceport="p1" targetport="p4">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="2597.403444950166,2092"/>
+					<y:Bend Location="6337.514569532058,2092"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e60" source="n30" target="n32" sourceport="p1" targetport="p5">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1122.3212786545594,2167"/>
+					<y:Bend Location="6432.744160626672,2167"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e61" source="n1" target="n28" sourceport="p2" targetport="p6">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="8123.925940077584,1297"/>
+					<y:Bend Location="7920.024206349206,1297"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e62" source="n1" target="n29" sourceport="p3" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="7891.582936507936,1635"/>
+					<y:Bend Location="7155.767391659127,1635"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e63" source="n7" target="n31" sourceport="p1" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="3647.088492063492,2017"/>
+					<y:Bend Location="2823.645220705058,2017"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e64" source="n4" target="n32" sourceport="p3" targetport="p6">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="7309.5011904761905,1610"/>
+					<y:Bend Location="6385.129365079365,1610"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e65" source="n4" target="n28" sourceport="p4" targetport="p7">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="7445.212552025348,1585"/>
+					<y:Bend Location="7513.399875165134,1585"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e66" source="n6" target="n32" sourceport="p2" targetport="p7">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e67" source="n8" target="n31" sourceport="p1" targetport="p3">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="4549.613095238095,2042"/>
+					<y:Bend Location="2710.524332827612,2042"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e68" source="n14" target="n31" sourceport="p3" targetport="p4">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="2141.2296280037513,1510"/>
+					<y:Bend Location="2767.084776766335,1510"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e69" source="n15" target="n31" sourceport="p3" targetport="p5">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1433.986387829019,1535"/>
+					<y:Bend Location="2540.843001011443,1535"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e70" source="n15" target="n30" sourceport="p4" targetport="p2">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1035.6834534408222,1257"/>
+					<y:Bend Location="1034.3218253968255,1257"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e71" source="n23" target="n28" sourceport="p3" targetport="p8">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="1668.773857402512,709"/>
+					<y:Bend Location="8298.373015873016,709"/>
+					<y:Bend Location="8298.373015873016,1163"/>
+					<y:Bend Location="8326.648537533278,1163"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<yjs:PolylineEdgeStyle>
+					<yjs:PolylineEdgeStyle.stroke>
+						<yjs:Stroke fill="#FF000000" dashStyle="Dash"/>
+					</yjs:PolylineEdgeStyle.stroke>
+					<yjs:PolylineEdgeStyle.targetArrow>
+						<yjs:Arrow stroke="#FF000000" fill="#FF000000"/>
+					</yjs:PolylineEdgeStyle.targetArrow>
+				</yjs:PolylineEdgeStyle>
+			</data>
+		</edge>
+		<edge id="e72" source="n16" target="n29" sourceport="p3" targetport="p3">
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+		<edge id="e73" source="n21" target="n29" sourceport="p3" targetport="p4">
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="4337.661298118993,1585"/>
+					<y:Bend Location="6658.486576594842,1585"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<y:GraphMLReference ResourceKey="13"/>
+			</data>
+		</edge>
+	</graph>
+</graphml>
