@@ -8,6 +8,12 @@ platform:
 
 steps:
 
+- name: build
+  image: trion/ng-cli-karma:8.0.2
+  commands:
+    - npm install
+    - npm run build
+
 - name: test
   image: trion/ng-cli-karma:8.0.2
   commands:
@@ -26,12 +32,6 @@ steps:
   commands:
     - npm install
     - ng e2e
-
-- name: build
-  image: trion/ng-cli-karma:8.0.2
-  commands:
-    - npm install
-    - npm run build
 
 - name: docker
   image: plugins/docker
