@@ -8,15 +8,23 @@ platform:
 
 steps:
 
+- name: build
+  image: trion/ng-cli-karma:8.0.2
+  commands:
+    - npm install
+    - npm run build
+
 - name: test
   image: trion/ng-cli-karma:8.0.2
   commands:
   - npm install
-  - ng test --watch=false --progress=false
+  - ng test --watch=false --progress=false --code-coverage
 
 - name: codecov
   image: robertstettner/drone-codecov
   settings:
+    paths:
+      - coverage
     token:
       from_secret: codecov_token
 
@@ -25,12 +33,6 @@ steps:
   commands:
     - npm install
     - ng e2e
-
-- name: build
-  image: trion/ng-cli-karma:8.0.2
-  commands:
-    - npm install
-    - npm run build
 
 - name: docker
   image: plugins/docker
