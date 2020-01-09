@@ -18,12 +18,13 @@ steps:
   image: trion/ng-cli-karma:8.0.2
   commands:
   - npm install
-  - ng test --watch=false --progress=false
-  - node_modules/.bin/nyc report --reporter=json > coverage.json
+  - ng test --watch=false --progress=false --code-coverage
 
 - name: codecov
   image: robertstettner/drone-codecov
   settings:
+    paths:
+      - coverage
     token:
       from_secret: codecov_token
 
