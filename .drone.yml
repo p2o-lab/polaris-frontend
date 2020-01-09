@@ -13,6 +13,7 @@ steps:
   commands:
   - npm install
   - ng test --watch=false --progress=false
+  + node_modules/.bin/nyc report --reporter=json > coverage.json
 
 - name: codecov
   image: robertstettner/drone-codecov
