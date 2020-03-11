@@ -25,7 +25,7 @@
     "@angular/material": "^8.2.3",
     "@angular/platform-browser": "^8.2.2",
     "@angular/platform-browser-dynamic": "^8.2.2",
-    "@angular/pwa": "^0.803.8",
+    "@angular/pwa": "^0.900.6",
     "@angular/router": "^8.2.2",
     "@angular/service-worker": "^8.2.2",
     "@ngx-loading-bar/core": "^4.2.0",
