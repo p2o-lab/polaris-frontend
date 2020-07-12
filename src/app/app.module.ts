@@ -13,7 +13,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
 import * as moment from 'moment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-//import {WebStorageModule} from 'ngx-store';
+// import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
 import {AmbientLightService} from './_services/ambient-light.service';
 import {BackendService} from './_services/backend.service';
