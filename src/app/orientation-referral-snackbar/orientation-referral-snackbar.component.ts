@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MatIcon} from '@angular/material';
+import { MatIcon } from '@angular/material/icon';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 @Component({

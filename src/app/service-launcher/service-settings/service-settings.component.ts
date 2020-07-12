@@ -1,5 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {ParameterInterface, ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
 import * as cloneDeep from 'lodash';
 import * as moment from 'moment';
