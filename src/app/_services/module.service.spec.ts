@@ -1,4 +1,5 @@
 import {Overlay} from '@angular/cdk/overlay';
+import {DatePipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {inject, TestBed} from '@angular/core/testing';
@@ -11,7 +12,7 @@ describe('ModuleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ModuleService, HttpClient, SettingsService, MatSnackBar, Overlay, NGXLogger, NGXMapperService,
-        LoggerConfig, NGXLoggerHttpService],
+        LoggerConfig, NGXLoggerHttpService, DatePipe],
       imports: [HttpClientTestingModule]
     });
   });

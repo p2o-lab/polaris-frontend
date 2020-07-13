@@ -1,3 +1,4 @@
+import {DatePipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {inject, TestBed} from '@angular/core/testing';
@@ -9,7 +10,7 @@ describe('RecipeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [RecipeService, HttpClient, SettingsService, NGXLogger, NGXMapperService, NGXLoggerHttpService,
-        LoggerConfig],
+        LoggerConfig, DatePipe],
       imports: [HttpClientTestingModule]
     });
   });
