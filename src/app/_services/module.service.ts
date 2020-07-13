@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {ModuleInterface, ParameterOptions, ServiceInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
 import * as assignDeep from 'assign-deep';
 import {NGXLogger} from 'ngx-logger';

@@ -1,7 +1,12 @@
 import { DragDropModule} from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDivider, MatFormField, MatLabel, MatOption, MatSelect, MatSlider, MatTabGroup } from '@angular/material';
+import { MatOption } from '@angular/material/core';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatSlider } from '@angular/material/slider';
+import { MatTabGroup } from '@angular/material/tabs';
 import { ServiceLauncherComponent } from './service-launcher.component';
 import { ServiceSettingsComponent} from './service-settings/service-settings.component';
 import { ServicelauncherButtonComponent} from './servicelauncher-button/servicelauncher-button.component';

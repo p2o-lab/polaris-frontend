@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {ModuleService} from '../_services/module.service';

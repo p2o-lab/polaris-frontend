@@ -11,7 +11,7 @@ import {
 import {ServiceInterface} from '@p2olab/polaris-interface';
 import * as Snap from 'snapsvg-cjs';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ServiceVisualisation } from './service.draw';
 
 @Component({

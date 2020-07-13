@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {MatDialogRef, MatSnackBar} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {NGXLogger} from 'ngx-logger';
 import {RecipeService} from '../_services/recipe.service';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';

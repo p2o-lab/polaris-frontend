@@ -5,18 +5,14 @@ import {CommonModule} from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
-import {
-  MatDialogActions,
-  MatDialogRef,
-  MatDivider, MatFormField, MatFormFieldModule, MatInput,
-  MatInputModule,
-  MatLabel,
-  MatOption, MatPseudoCheckbox, MatRipple, MatRippleModule,
-  MatSelect,
-  MatSlider,
-  MatTab, MatTabBody,
-  MatTabGroup, MatTabHeader, MatTabLabel
-} from '@angular/material';
+import { MatOption, MatPseudoCheckbox, MatRipple, MatRippleModule } from '@angular/material/core';
+import { MatDialogActions, MatDialogRef } from '@angular/material/dialog';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatSlider } from '@angular/material/slider';
+import { MatTab, MatTabBody, MatTabGroup, MatTabHeader, MatTabLabel } from '@angular/material/tabs';
 import { ServiceSettingsComponent } from './service-settings.component';
 
 describe('ServiceSettingsComponent', () => {

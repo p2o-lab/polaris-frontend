@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {RecipeInterface} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {PlayerService} from '../_services/player.service';

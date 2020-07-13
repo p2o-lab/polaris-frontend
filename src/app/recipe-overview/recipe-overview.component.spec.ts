@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MatDialogRef} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {RouterTestingModule} from '@angular/router/testing';
 import {LoggerTestingModule} from 'ngx-logger/testing';
 import {SettingsService} from '../_services/settings.service';

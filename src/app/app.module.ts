@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceWorkerModule} from '@angular/service-worker';
@@ -13,7 +13,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
 import * as moment from 'moment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import {WebStorageModule} from 'ngx-store';
+// import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
 import {AmbientLightService} from './_services/ambient-light.service';
 import {BackendService} from './_services/backend.service';
@@ -100,7 +100,7 @@ moment.relativeTimeThreshold('ss', 5);
         MaterialModule,
         AppRoutingModule,
         HttpClientModule,
-        WebStorageModule,
+ //       WebStorageModule,
         NgxChartsModule,
         ChartModule,
         FlexLayoutModule,

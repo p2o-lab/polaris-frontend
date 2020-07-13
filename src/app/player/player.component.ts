@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {PlayerInterface, RecipeInterface, StepOptions} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {NGXLogger} from 'ngx-logger';

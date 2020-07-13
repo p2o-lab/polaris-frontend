@@ -1,4 +1,4 @@
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {ServiceInterface} from '@p2olab/polaris-interface';
 import * as Snap from 'snapsvg-cjs';
 import {Icon} from './icon.draw';

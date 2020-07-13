@@ -3,7 +3,7 @@ import {fromEvent, timer} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import * as Snap from 'snapsvg-cjs';
 
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {Action} from './action.draw';
 import {Annotation} from './annotation.draw';
 import {Flag} from './flag.draw';

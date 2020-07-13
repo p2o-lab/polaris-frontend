@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {ModuleInterface, ModuleOptions, VirtualServiceInterface} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';

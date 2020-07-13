@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {ParameterInterface, ParameterOptions} from '@p2olab/polaris-interface';
 import {ParameterChangeDialogComponent} from '../parameter-change-dialog/parameter-change-dialog.component';
 
