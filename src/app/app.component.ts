@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
 
   @HostBinding('class') activeThemeCssClass: string;
   activeTheme: string;
-  darkmode: boolean = false;
-  handset: boolean = false;
-  currentPath: string = 'modules';
+  darkMode = false;
+  handset = false;
+  currentPath = 'modules';
   currentOrientation: ScreenOrientation;
 
   constructor(private breakpointObserver: BreakpointObserver,
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
               private overlayContainer: OverlayContainer,
               private snackBar: MatSnackBar) {
     // set color theme
-    this.setActiveTheme('indigo-purple', /* darkness: */ this.darkmode);
+    this.setActiveTheme('indigo-purple', /* darkness: */ this.darkMode);
 
     // set the screen orientation to access it in html
     this.currentOrientation = window.screen.orientation;
@@ -48,18 +48,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // subscribe to the darkmode observer of the ambient light service
-    this.ambientLight.darkMode.subscribe((darkmode) => {
-      switch (darkmode) {
-        // set theme accordingly to the darkmode parameter
-        case true:
-          this.setActiveTheme('deeppurple-amber', darkmode);
-          break;
-        case false:
-          this.setActiveTheme('indigo-purple', darkmode);
-          break;
+    // subscribe to the dark-mode observer of the ambient light service
+    this.ambientLight.darkMode.subscribe((darkModeActive) => {
+        // set theme accordingly to the dark-mode parameter
+          if (darkModeActive){
+            this.setActiveTheme('deeppurple-amber', darkModeActive);
+          } else {
+            this.setActiveTheme('indigo-purple', darkModeActive);
+          }
       }
-    });
+    );
 
     // listen for orientation changes of the device
     window.addEventListener('orientationchange', () => {
@@ -70,18 +68,18 @@ export class AppComponent implements OnInit {
 
   /**
    * Sets the color theme for the complete app
-   * @param theme namestring of the theme to set
-   * @param darkness boolean if darkmode should be enabled
+   * @param theme name of the theme to set
+   * @param darkness boolean `true` if dark-mode should be enabled
    */
-  setActiveTheme(theme: string, darkness: boolean = null) {
+  setActiveTheme(theme: string, darkness: boolean = null): void {
     if (darkness === null) {
-      darkness = this.darkmode;
-    } else if (this.darkmode === darkness) {
+      darkness = this.darkMode;
+    } else if (this.darkMode === darkness) {
       if (this.activeTheme === theme) {
         return;
       }
     } else {
-      this.darkmode = darkness;
+      this.darkMode = darkness;
     }
     this.activeTheme = theme;
 
@@ -102,7 +100,7 @@ export class AppComponent implements OnInit {
    * @param component route name of the component
    * @param currentOrientation orientation of the device when called
    */
-  checkOrientation(component: string, currentOrientation: ScreenOrientation) {
+  checkOrientation(component: string, currentOrientation: ScreenOrientation): void {
     // check if the device is a handset, otherwise exit
     if (this.handset && this.settings.orientationAssistance) {
       // save current path
@@ -152,7 +150,7 @@ export class AppComponent implements OnInit {
    *
    * @param horizontal true, if horizontal orientation is needed, false for vertical
    */
-  notifyOrientationReferral(horizontal: boolean) {
+  notifyOrientationReferral(horizontal: boolean): void {
     let displayedReferral: string;
     if (horizontal) {
       displayedReferral = 'The currently displayed content does not fit optimal at your screen orientation.' +
