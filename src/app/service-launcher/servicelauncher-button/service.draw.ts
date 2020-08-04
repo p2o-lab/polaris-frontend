@@ -1,3 +1,4 @@
+import {EventEmitter} from '@angular/core';
 import {ServiceInterface} from '@p2olab/polaris-interface';
 import {fromEvent, timer} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -9,7 +10,7 @@ import {Annotation} from './annotation.draw';
 import {Flag} from './flag.draw';
 import {Icon} from './icon.draw';
 
-declare var mina: any;
+declare let mina: any;
 
 export class ServiceVisualisation {
   // Instance in Service
@@ -23,19 +24,18 @@ export class ServiceVisualisation {
   radiusClicked: number;
   xMid: number;
   yMid: number;
-  iconScale: number = 40;
+  iconScale = 40;
   background: any;
   serviceLauncherDiv: any;
 
   // variables for current Service
   serviceName: string;
   serviceState: string;
-  serviceDiv: any;
   pinned: boolean;
-  sc: boolean = false;
-  strategy: string = '';
+  sc = false;
+  strategy = '';
 
-  // Variables for reuse in the methodes
+  // Variables for reuse in the methods
   clickedService: boolean; // true, if Service is clicked
   serviceCircle: Snap.Paper; // Circle of Service
   iconSvg: Snap.Paper; // Icon of Service
@@ -44,14 +44,14 @@ export class ServiceVisualisation {
 
   constructor(
     service: Snap.Paper,
-    serviceRadius,
-    xMid,
-    yMid,
+    serviceRadius: number,
+    xMid: number,
+    yMid: number,
     currentService: ServiceInterface,
     dialog: MatDialog,
-    openSettings,
-    pinService,
-    setAction) {
+    openSettings: EventEmitter<any>,
+    pinService: EventEmitter<any>,
+    setAction: EventEmitter<any>) {
     // set Constance
     this.serviceState = currentService.status;
     this.serviceName = currentService.name;
@@ -74,7 +74,7 @@ export class ServiceVisualisation {
     document.getElementById('buttonDiv');
 
     // get current strategy id & sc for drawing
-    currentService.strategies.forEach((currValue, i) => {
+    currentService.strategies.forEach((currValue) => {
       if (currValue.name === currentService.currentStrategy) {
         this.strategy = currValue.id;
         this.sc = currValue.sc;
@@ -90,11 +90,7 @@ export class ServiceVisualisation {
     this.action = new Action(service, serviceRadius, xMid, yMid, this.serviceState, setAction);
   }
 
-  setService(snap: Snap.Paper, serviceStateTyp) {
-    // set Constance. Is nessecary because snap can not use global variables
-    const radius = this.radius;
-    const clickedServiceRadius = this.radiusClicked;
-
+  setService(snap: Snap.Paper, serviceStateTyp: string): void {
     const serviceState = serviceStateTyp;
 
     // Setup Service Circle
@@ -131,7 +127,7 @@ export class ServiceVisualisation {
       this.serviceStateText
     );
 
-    // hover function for Service; If hoverd show Service State; If not hoverd hide Service State
+    // hover function for Service; If hovered show Service State; If not hovered hide Service State
     serviceGroup.hover(
       () => {
         if (!this.clickedService) {
@@ -150,7 +146,7 @@ export class ServiceVisualisation {
     );
 
     /* click function for Service; If clicked show Actions and Flag,
-     * time the clicks so drag'n'drop actions dont click it
+     * time the clicks so drag n drop actions dont click it
      */
 
     // TODO choose correct event target
@@ -158,7 +154,7 @@ export class ServiceVisualisation {
 
     const mouseup$ = fromEvent(document.getElementById('buttonDiv'), 'mouseup');
 
-    mousedown$.subscribe((e) => {
+    mousedown$.subscribe(() => {
       const clickTimer$ = timer(200);
       mouseup$.pipe(takeUntil(clickTimer$)).subscribe(() => {
         if (this.clickedService) {
@@ -167,13 +163,13 @@ export class ServiceVisualisation {
             class: 'serviceState clicked_service'
           });
         } else {
-          this.clickService(snap);
+          this.clickService();
         }
       });
     });
   }
 
-  clickService(snap: Snap.Paper) {
+  clickService(): void {
     this.annotation.clickService();
     this.action.clickService();
     this.flag.clickService();
@@ -214,7 +210,7 @@ export class ServiceVisualisation {
     this.clickedService = true;
   }
 
-  unclickService() {
+  unclickService(): void {
     this.resetBackground();
 
     const elements = Array.from(document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>);
@@ -259,7 +255,7 @@ export class ServiceVisualisation {
     // test
   }
 
-  resetBackground() {
+  resetBackground(): void {
     this.background[0].style.display = 'none';
   }
 }
