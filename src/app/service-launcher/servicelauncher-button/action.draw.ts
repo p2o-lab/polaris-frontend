@@ -20,7 +20,7 @@ export class Action {
     maskedGroup: Element;
 
     constructor(action: Snap.Paper, serviceRadius: number, xMid: number, yMid: number, state: string,
-                public setAction: EventEmitter<any>) {
+                public setAction) {
         this.serviceRadius = serviceRadius;
         this.xMid = xMid;
         this.yMid = yMid;

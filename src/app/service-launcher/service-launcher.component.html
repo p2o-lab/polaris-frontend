@@ -1,5 +1,5 @@
 <div class="component-card">
-        
+
     <div class="component-card-header service-launcher-card-header">
         <span>Services</span>
         <div class="field search">
@@ -15,13 +15,13 @@
         <div class="field sort">
             <mat-form-field>
                 <mat-select (selectionChange)="onSelect()" [(value)] ="sorting">
-                    <mat-option *ngFor="let sorting of sortingOptionsArray" [value]="sorting" >{{sorting}}</mat-option>
+                    <mat-option *ngFor="let sorting of sortingOptions" [value]="sorting" >{{sorting}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
     </div>
 
-    <div class="component-card-content service-launcher-card-content"> 
+    <div class="component-card-content service-launcher-card-content">
         <div class="background"></div>
         <div cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="droppedInPinnedSection($event)" #pinnedList="cdkDropList" [cdkDropListConnectedTo]="[unpinnedList]" class="section_pinned_services " >
             <app-servicelauncher-button (openSettings)="openDialog(service)" (pinService)="pinService(service)"
