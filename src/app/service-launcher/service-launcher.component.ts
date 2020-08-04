@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ModuleInterface, ParameterOptions, ServiceInterface} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ModuleService} from '../_services/module.service';
 import {ServiceSettingsComponent} from './service-settings/service-settings.component';
 
@@ -18,16 +18,14 @@ export class ServiceLauncherComponent implements OnInit {
   modulesWithServices: ModuleInterface[] = [];
   services: ServiceInterface[] = [];
   pinnedServiceArray: ServiceInterface[] = [];
-  states: any[] = [];
+  states = [];
   activeServices: any[];
 
-  data: any;
   sorting: string;
 
   strategyFormControl: FormControl = new FormControl('', new FormControl());
   strategyParameterFormGroup: FormGroup = new FormGroup({}, {updateOn: 'blur'});
 
-  public changeDuration: string;
 
   /**
    * all available sorting methods (used for directives)
@@ -40,8 +38,6 @@ export class ServiceLauncherComponent implements OnInit {
       state: 'nach Zustand',
       activity: 'nach Aktivität'
     };
-  sortingOptionsArray: string[] = ['default', 'alphabetisch', 'nach Modul', 'nach Zustand', 'nach Aktivität'];
-  private timer: Subscription;
 
   constructor(public dialog: MatDialog,
               private backend: ModuleService,
@@ -52,7 +48,7 @@ export class ServiceLauncherComponent implements OnInit {
   /**
    * subscribe to current module selection and already pinned services
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.sorting = this.sortingOptions.alphabetically;
 
     this.modules$.subscribe((data) => {
@@ -79,12 +75,12 @@ export class ServiceLauncherComponent implements OnInit {
    * open dialog and set current service in appState to this service
    * @param service - clicked service
    */
-  openDialog(service: ServiceInterface) {
+  openDialog(service: ServiceInterface): void {
     const config = new MatDialogConfig();
     config.data = {
       'service': service
     };
-    const modal: MatDialogRef<ServiceSettingsComponent> = this.dialog.open(ServiceSettingsComponent, config);
+    this.dialog.open(ServiceSettingsComponent, config);
   }
 
   /**
@@ -93,8 +89,8 @@ export class ServiceLauncherComponent implements OnInit {
    * dispatch newly pinned or unpinned service in ngrx store => all lists get updated
    * @param service - clicked service
    */
-  pinService(service: ServiceInterface) {
-    let reminder: number = 0;
+  pinService(service: ServiceInterface): void {
+    let reminder = 0;
     this.pinnedServiceArray.forEach((pinnedService, index) => {
       if (pinnedService.name === service.name) {
         // if element is found, delete it from the pin list
@@ -112,7 +108,7 @@ export class ServiceLauncherComponent implements OnInit {
    * filter all services by input of search bar
    * @param event - input of search bar
    */
-  onKey(event) {
+  onKey(event): void {
     this.sorting = this.sortingOptions.default;
     // this.serviceArray = this.store$.pipe(
     // select(selectAllServicesFromModulesWhichStartsWith(this.moduleIds, event.target.value)));
@@ -121,7 +117,7 @@ export class ServiceLauncherComponent implements OnInit {
   /**
    * sort all services by selected sorting option
    */
-  onSelect() {
+  onSelect(): void {
 
     switch (this.sorting) {
       case this.sortingOptions.default:
@@ -138,7 +134,7 @@ export class ServiceLauncherComponent implements OnInit {
         // create object with all the states
         this.services.forEach((service) => {
           // short memo if the state was found
-          let reminder: number = 0;
+          let reminder = 0;
           // check already existing array, if the current state is already in there
           this.states.forEach((state) => {
             if (state.state === service.status) {
@@ -175,7 +171,7 @@ export class ServiceLauncherComponent implements OnInit {
    * drop function, service got dragged into pinned service section
    * @param $event -  DragAndDrop Event from angular cdk
    */
-  droppedInPinnedSection($event) {
+  droppedInPinnedSection($event): void {
     const service = $event.item.data;
     if (service.pinned) {
       this.logger.debug('do nothing');
@@ -189,7 +185,7 @@ export class ServiceLauncherComponent implements OnInit {
    * drop function, service got dragged into normal (unpinned) service section
    * @param $event -  DragAndDrop Event from angular cdk
    */
-  droppedInUnpinnedSection($event) {
+  droppedInUnpinnedSection($event): void {
     const service = $event.item.data;
     if (!service.pinned) {
       this.logger.debug('do nothing');
@@ -203,11 +199,12 @@ export class ServiceLauncherComponent implements OnInit {
    * triggered from EventEmitter in ServiceLauncher-Button
    * onClick of Action buttons (svg)
    * @param action -  type of clicked action button
-   *
+   * @param service - specific service
    * TODO: react to events.
    * TODO: Adding argument 'Action' to service and set it here + commit to opcua server
+   * TODO: add functionality
    */
-  setAction(action: string, service) {
+  setAction(action: string, service: ServiceInterface): void {
     this.logger.debug('set action', action, service);
     switch (action) {
       case 'stateChange':
@@ -229,7 +226,7 @@ export class ServiceLauncherComponent implements OnInit {
   /*
     Send opcua control command via backend service
    */
-  sendCommand(command: string) {
+  sendCommand(command: string): void {
     // const strategy: string = this.strategyFormControl.value.name;
     // const parameters: any[] = this.getParameter();
 
