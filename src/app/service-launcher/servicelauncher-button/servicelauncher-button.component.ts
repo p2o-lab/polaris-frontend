@@ -22,9 +22,9 @@ import { ServiceVisualisation } from './service.draw';
 })
 export class ServicelauncherButtonComponent implements OnInit, AfterViewInit {
 
-    serviceRadius: number = 32; // radius of Service; also used for calculation for Annotation and Action
-    xMid: number = 105; // Midpoid x of Service
-    yMid: number = 105; // Midpoid y of Service
+    serviceRadius = 32; // radius of Service; also used for calculation for Annotation and Action
+    xMid = 105; // Midpoint x of Service
+    yMid = 105; // Midpoint y of Service
 
     @Input() currentService: ServiceInterface;
     @Output() openSettings: EventEmitter<any> = new EventEmitter();
@@ -39,17 +39,16 @@ export class ServicelauncherButtonComponent implements OnInit, AfterViewInit {
 
     }
 
-    ngOnInit() {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ngOnInit():void {}
 
-    }
-
-    ngAfterViewInit() {
+    ngAfterViewInit():void {
         const snap = Snap(this.svg.nativeElement);
         const serviceButton = new ServiceVisualisation(snap, this.serviceRadius, this.xMid, this.yMid,
           this.currentService, this.dialog, this.openSettings, this.pinService, this.setAction);
     }
 
-    createNewButton(service, snap: Snap.Paper) {
+    createNewButton(service:ServiceInterface, snap: Snap.Paper): void {
         snap.clear();
         const state = 'running';
         const name = service.name;
