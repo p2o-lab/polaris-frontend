@@ -1,5 +1,5 @@
 import {Location} from '@angular/common';
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
 import {version} from '../../../package.json';
 import {AmbientLightService} from '../_services/ambient-light.service';
@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
 
   @ViewChild('forceDarkmodeCheckbox', {static: true}) forceDarkmodeCheckbox: MatCheckbox;
 
-  private forceDarkmode: boolean = false;
+  private forceDarkmode = false;
 
   constructor(private location: Location,
               public settings: SettingsService,
@@ -27,14 +27,14 @@ export class SettingsComponent implements OnInit {
     this.frontendVersion = version;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.backend.refreshAutoReset();
     this.backend.getVersion().subscribe((data: { version: string }) => this.backendVersion = data.version);
 
     this.ambientLight.darkmode.subscribe((value) => this.setCheckbox(value));
   }
 
-  reload() {
+  reload(): void {
     // use window.location reload method in order to load whole page resulting in fresh websocket connection
     location.reload();
   }
@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
   /**
    * toggles the darkmode globally
    */
-  toggleDarkmode(e: MatCheckboxChange) {
+  toggleDarkmode(e: MatCheckboxChange): void {
     if (this.ambientLight.getAmbientAdaptionEnabled() === true) {
       this.forceDarkmode = !this.forceDarkmode;
       this.ambientLight.setDarkmode(this.forceDarkmode);
@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit {
   /**
    * Switch the ambient light adaption state
    */
-  enableAmbientAdaption(e: MatCheckboxChange) {
+  enableAmbientAdaption(e: MatCheckboxChange): void {
     if (e.checked) {
       // activate ambient adaption
       this.ambientLight.enableAmbientLightAdaption(true);
