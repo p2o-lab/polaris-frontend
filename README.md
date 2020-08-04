@@ -1,8 +1,6 @@
 # polaris-frontend
 Polaris is a Process Orchestration Layer application for controlling process equipment assemblies (PEA) in the context of modular production in process industries. Thus, it follows the VDI/VDE/NAMUR 2658 standards. *polaris-frontend* is a visualisation for Polaris recipe engine.
 
-[![Build Status](https://cloud.drone.io/api/badges/p2o-lab/polaris-frontend/status.svg)](https://cloud.drone.io/p2o-lab/polaris-frontend) [![](https://images.microbadger.com/badges/version/p2olab/polaris-frontend.svg)](https://microbadger.com/images/p2olab/polaris-frontend) [![Greenkeeper badge](https://badges.greenkeeper.io/p2o-lab/polaris-frontend.svg)](https://greenkeeper.io/) [![CodeFactor](https://www.codefactor.io/repository/github/p2o-lab/polaris-frontend/badge)](https://www.codefactor.io/repository/github/p2o-lab/polaris-frontend) [![codecov](https://codecov.io/gh/p2o-lab/polaris-frontend/branch/develop/graph/badge.svg)](https://codecov.io/gh/p2o-lab/polaris-frontend)
-
 ## Features
 
 polaris-frontend is able to provide several visualisations for orchestrating multiple PEAs:
@@ -43,18 +41,13 @@ To work properly, *polaris-frontend* needs an backend, which is provided by [pol
 
 ### Run polaris-backend testserver
 ```
-git clone https://github.com/p2o-lab/polaris-backend
+git clone https://dev.plt.et.tu-dresden.de/modulare-automation/polaris-backend.git
 cd ./polaris-backend
 npm install
 npm run-script testserver
 ```
 
-### Run polaris-backend using docker image
 
-```
-docker pull p2olab/polaris-backend
-docker run -d -p 3000:3000 p2olab/polaris-backend
-```
 ### Run polaris-frontend
 
 Clone project, follow the above instructions to install dependencies and start the development server. The test PEA can now added in the module view.
