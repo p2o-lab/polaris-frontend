@@ -31,7 +31,7 @@ export class SettingsComponent implements OnInit {
     this.backend.refreshAutoReset();
     this.backend.getVersion().subscribe((data: { version: string }) => this.backendVersion = data.version);
 
-    this.ambientLight.darkmode.subscribe((value) => this.setCheckbox(value));
+    this.ambientLight.darkMode.subscribe((value) => this.setCheckbox(value));
   }
 
   reload(): void {
@@ -45,7 +45,7 @@ export class SettingsComponent implements OnInit {
   toggleDarkmode(e: MatCheckboxChange): void {
     if (this.ambientLight.getAmbientAdaptionEnabled() === true) {
       this.forceDarkmode = !this.forceDarkmode;
-      this.ambientLight.setDarkmode(this.forceDarkmode);
+      this.ambientLight.setDarkMode(this.forceDarkmode);
     } else {
       // reset the checkbox
       e.source.checked = false;

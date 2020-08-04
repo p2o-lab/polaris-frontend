@@ -1,9 +1,8 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {PlayerInterface, RecipeInterface} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
-import {BehaviorSubject, Observable, timer} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
 
 @Injectable({
@@ -12,16 +11,16 @@ import {SettingsService} from './settings.service';
 export class AmbientLightService {
 
   /**
-   * Method for retrieving the current darkmode status
+   * Method for retrieving the current dark-mode status
    */
-  get darkmode(): Observable<boolean> {
+  get darkMode(): Observable<boolean> {
     return this.isDark.asObservable();
   }
   private location: Position;
   private sunrise: Date;
   private sunset: Date;
   private isDark: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private enableAdaption: boolean = false;
+  private enableAdaption = false;
 
   constructor(private http: HttpClient,
               private snackBar: MatSnackBar,
@@ -42,28 +41,28 @@ export class AmbientLightService {
       alert('Geolocation is not supported by your browser.');
     }
 
-    // set timer for calcDarkmode, to periodically get checked if the Darkmode is necessary, if darkmode is being
+    // set timer for calcDarkMode, to periodically get checked if the dark-mode is necessary, if dark-mode is being
     // subscribed on
     // timer(0, 60000)
     //   .subscribe(() => {
-    //     this.calcDarkmode();
+    //     this.calcDarkMode();
     //   });
   }
 
   /**
-   * Method for forcing a darkmode setting. This overwrites the internal darkmode settings.
+   * Method for forcing a dark-mode setting. This overwrites the internal dark-mode settings.
    */
-  public setDarkmode(value: boolean) {
+  public setDarkMode(value: boolean): void {
       if (this.enableAdaption === true) {
         this.isDark.next(value);
       }
   }
 
   /**
-   * Currently calculates, if the Darkmode has to be applied based on the current time. In the future, other custom
+   * Currently calculates, if the dark-mode has to be applied based on the current time. In the future, other custom
    * options or preferences are possible.
    */
-  public calcDarkmode() {
+  public calcDarkMode(): void {
     const now = new Date();
     if (this.enableAdaption === true) {
       // compare current time with sunrise/ sunset time
@@ -79,14 +78,14 @@ export class AmbientLightService {
    * Method for enabling/ disabling the ambient light adaption globally
    * @param state
    */
-  public enableAmbientLightAdaption(state: boolean) {
+  public enableAmbientLightAdaption(state: boolean): void {
     this.enableAdaption = state;
     if (state === false) {
       this.isDark.next(false);
     }
   }
 
-  public getAmbientAdaptionEnabled() {
+  public getAmbientAdaptionEnabled(): boolean {
     return this.enableAdaption;
   }
 
@@ -96,7 +95,7 @@ export class AmbientLightService {
    */
   private getSunsetSunrise(coords: Coordinates) {
     this.http.get('https://api.sunrise-sunset.org/json?lat=' + coords.latitude + '&lng=' + coords.longitude +
-      '&date=today').subscribe((json: any) => {
+      '&date=today').subscribe((json: any ) => {
       this.sunrise = new Date(moment(json.results.sunrise, 'LTS').format());
       this.sunset = new Date(moment(json.results.sunset, 'LTS').format());
 
@@ -112,7 +111,7 @@ export class AmbientLightService {
         moment(this.sunset).add(1, 'h');
       }
 
-      this.calcDarkmode();
+      this.calcDarkMode();
     });
   }
 

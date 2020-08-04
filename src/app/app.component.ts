@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // subscribe to the darkmode observer of the ambient light service
-    this.ambientLight.darkmode.subscribe((darkmode) => {
+    this.ambientLight.darkMode.subscribe((darkmode) => {
       switch (darkmode) {
         // set theme accordingly to the darkmode parameter
         case true:
