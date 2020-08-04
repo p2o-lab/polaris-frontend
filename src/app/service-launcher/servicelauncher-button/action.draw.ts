@@ -1,7 +1,7 @@
+import {EventEmitter} from '@angular/core';
+import {Element} from 'snapsvg';
 import * as Snap from 'snapsvg-cjs';
 import {Icon} from './icon.draw';
-
-declare var mina: any;
 
 export class Action {
 
@@ -9,17 +9,18 @@ export class Action {
     serviceRadius: number;
     xMid: number;
     yMid: number;
-    actionCirclePercent: number = 0.84375;
-    actionMidPointPercent: number = 2.625; // needed for calculation of MidPoint Action Circle
+    actionCirclePercent = 0.84375;
+    actionMidPointPercent = 2.625; // needed for calculation of MidPoint Action Circle
     actionRadius: number;
     actionMidPoint: number;
-    iconScale: number = 40;
+    iconScale = 40;
 
     actionArray: any[] = [];
-    serviceMask: any;
-    maskedGroup: any;
+    serviceMask: Element;
+    maskedGroup: Element;
 
-    constructor(action: Snap.Paper, serviceRadius, xMid, yMid, state: string, public setAction) {
+    constructor(action: Snap.Paper, serviceRadius: number, xMid: number, yMid: number, state: string,
+                public setAction: EventEmitter<any>) {
         this.serviceRadius = serviceRadius;
         this.xMid = xMid;
         this.yMid = yMid;
@@ -30,7 +31,7 @@ export class Action {
 
     }
 
-    setActions(snap: Snap.Paper, state: string) {
+    setActions(snap: Snap.Paper, state: string): void {
 
         this.serviceMask = snap.circle(this.xMid, this.yMid, this.serviceRadius * 1.5);
         this.serviceMask.attr({
@@ -132,7 +133,7 @@ export class Action {
         }
     }
 
-    setStateChange(snap: Snap.Paper, nextState: string) {
+    setStateChange(snap: Snap.Paper, nextState: string): void {
         // create Circle for Action
         const stateChangeCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
             class: 'action',
@@ -190,7 +191,7 @@ export class Action {
         }).click(() => {this.emitAction('stateChange'); });
     }
 
-    setStart(snap: Snap.Paper) {
+    setStart(snap: Snap.Paper): void {
 
         // create Circle for Action
         const startCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
@@ -247,7 +248,7 @@ export class Action {
         }).click(() => {this.emitAction('start'); });
     }
 
-    setPause(snap: Snap.Paper) {
+    setPause(snap: Snap.Paper): void {
         // create Circle for Action
         const pauseCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
             class: 'action'
@@ -304,7 +305,7 @@ export class Action {
         }).click(() => {this.emitAction('PAUSE'); });
     }
 
-    setStop(snap: Snap.Paper) {
+    setStop(snap: Snap.Paper): void {
         // create Circle for Action
         const stopCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
             class: 'action'
@@ -359,7 +360,7 @@ export class Action {
         }).click(() => {this.emitAction('STOP'); });
     }
 
-    setHold(snap: Snap.Paper) {
+    setHold(snap: Snap.Paper): void {
         // create Circle for Action
         const holdCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
             class: 'action'
@@ -414,7 +415,7 @@ export class Action {
         }).click(() => {this.emitAction('HOLD'); });
     }
 
-    setAbort(snap: Snap.Paper) {
+    setAbort(snap: Snap.Paper): void {
         // create Circle for Action
         const abortCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
             class: 'action'
@@ -471,7 +472,7 @@ export class Action {
         ).click(() => {this.emitAction('ABORT'); });
     }
 
-    setReset(snap: Snap.Paper) {
+    setReset(snap: Snap.Paper): void {
         // create Circle for Action
         const resetCircle = snap.circle(this.xMid, this.yMid + this.actionMidPoint, this.actionRadius).attr({
             class: 'action'
@@ -526,19 +527,19 @@ export class Action {
         }).click(() => {this.emitAction('RESET'); });
     }
 
-    calculateActionRadius(serviceRadius: number) {
+    calculateActionRadius(serviceRadius: number): number {
         return serviceRadius * this.actionCirclePercent;
     }
 
-    calculateActionMidPoint(serviceRadius: number) {
+    calculateActionMidPoint(serviceRadius: number): number {
         return serviceRadius * this.actionMidPointPercent;
     }
 
-    capitalizeFirstLetter(text: string) {
+    capitalizeFirstLetter(text: string): string {
         return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    clickService() {
+    clickService(): void {
         setTimeout( () => {
             this.serviceMask.animate({
                 r: this.serviceRadius + this.actionRadius + this.actionMidPoint
@@ -552,7 +553,7 @@ export class Action {
         }
     }
 
-    unclickService() {
+    unclickService(): void {
         this.serviceMask.animate({
             r: this.serviceRadius
         }, 1);
@@ -561,16 +562,16 @@ export class Action {
     }
 
     // todo
-    makeClickable(circle: Snap.Paper) {
+    makeClickable(circle: Snap.Paper): void {
         circle.node.style.pointerEvents = 'auto';
     }
 
     // todo
-    makeUnclickable(circle: Snap.Paper) {
+    makeUnClickable(circle: Snap.Paper): void {
         circle.node.style.pointerEvents = 'none';
     }
 
-    emitAction(action: string) {
+    emitAction(action: string): void {
         // console.log('action',action)
         if (action) {
             this.setAction.emit(action);
