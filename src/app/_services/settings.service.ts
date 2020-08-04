@@ -6,6 +6,6 @@ export class SettingsService {
 
   @LocalStorage() public apiUrl: string = window.location.protocol + '//' + window.location.hostname + ':3000/api';
   @LocalStorage() public mtpConverterUrl: string = window.location.protocol + '//' + window.location.hostname + ':3031';
-  @LocalStorage() public orientationAssistance: boolean = true;
+  @LocalStorage() public orientationAssistance: true;
 
 }
