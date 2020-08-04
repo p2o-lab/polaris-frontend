@@ -1,7 +1,14 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {ModuleInterface, ParameterOptions, ServiceInterface, VirtualServiceInterface} from '@p2olab/polaris-interface';
+import {
+  ModuleInterface,
+  ModuleOptions,
+  ParameterOptions,
+  ServiceInterface,
+  VirtualServiceInterface
+} from '@p2olab/polaris-interface';
+import {ParameterInterface} from '@p2olab/polaris-interface/dist/service/interfaces';
 import * as assignDeep from 'assign-deep';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -32,7 +39,7 @@ export class ModuleService {
         this.refreshVirtualServicesViaHttp();
     }
 
-    public updateService(moduleId: string, newService: ServiceInterface) {
+    public updateService(moduleId: string, newService: ServiceInterface): void {
         this.logger.trace('update service', newService);
         const modules = this._modules.value;
         const oldModule = modules.find((module) => module.id === moduleId);
@@ -68,7 +75,7 @@ export class ModuleService {
     /**
      * update internal variables of module (service states, controlEnable of services, strategy parameters)
      */
-    public updateModuleState(moduleInterface: ModuleInterface) {
+    public updateModuleState(moduleInterface: ModuleInterface): void {
         const modules = this._modules.value;
         this.logger.debug('Update module', moduleInterface);
         const oldModule = modules.find((module) => module.id === moduleInterface.id);
@@ -79,7 +86,7 @@ export class ModuleService {
         }
     }
 
-    updateVirtualServices(vservice: VirtualServiceInterface) {
+    updateVirtualServices(vservice: VirtualServiceInterface): void {
         this.logger.info('Update virtual service');
         const virtualServices = this._virtualServices.value;
         const oldVirtualService = virtualServices.find((vs) => vs.name === vservice.name);
@@ -90,26 +97,26 @@ export class ModuleService {
         }
     }
 
-    refreshModulesViaHttp() {
+    refreshModulesViaHttp(): void {
         this.http.get(`${this.settings.apiUrl}/module`).subscribe(
             (modules: ModuleInterface[]) => {
                 this.logger.debug('modules refreshed via HTTP GET', modules);
                 this._modules.next(modules);
             },
-            (error) => {
+            () => {
                 this.logger.warn(`Could not connect to ${this.settings.apiUrl}/module`);
                 this.snackBar.open(`Could not connect to ${this.settings.apiUrl}/module. Check settings`);
             });
     }
 
-    refreshVirtualServicesViaHttp() {
+    refreshVirtualServicesViaHttp(): void {
         this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vservices: VirtualServiceInterface[]) => {
             this.logger.debug('virtual services refreshed via HTTP GET', vservices);
             this._virtualServices.next(vservices);
         });
     }
 
-    addModule(moduleOptions): Observable<ModuleInterface[]> {
+    addModule(moduleOptions: ModuleOptions): Observable<ModuleInterface[]> {
         return this.http.put<ModuleInterface[]>(`${this.settings.apiUrl}/module`, {module: moduleOptions});
     }
 
@@ -121,13 +128,13 @@ export class ModuleService {
         return this.http.post<ModuleInterface>(`${this.settings.apiUrl}/module/${module}/disconnect`, {});
     }
 
-    removeModule(module: string) {
+    removeModule(module: string): Observable<Record<string, any>> {
         this.removeModuleFromInternalStorage(module);
         return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
     }
 
-    sendCommand(module: string, service: string, command: string, strategy: string, parameters: object[]) {
-        const body: any = {};
+    sendCommand(module: string, service: string, command: string, strategy: string, parameters: Record<string, any>[]): Observable<any> {
+        const body = {strategy:'',parameters:[]};
         if (strategy) {
             body.strategy = strategy;
         }
@@ -137,8 +144,8 @@ export class ModuleService {
         return this.http.post(`${this.settings.apiUrl}/module/${module}/service/${service}/${command}`, body);
     }
 
-    sendVirtualServiceCommand(service: string, command: string, parameters: object[]) {
-        const body: any = {};
+    sendVirtualServiceCommand(service: string, command: string, parameters: Record<string, any>[]):Observable<Record<string, any>>{
+        const body = {parameters:[]};
         if (parameters) {
             body.parameters = parameters;
         }
@@ -146,7 +153,7 @@ export class ModuleService {
     }
 
     configureService(module: ModuleInterface, service: ServiceInterface, strategyName?: string,
-                     parameterOptions?: ParameterOptions[]) {
+                     parameterOptions?: ParameterOptions[]): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}`,
             {strategy: strategyName, parameters: parameterOptions});
     }

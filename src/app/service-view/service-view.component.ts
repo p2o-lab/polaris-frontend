@@ -78,7 +78,9 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.timer.unsubscribe();
+      if(this.timer){
+      this.timer.unsubscribe();
+      }
     }
 
     disabled(): boolean {
