@@ -22,7 +22,7 @@ import {ModuleService} from '../_services/module.service';
 export class ServiceViewComponent implements OnInit, OnDestroy {
     @Input() service: ServiceInterface;
     @Input() module: ModuleInterface;
-    @Input() virtualService: boolean = false;
+    @Input() virtualService = false;
 
     public strategyFormControl: FormControl = new FormControl('', new FormControl());
     public changeDuration: string;
@@ -41,7 +41,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
                 private logger: NGXLogger) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.service ) {
             if (this.service.strategies) {
                 let strat = this.service.strategies.find((strategy) => strategy.name === this.service.currentStrategy);
@@ -77,11 +77,11 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.timer.unsubscribe();
     }
 
-    disabled() {
+    disabled(): boolean {
         if (!this.module) {
             return false;
         }
@@ -90,7 +90,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
             this.service.sourceMode !== SourceMode.Manual;
     }
 
-    sendCommand(command: string) {
+    sendCommand(command: string): void {
         const strategyName: string = this.selectedStrategy.name;
         const parameters: ParameterOptions[] = this.getProcedureParameter();
 
@@ -107,7 +107,7 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         }
     }
 
-    public onChangeParameter(newParameter: ParameterOptions, continousParameter = false) {
+    public onChangeParameter(newParameter: ParameterOptions, continousParameter = false): void {
         if (newParameter) {
             newParameter.continuous = continousParameter;
             this.backend.configureService(this.module, this.service, undefined, [newParameter])
