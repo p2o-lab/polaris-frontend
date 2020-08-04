@@ -21,7 +21,7 @@ export class LogComponent implements OnInit {
         this.logVariableUrl = this.settings.apiUrl + '/logs/variables.json';
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.logs$ = this.backend.getLogs();
   }
 

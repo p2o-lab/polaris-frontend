@@ -32,7 +32,7 @@ export class TimeSeriesViewComponent implements OnInit {
     constructor(public backend: BackendService) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         // only for initial data
         this.backend.series.pipe(first()).subscribe((data) => {
             this.chartOptions.series = data;

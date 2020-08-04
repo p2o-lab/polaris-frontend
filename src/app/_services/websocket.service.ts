@@ -9,7 +9,7 @@ export class WebsocketService {
     constructor(private logger: NGXLogger) {
     }
 
-    public connect(url): Subject<MessageEvent> {
+    public connect(url: any): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
     }

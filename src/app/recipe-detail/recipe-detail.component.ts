@@ -23,7 +23,7 @@ export class RecipeDetailComponent implements OnInit {
               private logger: NGXLogger) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.recipe$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.backend.getRecipe(params.get('id')))
@@ -31,7 +31,7 @@ export class RecipeDetailComponent implements OnInit {
     this.logger.trace('Load recipe on init', this.recipe$);
   }
 
-  back() {
+  back(): void {
     this.location.back();
   }
 

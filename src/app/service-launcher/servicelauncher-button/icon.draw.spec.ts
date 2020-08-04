@@ -1,5 +1,4 @@
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {mock} from 'ts-mockito';
+import {TestBed} from '@angular/core/testing';
 import {Icon} from './icon.draw';
 
 describe('Icon', () => {

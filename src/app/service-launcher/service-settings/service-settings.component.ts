@@ -2,10 +2,8 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {ParameterInterface, ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
-import * as cloneDeep from 'lodash';
 import * as moment from 'moment';
 import {Subscription, timer} from 'rxjs';
-import {ModuleService} from '../../_services/module.service';
 
 @Component({
     selector: 'app-service-settings',
@@ -35,12 +33,12 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
       this.currentService = data.service;
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
        // fill the modal with data
       this.serviceParameter = this.currentService.parameters;
       this.serviceStrategies = this.currentService.strategies;
 
-      this.currentService.strategies.forEach((strategy, index) => {
+      this.currentService.strategies.forEach((strategy) => {
         if (strategy.name === this.currentService.currentStrategy) {
           this.currentStrategy = strategy;
           this.strategyParameter = strategy.parameters;
@@ -54,14 +52,14 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
     /**
      *  close dialog and save nothing
      */
-    close() {
+    close(): void {
         this.dialogRef.close();
     }
 
     /**
-     * apply all changes from dialog with the help of opcuaService
+     * apply all changes from dialog with the help of OPC-UA-Service
      */
-    apply() {
+    apply(): void {
         /*this.subscriptions.add(this.store$.pipe(select(selectModuleOfService(this.currentService.id))).subscribe(
             (_module) => {
                 this.serviceParameter.forEach(
@@ -81,7 +79,7 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
     /**
      * reset all parameters to value of valueNode (previous value)
      */
-    reset() {
+    reset(): void {
       // this.strategyParameter = this.prevStrategyParameters;
       this.snackBar.open('Not implemented yet');
     }
@@ -89,13 +87,13 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
     /**
      *
      */
-    showStrategyParameters() {
+    showStrategyParameters(): void {
       // read form & display parameters
     }
     /**
      * unsubscribe from all subscriptions
      */
-    ngOnDestroy() {
+    ngOnDestroy(): void {
       this.timer.unsubscribe();
     }
 

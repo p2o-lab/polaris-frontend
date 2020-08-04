@@ -20,7 +20,7 @@ export class NewVirtualServiceComponent {
                 private logger: NGXLogger) {
     }
 
-    public previewFile(event) {
+    public previewFile(event): void {
         const reader = new FileReader();
         reader.onload = (e: any) => {
             this.virtualService = e.target.result.toString();
@@ -29,7 +29,7 @@ export class NewVirtualServiceComponent {
         reader.readAsText(event.target.files[0]);
     }
 
-    public instantiate() {
+    public instantiate(): void {
         try {
             const virtualService = JSON.parse(this.virtualService);
             this.logger.info('instantiate virtual service', virtualService);

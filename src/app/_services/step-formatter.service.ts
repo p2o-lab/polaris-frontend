@@ -9,7 +9,7 @@ export class StepFormatterService {
      * @param {ParameterInterface[]} parameter
      * @returns {string}
      */
-    parameterToString(parameter: ParameterInterface[]) {
+    parameterToString(parameter: ParameterInterface[]): string {
         return parameter.map((param) => `${param.name}=${param.value}`).join(', ');
     }
 
@@ -18,7 +18,7 @@ export class StepFormatterService {
      * @param {ConditionOptions} condition
      * @returns {string}
      */
-    conditionToString(condition: ConditionOptions) {
+    conditionToString(condition: ConditionOptions): string {
         if (condition.type === ConditionType.time) {
             return `duration == ${condition.duration}`;
         }

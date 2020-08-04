@@ -24,7 +24,7 @@ export class NewModuleComponent implements OnInit {
                 private logger: NGXLogger) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.formGroup = new FormGroup({
             id: new FormControl(this.module.id, [Validators.required, Validators.minLength(3)]),
             description: new FormControl(this.module.description),
@@ -36,7 +36,7 @@ export class NewModuleComponent implements OnInit {
         });
     }
 
-    public addModule() {
+    public addModule(): void {
         this.module = { ...this.module, ...this.formGroup.value};
         this.logger.debug('Send new module options to backend', this.module);
         this.moduleService.addModule(this.module).subscribe(

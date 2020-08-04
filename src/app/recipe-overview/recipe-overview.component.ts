@@ -23,12 +23,12 @@ export class RecipeOverviewComponent implements OnInit {
               private logger: NGXLogger) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.recipeService.refreshRecipes();
     this.recipeService.recipes.subscribe((recipes) => this.recipes = recipes);
   }
 
-  addToPlayList(id: string) {
+  addToPlayList(id: string): void {
     this.playerService.enqueueRecipe(id).subscribe(
         () => {
             // this.router.navigate(['/player']);
@@ -42,7 +42,7 @@ export class RecipeOverviewComponent implements OnInit {
     );
   }
 
-  remove(id: string) {
+  remove(id: string): void {
     this.recipeService.removeRecipe(id).subscribe((data) => {
         this.logger.debug('Remove recipe', id, data);
         this.snackBar.open(`Recipe removed`, 'Ok');
@@ -52,7 +52,7 @@ export class RecipeOverviewComponent implements OnInit {
       });
   }
 
-    newRecipe() {
+    newRecipe(): void {
       this.dialog.open(NewRecipeComponent, {
         width: '600px',
         height: '800px'

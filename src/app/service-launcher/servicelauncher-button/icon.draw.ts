@@ -1,7 +1,7 @@
 
 export class Icon {
 
-    static getIcon(serviceStatus) {
+    static getIcon(serviceStatus:string): string {
         switch (serviceStatus) {
             case 'RUNNING':
             case 'START':

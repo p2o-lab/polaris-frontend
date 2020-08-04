@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {ParameterInterface, ParameterOptions} from '@p2olab/polaris-interface';
 import {ParameterChangeDialogComponent} from '../parameter-change-dialog/parameter-change-dialog.component';
 
@@ -15,7 +15,7 @@ export class ParameterViewComponent {
 
   constructor(public dialog: MatDialog) { }
 
-  changeParameter() {
+  changeParameter(): void {
     const dialogRef = this.dialog.open(ParameterChangeDialogComponent, {
       data: this.param
     });
@@ -24,5 +24,4 @@ export class ParameterViewComponent {
       this.changed.emit(newParameter);
     });
   }
-
 }

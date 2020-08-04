@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {RecipeInterface} from '@p2olab/polaris-interface';
+import {RecipeInterface, RecipeOptions, VirtualServiceInterface} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SettingsService} from './settings.service';
@@ -22,11 +22,11 @@ export class RecipeService {
         this.refreshRecipes();
     }
 
-    public updateRecipes(recipes: RecipeInterface[]) {
+    public updateRecipes(recipes: RecipeInterface[]): void {
         this._recipes.next(recipes);
     }
 
-    refreshRecipes() {
+    refreshRecipes(): void {
         this.http.get(`${this.settings.apiUrl}/recipe`).subscribe(
             (data: RecipeInterface[]) => {
                 this._recipes.next(data);
@@ -40,15 +40,15 @@ export class RecipeService {
         return this.http.get<RecipeInterface>(`${this.settings.apiUrl}/recipe/${id}`);
     }
 
-    submitNewRecipe(recipeOptions) {
+    submitNewRecipe(recipeOptions: RecipeOptions): Observable<Record<string, any>> {
         return this.http.put(`${this.settings.apiUrl}/recipe`, recipeOptions);
     }
 
-    removeRecipe(id: string) {
+    removeRecipe(id: string): Observable<Record<string, any>> {
         return this.http.delete(`${this.settings.apiUrl}/recipe/${id}`);
     }
 
-    instantiateVirtualService(virtualService: any) {
+    instantiateVirtualService(virtualService: VirtualServiceInterface): Observable<Record<string, any>> {
         return this.http.put(`${this.settings.apiUrl}/virtualService`, virtualService);
     }
 }

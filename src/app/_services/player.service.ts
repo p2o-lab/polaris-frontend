@@ -25,11 +25,11 @@ export class PlayerService {
         return this._player.asObservable();
     }
 
-    public updatePlayer(player: PlayerInterface) {
+    public updatePlayer(player: PlayerInterface): void {
         this._player.next(player);
     }
 
-    refreshPlayer() {
+    refreshPlayer(): void {
         this.http.get(`${this.settings.apiUrl}/player`)
             .subscribe((data: PlayerInterface) => {
                     this._player.next(data);
@@ -37,35 +37,35 @@ export class PlayerService {
             );
     }
 
-    startPlayer() {
+    startPlayer(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/start`, {});
     }
 
-    resetPlayer() {
+    resetPlayer(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/reset`, {});
     }
 
-    pausePlayer() {
+    pausePlayer(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/pause`, {});
     }
 
-    resumePlayer() {
+    resumePlayer(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/resume`, {});
     }
 
-    stopPlayer() {
+    stopPlayer(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/stop`, {});
     }
 
-    enqueueRecipe(id: string) {
+    enqueueRecipe(id: string): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/enqueue`, {recipeId: id});
     }
 
-    removeRecipeFromPlaylist(index: number) {
+    removeRecipeFromPlaylist(index: number): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/player/remove`, {index});
     }
 
-    playerForceTransition(currentStep: string, nextStep: string) {
+    playerForceTransition(currentStep: string, nextStep: string): Observable<Record<string, any>> {
         const body = {stepName: currentStep, nextStepName: nextStep};
         return this.http.post(`${this.settings.apiUrl}/player/forceTransition`, body);
     }

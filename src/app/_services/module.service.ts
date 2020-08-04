@@ -8,7 +8,6 @@ import {
   ServiceInterface,
   VirtualServiceInterface
 } from '@p2olab/polaris-interface';
-import {ParameterInterface} from '@p2olab/polaris-interface/dist/service/interfaces';
 import * as assignDeep from 'assign-deep';
 import {NGXLogger} from 'ngx-logger';
 import {BehaviorSubject, Observable} from 'rxjs';

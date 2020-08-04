@@ -19,7 +19,7 @@ export class NewRecipeComponent {
               private logger: NGXLogger) {
   }
 
-  public previewFile(event) {
+  public previewFile(event): void {
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.recipe = e.target.result.toString();
@@ -28,7 +28,7 @@ export class NewRecipeComponent {
     reader.readAsText(event.target.files[0]);
   }
 
-  public submitRecipe() {
+  public submitRecipe(): void {
     try {
       const recipe = JSON.parse(this.recipe);
       this.snackBar.dismiss();

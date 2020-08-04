@@ -67,7 +67,7 @@ export class BackendService {
     private _updatedVariable: BehaviorSubject<UpdatedVariableInterface> = new BehaviorSubject(undefined);
     private _variables: BehaviorSubject<ModuleVariableInterface[]> = new BehaviorSubject([]);
 
-    private pingTimeout: any;
+    private pingTimeout:  any;
     private _autoReset: boolean;
 
     constructor(private http: HttpClient,
@@ -82,7 +82,7 @@ export class BackendService {
         this.connectToWebsocket();
     }
 
-    public refreshAutoReset() {
+    public refreshAutoReset(): void {
         this.http.get(`${this.settings.apiUrl}/autoReset`)
             .pipe(timeout(2000))
             .subscribe(
@@ -95,29 +95,29 @@ export class BackendService {
         );
     }
 
-    public getLogs() {
+    public getLogs(): Observable<Record<string, any>> {
         return this.http.get(`${this.settings.apiUrl}/logs`);
     }
 
-    public abortAllServices() {
+    public abortAllServices(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/abort`, {});
     }
 
-    public convertMtp(file) {
+    public convertMtp(file: any): Observable<Record<string, any>> {
         const formData: FormData = new FormData();
         formData.append('upload', file);
         return this.http.post(`${this.settings.mtpConverterUrl}/json`, formData);
     }
 
-    public shutdown() {
+    public shutdown(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/shutdown`, null);
     }
 
-    public getVersion() {
+    public getVersion(): Observable<Record<string, any>> {
         return this.http.get(`${this.settings.apiUrl}/version`);
     }
 
-    private heartbeat() {
+    private heartbeat(): void {
         clearTimeout(this.pingTimeout);
 
         // Use `WebSocket#terminate()` and not `WebSocket#close()`. Delay should be
@@ -129,7 +129,7 @@ export class BackendService {
         }, 3000 + 1000);
     }
 
-    private connectToWebsocket() {
+    private connectToWebsocket(): void {
         this.ws.connect(this.settings.apiUrl.replace('http', 'ws'))
             .subscribe((msg) => {
                 const notification: BackendNotification = JSON.parse(msg.data);
@@ -158,7 +158,7 @@ export class BackendService {
             });
     }
 
-    private addData(data) {
+    private addData(data): void {
         const name = data.variable as string;
         const module = data.module as string;
         const value = data.value;
@@ -189,13 +189,13 @@ export class BackendService {
 
         const series: SeriesInterface[] = this._series.value;
         const seriesName = `${module}.${name}`;
-        const serie = series.find((s) => s.name === seriesName);
-        if (serie) {
-            if (timestamp.getTime() > serie.data[serie.data.length - 1][0]) {
-                serie.data.push([timestamp.getTime(), value * 1]);
-                const firstTimestamp = serie.data[0][0];
+        const foundSeries = series.find((s) => s.name === seriesName);
+        if (foundSeries) {
+            if (timestamp.getTime() > foundSeries.data[foundSeries.data.length - 1][0]) {
+                foundSeries.data.push([timestamp.getTime(), value * 1]);
+                const firstTimestamp = foundSeries.data[0][0];
                 if (timestamp.getTime() - firstTimestamp > 1000 * 60 * 5) {
-                    serie.data.shift();
+                    foundSeries.data.shift();
                 }
             }
         } else {
@@ -212,7 +212,7 @@ export class BackendService {
         this._series.next(series);
     }
 
-    private setAutoReset(value: boolean) {
+    private setAutoReset(value: boolean): void {
         this.http.post(`${this.settings.apiUrl}/autoReset`, {autoReset: value}).subscribe((data: any) => {
             this._autoReset = data.autoReset;
         });

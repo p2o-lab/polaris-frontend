@@ -26,33 +26,33 @@ export class ModuleViewComponent {
                 private logger: NGXLogger) {
     }
 
-    connect(module: string) {
+    connect(module: string): void {
         this.moduleService.connect(module).subscribe((data) => {
             this.logger.debug('Connect result', data);
         });
     }
 
-    disconnect(module: string) {
+    disconnect(module: string): void {
         this.moduleService.disconnect(module).subscribe((data) => {
             this.logger.debug('Disconnect result', data);
         });
     }
 
-    remove(module: string) {
+    remove(module: string): void {
         this.moduleService.removeModule(module).subscribe((data) => this.logger.debug('Remove result', data));
     }
 
-    configure(module: ModuleInterface) {
+    configure(module: ModuleInterface): void {
         this.dialog.open(ServiceParameterDialogComponent, {
             data: module
         });
     }
 
-    instantiateVirtualService() {
+    instantiateVirtualService(): void {
         this.dialog.open(NewVirtualServiceComponent, {});
     }
 
-    public async fileNameChanged(event) {
+    public async fileNameChanged(event): Promise<void> {
         const file: File = event.target.files[0];
         let module: ModuleOptions = null;
         await new Promise((resolve) => {
@@ -89,7 +89,7 @@ export class ModuleViewComponent {
         });
     }
 
-    public newModule() {
+    public newModule(): void {
         this.dialog.open(NewModuleComponent);
     }
 }

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {PlayerInterface, RecipeInterface, StepOptions} from '@p2olab/polaris-interface';
+import {PlayerInterface, RecipeInterface} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {NGXLogger} from 'ngx-logger';
 import {Subscription, timer} from 'rxjs';
@@ -16,7 +16,6 @@ import {StepFormatterService} from '../_services/step-formatter.service';
 export class PlayerComponent implements OnInit, OnDestroy {
     public player: PlayerInterface;
     public currentRecipe: RecipeInterface = undefined;
-    public currentStep: StepOptions;
     private timer: Subscription;
     private changeDuration: string;
 
@@ -27,7 +26,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
                 private logger: NGXLogger) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         /* Continuously update data from backend service */
         this.playerService.player.subscribe((player) => {
             this.logger.debug('Got new info for player', player);
@@ -40,27 +39,27 @@ export class PlayerComponent implements OnInit, OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.timer.unsubscribe();
     }
 
-    startAllowed() {
+    startAllowed(): boolean {
         return (this.player.status === 'idle' || this.player.status === 'paused');
     }
 
-    stopAllowed() {
+    stopAllowed(): boolean {
         return this.player.status === 'running';
     }
 
-    pauseAllowed() {
+    pauseAllowed(): boolean {
         return this.player.status === 'running';
     }
 
-    resetAllowed() {
+    resetAllowed(): boolean {
         return (this.player.status === 'stopped' || this.player.status === 'completed');
     }
 
-    start() {
+    start(): void {
         this.playerService.startPlayer().subscribe(
             (data) => {
                 this.logger.debug('start player', data);
@@ -70,39 +69,39 @@ export class PlayerComponent implements OnInit, OnDestroy {
         );
     }
 
-    reset() {
+    reset(): void {
         this.playerService.resetPlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
-    pause() {
+    pause(): void {
         this.playerService.pausePlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
-    resume() {
+    resume(): void {
         this.playerService.resumePlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
-    stop() {
+    stop(): void {
         this.playerService.stopPlayer().subscribe(() => this.playerService.refreshPlayer());
     }
 
-    forceTransition(nextStep) {
+    forceTransition(nextStep: string): void {
         this.playerService.playerForceTransition(this.player.currentRecipe.currentStep.name, nextStep)
             .subscribe((data) => this.logger.debug('transitions forced', data));
     }
 
-    remove(id: number) {
+    remove(id: number): void {
         this.playerService.removeRecipeFromPlaylist(id).subscribe(() => {
                 this.playerService.refreshPlayer();
             }
         );
     }
 
-    public getTime(time): string {
+    public getTime(time: moment.MomentInput): string {
         return moment(time).calendar();
     }
 
-    public getDuration(startTime, endTime): string {
+    public getDuration(startTime: moment.MomentInput, endTime: moment.MomentInput): string {
         return moment.duration(moment(startTime).diff(moment(endTime))).humanize();
     }
 
