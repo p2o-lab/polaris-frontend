@@ -1,63 +1,93 @@
 ---
-kind: pipeline
-name: default
+clone:
+  git:
+    image: plugins/git
+    skip_verify: true
 
-platform:
-  os: linux
-  arch: amd64
+pipeline:
+  #  lint:
+  #   image: trion/ng-cli-karma:8.0.2
+  #    commands:
+  #      - npm install
+  #      - npm run lint
 
-steps:
+  build:
+    image: trion/ng-cli-karma:8.0.2
+    commands:
+      - npm install
+      - npm run build
 
-- name: build
-  image: trion/ng-cli-karma:8.0.2
-  commands:
+  test:
+    image: trion/ng-cli-karma:8.0.2
+    commands:
     - npm install
-    - npm run build
+    - ng test --watch=false --progress=false --code-coverage
 
-- name: test
-  image: trion/ng-cli-karma:8.0.2
-  commands:
-  - npm install
-  - ng test --watch=false --progress=false --code-coverage
-
-- name: codecov
-  image: robertstettner/drone-codecov
-  settings:
-    paths:
-      - coverage
-    token:
-      from_secret: codecov_token
-
-- name: e2e
-  image: trion/ng-cli-karma:latest
-  commands:
+  e2e:
+    image: trion/ng-cli-karma:latest
+    commands:
     - npm install
     - ng e2e
-
-- name: docker
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: p2olab/polaris-frontend
-    auto_tag: true
-
-- name: docker-arm
-  image: plugins/docker
-  settings:
-    dockerfile: Dockerfile.arm
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: p2olab/polaris-frontend
-    auto_tag: true
-    auto_tag_suffix: arm
-
 ---
-kind: signature
-hmac: 58aaccd193aef862418f242688920adeafc3bb8ef6f24df30928e3a0c5ed33ba
+#kind: pipeline
+#name: default
 
-...
+#platform:
+#  os: linux
+#  arch: amd64
+
+#steps:
+
+#- name: build
+#  image: trion/ng-cli-karma:8.0.2
+#  commands:
+#    - npm install
+#    - npm run build
+
+#- name: test
+#  image: trion/ng-cli-karma:8.0.2
+#  commands:
+#  - npm install
+#  - ng test --watch=false --progress=false --code-coverage
+
+#- name: codecov
+#  image: robertstettner/drone-codecov
+#  settings:
+#    paths:
+#      - coverage
+#    token:
+#      from_secret: codecov_token
+
+#- name: e2e
+#  image: trion/ng-cli-karma:latest
+#  commands:
+#    - npm install
+#    - ng e2e
+#
+#- name: docker
+#  image: plugins/docker
+#  settings:
+#    username:
+#      from_secret: docker_username
+#    password:
+#      from_secret: docker_password
+#    repo: p2olab/polaris-frontend
+#    auto_tag: true
+
+#- name: docker-arm
+#  image: plugins/docker
+#  settings:
+#    dockerfile: Dockerfile.arm
+#    username:
+#      from_secret: docker_username
+#    password:
+#      from_secret: docker_password
+#    repo: p2olab/polaris-frontend
+#    auto_tag: true
+#    auto_tag_suffix: arm
+
+#---
+#kind: signature
+#hmac: 58aaccd193aef862418f242688920adeafc3bb8ef6f24df30928e3a0c5ed33ba
+
+#...
