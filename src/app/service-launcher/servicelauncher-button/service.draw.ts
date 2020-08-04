@@ -224,7 +224,7 @@ export class ServiceVisualisation {
 
     this.annotation.unClickService();
     this.action.unclickService();
-    this.flag.unclickService();
+    this.flag.unClickService();
 
     this.serviceCircle.attr({
       class: 'service unclicked_service'

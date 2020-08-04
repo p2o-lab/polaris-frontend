@@ -1,25 +1,27 @@
-import { MatDialog } from '@angular/material/dialog';
+import {EventEmitter} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {ServiceInterface} from '@p2olab/polaris-interface';
+import {Element} from 'snapsvg';
 import * as Snap from 'snapsvg-cjs';
 import {Icon} from './icon.draw';
 
 export class Flag {
     // Constance
-    infoLength: number = 200; // todo: set dynamic
+    infoLength = 200; // todo: set dynamic
     infoHeight: number;
     infoRadius: number;
     serviceRadius: number;
     xMid: number;
     yMid: number;
-    infoFlagMovement: number = 175; // in px
+    infoFlagMovement = 175; // in px
 
     strategyName: string;
     operationMode: string;
 
     // Variables
-    infoMask: any;
-    infoFlag: any;
-    infoGround: any;
+    infoMask: Element;
+    infoFlag: Element;
+    infoGround: Element;
     servicePinned: boolean;
 
     background: any;
@@ -29,14 +31,14 @@ export class Flag {
 
     constructor(
         flag: Snap.Paper,
-        serviceRadius,
-        xMid,
-        yMid,
+        serviceRadius: number,
+        xMid: number,
+        yMid: number,
         public currentService: ServiceInterface,
         public dialog: MatDialog,
-        public openService,
-        public pinServiceEmitter,
-        public pinned) {
+        public openService: EventEmitter<any>,
+        public pinServiceEmitter: EventEmitter<any>,
+        public pinned:boolean) {
 
         this.background = document.getElementsByClassName('background');
 
@@ -53,7 +55,7 @@ export class Flag {
         this.servicePinned = pinned;
     }
 
-    setFlag(snap: Snap.Paper) {
+    setFlag(snap: Snap.Paper): void {
 
                 // var array = JSON.parse(localStorage.getItem("pinned"));
                 // if(array.includes(this.currentService.id))
@@ -87,7 +89,7 @@ export class Flag {
 
         const flagCircleRadius = 12 * 0.8;
         const settingsRadius = this.infoRadius * 0.5;
-        const xWarn = infoBBox.x + 0.6 * infoBBox.width; // Position of Warining Circle
+        const xWarn = infoBBox.x + 0.6 * infoBBox.width; // Position of Warning Circle
         const yWarn = infoBBox.y + 0.27 * infoBBox.height;
         const xAlert = infoBBox.x + 0.45 * infoBBox.width; // Position of Alert Circle
         const yAlert = yWarn;
@@ -116,7 +118,7 @@ export class Flag {
         this.infoFlag.add(operationModeText);
     }
 
-    addWarn(snap: Snap.Paper, xWarn, yWarn, flagCircleRadius) {
+    addWarn(snap: Snap.Paper, xWarn: number, yWarn: number, flagCircleRadius: number): void {
         const warnCircle = snap.circle(xWarn, yWarn, flagCircleRadius).attr({
             class: 'flagWarnCircle'
         });
@@ -140,7 +142,7 @@ export class Flag {
 
     }
 
-    addAlert(snap: Snap.Paper, xAlert, yAlert, flagCircleRadius) {
+    addAlert(snap: Snap.Paper, xAlert: number, yAlert: number, flagCircleRadius: number): void {
         const alertCircle = snap.circle(xAlert, yAlert, flagCircleRadius).attr({
             class: 'flagAlertCircle'
         });
@@ -163,7 +165,7 @@ export class Flag {
         this.infoFlag.add(alertGroup);
     }
 
-    addPin(snap: Snap.Paper, xPin, yPin, flagCircleRadius) {
+    addPin(snap: Snap.Paper, xPin: number, yPin: number, flagCircleRadius: number): void {
         const pinCircle = snap.circle(xPin, yPin, flagCircleRadius).attr({
             class: 'flagPinCircle'
         });
@@ -234,15 +236,15 @@ export class Flag {
 
         this.infoFlag.add(pinGroup);
     }
-    addSettingButton(snap: Snap.Paper, xSettings, ySettings, settingeRadius) {
+    addSettingButton(snap: Snap.Paper, xSettings: number, ySettings: number, settingRadius: number): void {
 
-        const settingsCircle = snap.circle(xSettings, ySettings, settingeRadius).attr({
+        const settingsCircle = snap.circle(xSettings, ySettings, settingRadius).attr({
             class: 'settingsButton'
         });
 
         const iconScale = 0.9 * settingsCircle.getBBox().width;
-        const xSettingsIcon = xSettings - 0.5 * iconScale;
-        const ySettingsIcon = ySettings - 0.5 * iconScale;
+        //const xSettingsIcon = xSettings - 0.5 * iconScale;
+        //const ySettingsIcon = ySettings - 0.5 * iconScale;
 
         const settingsIcon = snap.svg(
             xSettings - 0.5 * 0.9 * settingsCircle.getBBox().width,
@@ -264,14 +266,14 @@ export class Flag {
 
         this.infoFlag.add(settingsGroup);
 
-        // todo: show modal wehn settings button is clicked
+        // todo: show modal when settings button is clicked
 
         settingsCircle.click( () => {
             this.openSettings();
         });
     }
 
-    clickService() {
+    clickService(): void {
         this.infoFlag.attr({
             display: 'block'
         });
@@ -284,7 +286,7 @@ export class Flag {
         }, 275);
     }
 
-    unclickService() {
+    unClickService(): void {
         this.infoFlag.attr({
             display: 'none'
         });
@@ -296,15 +298,15 @@ export class Flag {
         }, 30);
     }
 
-    openSettings() {
+    openSettings(): void {
         // this.dialog.open(ServiceSettingsComponent);
         this.openService.emit(this.currentService);
         // todo: handle parameters
     }
-    pinService() {
+    pinService(): void {
         this.pinServiceEmitter.emit(this.currentService);
     }
-    resetBackground() {
+    resetBackground(): void {
         this.background[0].style.display = 'none';
     }
 }
