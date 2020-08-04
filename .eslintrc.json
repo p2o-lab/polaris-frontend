@@ -6,8 +6,8 @@
         "node": true
     },
     "extends": [
-        "google"
-        //"plugin:@typescript-eslint/recommended"
+        //"google"
+        "plugin:@typescript-eslint/recommended"
     ],
     "globals": {
         "Atomics": "readonly",

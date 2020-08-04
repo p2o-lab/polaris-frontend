@@ -5,7 +5,7 @@ export class Annotation {
     serviceRadius: number; // used for calculation of Annotation Position
     xMid: number; // MidPoint of Service
     yMid: number;
-    radius: number = 12;
+    radius = 12;
     sc: boolean;
     strategy: string;
 
@@ -15,7 +15,8 @@ export class Annotation {
     lowerAnnotationCircle;
     lowerAnnotationText;
 
-    constructor(annotation: Snap.Paper, serviceRadius, xMid: number, yMid: number, sc: boolean, strategy: string) {
+    constructor(annotation: Snap.Paper, serviceRadius: number, xMid: number, yMid: number, sc: boolean,
+                strategy: string) {
         // set Constance
         this.serviceRadius = serviceRadius;
         this.xMid = xMid;
@@ -26,7 +27,7 @@ export class Annotation {
         this.setAnnotation(annotation);
     }
 
-    setAnnotation(snap: Snap.Paper) {
+    setAnnotation(snap: Snap.Paper): void {
 
         // ----------- Set upper Annotation ------------------
         const upperAnnotationState = this.strategy;
@@ -79,7 +80,7 @@ export class Annotation {
       }
     }
 
-    clickService() {
+    clickService(): void {
         this.upperAnnotationText.node.style.display = 'none';
         this.upperAnnotationCircle.node.style.display = 'none';
 
@@ -89,7 +90,7 @@ export class Annotation {
         }
     }
 
-    unclickService() {
+    unClickService():void {
         this.upperAnnotationText.node.style.display = 'block';
         this.upperAnnotationCircle.node.style.display = 'block';
 

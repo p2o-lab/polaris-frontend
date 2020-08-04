@@ -222,7 +222,7 @@ export class ServiceVisualisation {
       item.style.zIndex = '1';
     }
 
-    this.annotation.unclickService();
+    this.annotation.unClickService();
     this.action.unclickService();
     this.flag.unclickService();
 
