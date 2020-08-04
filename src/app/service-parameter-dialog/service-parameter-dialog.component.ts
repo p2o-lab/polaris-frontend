@@ -18,14 +18,12 @@ export class ServiceParameterDialogComponent {
               private logger: NGXLogger) {
   }
 
-  save(parameterForm: NgForm) {
+  save(parameterForm: NgForm): void {
     const parameters = [];
     this.logger.info('set configuration parameters', parameterForm);
     if (parameterForm) {
       Object.keys(parameterForm.value).forEach((key) => {
-        let service;
-        let param;
-        [service, param] = key.split('>');
+        const [service, param] = key.split('>');
         parameters.push({service, parameter: param, value: parameterForm.value[key]});
       });
       this.logger.debug('Collected Parameters', parameters);
