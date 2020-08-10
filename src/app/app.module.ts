@@ -102,7 +102,7 @@ moment.relativeTimeThreshold('ss', 5);
         MaterialModule,
         AppRoutingModule,
         HttpClientModule,
- //       WebStorageModule,
+        //WebStorageModule,
         NgxChartsModule,
         ChartModule,
         FlexLayoutModule,
@@ -121,7 +121,11 @@ moment.relativeTimeThreshold('ss', 5);
         ParameterChangeDialogComponent
     ],
     providers: [
-        SettingsService, BackendService, WebsocketService, StepFormatterService, AmbientLightService,
+        SettingsService,
+        BackendService,
+        WebsocketService,
+        StepFormatterService,
+        AmbientLightService,
         {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
     ],
     bootstrap: [AppComponent]
