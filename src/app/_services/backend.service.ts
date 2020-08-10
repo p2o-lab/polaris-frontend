@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {BackendNotification} from '@p2olab/polaris-interface';
+import {BackendNotification, ModuleOptions} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {timeout} from 'rxjs/internal/operators';
 import {ModuleService} from './module.service';
 import {PlayerService} from './player.service';
@@ -108,6 +108,13 @@ export class BackendService {
         formData.append('upload', file);
         return this.http.post(`${this.settings.mtpConverterUrl}/json`, formData);
     }
+  public convertNewPEAMtp(file: any): Observable<Record<string, any>> {
+    //const formData: FormData = new FormData();
+    //formData.append('upload', file);
+    //return this.http.post(`${this.settings.apiUrl}/mtpConvertRequest`, formData);
+    const data = {module: Array.of<ModuleOptions>()};
+    return of(data);
+  }
 
     public shutdown(): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/shutdown`, null);

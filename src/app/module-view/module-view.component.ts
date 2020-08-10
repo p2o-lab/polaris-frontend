@@ -1,11 +1,14 @@
+import {ComponentType} from '@angular/cdk/overlay';
 import {Component} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ModuleInterface, ModuleOptions, VirtualServiceInterface} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
 import {NewModuleComponent} from '../new-module/new-module.component';
+import {NewPeaComponent} from '../new-pea/new-pea.component';
 import {NewVirtualServiceComponent} from '../new-virtual-service/new-virtual-service.component';
 import {ServiceParameterDialogComponent} from '../service-parameter-dialog/service-parameter-dialog.component';
 
@@ -23,7 +26,8 @@ export class ModuleViewComponent {
     constructor(private moduleService: ModuleService,
                 private dialog: MatDialog,
                 private backend: BackendService,
-                private logger: NGXLogger) {
+                private logger: NGXLogger,
+                private snackBar: MatSnackBar) {
     }
 
     connect(module: string): void {
@@ -72,11 +76,7 @@ export class ModuleViewComponent {
         });
         module.opcua_server_url = this.addDefaultPort(module.opcua_server_url);
 
-        this.dialog.open(NewModuleComponent, {
-            width: '800px',
-            height: '800px',
-            data: module
-        });
+        this.newPEAAddDialog(NewModuleComponent, module);
     }
     /**
      * Add default port (4840) to server url if not present
@@ -89,7 +89,37 @@ export class ModuleViewComponent {
         });
     }
 
-    public newModule(): void {
-        this.dialog.open(NewModuleComponent);
+  public async fileNameNewPEAChanged(event): Promise<void> {
+    const file: File = event.target.files[0];
+    let module: ModuleOptions = null;
+    await new Promise((resolve) => {
+      if (file.name.endsWith('.mtp') || file.name.endsWith('.zip')) {
+        this.backend.convertNewPEAMtp(file).subscribe((data: { modules: ModuleOptions[] }) => {
+          module = data.modules[0];
+          resolve();
+        });
+        module.opcua_server_url = this.addDefaultPort(module.opcua_server_url);
+        this.newPEAAddDialog(NewPeaComponent, module);
+      } else if (file.name.endsWith('.json')){
+        const reader: FileReader = new FileReader();
+        reader.onload = () => {
+          module = JSON.parse(reader.result.toString()).modules[0] as ModuleOptions;
+          resolve();
+        };
+        reader.readAsText(file);
+        module.opcua_server_url = this.addDefaultPort(module.opcua_server_url);
+        this.newPEAAddDialog(NewPeaComponent, module);
+      } else{
+        this.logger.error(`File (${file.name}) is of unknown type!`);
+        this.snackBar.open(`File ${file.name} is of unknown type!`, 'Dismiss');
+      }
+    });
+  }
+
+    public newPEAAddDialog(componentType:ComponentType<NewPeaComponent|NewModuleComponent>, data: ModuleOptions): void {
+      this.dialog.open(componentType, {width: '800px',
+        height: '800px',
+        data:data});
     }
+
 }

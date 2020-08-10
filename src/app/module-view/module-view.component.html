@@ -4,6 +4,11 @@
         <mat-icon>add</mat-icon>
     </button>
     <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
+    <button mat-button matTooltip="Add PEA" matTooltip="Load new PEA from MTP file"
+            (click)="inputNewFileInput.click()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <input #inputNewFileInput type="file" (change)="fileNameNewPEAChanged($event)" hidden accept=".mtp">
 </h1>
 
 <div *ngIf="modules$ | async as modulesObject">
@@ -45,11 +50,19 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-        <button mat-raised-button matTooltip="Add Module" matTooltip="Load new PEA from MTP file or JSON file"
-                (click)="inputFileInput.click()">
-            <mat-icon>add</mat-icon> Add PEA
-        </button>
-        <input #inputFileInput2 type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
+          Add PEA with mtp-converter:
+          <button mat-button matTooltip="Add Module" matTooltip="Load new PEA from MTP file or JSON file"
+                  (click)="inputFileInput.click()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <input #inputFileInput type="file" (change)="fileNameChanged($event)" hidden accept="application/json, .mtp, .zip">
+          <br>
+          Add PEA with PiMAd:
+          <button mat-button matTooltip="Add PEA" matTooltip="Load new PEA from MTP file"
+                  (click)="inputNewFileInput.click()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <input #inputNewFileInput type="file" (change)="fileNameNewPEAChanged($event)" hidden accept=".mtp">
         </mat-card-content>
     </mat-card>
 </div>
