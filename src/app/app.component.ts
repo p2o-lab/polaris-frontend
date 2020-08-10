@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               public backend: BackendService,
               private ambientLight: AmbientLightService,
-              private settings: SettingsService,
+              public readonly settings: SettingsService,
               private overlayContainer: OverlayContainer,
               private snackBar: MatSnackBar) {
     // set color theme
