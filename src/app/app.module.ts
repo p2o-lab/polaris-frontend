@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceWorkerModule} from '@angular/service-worker';
@@ -12,7 +12,7 @@ import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular-highcharts';
 import * as moment from 'moment';
-import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 // import {WebStorageModule} from 'ngx-store';
 import {environment} from '../environments/environment';
 import {AmbientLightService} from './_services/ambient-light.service';
@@ -28,10 +28,11 @@ import {LogComponent} from './log/log.component';
 import {MaterialModule} from './material/material.module';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
+import {NewPeaComponent} from './new-pea/new-pea.component';
 import {NewRecipeComponent} from './new-recipe/new-recipe.component';
 import {NewVirtualServiceComponent} from './new-virtual-service/new-virtual-service.component';
 // tslint:disable-next-line:max-line-length
-import { OrientationReferralSnackbarComponent } from './orientation-referral-snackbar/orientation-referral-snackbar.component';
+import {OrientationReferralSnackbarComponent} from './orientation-referral-snackbar/orientation-referral-snackbar.component';
 import {ParameterChangeDialogComponent} from './parameter-change-dialog/parameter-change-dialog.component';
 import {ParameterViewComponent} from './parameter-view/parameter-view.component';
 import {PlayerComponent} from './player/player.component';
@@ -75,6 +76,7 @@ moment.relativeTimeThreshold('ss', 5);
         ModuleViewComponent,
         NewRecipeComponent,
         NewModuleComponent,
+        NewPeaComponent,
         NewVirtualServiceComponent,
         ServiceViewComponent,
         AboutComponent,
@@ -100,7 +102,7 @@ moment.relativeTimeThreshold('ss', 5);
         MaterialModule,
         AppRoutingModule,
         HttpClientModule,
- //       WebStorageModule,
+        //WebStorageModule,
         NgxChartsModule,
         ChartModule,
         FlexLayoutModule,
@@ -113,12 +115,17 @@ moment.relativeTimeThreshold('ss', 5);
         ServiceParameterDialogComponent,
         ServiceSettingsComponent,
         NewModuleComponent,
+        NewPeaComponent,
         NewRecipeComponent,
         NewVirtualServiceComponent,
         ParameterChangeDialogComponent
     ],
     providers: [
-        SettingsService, BackendService, WebsocketService, StepFormatterService, AmbientLightService,
+        SettingsService,
+        BackendService,
+        WebsocketService,
+        StepFormatterService,
+        AmbientLightService,
         {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
     ],
     bootstrap: [AppComponent]

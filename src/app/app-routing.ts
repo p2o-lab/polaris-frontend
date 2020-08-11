@@ -5,6 +5,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {LogComponent} from './log/log.component';
 import {ModuleViewComponent} from './module-view/module-view.component';
 import {NewModuleComponent} from './new-module/new-module.component';
+import {NewPeaComponent} from './new-pea/new-pea.component';
 import {PlayerComponent} from './player/player.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {RecipeOverviewComponent} from './recipe-overview/recipe-overview.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'modules', component: ModuleViewComponent},
   {path: 'servicelauncher', component: ServiceLauncherComponent},
   {path: 'modules/new', component: NewModuleComponent},
+  {path: 'modules/newPEA', component: NewPeaComponent},
   {path: 'logs', component: LogComponent},
   {path: 'player', component: PlayerComponent},
   {path: 'recipe', component: RecipeOverviewComponent},

@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Load new Process Equipment Assembly</h1>
+<form [formGroup]="formGroup" (ngSubmit)="addModule()">
+  <mat-dialog-content>
+    <mat-vertical-stepper>
+      <mat-step label="Identification & Connection" [stepControl]="formGroup">
+        <mat-form-field>
+          <input matInput  required type="text"
+                 placeholder="ID" formControlName="id">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Optional description of PEA" type="text" formControlName="description">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="OPC UA Server URL" required type="text" formControlName="opcua_server_url">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Authentication Settings</mat-label>
+          <mat-select formControlName="authentication">
+            <mat-option value="anonymous">Anonymous</mat-option>
+            <mat-option value="password">Username/Password</mat-option>
+            <mat-option value="certificate" disabled>Certificate</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div [hidden]="formGroup.value.authentication!=='password'">
+          <mat-form-field>
+            <input matInput name="username" placeholder="OPC UA username"
+                   type="text" formControlName="username">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="password" placeholder="OPC UA password"
+                   type="password" formControlName="password">
+          </mat-form-field>
+        </div>
+      </mat-step>
+      <mat-step label="Rename Services">
+        <form>
+          <mat-form-field *ngFor="let service of module.services; let i = index">
+            <input matInput required type="text"
+                   [(ngModel)]="service.name"
+                   name="service_name_{{i+1}}"
+                   placeholder="{{i+1}}. service"
+            >
+          </mat-form-field>
+        </form>
+      </mat-step>
+      <mat-step label="Show Process Values">
+        <mat-chip-list selectable="false">
+          <mat-chip *ngFor="let pv of module.process_values">{{pv.name}}</mat-chip>
+        </mat-chip-list>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button color="warn" mat-stroked-button mat-dialog-close>Cancel</button>
+    <button type="submit" color="primary" mat-raised-button [disabled]="!formGroup.valid">Add PEA</button>
+  </mat-dialog-actions>
+</form>
+

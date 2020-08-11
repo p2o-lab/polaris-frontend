@@ -8,18 +8,18 @@ import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
 
 @Component({
-    selector: 'app-new-module',
-    templateUrl: './new-module.component.html',
-    styleUrls: ['./new-module.component.css']
+    selector: 'app-new-pea',
+    templateUrl: './new-pea.component.html',
+    styleUrls: ['./new-pea.component.css']
 })
-export class NewModuleComponent implements OnInit {
+export class NewPeaComponent implements OnInit {
 
     public formGroup: FormGroup;
 
     constructor(@Inject(MAT_DIALOG_DATA) public module: ModuleOptions,
                 private backend: BackendService,
                 private moduleService: ModuleService,
-                private dialogRef: MatDialogRef<NewModuleComponent>,
+                private dialogRef: MatDialogRef<NewPeaComponent>,
                 private snackBar: MatSnackBar,
                 private logger: NGXLogger) {
     }
@@ -31,8 +31,8 @@ export class NewModuleComponent implements OnInit {
             opcua_server_url: new FormControl(this.module.opcua_server_url,
                 [Validators.required, Validators.pattern('opc.tcp://(.*)')]),
             authentication: new FormControl(this.module.username ? 'password' : 'anonymous'),
-            username: new FormControl(),
-            password: new FormControl()
+            username: new FormControl(this.module.username, Validators.minLength(3)),
+            password: new FormControl(this.module.password, Validators.minLength(3))
         });
     }
 
@@ -46,7 +46,7 @@ export class NewModuleComponent implements OnInit {
                 this.moduleService.updateModuleState(data[0]);
             },
             (error) => {
-                this.snackBar.open(`Unable to add PEA`, 'Dismiss', {duration: 20000});
+                this.snackBar.open(JSON.stringify(error.error), 'Dismiss', {duration: 20000});
             });
         this.dialogRef.close();
     }

@@ -20,7 +20,8 @@
         <mat-icon mat-list-icon>view_module</mat-icon>
         <span matBadgeOverlap="false" [matBadge]="(backend.moduleService.modules | async)?.length" >Modules</span>
       </a>
-      <a mat-list-item routerLink="/servicelauncher" routerLinkActive="active" (click)="checkOrientation('servicelauncher', currentOrientation)">
+      <a *ngIf="settings.enableServiceLauncher" mat-list-item routerLink="/servicelauncher" routerLinkActive="active"
+         (click)="checkOrientation('servicelauncher', currentOrientation)">
         <mat-icon mat-list-icon>donut_large</mat-icon>
         <span>Service Launcher</span>
       </a>

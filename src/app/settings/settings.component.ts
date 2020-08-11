@@ -1,5 +1,5 @@
-import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
 import {version} from '../../../package.json';
 import {AmbientLightService} from '../_services/ambient-light.service';
@@ -15,12 +15,13 @@ import {SettingsService} from '../_services/settings.service';
 export class SettingsComponent implements OnInit {
   public backendVersion: string;
   public frontendVersion: string;
+  public formGroup: FormGroup;
 
   @ViewChild('forceDarkmodeCheckbox', {static: true}) forceDarkmodeCheckbox: MatCheckbox;
 
   private forceDarkmode = false;
 
-  constructor(private location: Location,
+  constructor(private fb: FormBuilder,
               public settings: SettingsService,
               public backend: BackendService,
               public ambientLight: AmbientLightService) {
@@ -28,6 +29,10 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formGroup = this.fb.group({
+      'apiUrl': [this.settings.apiUrl, Validators.pattern(/https?:\/\//)],
+      'mtpConverterUrl': [this.settings.mtpConverterUrl, Validators.pattern(/https?:\/\//)]
+    });
     this.backend.refreshAutoReset();
     this.backend.getVersion().subscribe((data: { version: string }) => this.backendVersion = data.version);
 
@@ -70,6 +75,14 @@ export class SettingsComponent implements OnInit {
    */
   private setCheckbox(state: boolean) {
     this.forceDarkmodeCheckbox.checked = state;
+  }
+
+  saveUrls(): void {
+    // TODO: check if URLs are valid (responding backend)
+    this.settings.apiUrl = this.formGroup.value.apiUrl;
+    this.settings.mtpConverterUrl = this.formGroup.value.mtpConverterUrl;
+
+    // TODO: restart websocket with new URL
   }
 
 }
