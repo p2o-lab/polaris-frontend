@@ -28,7 +28,7 @@ export class NewPeaComponent implements OnInit {
         this.formGroup = new FormGroup({
             id: new FormControl(this.module.id, [Validators.required, Validators.minLength(3)]),
             description: new FormControl(this.module.description),
-            opcua: new FormControl(this.module.opcua_server_url,
+            opcua_server_url: new FormControl(this.module.opcua_server_url,
                 [Validators.required, Validators.pattern('opc.tcp://(.*)')]),
             authentication: new FormControl(this.module.username ? 'password' : 'anonymous'),
             username: new FormControl(this.module.username, Validators.minLength(3)),
