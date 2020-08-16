@@ -7,7 +7,7 @@ import {
     ParameterOptions,
     ServiceInterface,
     SourceMode,
-    StrategyInterface
+    ProcedureInterface
 } from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {NGXLogger} from 'ngx-logger';
@@ -24,12 +24,12 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     @Input() module: ModuleInterface;
     @Input() virtualService = false;
 
-    public strategyFormControl: FormControl = new FormControl('', new FormControl());
+    public procedureFormControl: FormControl = new FormControl('', new FormControl());
     public changeDuration: string;
-    public selectedStrategyId: string;
-    public get selectedStrategy(): StrategyInterface {
-        if (this.service && this.service.strategies) {
-            return this.service.strategies.find((s) => s.id === this.selectedStrategyId);
+    public selectedProcedureId: string;
+    public get selectedProcedure(): ProcedureInterface {
+        if (this.service && this.service.procedures) {
+            return this.service.procedures.find((s) => s.id === this.selectedProcedureId);
         } else {
             return undefined;
         }
@@ -42,36 +42,36 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (this.service ) {
-            if (this.service.strategies) {
-                let strat = this.service.strategies.find((strategy) => strategy.name === this.service.currentStrategy);
-                if (!strat) {
-                    strat = this.service.strategies.find((strategy) => strategy.default);
+        if (this.service) {
+            if (this.service.procedures) {
+                let proc = this.service.procedures.find((procedure) => procedure.name === this.service.currentProcedure);
+                if (!proc) {
+                    proc = this.service.procedures.find((procedure) => procedure.isDefault);
                 }
-                this.selectedStrategyId = strat.id;
+                this.selectedProcedureId = proc.id;
             }
 
-            this.strategyFormControl.valueChanges.subscribe((strategyId: string) => {
-                this.selectedStrategyId = strategyId;
+            this.procedureFormControl.valueChanges.subscribe((procedureId: string) => {
+                this.selectedProcedureId = procedureId;
                 if (this.module && this.module.connected) {
-                    this.backend.configureService(this.module, this.service, this.selectedStrategy.name)
+                    this.backend.configureService(this.module, this.service, this.selectedProcedure.name)
                         .subscribe(
                             (data) => {
-                                this.logger.trace(`Service ${this.service.name} has changed to strategy ` +
-                                    `${this.selectedStrategy.name}: ${JSON.stringify(data)}`);
+                                this.logger.trace(`Service ${this.service.name} has changed to procedure ` +
+                                    `${this.selectedProcedure.name}: ${JSON.stringify(data)}`);
                             },
                             (err) => {
                                 this.logger.error(`Error while changing Service ${this.service.name} ` +
-                                    `to strategy ${this.selectedStrategy.name}: ${JSON.stringify(err)}`);
+                                    `to procedure ${this.selectedProcedure.name}: ${JSON.stringify(err)}`);
                                 this.snackBar.open(`Error while changing Service ${this.service.name} ` +
-                                    `to strategy ${this.selectedStrategy.name}`, 'Ok');
+                                    `to procedure ${this.selectedProcedure.name}`, 'Ok');
                             }
                         );
                 }
             });
-            this.strategyFormControl.setValue(this.selectedStrategyId);
-            if (!this.service.strategies || this.service.strategies.length === 1) {
-                this.strategyFormControl.disable();
+            this.procedureFormControl.setValue(this.selectedProcedureId);
+            if (!this.service.procedures || this.service.procedures.length === 1) {
+                this.procedureFormControl.disable();
             }
             this.timer = timer(0, 1000).subscribe(() => this.updateDuration());
         }
@@ -93,11 +93,11 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
     }
 
     sendCommand(command: string): void {
-        const strategyName: string = this.selectedStrategy.name;
+        const procedureName: string = this.selectedProcedure.name;
         const parameters: ParameterOptions[] = this.getProcedureParameter();
 
         if (!this.virtualService) {
-            this.backend.sendCommand(this.module.id, this.service.name, command, strategyName, parameters)
+            this.backend.sendCommand(this.module.id, this.service.name, command, procedureName, parameters)
                 .subscribe((data) => {
                     this.logger.debug('command sent', data);
                 });
@@ -109,9 +109,9 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
         }
     }
 
-    public onChangeParameter(newParameter: ParameterOptions, continousParameter = false): void {
+    public onChangeParameter(newParameter: ParameterOptions, continuousParameter = false): void {
         if (newParameter) {
-            newParameter.continuous = continousParameter;
+            newParameter.continuous = continuousParameter;
             this.backend.configureService(this.module, this.service, undefined, [newParameter])
                 .subscribe((data) => this.logger.debug('parameter changed', data));
         }
@@ -122,13 +122,13 @@ export class ServiceViewComponent implements OnInit, OnDestroy {
      * @returns {ParameterOptions[]}
      */
     private getProcedureParameter(): ParameterOptions[] {
-        const parameters = this.selectedStrategy.parameters;
+        const parameters = this.selectedProcedure.parameters;
         return parameters
             .filter((param) => !param.readonly)
             .map((param) => {
                 return {
                     name: param.name,
-                    value: this.selectedStrategy.parameters[param.name]
+                    value: this.selectedProcedure.parameters[param.name]
                 };
             });
     }

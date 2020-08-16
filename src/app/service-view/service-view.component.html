@@ -11,11 +11,13 @@
             </small>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <div class="form" *ngIf="service.strategies">
+    <div class="form" *ngIf="service.procedures">
         <mat-form-field class="field">
-            <mat-select [formControl]="strategyFormControl" placeholder="Strategy">
-                <mat-option *ngFor="let strategy of service.strategies" [value]="strategy.id">
-                    {{strategy.name}} <span *ngIf="strategy.sc">(self-completing)</span>
+            <mat-select [formControl]="procedureFormControl" placeholder="Procedure">
+                <mat-option *ngFor="let procedure of service.procedures" [value]="procedure.id">
+                  {{procedure.name}}
+                  <span *ngIf="procedure.isSelfCompleting">(self-completing)</span>
+                  <span *ngIf="procedure.isDefault">(default)</span>
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -24,34 +26,34 @@
          fxLayout
          fxLayout.lt-md="column"
          fxLayoutGap="10px"
-         *ngIf="selectedStrategy">
+         *ngIf="selectedProcedure">
         <div fxFlex>
             <h3 matTooltip="Procedure Parameters">Parameters</h3>
-            <p *ngFor="let param of selectedStrategy.parameters">
+            <p *ngFor="let param of selectedProcedure.parameters">
                 <app-parameter-view [param]="param" (changed)="onChangeParameter($event)"></app-parameter-view>
             </p>
-            <p *ngIf="!selectedStrategy.parameters || selectedStrategy.parameters.length===0">---</p>
+            <p *ngIf="!selectedProcedure.parameters || selectedProcedure.parameters.length===0">---</p>
         </div>
         <div fxFlex>
-            <h3 matTooltip="Processvalues In">PV In</h3>
-            <p *ngFor="let param of selectedStrategy.processValuesIn">
+            <h3 matTooltip="ProcessValuesIn">PV In</h3>
+            <p *ngFor="let param of selectedProcedure.processValuesIn">
                 <app-parameter-view [param]="param" (changed)="onChangeParameter($event, true)"></app-parameter-view>
             </p>
-            <p *ngIf="!selectedStrategy.processValuesIn || selectedStrategy.processValuesIn.length===0">---</p>
+            <p *ngIf="!selectedProcedure.processValuesIn || selectedProcedure.processValuesIn.length===0">---</p>
         </div>
         <div fxFlex>
-            <h3 matTooltip="Processvalues Out">PV Out</h3>
-            <p *ngFor="let param of selectedStrategy.processValuesOut">
+            <h3 matTooltip="ProcessValuesOut">PV Out</h3>
+            <p *ngFor="let param of selectedProcedure.processValuesOut">
                 <app-parameter-view [param]="param"></app-parameter-view>
             </p>
-            <p *ngIf="!selectedStrategy.processValuesOut || selectedStrategy.processValuesOut.length===0">---</p>
+            <p *ngIf="!selectedProcedure.processValuesOut || selectedProcedure.processValuesOut.length===0">---</p>
         </div>
         <div fxFlex>
             <h3>Report Values</h3>
-            <p *ngFor="let param of selectedStrategy.reportParameters">
+            <p *ngFor="let param of selectedProcedure.reportParameters">
                 <app-parameter-view [param]="param"></app-parameter-view>
             </p>
-            <p *ngIf="!selectedStrategy.reportParameters || selectedStrategy.reportParameters.length===0">---</p>
+            <p *ngIf="!selectedProcedure.reportParameters || selectedProcedure.reportParameters.length===0">---</p>
         </div>
     </div>
     <mat-action-row *ngIf="service.controlEnable">
