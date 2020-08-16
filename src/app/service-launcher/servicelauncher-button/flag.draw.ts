@@ -15,7 +15,7 @@ export class Flag {
     yMid: number;
     infoFlagMovement = 175; // in px
 
-    strategyName: string;
+    procedureName: string;
     operationMode: string;
 
     // Variables
@@ -42,7 +42,7 @@ export class Flag {
 
         this.background = document.getElementsByClassName('background');
 
-        this.strategyName = currentService.currentStrategy;
+        this.procedureName = currentService.currentProcedure;
         this.operationMode = currentService.sourceMode + ' ' + currentService.operationMode;
 
         this.infoHeight = 2.4 * serviceRadius;
@@ -95,9 +95,9 @@ export class Flag {
         const yAlert = yWarn;
         const xPin = infoBBox.x + 0.83 * infoBBox.width;
         const yPin = yWarn;
-        const xStrategy = xAlert - flagCircleRadius;
-        const yStrategy = infoBBox.y + 0.60 * infoBBox.height;
-        const xOpMode = xStrategy;
+        const xProcedure = xAlert - flagCircleRadius;
+        const yProcedure = infoBBox.y + 0.60 * infoBBox.height;
+        const xOpMode = xProcedure;
         const yOpMode = infoBBox.y + 0.8 * infoBBox.height;
         const xSettings = infoBBox.x + infoBBox.width + (Math.sqrt(2) / 2 - 1) * this.infoRadius;
         const ySettings = infoBBox.y + infoBBox.height + (Math.sqrt(2) / 2 - 1) * this.infoRadius;
@@ -107,14 +107,14 @@ export class Flag {
         this.addPin(snap, xPin, yPin, flagCircleRadius);
         this.addSettingButton(snap, xSettings, ySettings, settingsRadius);
 
-        const strategyText = snap.text(xStrategy, yStrategy, this.strategyName).attr({
-            class: 'flagStrategyText'
+        const procedureText = snap.text(xProcedure, yProcedure, this.procedureName).attr({
+            class: 'flagProcedureText'
         });
         const operationModeText = snap.text(xOpMode, yOpMode, this.operationMode).attr({
             class: 'flagOperationModeText'
         });
 
-        this.infoFlag.add(strategyText);
+        this.infoFlag.add(procedureText);
         this.infoFlag.add(operationModeText);
     }
 
