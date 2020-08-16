@@ -9,8 +9,7 @@
     "build": "ng build --prod",
     "test": "ng test --code-coverage",
     "lint": "eslint -f pretty --ext \".ts\" src",
-    "e2e": "ng e2e",
-    "showCovReport": "ng serve -c-1 -o -p 9877 ./coverage"
+    "e2e": "ng e2e"
   },
   "keywords": [
     "Modulare Automation",
