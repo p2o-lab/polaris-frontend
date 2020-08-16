@@ -89,7 +89,8 @@ export class ServiceVisualisation {
     this.flag = new Flag(service, serviceRadius, xMid, yMid, currentService,
       dialog, openSettings, pinService, this.pinned);
     this.setService(service, this.serviceState); // generate Service
-    this.annotation = new Annotation(service, serviceRadius, xMid, yMid, this.isSelfCompleting, this.procedure);
+    this.annotation = new Annotation(service, serviceRadius, xMid, yMid, this.isSelfCompleting,
+      this.isDefault, this.procedure);
     this.action = new Action(service, serviceRadius, xMid, yMid, this.serviceState, setAction);
   }
 

@@ -23,8 +23,8 @@ export class ServiceLauncherComponent implements OnInit {
 
   sorting: string;
 
-  strategyFormControl: FormControl = new FormControl('', new FormControl());
-  strategyParameterFormGroup: FormGroup = new FormGroup({}, {updateOn: 'blur'});
+  procedureFormControl: FormControl = new FormControl('', new FormControl());
+  procedureParameterFormGroup: FormGroup = new FormGroup({}, {updateOn: 'blur'});
 
 
   /**
@@ -242,12 +242,12 @@ export class ServiceLauncherComponent implements OnInit {
    * @returns {ParameterOptions[]}
    */
   private getParameter(): ParameterOptions[] {
-    return this.strategyFormControl.value.parameters
+    return this.procedureFormControl.value.parameters
       .filter((param) => !param.readonly)
       .map((param) => {
         return {
           name: param.name,
-          value: this.strategyParameterFormGroup.value[param.name]
+          value: this.procedureParameterFormGroup.value[param.name]
         };
       });
   }

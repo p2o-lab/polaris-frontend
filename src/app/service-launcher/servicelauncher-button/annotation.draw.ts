@@ -6,8 +6,9 @@ export class Annotation {
     xMid: number; // MidPoint of Service
     yMid: number;
     radius = 12;
-    sc: boolean;
-    strategy: string;
+    isSelfCompleting: boolean;
+    isDefault: boolean;
+    procedure: string;
 
     // Variables for reuse in the methods
     upperAnnotationCircle;
@@ -15,14 +16,19 @@ export class Annotation {
     lowerAnnotationCircle;
     lowerAnnotationText;
 
-    constructor(annotation: Snap.Paper, serviceRadius: number, xMid: number, yMid: number, sc: boolean,
-                strategy: string) {
+    constructor(annotation: Snap.Paper,
+                serviceRadius: number,
+                xMid: number, yMid: number,
+                isSelfCompleting: boolean,
+                isDefault: boolean,
+                procedure: string) {
         // set Constance
         this.serviceRadius = serviceRadius;
         this.xMid = xMid;
         this.yMid = yMid;
-        this.sc = sc;
-        this.strategy = strategy;
+        this.isSelfCompleting = isSelfCompleting;
+        this.isDefault = isDefault
+        this.procedure = procedure;
 
         this.setAnnotation(annotation);
     }
@@ -30,7 +36,7 @@ export class Annotation {
     setAnnotation(snap: Snap.Paper): void {
 
         // ----------- Set upper Annotation ------------------
-        const upperAnnotationState = this.strategy;
+        const upperAnnotationState = this.procedure;
         this.upperAnnotationCircle = snap.circle(
             this.xMid + this.serviceRadius / Math.sqrt(2),
             this.yMid - this.serviceRadius / Math.sqrt(2), this.radius
@@ -52,9 +58,10 @@ export class Annotation {
         );
 
         // -------------- Set lower Annotation --------------------
-        // toDo: implement dynamic
-        if (this.sc) {
-          const lowerAnnotationState = 'SC';
+        // TODO: implement dynamic
+        if (this.isSelfCompleting) {
+          // TODO: change to better wording as sc is already state change
+          const lowerAnnotationState = 'sc';
           this.lowerAnnotationCircle = snap.circle(
             this.xMid + this.serviceRadius / Math.sqrt(2),
             this.yMid + this.serviceRadius / Math.sqrt(2),
@@ -71,7 +78,7 @@ export class Annotation {
             x: xLower,
             y: yLower
           });
-          const lowerAnnnotationGroup = snap.group(
+          const lowerAnnotationGroup = snap.group(
             this.lowerAnnotationCircle,
             this.lowerAnnotationText
           );
@@ -84,7 +91,7 @@ export class Annotation {
         this.upperAnnotationText.node.style.display = 'none';
         this.upperAnnotationCircle.node.style.display = 'none';
 
-        if (this.sc) {
+        if (this.isSelfCompleting) {
           this.lowerAnnotationText.node.style.display = 'none';
           this.lowerAnnotationCircle.node.style.display = 'none';
         }
@@ -94,7 +101,7 @@ export class Annotation {
         this.upperAnnotationText.node.style.display = 'block';
         this.upperAnnotationCircle.node.style.display = 'block';
 
-        if (this.sc) {
+        if (this.isSelfCompleting) {
           this.lowerAnnotationText.node.style.display = 'block';
           this.lowerAnnotationCircle.node.style.display = 'block';
         }

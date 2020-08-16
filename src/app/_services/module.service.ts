@@ -132,10 +132,10 @@ export class ModuleService {
         return this.http.delete(`${this.settings.apiUrl}/module/${module}`);
     }
 
-    sendCommand(module: string, service: string, command: string, strategy: string, parameters: Record<string, any>[]): Observable<any> {
-        const body = {strategy:'',parameters:[]};
-        if (strategy) {
-            body.strategy = strategy;
+    sendCommand(module: string, service: string, command: string, procedure: string, parameters: Record<string, any>[]): Observable<any> {
+        const body = {procedure:'',parameters:[]};
+        if (procedure) {
+            body.procedure = procedure;
         }
         if (parameters) {
             body.parameters = parameters;
@@ -151,10 +151,10 @@ export class ModuleService {
         return this.http.post(`${this.settings.apiUrl}/virtualService/${service}/${command}`, body);
     }
 
-    configureService(module: ModuleInterface, service: ServiceInterface, strategyName?: string,
+    configureService(module: ModuleInterface, service: ServiceInterface, procedureName?: string,
                      parameterOptions?: ParameterOptions[]): Observable<Record<string, any>> {
         return this.http.post(`${this.settings.apiUrl}/module/${module.id}/service/${service.name}`,
-            {strategy: strategyName, parameters: parameterOptions});
+            {procedure: procedureName, parameters: parameterOptions});
     }
 
     private removeModuleFromInternalStorage(id: string) {
