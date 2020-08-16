@@ -32,8 +32,10 @@ export class ServiceVisualisation {
   serviceName: string;
   serviceState: string;
   pinned: boolean;
-  sc = false;
-  strategy = '';
+  isSelfCompleting = false;
+  // TODO: Add drawing for default
+  isDefault = false;
+  procedure = '';
 
   // Variables for reuse in the methods
   clickedService: boolean; // true, if Service is clicked
@@ -73,11 +75,12 @@ export class ServiceVisualisation {
 
     document.getElementById('buttonDiv');
 
-    // get current strategy id & sc for drawing
-    currentService.strategies.forEach((currValue) => {
-      if (currValue.name === currentService.currentStrategy) {
-        this.strategy = currValue.id;
-        this.sc = currValue.sc;
+    // get current procedure id, selfCompleting, default for drawing
+    currentService.procedures.forEach((curProcedure) => {
+      if (curProcedure.name === currentService.currentProcedure) {
+        this.procedure = curProcedure.id;
+        this.isSelfCompleting = curProcedure.isSelfCompleting;
+        this.isDefault = curProcedure.isDefault;
       }
     });
 
@@ -86,7 +89,7 @@ export class ServiceVisualisation {
     this.flag = new Flag(service, serviceRadius, xMid, yMid, currentService,
       dialog, openSettings, pinService, this.pinned);
     this.setService(service, this.serviceState); // generate Service
-    this.annotation = new Annotation(service, serviceRadius, xMid, yMid, this.sc, this.strategy);
+    this.annotation = new Annotation(service, serviceRadius, xMid, yMid, this.isSelfCompleting, this.procedure);
     this.action = new Action(service, serviceRadius, xMid, yMid, this.serviceState, setAction);
   }
 
@@ -158,7 +161,7 @@ export class ServiceVisualisation {
       const clickTimer$ = timer(200);
       mouseup$.pipe(takeUntil(clickTimer$)).subscribe(() => {
         if (this.clickedService) {
-          this.unclickService();
+          this.unClickService();
           this.serviceStateText.attr({
             class: 'serviceState clicked_service'
           });
@@ -210,7 +213,7 @@ export class ServiceVisualisation {
     this.clickedService = true;
   }
 
-  unclickService(): void {
+  unClickService(): void {
     this.resetBackground();
 
     const elements = Array.from(document.getElementsByClassName(this.serviceName) as HTMLCollectionOf<HTMLElement>);

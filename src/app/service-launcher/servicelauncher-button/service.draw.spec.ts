@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {mock} from 'ts-mockito';
 import {ServiceVisualisation} from './service.draw';
 
-describe('ServiceVisualitation', () => {
+describe('ServiceVisualisation', () => {
   let unit: ServiceVisualisation;
 
   beforeEach(() => {
