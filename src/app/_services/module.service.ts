@@ -49,22 +49,22 @@ export class ModuleService {
             oldService.lastChange = newService.lastChange;
             oldService.operationMode = newService.operationMode;
             oldService.sourceMode = newService.sourceMode;
-            newService.strategies.forEach((newStrategy) => {
-                const oldStrategy = oldService.strategies.find((s) => s.id === newStrategy.id);
-                newStrategy.parameters.forEach((newParam) => {
-                    const oldParam = oldStrategy.parameters.find((p) => p.name === newParam.name);
+            newService.procedures.forEach((newProcedure) => {
+                const oldProcedure = oldService.procedures.find((s) => s.id === newProcedure.id);
+                newProcedure.parameters.forEach((newParam) => {
+                    const oldParam = oldProcedure.parameters.find((p) => p.name === newParam.name);
                     Object.assign(oldParam, newParam);
                 });
-                newStrategy.processValuesIn.forEach((newParam) => {
-                    const oldParam = oldStrategy.processValuesIn.find((p) => p.name === newParam.name);
+                newProcedure.processValuesIn.forEach((newParam) => {
+                    const oldParam = oldProcedure.processValuesIn.find((p) => p.name === newParam.name);
                     Object.assign(oldParam, newParam);
                 });
-                newStrategy.processValuesOut.forEach((newParam) => {
-                    const oldParam = oldStrategy.processValuesOut.find((p) => p.name === newParam.name);
+                newProcedure.processValuesOut.forEach((newParam) => {
+                    const oldParam = oldProcedure.processValuesOut.find((p) => p.name === newParam.name);
                     Object.assign(oldParam, newParam);
                 });
-                newStrategy.reportParameters.forEach((newParam) => {
-                    const oldParam = oldStrategy.reportParameters.find((p) => p.name === newParam.name);
+                newProcedure.reportParameters.forEach((newParam) => {
+                    const oldParam = oldProcedure.reportParameters.find((p) => p.name === newParam.name);
                     Object.assign(oldParam, newParam);
                 });
             });
@@ -85,14 +85,14 @@ export class ModuleService {
         }
     }
 
-    updateVirtualServices(vservice: VirtualServiceInterface): void {
+    updateVirtualServices(vService: VirtualServiceInterface): void {
         this.logger.info('Update virtual service');
         const virtualServices = this._virtualServices.value;
-        const oldVirtualService = virtualServices.find((vs) => vs.name === vservice.name);
+        const oldVirtualService = virtualServices.find((vs) => vs.name === vService.name);
         if (oldVirtualService) {
-            Object.assign(oldVirtualService, vservice);
+            Object.assign(oldVirtualService, vService);
         } else {
-            virtualServices.push(vservice);
+            virtualServices.push(vService);
         }
     }
 
@@ -109,9 +109,9 @@ export class ModuleService {
     }
 
     refreshVirtualServicesViaHttp(): void {
-        this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vservices: VirtualServiceInterface[]) => {
-            this.logger.debug('virtual services refreshed via HTTP GET', vservices);
-            this._virtualServices.next(vservices);
+        this.http.get(`${this.settings.apiUrl}/virtualService`).subscribe((vServices: VirtualServiceInterface[]) => {
+            this.logger.debug('virtual services refreshed via HTTP GET', vServices);
+            this._virtualServices.next(vServices);
         });
     }
 
