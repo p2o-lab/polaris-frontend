@@ -12,27 +12,28 @@
                         <mat-form-field>
                             <input matInput [(ngModel)]="parameter.value" >
                         </mat-form-field>
-                        <mat-label>{{parameter.unit}}</mat-label>     
+                        <mat-label>{{parameter.unit}}</mat-label>
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="Strategy">
-            <div class="strategy-parameter margin">
-                <div class="strategy-parameter-name">
+        <mat-tab label="Procedure">
+            <div class="procedure-parameter margin">
+                <div class="procedure-parameter-name">
                     <mat-form-field>
-                        <mat-select placeholder="Strategy" [(value)] = "currentStrategy" (selectionChange)="showStrategyParameters()">
-                          <mat-option *ngFor="let strategy of serviceStrategies" [value]="strategy">
-                            {{strategy.name}}
+                        <mat-select placeholder="Procedure" [(value)] = "currentProcedure"
+                                    (selectionChange)="showProcedureParameters()">
+                          <mat-option *ngFor="let procedure of serviceProcedures" [value]="procedure">
+                            {{procedure.name}}
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <div  *ngFor="let parameter of strategyParameter; let i = index" class ="margin" >
+                    <div  *ngFor="let parameter of procedureParameter; let i = index" class ="margin" >
                         <mat-label>{{parameter.name}}</mat-label>
                         <mat-slider min= "parameter.min" max="parameter.max" [(ngModel)]="parameter.value" ></mat-slider>
                         <mat-form-field>
                                 <input matInput [(ngModel)]="parameter.value" >
                         </mat-form-field>
-                        <mat-label>{{parameter.unit}}</mat-label>     
+                        <mat-label>{{parameter.unit}}</mat-label>
                     </div>
                 </div>
             </div>

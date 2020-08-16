@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {ParameterInterface, ServiceInterface, StrategyInterface} from '@p2olab/polaris-interface';
+import {ParameterInterface, ServiceInterface, ProcedureInterface} from '@p2olab/polaris-interface';
 import * as moment from 'moment';
 import {Subscription, timer} from 'rxjs';
 
@@ -13,13 +13,13 @@ import {Subscription, timer} from 'rxjs';
 export class ServiceSettingsComponent implements OnInit, OnDestroy {
 
     currentService: ServiceInterface;
-    serviceStrategies: StrategyInterface[];
-    currentStrategy: StrategyInterface;
+    serviceProcedures: ProcedureInterface[];
+    currentProcedure: ProcedureInterface;
     serviceParameter: ParameterInterface[] = [];
-    strategyParameter: ParameterInterface[] = [];
+    procedureParameter: ParameterInterface[] = [];
     // needed for resetting the parameter values
     prevServiceParameters: ParameterInterface[] = [];
-    prevStrategyParameters: ParameterInterface[] = [];
+    prevProcedureParameters: ParameterInterface[] = [];
 
     public changeDuration: string;
 
@@ -36,12 +36,12 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
        // fill the modal with data
       this.serviceParameter = this.currentService.parameters;
-      this.serviceStrategies = this.currentService.strategies;
+      this.serviceProcedures = this.currentService.procedures;
 
-      this.currentService.strategies.forEach((strategy) => {
-        if (strategy.name === this.currentService.currentStrategy) {
-          this.currentStrategy = strategy;
-          this.strategyParameter = strategy.parameters;
+      this.currentService.procedures.forEach((procedure) => {
+        if (procedure.name === this.currentService.currentProcedure) {
+          this.currentProcedure = procedure;
+          this.procedureParameter = procedure.parameters;
         }
       });
 
@@ -80,14 +80,14 @@ export class ServiceSettingsComponent implements OnInit, OnDestroy {
      * reset all parameters to value of valueNode (previous value)
      */
     reset(): void {
-      // this.strategyParameter = this.prevStrategyParameters;
+      // this.procedureParameter = this.prevProcedureParameters;
       this.snackBar.open('Not implemented yet');
     }
 
     /**
      *
      */
-    showStrategyParameters(): void {
+    showProcedureParameters(): void {
       // read form & display parameters
     }
     /**
