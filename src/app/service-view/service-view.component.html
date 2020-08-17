@@ -87,6 +87,11 @@
             <mat-icon>play_circle_filled</mat-icon>
             <span *ngIf="service.controlEnable.resume">Resume</span>
         </button>
+        <button mat-button matTooltip="Hold" [disabled]="disabled() || !service.controlEnable.hold" color="warn"
+              (click)="sendCommand('hold')">
+          <mat-icon>pan_tool</mat-icon>
+          <span *ngIf="service.controlEnable.unhold">Unhold</span>
+        </button>
         <button mat-button matTooltip="Unhold" [disabled]="disabled() || !service.controlEnable.unhold"
                 (click)="sendCommand('unhold')">
             <mat-icon>sync</mat-icon>

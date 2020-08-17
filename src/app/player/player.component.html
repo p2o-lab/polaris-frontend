@@ -25,7 +25,7 @@
                         <mat-icon *ngIf="operation.state=='aborted'"
                                   matTooltip="Operation aborted">highlight_off</mat-icon> &nbsp;
                         <span *ngIf="operation.module">{{operation.module}}.</span>{{operation.service}}<span
-                            *ngIf="operation.strategy">.{{operation.strategy}}</span>.{{operation.command}}(<small
+                            *ngIf="operation.procedure">.{{operation.procedure}}</span>.{{operation.command}}(<small
                             *ngIf="operation.parameter">{{formatter.parameterToString(operation.parameter)}}</small>)
                         </span>
                 </p>
