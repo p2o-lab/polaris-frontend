@@ -32,7 +32,7 @@
     "@angular/service-worker": "^9.1.12",
     "@ngx-loading-bar/core": "^4.2.0",
     "@ngx-loading-bar/http-client": "^4.2.0",
-    "@p2olab/polaris-interface": "3.0.0alpha0.1",
+    "@p2olab/polaris-interface": "3.0.0alpha0.2",
     "@swimlane/ngx-charts": "^14.0.0",
     "@types/snapsvg": "^0.5.0",
     "angular-highcharts": "^9.0.11",
