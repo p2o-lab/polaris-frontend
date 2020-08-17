@@ -90,7 +90,7 @@
         <button mat-button matTooltip="Hold" [disabled]="disabled() || !service.controlEnable.hold" color="warn"
               (click)="sendCommand('hold')">
           <mat-icon>pan_tool</mat-icon>
-          <span *ngIf="service.controlEnable.unhold">Unhold</span>
+          <span *ngIf="service.controlEnable.hold">Hold</span>
         </button>
         <button mat-button matTooltip="Unhold" [disabled]="disabled() || !service.controlEnable.unhold"
                 (click)="sendCommand('unhold')">
