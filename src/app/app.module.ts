@@ -111,15 +111,6 @@ moment.relativeTimeThreshold('ss', 5);
         LoggerModule.forRoot(
             {serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
     ],
-    entryComponents: [
-        ServiceParameterDialogComponent,
-        ServiceSettingsComponent,
-        NewModuleComponent,
-        NewPeaComponent,
-        NewRecipeComponent,
-        NewVirtualServiceComponent,
-        ParameterChangeDialogComponent
-    ],
     providers: [
         SettingsService,
         BackendService,
