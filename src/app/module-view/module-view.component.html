@@ -80,7 +80,8 @@
     </mat-card-header>
     <mat-card-content class="dashboard-card-content">
         <mat-accordion multi="true">
-            <app-service-view *ngFor="let service of virtualServices" [service]="service" virtualService="true">
+            <app-service-view *ngFor="let service of virtualServices" [service]="service" virtualService="true"
+                              ChangeDete>
             </app-service-view>
             <div *ngIf="virtualServices.length==0">
                 <p>No Virtual Service defined yet.</p>

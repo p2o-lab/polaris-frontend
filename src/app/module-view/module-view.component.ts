@@ -1,5 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ModuleInterface, ModuleOptions, VirtualServiceInterface} from '@p2olab/polaris-interface';
