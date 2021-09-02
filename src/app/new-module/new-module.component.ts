@@ -4,9 +4,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ModuleInterface, ModuleOptions} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
+import {Subscription} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-new-module',
@@ -38,7 +38,7 @@ export class NewModuleComponent implements OnInit {
         });
 
         this.subscription = this.formGroup.get('authentication').valueChanges.subscribe(value => {
-            if(value=='password'){
+            if(value==='password'){
                 this.formGroup.get('username').setValidators([Validators.required, Validators.minLength(3)]);
                 this.formGroup.get('password').setValidators([Validators.required, Validators.minLength(3)]);
             }
