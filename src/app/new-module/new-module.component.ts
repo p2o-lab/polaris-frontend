@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ModuleInterface, ModuleOptions} from '@p2olab/polaris-interface';
 import {NGXLogger} from 'ngx-logger';
+import {Subscription} from 'rxjs';
 import {BackendService} from '../_services/backend.service';
 import {ModuleService} from '../_services/module.service';
 
@@ -15,6 +16,7 @@ import {ModuleService} from '../_services/module.service';
 export class NewModuleComponent implements OnInit {
 
     public formGroup: FormGroup;
+    subscription: Subscription;
 
     constructor(@Inject(MAT_DIALOG_DATA) public module: ModuleOptions,
                 private backend: BackendService,
@@ -31,9 +33,22 @@ export class NewModuleComponent implements OnInit {
             opcua: new FormControl(this.module.opcua_server_url,
                 [Validators.required, Validators.pattern('opc.tcp://(.*)')]),
             authentication: new FormControl(this.module.username ? 'password' : 'anonymous'),
-            username: new FormControl(this.module.username, Validators.minLength(3)),
-            password: new FormControl(this.module.password, Validators.minLength(3))
+            username: new FormControl(this.module.username),
+            password: new FormControl(this.module.password)
         });
+
+        this.subscription = this.formGroup.get('authentication').valueChanges.subscribe(value => {
+            if(value==='password'){
+                this.formGroup.get('username').setValidators([Validators.required, Validators.minLength(3)]);
+                this.formGroup.get('password').setValidators([Validators.required, Validators.minLength(3)]);
+            }
+            else {
+                this.formGroup.get('username').setValidators(null);
+                this.formGroup.get('password').setValidators(null);
+            }
+            this.formGroup.get('username').updateValueAndValidity();
+            this.formGroup.get('password').updateValueAndValidity();
+        })
     }
 
     public addModule() {
