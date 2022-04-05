@@ -36,7 +36,7 @@
     "angular-material-dynamic-themes": "^1.0.4",
     "assign-deep": "^1.0.1",
     "highcharts": "^8.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.28",
     "ngx-logger": "4.1.9",
     "ngx-store": "^2.1.0",
