@@ -39,7 +39,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "ngx-logger": "4.1.9",
-    "ngx-store": "^2.1.0",
+    "ngx-store": "^3.0.0",
     "open-sans-fontface": "^1.4.0",
     "rxjs": "^6.6.0",
     "snapsvg": "^0.5.1",
