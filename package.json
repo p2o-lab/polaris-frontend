@@ -37,7 +37,7 @@
     "assign-deep": "^1.0.1",
     "highcharts": "^8.1.1",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.41",
     "ngx-logger": "4.1.9",
     "ngx-store": "^2.1.0",
     "open-sans-fontface": "^1.4.0",
